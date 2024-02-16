@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guideyou.repository.interfaces.ProductRepository">
+
+	<insert id="insert">
+		insert into product(title, content, price)
+		values (#{title}, #{content}, #{price})
+	</insert>
+
+	<update id="updateBySoldCount">
+		update product set sold_count = #{soldCount} where id = #{id}
+	</update>
+	
+	<update id="updateByWishCount">
+		update product set wish_count = #{wishCount} where id = #{id}
+	</update>
+	
+	<update id="updateByViewCount">
+		update product set view_count = #{viewCount} where id = #{id}
+	</update>
+
+	<delete id="deletById">
+		delete from product where id = #{id}
+	</delete>
+	
+	<select id="findAllByUserId" resultType="com.guideyou.repository.entity.Product">
+		select * from product where user_id = #{userId}
+	</select>
+	
+	<select id="findByProductId" resultType="com.guideyou.repository.entity.Product">
+		select * from product where id = #{id}
+	</select>
+	
+	
+	
+	
+</mapper>
