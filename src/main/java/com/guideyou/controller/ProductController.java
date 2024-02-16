@@ -44,26 +44,27 @@ public class ProductController {
         Integer userId = (Integer) httpSession.getAttribute("userId");
         dto.setUserId(userId);
         
-        File uploadDirectory = new File(Define.UPLOAD_FILE_DIRECTORY);
+        // 업로드 디렉토리 생성
+        String uploadDirectoryPath = "C:/wok_spring/upload"; // 수정 필요
+        File uploadDirectory = new File(uploadDirectoryPath);
         if (!uploadDirectory.exists()) {
             uploadDirectory.mkdirs(); // 디렉토리 생성
         }
 
         MultipartFile file = dto.getCustomFile();
-        UUID uuid = UUID.randomUUID();
-        String fileName = uuid + "_" + file.getOriginalFilename();
-        dto.setOriginFileName(file.getOriginalFilename());
-        dto.setUploadFileName(fileName);
-        String uploadPath = Define.UPLOAD_FILE_DERECTORY + File.separator + fileName;
-        File destination = new File(uploadPath);
-        try {
-            file.transferTo(destination);
-        } catch (IllegalStateException | IOException e) {
-            e.printStackTrace();
+        if (file != null && !file.isEmpty()) {
+            UUID uuid = UUID.randomUUID();
+            String fileName = uuid + "_" + file.getOriginalFilename();
+            String uploadPath = uploadDirectoryPath + File.separator + fileName;
+            File destination = new File(uploadPath);
+            try {
+                file.transferTo(destination);
+                dto.setOriginFileName(file.getOriginalFilename());
+                dto.setUploadFileName(fileName);
+            } catch (IllegalStateException | IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        dto.setOriginFileName(file.getOriginalFilename());
-        dto.setUploadFileName(fileName);
 
         productService.createProduct(dto);
 

@@ -52,11 +52,9 @@ public class ProductService {
                 // ProductPhotos 저장
                 ProductPhotos photos = new ProductPhotos();
                 photos.setProduct_photo(file);
-                photos.setFilePath(filePath);
                 photosRepository.insert(photos);
             } catch (IOException e) {
                 e.printStackTrace();
-                // 파일 저장 중 오류 발생 시 처리
             }
         }
     }

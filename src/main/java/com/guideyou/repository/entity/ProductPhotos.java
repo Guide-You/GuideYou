@@ -19,6 +19,5 @@ public class ProductPhotos {
 	private MultipartFile product_photo;
 	private String origin_file_name;
 	private String upload_file_name;
-	private String filePath;
 	private Timestamp created_at;
 }
