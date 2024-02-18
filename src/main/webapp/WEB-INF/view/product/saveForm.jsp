@@ -5,29 +5,25 @@
 <head>
 <meta charset="UTF-8">
 <title>상품 등록 페이지</title>
-<!-- include libraries(jQuery, bootstrap) -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
 </head>
 <body>
     <form id="productForm" action="/save" method="post" enctype="multipart/form-data">
         <!-- 글 정보 입력 -->
         <label for="title">글 제목:</label><br>
-        <input type="text" id="title" name="title" maxlength="50"><br><br>
+        <input type="text" id="title" name="title" maxlength="50" value="sss"><br><br>
         
         <label for="price">가격:</label><br>
-        <input type="text" id="price" name="price" maxlength="10"><br><br>
+        <input type="text" id="price" name="price" maxlength="10" value="1000"><br><br>
         
         <label for="content">글 내용:</label><br>
-        <textarea id="content" name="content" style="height:150px;"></textarea><br><br>
+        <textarea id="content" name="content" style="height:150px;">aaa</textarea><br><br>
         
         <!-- 사진 정보 입력 -->
-        <label for="customFile">사진 추가:</label><br>
+        <label for="customFile" class="custom-file-input">사진 추가:</label><br>
         <input type="file" id="customFile" name="customFile" multiple><br><br>
         
         <!-- 등록 버튼 -->
@@ -40,6 +36,7 @@
           placeholder: '글을 입력하세요...',
           tabsize: 2,
           height: 100
+          codeview: false
         });
         
         $('#productForm').submit(function(event) {
@@ -66,6 +63,14 @@
           });
         });
       });
+      
+      $(".custom-file-input").on(
+				"change",
+				function() {
+					var fileName = $(this).val().split("\\").pop();
+					$(this).siblings(".custom-file-label").addClass(
+							"selected").html(fileName);
+				});
     </script>
 </body>
 </html>

@@ -1,11 +1,16 @@
 package com.guideyou.service;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileOutputStream;
+import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.guideyou.dto.ProductSaveFormDto;
@@ -14,6 +19,8 @@ import com.guideyou.repository.entity.ProductPhotos;
 import com.guideyou.repository.interfaces.ProductPhotosRepository;
 import com.guideyou.repository.interfaces.ProductRepository;
 import com.guideyou.utils.Define;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class ProductService {
@@ -38,27 +45,34 @@ public class ProductService {
         product.setPrice(dto.getPrice());
         product.setContent(dto.getContent());
         productRepository.insert(product);
+        int productId = product.getId();
         
-        // 파일 저장 및 ProductPhotos 저장
-        if (dto.getCustomFile() != null) {
-            try {
-                // 파일 저장
-                MultipartFile file = dto.getCustomFile();
-                String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-                String filePath = Define.UPLOAD_FILE_DIRECTORY + File.separator + fileName;
-                File destination = new File(filePath);
-                file.transferTo(destination);
-                
-                // ProductPhotos 저장
-                ProductPhotos photos = new ProductPhotos();
-                photos.setProduct_photo(file);
-                photos.setFilePath(filePath);
-                photosRepository.insert(photos);
-            } catch (IOException e) {
-                e.printStackTrace();
-                // 파일 저장 중 오류 발생 시 처리
-            }
+        MultipartFile[] files = dto.getCustomFile();
+        for(int i = 0; i < files.length; i++) {
+        	String filename = files[i].getOriginalFilename();
+        	String path = Define.UPLOAD_FILE_DERECTORY;
+        	String ext = StringUtils.getFilenameExtension(filename);
+        	
+        	LocalDateTime now = LocalDateTime.now();
+        	String uploadFileName = "P" + now.getYear() + now.getMonthValue() + now.getDayOfMonth() 
+        	+ now.getHour() + now.getMinute() + now.getSecond() + (int) (Math.random() * 100) + "." + ext;
+        	
+        	try {
+        		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(path + "/" + uploadFileName)));
+        		bos.write(files[i].getBytes());
+        		bos.close();
+        		
+        		ProductPhotos photos = new ProductPhotos();
+        		photos.setProduct_id(productId);
+        		photos.setProduct_photo_path(path);
+        		photos.setOrigin_file_name(filename);
+        		photos.setUpload_file_name(uploadFileName);
+        		photosRepository.insert(photos);
+        	} catch (Exception e) {
+        		System.out.println(e.getMessage());
+        	}
         }
+        
     }
     
     // 임시 사용자 ID 생성 로직 (UUID 사용)
