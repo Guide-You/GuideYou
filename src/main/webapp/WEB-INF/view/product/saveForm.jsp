@@ -14,13 +14,13 @@
     <form id="productForm" action="/save" method="post" enctype="multipart/form-data">
         <!-- 글 정보 입력 -->
         <label for="title">글 제목:</label><br>
-        <input type="text" id="title" name="title" maxlength="50"><br><br>
+        <input type="text" id="title" name="title" maxlength="50" value="sss"><br><br>
         
         <label for="price">가격:</label><br>
-        <input type="text" id="price" name="price" maxlength="10"><br><br>
+        <input type="text" id="price" name="price" maxlength="10" value="1000"><br><br>
         
         <label for="content">글 내용:</label><br>
-        <textarea id="content" name="content" style="height:150px;"></textarea><br><br>
+        <textarea id="content" name="content" style="height:150px;">aaa</textarea><br><br>
         
         <!-- 사진 정보 입력 -->
         <label for="customFile" class="custom-file-input">사진 추가:</label><br>

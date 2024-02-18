@@ -2,8 +2,6 @@ package com.guideyou.repository.entity;
 
 import java.sql.Timestamp;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ProductPhotos {
 	private Integer id;
 	private Integer product_id;
-	private MultipartFile product_photo;
+	private String product_photo_path;
 	private String origin_file_name;
 	private String upload_file_name;
 	private Timestamp created_at;

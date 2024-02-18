@@ -21,6 +21,5 @@ public class Define {
 	public static final String D_BALANCE_VALUE = null;
 
 
-	public static final String UPLOAD_FILE_DIRECTORY = "파일 없음";
 
 	}

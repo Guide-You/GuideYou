@@ -2,7 +2,6 @@ package com.guideyou.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -15,7 +14,8 @@ public class ProductSaveFormDto {
 	private String title;
 	private String content;
 	private Long price;	
-	private MultipartFile customFile;	
+	
+	private MultipartFile[] customFile;	
 	private String originFileName;
 	private String uploadFileName;
 }

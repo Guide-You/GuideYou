@@ -3,8 +3,8 @@
 <mapper namespace="com.guideyou.repository.interfaces.ProductPhotosRepository">
 
 	<insert id="insert">
-		insert into product_photos(product_photo, origin_file_name, upload_file_name)
-		values(#{productPhoto}, #{originFileName}, #{uploadFileName})
+		insert into product_photos(product_id, product_photo_path, origin_file_name, upload_file_name)
+		values(#{product_id}, #{product_photo_path}, #{origin_file_name}, #{upload_file_name})
 	</insert>
 
 	<update id="updateById">
