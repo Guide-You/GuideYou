@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.guideyou.repository.interfaces.user.UserRepository">
+
+	<insert id="insert">
+		INSERT INTO user (name, nickname, gender, email, phone, comment)
+		VALUES (#{name}, #{nickname}, #{gender}, #{email}, #{phone}, #{comment})
+	</insert>
+	
+	<select id="findByNameAndPhone" resultType="com.guideyou.repository.entity.User">
+		select * from user where name = #{name} and phone = #{phone}
+	</select>
+	
+</mapper>
