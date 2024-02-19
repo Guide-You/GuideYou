@@ -13,8 +13,7 @@
 	</update>
 
 	<delete id="deleteByPhoto">
-		delete from product_photos where product_id = #{productId} 
-		and product_photo = #{productPhoto}
+		delete from product_photos where product_id = #{productId}
 	</delete>
 	
 	<select id="findAllByProductId" resultType="com.guideyou.repository.entity.ProductPhotos">

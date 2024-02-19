@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class ProductWithPhotos {
 	private Integer id;
 	private Integer userId;
 	private Integer cityCodeId;
@@ -21,9 +21,5 @@ public class Product {
 	private Integer soldCount;
 	private Integer wishCount;
 	private Integer viewCount;
-	private Integer productId;
-	private String productPhotoPath;
-	private String originFileName;
-	private String uploadFileName;
 	private Timestamp createdAt;
 }

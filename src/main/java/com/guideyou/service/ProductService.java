@@ -20,6 +20,12 @@ import com.guideyou.repository.interfaces.ProductPhotosRepository;
 import com.guideyou.repository.interfaces.ProductRepository;
 import com.guideyou.utils.Define;
 
+/**
+ * 
+ */
+/**
+ * 
+ */
 @Service
 public class ProductService {
 
@@ -30,6 +36,7 @@ public class ProductService {
 	private ProductPhotosRepository photosRepository;
 
 	// 상품 등록
+	@Transactional
 	public boolean createProduct(ProductSaveFormDto dto) {
 
 		// Product 저장
@@ -95,8 +102,8 @@ public class ProductService {
 	}
 	
 	
-	public Product findByProductId(Integer productId) {
-		return productRepository.findByProductId(productId);
+	public Product findByProductId(Integer id) {
+		return productRepository.findByProductId(id);
 				
 	}
 		          
@@ -109,4 +116,36 @@ public class ProductService {
 		List<ProductPhotos> list = photosRepository.findAllByProductId(productId);		
 			return list;					
 	}
+	
+	
+	@Transactional
+	public void deleteProduct(Integer id) {
+		productRepository.deletById(id);
+	}
+	
+	@Transactional
+	public void deletePhotos(Integer productId) {
+		photosRepository.deleteByPhoto(productId);
+	}
+	
+	@Transactional
+	public void updateProduct(Integer id, ProductSaveFormDto dto) {
+		Product product = Product.builder()
+				.cityCodeId(dto.getCityCodeId())
+				.title(dto.getTitle())
+				.price(dto.getPrice())
+				.content(dto.getContent())
+				.build();
+		productRepository.updateById(product);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
