@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProductPhotos {
 	private Integer id;
-	private Integer product_id;
-	private String product_photo_path;
-	private String origin_file_name;
-	private String upload_file_name;
-	private Timestamp created_at;
+	private Integer productId;
+	private String productPhotoPath;
+	private String originFileName;
+	private String uploadFileName;
+	private Timestamp createdAt;
 }

@@ -11,6 +11,7 @@ import lombok.Data;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductSaveFormDto {
 	private Integer userId;
+	private Integer cityCodeId;
 	private String title;
 	private String content;
 	private Long price;	
