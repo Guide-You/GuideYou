@@ -31,6 +31,10 @@ public class GoogleConfig {
 
     @Value("${google.resource.uri}")
     private String googleResourceUri;
-    
 
+    @Value("${google.profile.uri}")
+    private String googleProfileUri;
+
+    @Value("${google.grant.type}")
+    private String googleGrantType;
 }

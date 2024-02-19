@@ -16,7 +16,7 @@
 		<a href="/login/naver">
 			네이버
 		</a>
-		<a href="">
+		<a href="/login/google">
 			구글
 		</a>
 	</form>

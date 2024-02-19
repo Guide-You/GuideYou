@@ -141,9 +141,8 @@ public class UserController {
 	  */
 	@GetMapping("/login/oauth2/code/google")
 	@ResponseBody
-	public String signInProcByGoogle(@RequestParam String code, @RequestParam String registrationId) {
-		String result = code + "최장호" + registrationId;
-		System.out.println(result);
+	public String signInProcByGoogle(@RequestParam String code) {
+		String result = userService.signInProcByGoogle(code);
 		return result;
 	}
 }

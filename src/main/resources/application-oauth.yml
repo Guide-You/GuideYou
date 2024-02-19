@@ -22,6 +22,10 @@ google:
     uri: https://oauth2.googleapis.com/token
   resource:
     uri: https://www.googleapis.com/oauth2/v2/userinfo    
+  profile:
+    uri: https://www.googleapis.com/userinfo/v2/me
+  grant:
+    type: authorization_code  
     
 kakao:
   client:
