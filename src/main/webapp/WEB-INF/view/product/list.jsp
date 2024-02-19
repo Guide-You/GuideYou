@@ -1,71 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-        .card {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-            width: 200px;
-            display: inline-block;
-            vertical-align: top;
-            position: relative;
-        }
-        .card img {
-            width: 100%;
-            height: auto;
-        }
-        .favorite-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            outline: none;
-            font-size: 20px;
-            color: gray;
-        }
-        .favorite-btn:hover {
-            color: red;
-        }
-    </style>
+<title>Product List</title>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+	crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <!-- 검색 창 -->
-        <form action="search.jsp" method="get">
-            <input type="text" name="query" placeholder="검색어를 입력하세요">
-            <button type="submit">검색</button>
-        </form>
-    </header>
-    
-    <main>
-        <!-- 메인 이미지 영역 -->
-        <div class="main-image">
-            <!-- 이미지 표시 -->
-            <img src="main_image.jpg" alt="Main Image">
-        </div>
-
-        <!-- 카드 레이아웃 -->
-        <div class="card-layout">
-            <!-- 이미지와 이미지 설명을 보여줄 카드 -->
-            <div class="card">
-                <!-- 이미지 -->
-                <img src="image1.jpg" alt="Image 1">
-                <!-- 이미지 설명 -->
-                <p>이미지 설명 1</p>
-                <!-- 찜 버튼 -->
-                <button class="favorite-btn">&#9825;</button>
-            </div>
-            <!-- 다른 이미지 카드들 -->
-        </div>
-    </main>
-
-    <!-- 필요한 JavaScript 파일 링크 추가 -->
+	<header>
+		<!-- 검색 창 -->
+		<form action="" method="post">
+			<input type="text" name="query" placeholder="검색어를 입력하세요">
+			<button type="submit">검색</button>
+		</form>
+	</header>
+	<main>
+		<c:forEach items="${product}" var="prod">
+		<c:forEach items="${photos}" var="pho">
+			<div class="card" style="width: 18rem;">
+				<img src="/images/upload/${pho.uploadFileName}" class="card-img-top" >								
+			<div class="card" style="width: 18rem;">
+				<div class="card-body">
+					<p class="card-title">제목 : ${prod.title}</p>
+					<p class="card-text">${prod.content}</p>
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">가격 : ${prod.price}</li>
+				</ul>
+			</div>
+			</div>
+		</c:forEach>
+		</c:forEach>
+	</main>
 </body>
 </html>

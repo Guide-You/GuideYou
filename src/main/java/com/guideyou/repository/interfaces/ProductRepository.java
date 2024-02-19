@@ -18,4 +18,8 @@ public interface ProductRepository {
 	
 	public List<Product> findAllByUserId(Integer userId);
 	public Product findByProductId(Integer id);
+	public List<Product> findAll();
+	
+
+
 }

@@ -4,7 +4,7 @@
 
 	<insert id="insert">
 		insert into product_photos(product_id, product_photo_path, origin_file_name, upload_file_name)
-		values(#{product_id}, #{product_photo_path}, #{origin_file_name}, #{upload_file_name})
+		values(#{productId}, #{productPhotoPath}, #{originFileName}, #{uploadFileName})
 	</insert>
 
 	<update id="updateById">
@@ -24,5 +24,13 @@
 	<select id="findByProductId" resultType="com.guideyou.repository.entity.ProductPhotos">
 		select * from product_photos where product_id = #{id}
 	</select>
-
+	
+	<select id="findAll" resultType="com.guideyou.repository.entity.ProductPhotos">
+		select * from product_photos
+	</select>
+	
+	<select id="findPhoto" resultType="com.guideyou.repository.entity.ProductPhotos">
+		SELECT upload_file_name FROM product_photos WHERE product_id = #{productId} ORDER BY created_at DESC LIMIT 1
+	</select>
+	
 </mapper>

@@ -13,12 +13,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Product {
 	private Integer id;
-	private Integer user_id;
+	private Integer userId;
+	private Integer cityCodeId;
 	private String title;
 	private String content;
 	private Long price;
-	private Integer sold_count;
-	private Integer wish_count;
-	private Integer view_count;
-	private Timestamp created_at;
+	private Integer soldCount;
+	private Integer wishCount;
+	private Integer viewCount;
+	private Timestamp createdAt;
 }

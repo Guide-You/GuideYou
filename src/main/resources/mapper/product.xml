@@ -2,10 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.guideyou.repository.interfaces.ProductRepository">
 
-	<insert id="insert" useGeneratedKeys="true"
-        keyProperty="id" keyColumn="id">
-		insert into product(title, content, price)
-		values (#{title}, #{content}, #{price})
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into product(city_code_id, title, price, content)
+		values (#{cityCodeId}, #{title}, #{price}, #{content})
 	</insert>
 
 	<update id="updateBySoldCount">
@@ -31,8 +30,10 @@
 	<select id="findByProductId" resultType="com.guideyou.repository.entity.Product">
 		select * from product where id = #{id}
 	</select>
-	
-	
-	
+		
+	<select id="findAll" resultType="com.guideyou.repository.entity.Product">
+		select * from product;
+	</select>
+		
 	
 </mapper>
