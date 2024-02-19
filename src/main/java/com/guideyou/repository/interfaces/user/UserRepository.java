@@ -1,6 +1,6 @@
 package com.guideyou.repository.interfaces.user;
 
-import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,5 +18,5 @@ import com.guideyou.repository.entity.User;
 @Mapper
 public interface UserRepository {
 	public int insert(User user);
-	public User findByNameAndPhone(String name, String phone);
+	public User findByNameAndPhone(Map<String, Object> params);;
 }

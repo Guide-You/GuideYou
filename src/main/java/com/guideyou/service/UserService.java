@@ -1,5 +1,8 @@
 package com.guideyou.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -122,13 +125,12 @@ public class UserService {
 
 		// 네이버에서 받아온 사용자 프로필 정보
 		NaverProfileRespDTO profileResult = profileRespResult.getBody();
-		
+
 		SignUpDTO signUpDTO = SignUpDTO.builder().name(profileResult.getResponse().getName())
 				.nickname(profileResult.getResponse().getNickname()).gender(profileResult.getResponse().getGender())
 				.email(profileResult.getResponse().getEmail()).phone(profileResult.getResponse().getMobile())
 				.comment(null).build();
 
-		// 네이버 사용자 정보로 db조회
 		User user = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
 		if (user == null) {
 			// 회원가입
@@ -151,7 +153,10 @@ public class UserService {
 	 * @return
 	 */
 	public User readUserByNameAndPhone(String name, String phone) {
-		return userRepository.findByNameAndPhone(name, phone);
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", name);
+		map.put("phone", phone);
+		return userRepository.findByNameAndPhone(map);
 	}
 
 	/**
@@ -192,34 +197,31 @@ public class UserService {
 		HttpEntity<MultiValueMap<String, String>> tokenReqMsg = new HttpEntity<>(params, tokenReqHeader);
 
 		// 토큰 응답 결과
-		ResponseEntity<KakaoTokenRespDTO> tokenRspResult = restTemplate.exchange(kakaoConfig.getKakaoTokenUri(), HttpMethod.POST,
-				tokenReqMsg, KakaoTokenRespDTO.class);
-		
+		ResponseEntity<KakaoTokenRespDTO> tokenRspResult = restTemplate.exchange(kakaoConfig.getKakaoTokenUri(),
+				HttpMethod.POST, tokenReqMsg, KakaoTokenRespDTO.class);
+
 		// 토큰으로 프로필 접근
 		HttpHeaders profielReqHeader = new HttpHeaders();
 		profielReqHeader.add("Authorization", "Bearer " + tokenRspResult.getBody().getAccessToken());
 		profielReqHeader.add("ContentType", kakaoConfig.getKakaoContentType());
-		
-		
+
 		HttpEntity<MultiValueMap<String, String>> profileReqMsg = new HttpEntity<>(profielReqHeader);
-		
+
 		// 카카오 프로필 정보 가져오기
-		ResponseEntity<KakaoProfileRespDTO> profileRspResult 
-		= restTemplate.exchange(kakaoConfig.getKakaoProfileUri(), HttpMethod.POST, profileReqMsg, KakaoProfileRespDTO.class);
-		
+		ResponseEntity<KakaoProfileRespDTO> profileRspResult = restTemplate.exchange(kakaoConfig.getKakaoProfileUri(),
+				HttpMethod.POST, profileReqMsg, KakaoProfileRespDTO.class);
+
 		// 카카오 프로필 정보
 		KakaoProfileRespDTO profileResult = profileRspResult.getBody();
-		
-		// 회원가입 DTO
-		SignUpDTO signUpDTO = SignUpDTO.builder()
-				.name(profileResult.getKakaoAccount().getName())
-				.nickname(profileResult.getProperties().getNickname())
-				.gender(profileResult.getKakaoAccount().getGender())
-				.email(profileResult.getKakaoAccount().getEmail())
-				.phone(profileResult.getKakaoAccount().getPhoneNumber())
-				.comment(null).build();
 
-		// 카카오 사용자 정보로 db조회
+		// 회원가입 DTO
+		SignUpDTO signUpDTO = SignUpDTO.builder().name(profileResult.getKakaoAccount().getName())
+				.nickname(profileResult.getProperties().getNickname())
+				.gender(profileResult.getKakaoAccount().getGender()).email(profileResult.getKakaoAccount().getEmail())
+				.phone(profileResult.transPhoneNumber()).comment(null).build();
+
+		System.out.println(signUpDTO.getPhone());
+
 		User user = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
 		if (user == null) {
 			// 회원가입
@@ -227,7 +229,6 @@ public class UserService {
 			User newUser = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
 			return newUser;
 		}
-
 		return user;
 	}
 

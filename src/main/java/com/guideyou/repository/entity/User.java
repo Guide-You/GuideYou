@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 /**
   * @FileName : User.java
   * @Project : GuideYou
@@ -15,10 +16,10 @@ import lombok.NoArgsConstructor;
   * @변경이력 :
   * @프로그램 설명 : user_tb 객체
   */
-@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Data
 public class User {
     private Integer id;
 

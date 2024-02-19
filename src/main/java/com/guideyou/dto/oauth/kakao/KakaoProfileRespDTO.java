@@ -30,6 +30,7 @@ public class KakaoProfileRespDTO {
 	}
 
 	@Data
+	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 	public class KakaoAccount {
 		private Profile profile;
 		private String name;
@@ -43,6 +44,12 @@ public class KakaoProfileRespDTO {
 			private String thumbnailImageUrl;
 			private String profileImageUrl;
 		}
+	}
+	
+	public String transPhoneNumber() {
+		  String formattedNum = this.kakaoAccount.phoneNumber.replaceAll("\\+82\\s*", "0");
+		  
+		  return formattedNum;
 	}
 
 }

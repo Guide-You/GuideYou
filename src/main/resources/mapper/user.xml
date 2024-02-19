@@ -7,7 +7,7 @@
 		VALUES (#{name}, #{nickname}, #{gender}, #{email}, #{phone}, #{comment})
 	</insert>
 
-	<select id="findByNameAndPhone" resultType="com.guideyou.repository.entity.User"> 
+	<select id="findByNameAndPhone" parameterType="map" resultType="com.guideyou.repository.entity.User"> 
 		select * from user where name = #{name} and phone = #{phone}
 	</select>
 	

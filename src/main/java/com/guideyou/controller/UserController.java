@@ -112,11 +112,10 @@ public class UserController {
 	  * @Method 설명 : 카카오 로그인 처리
 	  */
 	@GetMapping("/login/oauth2/code/kakao")
-	@ResponseBody
 	public String signInProcByKakao (@RequestParam String code) {
 		User kakaoUser = userService.signInProcByKakao(code, null);
 		httpSession.setAttribute(Define.PRINCIPAL, kakaoUser);
-		return "user/user";
+		return "redirect:/sign_in";
 	}
 	
 	
