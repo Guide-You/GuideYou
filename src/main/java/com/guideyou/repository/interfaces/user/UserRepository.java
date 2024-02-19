@@ -1,5 +1,7 @@
 package com.guideyou.repository.interfaces.user;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.guideyou.repository.entity.User;

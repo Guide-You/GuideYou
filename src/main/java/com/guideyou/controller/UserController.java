@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.guideyou.dto.user.SignUpDTO;
 import com.guideyou.repository.entity.User;
@@ -80,13 +81,70 @@ public class UserController {
 	 */
 	@GetMapping("/login/oauth2/code/naver")
 	public String signInProcByNaver(@RequestParam String code, @RequestParam String state) {
-		User user = userService.signInProcByNaver(code, state);
+		User naverUser = userService.signInProcByNaver(code, state);
 
 		/*  todo  첫 가입자면 작성하는 화면 요청 
 		 * if(result == 1) { comment 작성하는 화면 호출 }
 		 * else {메인화면 호출}
 		 */
-		httpSession.setAttribute(Define.PRINCIPAL, user);
+		httpSession.setAttribute(Define.PRINCIPAL, naverUser);
+		return "redirect:/sign_in";
+	}
+	
+	/**
+	  * @Method Name : kakaoLoginPage
+	  * @작성일 : 2024. 2. 19.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 카카오 로그인 api 요청
+	  */
+	@GetMapping("/login/kakao")
+	public String kakaoLoginPage() {
+		String kakaoLoginUrl = userService.kakaoLoginUrl();
+		return "redirect:" + kakaoLoginUrl;
+	}
+	
+	/**
+	  * @Method Name : signInProcByKakao
+	  * @작성일 : 2024. 2. 19.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 카카오 로그인 처리
+	  */
+	@GetMapping("/login/oauth2/code/kakao")
+	@ResponseBody
+	public String signInProcByKakao (@RequestParam String code) {
+		User kakaoUser = userService.signInProcByKakao(code, null);
+		httpSession.setAttribute(Define.PRINCIPAL, kakaoUser);
 		return "user/user";
+	}
+	
+	
+	/**
+	  * @Method Name : googleLoginPage
+	  * @작성일 : 2024. 2. 19.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 구글 로그인 api 요청
+	  */
+	@GetMapping("/login/google")
+	public String googleLoginPage() {
+		String googleLoginUrl = userService.googleLoginUrl();
+		return "redirect:" + googleLoginUrl;
+	}
+	
+	/**
+	  * @Method Name : signInProcByGoogle
+	  * @작성일 : 2024. 2. 19.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 구글 로그인 처리
+	  */
+	@GetMapping("/login/oauth2/code/google")
+	@ResponseBody
+	public String signInProcByGoogle(@RequestParam String code, @RequestParam String registrationId) {
+		String result = code + "최장호" + registrationId;
+		System.out.println(result);
+		return result;
 	}
 }

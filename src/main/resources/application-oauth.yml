@@ -11,3 +11,30 @@ naver:
     grant-type: authorization_code
   profile:
     uri: https://openapi.naver.com/v1/nid/me
+
+google:
+  client:
+    id: 972242740313-93nve9f79bn0rrblq9qqebpgqd6heh8m.apps.googleusercontent.com
+    secret: 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
+  redirect:
+    uri: http://localhost:80/login/oauth2/code/google
+  token:
+    uri: https://oauth2.googleapis.com/token
+  resource:
+    uri: https://www.googleapis.com/oauth2/v2/userinfo    
+    
+kakao:
+  client:
+    id: 6d15ece608fd5d0da6e00fe0c77888b7
+  redirect:
+    uri: http://localhost/login/oauth2/code/kakao
+  authorization:
+    uri: https://kauth.kakao.com/oauth/authorize
+  token:
+    uri: https://kauth.kakao.com/oauth/token
+  grant:
+    type: authorization_code  
+  content:
+    type: application/x-www-form-urlencoded;charset=utf-8
+  profile:
+    uri: https://kapi.kakao.com/v2/user/me

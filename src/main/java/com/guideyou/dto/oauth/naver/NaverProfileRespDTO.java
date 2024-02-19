@@ -16,14 +16,14 @@ import lombok.Data;
 
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class NaverProfileDTO {
+public class NaverProfileRespDTO {
 
 	private String resultcode;
 	private String message;
 	private Response response;
 
 	@Data
-	public static class Response {
+	public class Response {
 		private String id;
 		private String nickname;
 		private String profileImage;

@@ -21,10 +21,10 @@ spring:
       max-request-size:  20MB  
         
   datasource:
-    url: jdbc:mysql://192.168.0.165:3306/guideyou_dev?serverTimeZone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/guideyou_dev?serverTimeZone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: test
-    password: 1111
+    username: root
+    password: asd1234
           
   # h2:
   #  console:
