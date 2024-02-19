@@ -1,5 +1,7 @@
 package com.guideyou.service;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,8 @@ import org.springframework.web.client.RestTemplate;
 import com.guideyou.config.GoogleConfig;
 import com.guideyou.config.KakaoConfig;
 import com.guideyou.config.NaverConfig;
+import com.guideyou.dto.oauth.google.GoogleProfileRespDTO;
+import com.guideyou.dto.oauth.google.GoogleTokenRespDTO;
 import com.guideyou.dto.oauth.kakao.KakaoProfileRespDTO;
 import com.guideyou.dto.oauth.kakao.KakaoTokenRespDTO;
 import com.guideyou.dto.oauth.naver.NaverProfileRespDTO;
@@ -240,14 +245,88 @@ public class UserService {
 	 * @Method 설명 :
 	 */
 	public String googleLoginUrl() {
-		String url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleConfig.getGoogleClientId()
-				+ "&redirect_uri=" + googleConfig.getGoogleRedirectUri()
-				+ "&response_type=code&scope=email%20profile%20openid&access_type=offline";
+		String googleUrl = "https://accounts.google.com/o/oauth2/auth?client_id=" + googleConfig.getGoogleClientId()
+				+ "&redirect_uri=" + googleConfig.getGoogleRedirectUri() + "&response_type=code" + "&scope="
+				+ "https://www.googleapis.com/auth/userinfo.email "
+				+ "https://www.googleapis.com/auth/user.gender.read "
+				+ "https://www.googleapis.com/auth/user.phonenumbers.read "
+				+ "https://www.googleapis.com/auth/userinfo.profile"; 
+//		String url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleConfig.getGoogleClientId()
+//				+ "&redirect_uri=" + googleConfig.getGoogleRedirectUri()
+//				+ "&response_type=code&scope=email%20profile%20openid&access_type=offline";
 
-		String naverLoginUrl = String.format("%s?response_type=code&client_id=%s&state=STATE_STRING&redirect_uri=%s",
-				naverConfig.getNaverAuthorizationUri(), naverConfig.getNaverClientId(),
-				naverConfig.getNaverRedirectUri());
-		return naverLoginUrl;
+		return googleUrl;
 	}
 
+	/**
+	  * @Method Name : signInProcByGoogle
+	  * @작성일 : 2024. 2. 19.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 :
+	  * @param code
+	  * @return
+	  */
+	public String signInProcByGoogle(String code) {
+		RestTemplate restTemplate = new RestTemplate();
+		MultiValueMap<String, String> tokenReqBody = new LinkedMultiValueMap<>();
+		tokenReqBody.add("code", code);
+		tokenReqBody.add("client_id", googleConfig.getGoogleClientId());
+		tokenReqBody.add("client_secret", googleConfig.getGoogleClientSecret());
+		tokenReqBody.add("redirect_uri", googleConfig.getGoogleRedirectUri());
+		tokenReqBody.add("grant_type", googleConfig.getGoogleGrantType());
+
+		// 토큰 응답
+		ResponseEntity<GoogleTokenRespDTO> tokenRespResult = restTemplate.postForEntity(googleConfig.getGoogleTokenUri(), tokenReqBody,
+				GoogleTokenRespDTO.class);
+		
+		System.out.println("++++++++++++++++++" + tokenRespResult.getBody().getScope());
+		
+		
+		HttpHeaders profileReqHeader = new HttpHeaders();
+
+		profileReqHeader.add("Authorization", "Bearer " + tokenRespResult.getBody().getAccessToken());
+		HttpEntity<MultiValueMap<String, String>> googleInfo = new HttpEntity<>(profileReqHeader);
+		ResponseEntity<GoogleProfileRespDTO> profileRespResult = restTemplate.exchange(googleConfig.getGoogleProfileUri(),
+				HttpMethod.GET, googleInfo, GoogleProfileRespDTO.class);
+		
+		// 구글 프로필 정보
+		GoogleProfileRespDTO googleProfileRespDTO = profileRespResult.getBody();
+		
+//		String apiUrl = "https://people.googleapis.com/v1/people/me?personFields=genders,phoneNumbers,emailAddresses";
+		String apiUrl = "https://people.googleapis.com/v1/people/me?personFields=phoneNumbers";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + tokenRespResult.getBody().getAccessToken());
+
+        RequestEntity<Void> request = null;
+		try {
+			request = new RequestEntity<>(headers, HttpMethod.GET, new URI(apiUrl));
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+        ResponseEntity<String> response = new RestTemplate().exchange(request, String.class);
+        return response.getBody();
+
+		
+//		// 회원가입 DTO
+//		SignUpDTO signUpDTO = SignUpDTO.builder().name(googleProfileRespDTO.)
+//				.nickname(profileResult.getProperties().getNickname())
+//				.gender(profileResult.getKakaoAccount().getGender()).email(profileResult.getKakaoAccount().getEmail())
+//				.phone(profileResult.transPhoneNumber()).comment(null).build();
+//
+//		System.out.println(signUpDTO.getPhone());
+//
+//		User user = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
+//		if (user == null) {
+//			// 회원가입
+//			signUpProc(signUpDTO);
+//			User newUser = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
+//			return newUser;
+//		}
+//		return user;
+
+//		return profileRespResult.getBody().toString();
+
+	}
 }
