@@ -30,15 +30,22 @@
 		<c:forEach items="${photos}" var="pho">
 			<div class="card" style="width: 18rem;">
 				<img src="/images/upload/${pho.uploadFileName}" class="card-img-top" >								
-			<div class="card" style="width: 18rem;">
 				<div class="card-body">
 					<p class="card-title">제목 : ${prod.title}</p>
 					<p class="card-text">${prod.content}</p>
 				</div>
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item">가격 : ${prod.price}</li>
+					<li class="list-group-item">가격 : ${prod.price}</li>					
 				</ul>
-			</div>
+				<div class="d-flex">
+                    <form action="/delete/${prod.id}" method="post">
+                        <button class="btn btn-danger">삭제</button>
+                    </form>
+                    <form action="/update/${prod.id}" method="get">
+                        <button class="btn btn-warning updateBtn">수정</button>
+                        <input type="hidden" name="productId" value="${prod.id}">
+                    </form>
+                </div>
 			</div>
 		</c:forEach>
 		</c:forEach>

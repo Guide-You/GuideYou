@@ -21,5 +21,9 @@ public class Product {
 	private Integer soldCount;
 	private Integer wishCount;
 	private Integer viewCount;
+	private Integer productId;
+	private String productPhotoPath;
+	private String originFileName;
+	private String uploadFileName;
 	private Timestamp createdAt;
 }
