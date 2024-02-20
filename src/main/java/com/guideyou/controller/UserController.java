@@ -38,9 +38,9 @@ public class UserController {
 	 * @Method 설명 : 로그인 페이지 요청
 	 * @return
 	 */
-	@GetMapping("/sign_in")
+	@GetMapping("/signIn")
 	public String loginPage() {
-		return "user/sign_in";
+		return "user/test_signIn";
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class UserController {
 		 * else {메인화면 호출}
 		 */
 		httpSession.setAttribute(Define.PRINCIPAL, naverUser);
-		return "redirect:/sign_in";
+		return "redirect:/signIn";
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public class UserController {
 	public String signInProcByKakao (@RequestParam String code) {
 		User kakaoUser = userService.signInProcByKakao(code, null);
 		httpSession.setAttribute(Define.PRINCIPAL, kakaoUser);
-		return "redirect:/sign_in";
+		return "redirect:/signIn";
 	}
 	
 	

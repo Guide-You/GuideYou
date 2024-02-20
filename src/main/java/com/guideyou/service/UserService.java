@@ -251,10 +251,6 @@ public class UserService {
 				+ "https://www.googleapis.com/auth/user.gender.read "
 				+ "https://www.googleapis.com/auth/user.phonenumbers.read "
 				+ "https://www.googleapis.com/auth/userinfo.profile"; 
-//		String url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleConfig.getGoogleClientId()
-//				+ "&redirect_uri=" + googleConfig.getGoogleRedirectUri()
-//				+ "&response_type=code&scope=email%20profile%20openid&access_type=offline";
-
 		return googleUrl;
 	}
 
@@ -280,9 +276,6 @@ public class UserService {
 		ResponseEntity<GoogleTokenRespDTO> tokenRespResult = restTemplate.postForEntity(googleConfig.getGoogleTokenUri(), tokenReqBody,
 				GoogleTokenRespDTO.class);
 		
-		System.out.println("++++++++++++++++++" + tokenRespResult.getBody().getScope());
-		
-		
 		HttpHeaders profileReqHeader = new HttpHeaders();
 
 		profileReqHeader.add("Authorization", "Bearer " + tokenRespResult.getBody().getAccessToken());
@@ -293,8 +286,7 @@ public class UserService {
 		// 구글 프로필 정보
 		GoogleProfileRespDTO googleProfileRespDTO = profileRespResult.getBody();
 		
-//		String apiUrl = "https://people.googleapis.com/v1/people/me?personFields=genders,phoneNumbers,emailAddresses";
-		String apiUrl = "https://people.googleapis.com/v1/people/me?personFields=phoneNumbers";
+		String apiUrl = "https://people.googleapis.com/v1/people/me?personFields=genders,phoneNumbers,emailAddresses";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + tokenRespResult.getBody().getAccessToken());
 
