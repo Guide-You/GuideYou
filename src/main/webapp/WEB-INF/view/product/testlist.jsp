@@ -20,8 +20,8 @@
 <body>
 	<header>
 		<!-- 검색 창 -->
-		<form action="" method="post">
-			<input type="text" name="query" placeholder="검색어를 입력하세요">
+		<form action="/select" method="post">
+			<input type="text" name="title" placeholder="검색어를 입력하세요">
 			<button type="submit">검색</button>
 		</form>
 	</header>
