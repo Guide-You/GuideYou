@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import com.guideyou.dto.oauth.kakao.KakaoTokenRespDTO;
 import com.guideyou.dto.oauth.naver.NaverProfileRespDTO;
 import com.guideyou.dto.oauth.naver.NaverTokenRespDTO;
 import com.guideyou.dto.user.SignUpDTO;
+import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.User;
 import com.guideyou.repository.interfaces.user.UserRepository;
 import com.guideyou.utils.Define;
@@ -62,19 +64,15 @@ public class UserService {
 	 * @param signUpDTO
 	 * @return
 	 */
-	public int signUpProc(SignUpDTO signUpDTO) {
+	public void signUpProc(SignUpDTO signUpDTO) {
 		User user = User.builder().id(null).name(signUpDTO.getName()).nickname(signUpDTO.getNickname())
 				.gender(signUpDTO.getGender()).email(signUpDTO.getEmail()).phone(signUpDTO.getPhone())
 				.comment(signUpDTO.getComment()).createdAt(null).build();
 
 		int result = userRepository.insert(user);
 
-		if (result == 1) {
-			return result;
-		} else {
-			// todo 익셉션 개발되면 넣어야함
-			// throw new Exception();
-			return 0;
+		if (result != 1) {
+			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -138,7 +136,7 @@ public class UserService {
 	 * @param state
 	 * @return
 	 */
-	public User signInProcByNaver(String code, String state) {
+	public SignUpDTO signInProcByNaver(String code, String state) {
 		RestTemplate restTemplate = new RestTemplate();
 
 		// 토큰 요청 url
@@ -173,16 +171,7 @@ public class UserService {
 				.nickname(profileResult.getResponse().getNickname()).gender(profileResult.getResponse().getGender())
 				.email(profileResult.getResponse().getEmail()).phone(profileResult.getResponse().getMobile())
 				.comment(null).build();
-
-		User user = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
-		if (user == null) {
-			// 회원가입
-			signUpProc(signUpDTO);
-			User newUser = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
-			return newUser;
-		}
-
-		return user;
+		return signUpDTO;
 	}
 	
 	/**
@@ -206,7 +195,7 @@ public class UserService {
 	 * @변경이력 :
 	 * @Method 설명 : 카카오를 통한 로그인
 	 */
-	public User signInProcByKakao(String code, String state) {
+	public SignUpDTO signInProcByKakao(String code, String state) {
 
 		RestTemplate restTemplate = new RestTemplate();
 		// 헤더 구성
@@ -246,16 +235,7 @@ public class UserService {
 				.gender(profileResult.getKakaoAccount().getGender()).email(profileResult.getKakaoAccount().getEmail())
 				.phone(profileResult.transPhoneNumber()).comment(null).build();
 
-		System.out.println(signUpDTO.getPhone());
-
-		User user = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
-		if (user == null) {
-			// 회원가입
-			signUpProc(signUpDTO);
-			User newUser = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
-			return newUser;
-		}
-		return user;
+		return signUpDTO;
 	}
 
 	/**
@@ -287,7 +267,7 @@ public class UserService {
 	  * @param code
 	  * @return
 	  */
-	public User signInProcByGoogle(String code) {
+	public SignUpDTO signInProcByGoogle(String code) {
 		RestTemplate restTemplate = new RestTemplate();
 		MultiValueMap<String, String> tokenReqBody = new LinkedMultiValueMap<>();
 		tokenReqBody.add("code", code);
@@ -335,17 +315,8 @@ public class UserService {
 						Define.DEFAULT_PHONENUMBER : googlePersonRespDTO.getPhoneNumbers().get(0).getValue())
 				.comment(null).build();
 
-		User user = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
-		if(user == null) {
-			// 구글은 전화번호가 필수가 아니므로 이메일로 한번 더 확인
-			user = readUserByNameAndEmail(signUpDTO.getName(), signUpDTO.getEmail());
-			if (user == null) {
-				// 회원가입
-				signUpProc(signUpDTO);
-				User newUser = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
-				return newUser;
-			}
-		}
-		return user;
+		// TODO : 이미지 불러오기 해야함 - 최장호 - 240220
+		
+		return signUpDTO;
 	}
 }
