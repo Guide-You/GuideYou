@@ -22,6 +22,8 @@ public interface ProductRepository {
 	public List<Product> findAll();
 	
 	public List<Product> findByTitleContaining(String keyword);	
-
+	
+	// 상품 대표 이미지 찾기
+	public List<Product> findProductsWithImages();
 
 }

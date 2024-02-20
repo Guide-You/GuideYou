@@ -44,4 +44,16 @@
 		select * from product where title like CONCAT('%', #{title}, '%')
 	</select>	
 	
+	
+	<select id="findProductsWithImages" resultType="com.guideyou.repository.entity.Product">
+		SELECT p.*, pi.upload_file_name AS uploadFileName
+	    FROM product p
+	    LEFT JOIN product_photos pi ON p.id = pi.product_id
+	    GROUP BY p.id
+	    ORDER BY p.created_at DESC LIMIT 1
+	</select>
+	
+	
+	
+	
 </mapper>

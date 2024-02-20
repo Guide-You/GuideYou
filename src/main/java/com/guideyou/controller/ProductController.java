@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.guideyou.dto.ProductSaveFormDto;
 import com.guideyou.repository.entity.Product;
@@ -43,6 +42,7 @@ public class ProductController {
      * @변경이력 : 
      * @Method 설명 : 상품 등록 로직
      */
+    // TODO : 24.02.20 이미지 불러오기
    @PostMapping("/save")
    public String saveProduct(ProductSaveFormDto dto, @RequestParam("region") Integer cityCodeId) throws Exception {
    	dto.setCityCodeId(cityCodeId);
@@ -60,17 +60,13 @@ public class ProductController {
    // 상품 목록 페이지 
    @GetMapping("/list")
    public String productList(Model model, Integer productId) {    	
-   	
-   	
+   	  	
    	List<Product> product = productService.readProduct();
-   	model.addAttribute("product", product);
-       
-   	List<ProductPhotos> representativePhoto = productService.readRepresentativePhoto();
-    model.addAttribute("representativePhoto", representativePhoto);
+   	model.addAttribute("product", product);   	
    	
    	
    	
-       return "product/testlist";
+       return "product/productList";
    }
    
    // 상품 상세 페이지
@@ -82,7 +78,7 @@ public class ProductController {
        Product product = productService.findByProductId(productId);
        model.addAttribute("product", product);
        
-       return "product/testdetail";
+       return "product/productDetail";
    }
    
    // 상품 수정 페이지
@@ -102,7 +98,6 @@ public class ProductController {
    public String updateProduct(@PathVariable("productId") Integer productId, ProductSaveFormDto dto) {
    	
    	productService.updateProduct(productId, dto);
-   	productService.updatePhoto(productId, dto);
    	return "redirect:/list";
    }
    
@@ -116,14 +111,11 @@ public class ProductController {
    }
    
    // 상품 검색 기능
-   @GetMapping("/search")
-   public String search(String keyword, Model model) {
+   @PostMapping("/select")
+   public String selectByTitle(@RequestParam("title") String title) {
 	   
-	   List<Product> searchList = productService.search(keyword);
 	   
-	   model.addAttribute("searchList", searchList);
-	   
-	   return "/list";
+	   return "redirect:/list";
 	   
    }
    

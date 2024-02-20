@@ -71,6 +71,9 @@
             >
           </div>
           <div class="top-link pe-2">
+          	<a href="/save" class="text-white"
+              ><small class="text-white mx-2">글쓰기</small>/</a
+            >
             <a href="#" class="text-white"
               ><small class="text-white mx-2">약관</small>/</a
             >

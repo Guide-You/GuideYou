@@ -97,9 +97,9 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 	
-	public ProductPhotos readPhoto(Integer ProductId) {
+	public ProductPhotos readPhoto() {
 		
-		return photosRepository.findPhoto(ProductId);
+		return photosRepository.findPhoto();
 	}
 	
 	
@@ -127,6 +127,19 @@ public class ProductService {
 		return productList;
 		
 	}
+	
+	
+	// 사진 한 장과 상품 설명
+	public List<Product> getProductsWithImages() {
+		return productRepository.findProductsWithImages();
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	// 상품 삭제

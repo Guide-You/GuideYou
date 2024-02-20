@@ -18,7 +18,7 @@ public interface ProductPhotosRepository {
 	// 사용자의 아이디를 찾는다?
 	public ProductPhotos findByProductId(Integer id);
 	
-	public ProductPhotos findPhoto(Integer productId);
+	public ProductPhotos findPhoto();
 	
 	 List<ProductPhotos> findRepresentativePhotos();
 }
