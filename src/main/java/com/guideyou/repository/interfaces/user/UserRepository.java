@@ -19,4 +19,5 @@ import com.guideyou.repository.entity.User;
 public interface UserRepository {
 	public int insert(User user);
 	public User findByNameAndPhone(Map<String, Object> params);;
+	public User findByNameAndEmail(Map<String, Object> params);;
 }

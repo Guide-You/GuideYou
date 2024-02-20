@@ -17,7 +17,10 @@ import lombok.Getter;
 @Getter
 public class GoogleConfig {
 
-    @Value("${google.client.id}")
+	@Value("${google.authorization.uri}")
+	private String googleAuthorizationUri;
+
+	@Value("${google.client.id}")
     private String googleClientId;
 
     @Value("${google.client.secret}")
@@ -37,4 +40,19 @@ public class GoogleConfig {
 
     @Value("${google.grant.type}")
     private String googleGrantType;
+
+    @Value("${google.scope.email}")
+    private String googleScopeEmailUrl;
+    
+    @Value("${google.scope.profile}")
+    private String googleScopeProfileUrl;
+    
+    @Value("${google.scope.gender}")
+    private String googleScopeGenderUrl;
+    
+    @Value("${google.scope.phonenumbers}")
+    private String googleScopePhonenumbersUrl;
+
+    @Value("${google.api.people}")
+    private String googleApiPeopleUrl;
 }

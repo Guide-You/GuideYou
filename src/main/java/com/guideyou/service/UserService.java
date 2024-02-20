@@ -12,7 +12,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -20,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import com.guideyou.config.GoogleConfig;
 import com.guideyou.config.KakaoConfig;
 import com.guideyou.config.NaverConfig;
+import com.guideyou.dto.oauth.google.GooglePersonRespDTO;
 import com.guideyou.dto.oauth.google.GoogleProfileRespDTO;
 import com.guideyou.dto.oauth.google.GoogleTokenRespDTO;
 import com.guideyou.dto.oauth.kakao.KakaoProfileRespDTO;
@@ -29,6 +29,7 @@ import com.guideyou.dto.oauth.naver.NaverTokenRespDTO;
 import com.guideyou.dto.user.SignUpDTO;
 import com.guideyou.repository.entity.User;
 import com.guideyou.repository.interfaces.user.UserRepository;
+import com.guideyou.utils.Define;
 
 /**
  * @FileName : UserService.java
@@ -40,9 +41,11 @@ import com.guideyou.repository.interfaces.user.UserRepository;
  */
 @Service
 public class UserService {
+	// repoistory
 	@Autowired
 	private UserRepository userRepository;
 
+	// config
 	@Autowired
 	private NaverConfig naverConfig;
 	@Autowired
@@ -75,6 +78,41 @@ public class UserService {
 		}
 	}
 
+
+
+	/**
+	 * @Method Name : readUserByNameAndPhone
+	 * @작성일 : 2024. 2. 18.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 이름과 전화번호로 사용자 조회
+	 * @param name
+	 * @param phone
+	 * @return
+	 */
+	public User readUserByNameAndPhone(String name, String phone) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", name);
+		map.put("phone", phone);
+		return userRepository.findByNameAndPhone(map);
+	}
+	
+	
+	/**
+	  * @Method Name : readUserByNameAndEmail
+	  * @작성일 : 2024. 2. 20.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 이름과 이메일로 사용자 조회
+	  */
+	public User readUserByNameAndEmail(String name, String email) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", name);
+		map.put("email", email);
+		return userRepository.findByNameAndPhone(map);
+	}
+
+	
 	/**
 	 * @Method Name : naverLoginUrl
 	 * @작성일 : 2024. 2. 18.
@@ -146,24 +184,7 @@ public class UserService {
 
 		return user;
 	}
-
-	/**
-	 * @Method Name : readUserByNameAndPhone
-	 * @작성일 : 2024. 2. 18.
-	 * @작성자 : 최장호
-	 * @변경이력 :
-	 * @Method 설명 : 이름과 전화번호로 사용자 조회
-	 * @param name
-	 * @param phone
-	 * @return
-	 */
-	public User readUserByNameAndPhone(String name, String phone) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("name", name);
-		map.put("phone", phone);
-		return userRepository.findByNameAndPhone(map);
-	}
-
+	
 	/**
 	 * @Method Name : kakaoLoginUrl
 	 * @작성일 : 2024. 2. 19.
@@ -242,16 +263,19 @@ public class UserService {
 	 * @작성일 : 2024. 2. 19.
 	 * @작성자 : 최장호
 	 * @변경이력 :
-	 * @Method 설명 :
+	 * @Method 설명 : 구글 로그인 요청 Url
 	 */
 	public String googleLoginUrl() {
-		String googleUrl = "https://accounts.google.com/o/oauth2/auth?client_id=" + googleConfig.getGoogleClientId()
-				+ "&redirect_uri=" + googleConfig.getGoogleRedirectUri() + "&response_type=code" + "&scope="
-				+ "https://www.googleapis.com/auth/userinfo.email "
-				+ "https://www.googleapis.com/auth/user.gender.read "
-				+ "https://www.googleapis.com/auth/user.phonenumbers.read "
-				+ "https://www.googleapis.com/auth/userinfo.profile"; 
-		return googleUrl;
+		String googleLoginUrl = String.format("%s?client_id=%s&redirect_uri=%s&response_type=code&scope=%s %s %s %s" , 
+				googleConfig.getGoogleAuthorizationUri(),
+				googleConfig.getGoogleClientId(),
+				googleConfig.getGoogleRedirectUri(),
+				googleConfig.getGoogleScopeEmailUrl(),
+				googleConfig.getGoogleScopeProfileUrl(),
+				googleConfig.getGoogleScopeGenderUrl(),
+				googleConfig.getGoogleScopePhonenumbersUrl()
+				);
+		return googleLoginUrl;
 	}
 
 	/**
@@ -259,11 +283,11 @@ public class UserService {
 	  * @작성일 : 2024. 2. 19.
 	  * @작성자 : 최장호
 	  * @변경이력 : 
-	  * @Method 설명 :
+	  * @Method 설명 : 구글을 통한 로그인
 	  * @param code
 	  * @return
 	  */
-	public String signInProcByGoogle(String code) {
+	public User signInProcByGoogle(String code) {
 		RestTemplate restTemplate = new RestTemplate();
 		MultiValueMap<String, String> tokenReqBody = new LinkedMultiValueMap<>();
 		tokenReqBody.add("code", code);
@@ -283,10 +307,10 @@ public class UserService {
 		ResponseEntity<GoogleProfileRespDTO> profileRespResult = restTemplate.exchange(googleConfig.getGoogleProfileUri(),
 				HttpMethod.GET, googleInfo, GoogleProfileRespDTO.class);
 		
-		// 구글 프로필 정보
+		// 구글 프로필 정보 - 이름, 이메일, 프로필사진
 		GoogleProfileRespDTO googleProfileRespDTO = profileRespResult.getBody();
 		
-		String apiUrl = "https://people.googleapis.com/v1/people/me?personFields=genders,phoneNumbers,emailAddresses";
+		String apiUrl = googleConfig.getGoogleApiPeopleUrl();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + tokenRespResult.getBody().getAccessToken());
 
@@ -297,28 +321,31 @@ public class UserService {
 			e.printStackTrace();
 		}
 
-        ResponseEntity<String> response = new RestTemplate().exchange(request, String.class);
-        return response.getBody();
+        ResponseEntity<GooglePersonRespDTO> response = new RestTemplate().exchange(request, GooglePersonRespDTO.class);
+        // 구글 추가 정보 - 성별, 전화번호
+        GooglePersonRespDTO googlePersonRespDTO = response.getBody();
+        
+		// 회원가입 DTO
+		SignUpDTO signUpDTO = SignUpDTO.builder().name(googleProfileRespDTO.getName())
+				.nickname(Define.DEFAULT_NICKNAME)
+				.gender(googlePersonRespDTO.getGenders().get(0).getValue())
+				.email(googleProfileRespDTO.getEmail())
+				// 전화번호가 없으면 Define.GOOGLE_PHONENUMBER로 세팅
+				.phone((googlePersonRespDTO.getPhoneNumbers() == null) ?
+						Define.DEFAULT_PHONENUMBER : googlePersonRespDTO.getPhoneNumbers().get(0).getValue())
+				.comment(null).build();
 
-		
-//		// 회원가입 DTO
-//		SignUpDTO signUpDTO = SignUpDTO.builder().name(googleProfileRespDTO.)
-//				.nickname(profileResult.getProperties().getNickname())
-//				.gender(profileResult.getKakaoAccount().getGender()).email(profileResult.getKakaoAccount().getEmail())
-//				.phone(profileResult.transPhoneNumber()).comment(null).build();
-//
-//		System.out.println(signUpDTO.getPhone());
-//
-//		User user = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
-//		if (user == null) {
-//			// 회원가입
-//			signUpProc(signUpDTO);
-//			User newUser = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
-//			return newUser;
-//		}
-//		return user;
-
-//		return profileRespResult.getBody().toString();
-
+		User user = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
+		if(user == null) {
+			// 구글은 전화번호가 필수가 아니므로 이메일로 한번 더 확인
+			user = readUserByNameAndEmail(signUpDTO.getName(), signUpDTO.getEmail());
+			if (user == null) {
+				// 회원가입
+				signUpProc(signUpDTO);
+				User newUser = readUserByNameAndPhone(signUpDTO.getName(), signUpDTO.getPhone());
+				return newUser;
+			}
+		}
+		return user;
 	}
 }

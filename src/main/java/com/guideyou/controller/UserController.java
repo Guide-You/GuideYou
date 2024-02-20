@@ -140,9 +140,9 @@ public class UserController {
 	  * @Method 설명 : 구글 로그인 처리
 	  */
 	@GetMapping("/login/oauth2/code/google")
-	@ResponseBody
 	public String signInProcByGoogle(@RequestParam String code) {
-		String result = userService.signInProcByGoogle(code);
-		return result;
+		User googleUser = userService.signInProcByGoogle(code);
+		httpSession.setAttribute(Define.PRINCIPAL, googleUser);
+		return "redirect:/signIn";
 	}
 }
