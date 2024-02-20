@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.guideyou.dto.ProductSaveFormDto;
 import com.guideyou.repository.entity.Product;
 
 @Mapper
@@ -19,7 +20,8 @@ public interface ProductRepository {
 	public List<Product> findAllByUserId(Integer userId);
 	public Product findByProductId(Integer id);
 	public List<Product> findAll();
-	public List<Product> selectByTitle(String keyword);	
+	
+	public List<Product> findByTitleContaining(String keyword);	
 
 
 }

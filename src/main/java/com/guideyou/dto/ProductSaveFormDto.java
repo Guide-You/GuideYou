@@ -17,6 +17,9 @@ public class ProductSaveFormDto {
 	private Long price;	
 	
 	private MultipartFile[] customFile;	
+	private String productPhotoPath;
 	private String originFileName;
 	private String uploadFileName;
+	
+	private String keyword;
 }

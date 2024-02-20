@@ -12,8 +12,8 @@
 </head>
 <body>
         
-    <form id="productForm" action="/update/${pro.id}" method="post" enctype="multipart/form-data">
-        <input type="hidden" id="productId" name="productId" value="${pro.id}">
+    <form id="productForm" action="/update/${product.id}" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="productId" name="productId" value="${product.id}">
         <!-- 지역 선택 콤보박스 -->
         <label for="region">지역 선택:</label><br>
         <select id="region" name="region">
@@ -34,19 +34,19 @@
         
         <!-- 글 정보 입력 -->
         <label for="title">글 제목:</label><br>
-        <input type="text" id="title" name="title" maxlength="50"><br><br>
+        <input type="text" id="title" name="title" maxlength="50" value="${product.title}"><br><br>
         
         <label for="price">가격:</label><br>
-        <input type="text" id="price" name="price" maxlength="10" ><br><br>
+        <input type="text" id="price" name="price" maxlength="10" value="${product.price}"><br><br>
         
         <label for="content">글 내용:</label><br>
-        <textarea id="content" name="content" style="height:150px;"></textarea><br><br>
+        <textarea id="content" name="content" style="height:150px;">${product.content}</textarea><br><br>
         
         
         
         <!-- 사진 정보 입력 -->
         <label for="customFile" class="custom-file-input">사진 추가:</label><br>
-        <input type="file" id="customFile" name="customFile" multiple><br><br>
+        <input type="file" id="customFile" name="customFile" multiple value=""><br><br>
         
         
         <!-- 등록 버튼 -->
