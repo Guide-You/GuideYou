@@ -103,14 +103,20 @@ public class ProductService {
 	}
 	
 	
+	// 상품에 해당하는 사진 한 장 찾기
+	public List<ProductSaveFormDto> selectPhotoList() {
+		return photosRepository.selectPhotoList(); 
+	}
+	
+	
 	public Product findByProductId(Integer id) {
 		return productRepository.findByProductId(id);
 				
 	}
 		          
-	// 사진 한 장 찾기
-	public List<ProductPhotos> readRepresentativePhoto() {
-	    return photosRepository.findRepresentativePhotos();
+	// 해당 상품 이미지 전부 찾기
+	public List<ProductPhotos> findAllByProductId(Integer productId) {
+	    return photosRepository.findAllByProductId(productId);
 	}
     
 	public List<ProductPhotos> findFileName(Integer productId) {		

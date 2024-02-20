@@ -10,16 +10,19 @@ import lombok.Data;
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductSaveFormDto {
+	private Integer id;
 	private Integer userId;
 	private Integer cityCodeId;
 	private String title;
 	private String content;
 	private Long price;	
-	
 	private MultipartFile[] customFile;	
 	private String productPhotoPath;
 	private String originFileName;
 	private String uploadFileName;
+	private Integer soldCount;
+	private Integer wishCount;
+	private Integer viewCount;
 	
 	private String keyword;
 }

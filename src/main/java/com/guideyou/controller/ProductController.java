@@ -61,8 +61,12 @@ public class ProductController {
    @GetMapping("/list")
    public String productList(Model model, Integer productId) {    	
    	  	
-   	List<Product> product = productService.readProduct();
-   	model.addAttribute("product", product);   	
+	List<ProductSaveFormDto> dto = productService.selectPhotoList();
+	model.addAttribute("dto", dto);
+	
+	
+//   	List<Product> product = productService.readProduct();
+//   	model.addAttribute("product", product);   	
    	
    	
    	
@@ -84,8 +88,12 @@ public class ProductController {
    // 상품 수정 페이지
    @GetMapping("/update/{productId}")
    public String productUpdatePage(@PathVariable("productId") Integer productId, Model model) {
-   	List<ProductPhotos> findName = productService.findFileName(productId);    	
-       model.addAttribute("findName", findName);
+	   
+	   List<ProductPhotos> photoResult = productService.findAllByProductId(productId);
+	   model.addAttribute("photoResult", photoResult);
+	   
+//	   List<ProductPhotos> findName = productService.findFileName(productId);    	
+//     model.addAttribute("findName", findName);
        
        Product product = productService.findByProductId(productId);
        model.addAttribute("product", product);
@@ -95,8 +103,10 @@ public class ProductController {
    
    // 상품 수정 기능
    @PostMapping("/update/{productId}")
-   public String updateProduct(@PathVariable("productId") Integer productId, ProductSaveFormDto dto) {
+   public String updateProduct(@PathVariable("productId") Integer productId, ProductSaveFormDto dto, @RequestParam("region") Integer cityCodeId) {
    	
+	   dto.setCityCodeId(cityCodeId);
+	   
    	productService.updateProduct(productId, dto);
    	return "redirect:/list";
    }
