@@ -74,6 +74,7 @@
 			<c:forEach items="${photoResult}" var="pho">
 				<p id="imgName_${pho.id}">${pho.originFileName}<span onclick="deleteImg(${pho.id})" class="removeImg">X</span></p>
 				
+				
 			</c:forEach>
 		</div>
 		
@@ -90,36 +91,18 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
-    // 파일 선택이 변경되었을 때 실행되는 함수
-    $('#fileInput').change(function() {
-        // 선택된 파일 목록 가져오기
-        var files = $(this)[0].files;
-        // 선택된 파일 이름을 보여줄 공간 선택
-        var selectedFilesContainer = $('#selectedFiles');
-        // 선택된 파일 이름을 초기화
-        selectedFilesContainer.empty();
-        // 선택된 파일이 있으면 파일 이름을 표시
-        if (files.length > 0) {
-            for (var i = 0; i < files.length; i++) {
-                selectedFilesContainer.append('<p>' + files[i].name + '</p>');
-            }
-        } else {
-            selectedFilesContainer.append('<p>선택된 파일 없음</p>');
-        }
-    });
-});
+
 
 function deleteImg(id) {
-	let removeImgNum = ${"#removeImgs"}.val();
+	let removeImgNum = $("#removeImgs").val();
 	if (removeImgNum == "") {
 		removeImgNum += id; 
 	} else {
 		removeImgNum += "," + id;
 	}
 	
-	${"#removeImgs"}.val(removeImgNum);
-	${"#imgName_" + id}.css("display","none");
+	$("#removeImgs").val(removeImgNum);
+	$("#imgName_" + id).css("display","none");
 }
 
 

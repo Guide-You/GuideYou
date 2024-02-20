@@ -16,6 +16,11 @@
 		delete from product_photos where product_id = #{productId}
 	</delete>
 	
+	<delete id="deleteMutiPhoto">
+		delete from product_photos where product_id = #{productId} 
+		and id in (#{id})
+	</delete>	
+	
 	<select id="findAllByProductId" resultType="com.guideyou.repository.entity.ProductPhotos">
 		select * from product_photos where product_id = #{productId}
 	</select>
@@ -36,7 +41,6 @@
 		SELECT p.*, pi.upload_file_name AS uploadFileName
 	    FROM product p
 	    LEFT JOIN product_photos pi ON p.id = pi.product_id
-	    GROUP BY p.id
 	    ORDER BY p.created_at DESC
 	</select>
 	

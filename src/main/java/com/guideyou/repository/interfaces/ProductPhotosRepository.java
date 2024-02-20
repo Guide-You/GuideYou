@@ -12,7 +12,9 @@ public interface ProductPhotosRepository {
 	
 	public int insert(ProductPhotos photos);
 	public int updateById(ProductPhotos photos);
-	public int deleteByPhoto(Integer ProductId);
+	public int deleteByPhoto(Integer productId);
+	public int deleteMutiPhoto(Integer productId, String[] ids);
+	
 	
 	// 사용자가 게시물에 올린 모든 상품 조회
 	public List<ProductPhotos> findAllByProductId(Integer productId);
