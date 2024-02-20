@@ -5,7 +5,6 @@
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
-
   <body >
     <div class="container-fluid contact py-5">
       <div class="container py-5">
@@ -63,7 +62,7 @@
                             </div>
                             <div class="col-md-12 col-lg-4">
                                 <div class="form-item w-100">
-                                  <button class="payment--payby"> <img src="/img/kakao-pay.png" alt=""></button>
+                                  <button class="payment--payby" id="kakaopay--btn" type="button" > <img src="/img/kakao-pay.png" alt=""></button>
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-4">
@@ -73,8 +72,6 @@
                             </div>
                           </div>
                       </div>
-
-
 
                       <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 cart--purchase" type="button">
                       구매하기
@@ -90,6 +87,9 @@
 
     <!--  payment End -->
   </body>
+  
+  
+
   
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

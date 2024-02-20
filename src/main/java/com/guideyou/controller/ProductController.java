@@ -203,14 +203,13 @@ public class ProductController {
    
    
    
+    
    
    
    
    
    
-   
-   
-   
+  
    
 	   /**
 	  * @Method Name : paymentPage
@@ -222,8 +221,7 @@ public class ProductController {
 	@GetMapping("/payment")
 	private String paymentPage() {
 		
-		return "/product/productPayment";
-		
+		return "/product/productPayment";	
 	
 	}
    
