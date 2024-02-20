@@ -124,4 +124,103 @@ public class ProductController {
    
    
    
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+	   /**
+	  * @Method Name : paymentPage
+	  * @작성일 : 2024. 2. 20.
+	  * @작성자 : 박경진
+	  * @변경이력 : 
+	  * @Method 설명 :
+	  */
+	@GetMapping("/payment")
+	private String paymentPage() {
+		
+		return "/product/productPayment";
+		
+	
+	}
+   
+   
 }
