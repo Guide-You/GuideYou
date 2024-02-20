@@ -21,5 +21,9 @@ public class Define {
 	public static final String D_BALANCE_VALUE = null;
 
 
+	public static final String DEFAULT_NICKNAME = "DEFAULT_NICKNAME";
+
+	public static final String DEFAULT_PHONENUMBER = "DEFAULT_PHONENUMBER";
+	
 
 	}

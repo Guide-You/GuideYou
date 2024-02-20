@@ -42,6 +42,18 @@ public class UserController {
 	public String loginPage() {
 		return "user/test_signIn";
 	}
+	
+	/**
+	  * @Method Name : userInfoDetail
+	  * @작성일 : 2024. 2. 20.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자정보 변경 페이지 요청
+	  */
+	@GetMapping("/userInfoDetail")
+	public String userInfoDetail() {
+		return "user/test_userInfoDetail";
+	}
 
 	/**
 	 * @Method Name : signUpProc
@@ -51,8 +63,8 @@ public class UserController {
 	 * @Method 설명 : 사용자 회원가입 처리
 	 * @param signUpDTO
 	 */
-	public int signUpProc(SignUpDTO signUpDTO) {
-		return userService.signUpProc(signUpDTO);
+	public void signUpProc(SignUpDTO signUpDTO) {
+		userService.signUpProc(signUpDTO);
 	}
 
 	/**
@@ -81,12 +93,16 @@ public class UserController {
 	 */
 	@GetMapping("/login/oauth2/code/naver")
 	public String signInProcByNaver(@RequestParam String code, @RequestParam String state) {
-		User naverUser = userService.signInProcByNaver(code, state);
+		SignUpDTO naverUser = userService.signInProcByNaver(code, state);
 
-		/*  todo  첫 가입자면 작성하는 화면 요청 
-		 * if(result == 1) { comment 작성하는 화면 호출 }
-		 * else {메인화면 호출}
-		 */
+		User user = userService.readUserByNameAndPhone(naverUser.getName(), naverUser.getPhone());
+		if (user == null) {
+			// 회원가입
+			signUpProc(naverUser);
+			User newUser = userService.readUserByNameAndPhone(naverUser.getName(), naverUser.getPhone());
+			httpSession.setAttribute(Define.PRINCIPAL, newUser);
+			return "redirect:/userInfoDetail";
+		}
 		httpSession.setAttribute(Define.PRINCIPAL, naverUser);
 		return "redirect:/signIn";
 	}
@@ -113,8 +129,19 @@ public class UserController {
 	  */
 	@GetMapping("/login/oauth2/code/kakao")
 	public String signInProcByKakao (@RequestParam String code) {
-		User kakaoUser = userService.signInProcByKakao(code, null);
-		httpSession.setAttribute(Define.PRINCIPAL, kakaoUser);
+		SignUpDTO kakaoUser = userService.signInProcByKakao(code, null);
+		
+		User user = userService.readUserByNameAndPhone(kakaoUser.getName(), kakaoUser.getPhone());
+		if (user == null) {
+			// 회원가입
+			signUpProc(kakaoUser);
+			User newUser = userService.readUserByNameAndPhone(kakaoUser.getName(), kakaoUser.getPhone());
+			httpSession.setAttribute(Define.PRINCIPAL, newUser);
+			return "redirect:/userInfoDetail";
+		}
+		
+		
+		httpSession.setAttribute(Define.PRINCIPAL, user);
 		return "redirect:/signIn";
 	}
 	
@@ -140,9 +167,23 @@ public class UserController {
 	  * @Method 설명 : 구글 로그인 처리
 	  */
 	@GetMapping("/login/oauth2/code/google")
-	@ResponseBody
 	public String signInProcByGoogle(@RequestParam String code) {
-		String result = userService.signInProcByGoogle(code);
-		return result;
+		SignUpDTO googleUser = userService.signInProcByGoogle(code);
+		
+		User user = userService.readUserByNameAndPhone(googleUser.getName(), googleUser.getPhone());
+		if(user == null) {
+			// 구글은 전화번호가 필수가 아니므로 이메일로 한번 더 확인
+			user = userService.readUserByNameAndEmail(googleUser.getName(), googleUser.getEmail());
+			if (user == null) {
+				// 회원가입
+				signUpProc(googleUser);
+				User newUser = userService.readUserByNameAndPhone(googleUser.getName(), googleUser.getPhone());
+				httpSession.setAttribute(Define.PRINCIPAL, googleUser);
+				return "redirect:/userInfoDetail";
+			}
+		}
+		
+		httpSession.setAttribute(Define.PRINCIPAL, googleUser);
+		return "redirect:/signIn";
 	}
 }
