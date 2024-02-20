@@ -97,8 +97,9 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 	
-	public List<ProductPhotos> readPhoto() {
-		return photosRepository.findAll();
+	public ProductPhotos readPhoto(Integer ProductId) {
+		
+		return photosRepository.findPhoto(ProductId);
 	}
 	
 	
@@ -108,8 +109,8 @@ public class ProductService {
 	}
 		          
 	// 사진 한 장 찾기
-	public List<ProductPhotos> findPhoto(Integer ProductId) {
-		return photosRepository.findPhoto(ProductId);		
+	public List<ProductPhotos> readRepresentativePhoto() {
+	    return photosRepository.findRepresentativePhotos();
 	}
     
 	public List<ProductPhotos> findFileName(Integer productId) {		
@@ -119,33 +120,50 @@ public class ProductService {
 	
 	// 검색
 	@Transactional
-	public List<Product> selectByTitle(String keyword) {
+	public List<Product> search(String keyword) {
+			
+		List<Product> productList = productRepository.findByTitleContaining(keyword);
 		
-		List<Product> list = productRepository.selectByTitle(keyword);
-		return list;
+		return productList;
 		
 	}
 	
 	
+	// 상품 삭제
 	@Transactional
 	public void deleteProduct(Integer id) {
 		productRepository.deletById(id);
 	}
 	
+	
+	// 사진 삭제
 	@Transactional
 	public void deletePhotos(Integer productId) {
 		photosRepository.deleteByPhoto(productId);
 	}
 	
+	// 상품 정보 업데이트
 	@Transactional
 	public void updateProduct(Integer id, ProductSaveFormDto dto) {
 		Product product = Product.builder()
+				.id(id)
 				.cityCodeId(dto.getCityCodeId())
 				.title(dto.getTitle())
 				.price(dto.getPrice())
 				.content(dto.getContent())
 				.build();
 		productRepository.updateById(product);
+	}
+	
+	@Transactional
+	public void updatePhoto(Integer id, ProductSaveFormDto dto) {
+		ProductPhotos photos = ProductPhotos.builder()
+				.id(id)
+				.productPhotoPath(dto.getProductPhotoPath())
+				.originFileName(dto.getOriginFileName())
+				.uploadFileName(dto.getUploadFileName())
+				.build();
+		photosRepository.updateById(photos);
 	}
 	
 	

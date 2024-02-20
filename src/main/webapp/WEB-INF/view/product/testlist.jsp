@@ -20,34 +20,35 @@
 <body>
 	<header>
 		<!-- 검색 창 -->
-		<form action="/select" method="post">
-			<input type="text" name="title" placeholder="검색어를 입력하세요">
-			<button type="submit">검색</button>
+		<form name="search-form" action="/select" method="post"
+			autocomplete="off">
+			<input type="text" name="keyword" placeholder="검색어를 입력하세요"></input> <input
+				type="button" onclick="getSearchList()"
+				class="btn btn-outline-primary mr-2" value="검색"></input>
 		</form>
 	</header>
 	<main>
 		<c:forEach items="${product}" var="prod">
-		<c:forEach items="${photos}" var="pho">
-			<div class="card" style="width: 18rem;">
-				<img src="/images/upload/${pho.uploadFileName}" class="card-img-top" >								
-				<div class="card-body">
-					<p class="card-title">제목 : ${prod.title}</p>
-					<p class="card-text">${prod.content}</p>
+				<div class="card" style="width: 18rem;">
+					<img src="/images/upload/${uploadFileName}"
+						class="card-img-top">
+					<div class="card-body">
+						<p class="card-title">제목 : ${prod.title}</p>
+						<p class="card-text">${prod.content}</p>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">가격 : ${prod.price}</li>
+					</ul>
+					<div class="d-flex">
+						<form action="/delete/${prod.id}" method="post">
+							<button class="btn btn-danger">삭제</button>
+						</form>
+						<form action="/update/${prod.id}" method="get">
+							<button class="btn btn-warning updateBtn">수정</button>
+							<input type="hidden" name="productId" value="${prod.id}">
+						</form>
+					</div>
 				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">가격 : ${prod.price}</li>					
-				</ul>
-				<div class="d-flex">
-                    <form action="/delete/${prod.id}" method="post">
-                        <button class="btn btn-danger">삭제</button>
-                    </form>
-                    <form action="/update/${prod.id}" method="get">
-                        <button class="btn btn-warning updateBtn">수정</button>
-                        <input type="hidden" name="productId" value="${prod.id}">
-                    </form>
-                </div>
-			</div>
-		</c:forEach>
 		</c:forEach>
 	</main>
 </body>

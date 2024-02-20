@@ -6,7 +6,12 @@
 		insert into product(city_code_id, title, price, content)
 		values (#{cityCodeId}, #{title}, #{price}, #{content})
 	</insert>
-
+	
+	<update id="updateById">
+		update product set city_code_id = #{cityCodeId}, title = #{title},
+		price = #{price}, content = #{content} where id = #{id}
+	</update>
+	
 	<update id="updateBySoldCount">
 		update product set sold_count = #{soldCount} where id = #{id}
 	</update>

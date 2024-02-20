@@ -28,7 +28,7 @@
 		select * from product_photos
 	</select>
 	
-	<select id="findPhoto" resultType="com.guideyou.repository.entity.ProductPhotos">
+	<select id="findRepresentativePhotos" resultType="com.guideyou.repository.entity.ProductPhotos">
 		SELECT upload_file_name FROM product_photos WHERE product_id = #{productId} ORDER BY created_at DESC LIMIT 1
 	</select>
 	
