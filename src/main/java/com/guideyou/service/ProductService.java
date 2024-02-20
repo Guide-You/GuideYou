@@ -117,6 +117,15 @@ public class ProductService {
 			return list;					
 	}
 	
+	// 검색
+	@Transactional
+	public List<Product> selectByTitle(String keyword) {
+		
+		List<Product> list = productRepository.selectByTitle(keyword);
+		return list;
+		
+	}
+	
 	
 	@Transactional
 	public void deleteProduct(Integer id) {

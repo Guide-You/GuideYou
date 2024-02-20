@@ -32,8 +32,11 @@
 	</select>
 		
 	<select id="findAll" resultType="com.guideyou.repository.entity.Product">
-		select * from product;
+		select * from product
 	</select>
-		
+	
+	<select id="selectByTitle" resultType="com.guideyou.repository.entity.Product">
+		select * from product where title like CONCAT('%', #{title}, '%')
+	</select>	
 	
 </mapper>

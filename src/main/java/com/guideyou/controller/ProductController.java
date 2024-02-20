@@ -31,7 +31,7 @@ public class ProductController {
     // 상품 등록 페이지
     @GetMapping("/save")
     public String savePage() {
-        return "product/saveForm";
+        return "product/testsaveForm";
     }
 
     /**
@@ -69,7 +69,7 @@ public class ProductController {
    	
    	
    	
-       return "product/list";
+       return "product/testlist";
    }
    
    // 상품 상세 페이지
@@ -81,7 +81,7 @@ public class ProductController {
        Product product = productService.findByProductId(productId);
        model.addAttribute("product", product);
        
-       return "product/detail";
+       return "product/testdetail";
    }
    
    // 상품 수정 페이지
@@ -93,7 +93,7 @@ public class ProductController {
        Product product = productService.findByProductId(productId);
        model.addAttribute("product", product);
        
-       return "product/update";
+       return "product/testupdate";
    }
    
    // 상품 수정 기능
@@ -112,4 +112,16 @@ public class ProductController {
    	productService.deletePhotos(productId);
        return "redirect:/list";
    }
+   
+   // 상품 검색 기능
+   @PostMapping("/select")
+   public String selectByTitle(@RequestParam("title") String title) {
+	   productService.selectByTitle(title);
+	   
+	   return "redirect:/list";
+	   
+   }
+   
+   
+   
 }
