@@ -93,7 +93,7 @@
       </div>
       <div class="container px-0">
         <nav class="navbar navbar-light bg-white navbar-expand-xl">
-          <a href="index.html" class="navbar-brand">
+          <a href="/main" class="navbar-brand">
             <h1 class="text-primary display-6">GUIDE YOU</h1>
           </a>
           <button
