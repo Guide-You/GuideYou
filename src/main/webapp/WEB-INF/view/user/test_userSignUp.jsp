@@ -32,7 +32,7 @@
                 </form>
                 <div class="social-media">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-block create--account" onclick="validateProfile()">회원가입</button>
+                    <button type="submit" class="btn btn-block create--account" onclick="validateSignUpProfile()">회원가입</button>
                 </div>
                 </div>
             </div>

@@ -11,6 +11,7 @@ function validateSignUpProfile() {
 		alert("휴대폰 번호는 필수 입력 사항입니다.");
 		return false;
 	}
+	
 	alert("회원가입되었습니다");
 	// 다른 필요한 검증 로직이 있다면 여기에 추가
 	return true;
