@@ -1,13 +1,49 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
- ¿©±â´Â »ç¿ëÀÚ Á¤º¸ ¼öÁ¤ »ó¼¼ ÆäÀÌÁö ÀÔ´Ï´Ù.
- ÀÌ ÆäÀÌÁö´Â È¸¿ø°¡ÀÔ ÇÑ »ç¶÷ÀÌ µé¾î°©´Ï´Ù.
-</body>
-</html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<!-- header -->
+<%@ include file="/WEB-INF/view/layout/header.jsp"%>
+                
+          <!-- Profile Start -->
+          <div class="col-md-12 col-lg-6 col-xl-9">
+            <div class="container profile--main">
+              <div class="registration-form profile--form">
+                <form action="/testUser1" method="get">
+                    <div class="form-icon">
+                        <span><i class="icon icon-user"></i></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-control item" id="username">
+                        	${principal.name}
+                        </div> 
+                        <input type="text" class="form-control item" id="nickname" placeholder="ë‹‰ë„¤ì„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”"
+                         value="${not empty principal.nickname ? principal.nickname : ''}">
+                        <div class="form-control item" id="email">
+                        	${principal.email}
+                        </div>
+                        <input type="text" class="form-control item" id="phone" placeholder="íœ´ëŒ€í° ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”"
+                         value="${not empty principal.phone && principal.phone ne 'DEFAULT_PHONENUMBER' ? principal.phone : ''}">
+                    </div>
+                    <hr>
+                    <h4>ì†Œê°œ</h4>
+                    <div class="form-group">
+                      <input type="text" class="form-control item" id="profile--intro" placeholder="ì†Œê°œê¸€">
+                  </div>
+                </form>
+                <div class="social-media">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block create--account" onclick="validateProfile()">íšŒì›ê°€ì…</button>
+                </div>
+                </div>
+            </div>
+            </div>
+          </div>
+          <!-- Profile End -->
+        </div>
+      </div>
+    </div>
+      <!--  Page End -->
+      
+      
+<!-- footer -->
+<%@ include file="/WEB-INF/view/layout/footer.jsp"%>

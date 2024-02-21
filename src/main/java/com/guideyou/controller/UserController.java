@@ -3,7 +3,6 @@ package com.guideyou.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -30,6 +29,28 @@ public class UserController {
 
 	@Autowired
 	private HttpSession httpSession;
+	
+	/* ------------------------------------------------------------------------------------*/	
+	/**
+	  * @Method Name : test
+	  * @작성일 : 2024. 2. 21.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : test중
+	  * @return
+	  */
+	@GetMapping("/testUser")
+	public String test() {
+		return "user/test_userSignUp";
+	}
+
+	@GetMapping("/testUser1")
+	@ResponseBody
+	public String test1() {
+		System.out.println("이거 탔지?");
+		return "main";
+	}
+/* ------------------------------------------------------------------------------------*/	
 
 	/**
 	 * @Method Name : loginPage
@@ -55,6 +76,7 @@ public class UserController {
 	public String userSignUpPage() {
 		return "user/test_userSignUp";
 	}
+
 
 	/**
 	 * @Method Name : signUpProc
@@ -93,7 +115,6 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/login/oauth2/code/naver")
-	@ResponseBody
 	public String signInProcByNaver(@RequestParam String code, @RequestParam String state) {
 		SignUpDTO naverUser = userService.signInProcByNaver(code, state);
 

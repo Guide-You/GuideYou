@@ -57,6 +57,7 @@
     <script src="/js/owlcarousel/owl.carousel.min.js"></script>
     <script src="/js/payment.js"></script> 
     <script src="/js/order.js"></script> 
+    <script src="/js/user.js"></script> 
 	
 	  </footer>
 	  <!-- Template Javascript -->
