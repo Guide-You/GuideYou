@@ -93,6 +93,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/login/oauth2/code/naver")
+	@ResponseBody
 	public String signInProcByNaver(@RequestParam String code, @RequestParam String state) {
 		SignUpDTO naverUser = userService.signInProcByNaver(code, state);
 
@@ -105,7 +106,7 @@ public class UserController {
 			return "redirect:/userInfoDetail";
 		}
 		httpSession.setAttribute(Define.PRINCIPAL, naverUser);
-		return "redirect:/signIn";
+		return "redirect:/Test";
 	}
 	
 	/**

@@ -43,7 +43,3 @@
       
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-  </body>
-
-	
-

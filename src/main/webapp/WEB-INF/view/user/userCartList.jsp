@@ -95,7 +95,3 @@
     
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
-
-  </body>
-
-  

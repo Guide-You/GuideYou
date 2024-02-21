@@ -39,13 +39,11 @@ public class PaymentController {
 	@PostMapping("/process-order")
 	private String processOrder(Model model, OrderDto orderDto) {
 		
-		model.addAttribute("orderDto", orderDto);
-		log.info("PaymentController order dto"+ orderDto);
+		model.addAttribute("order", orderDto);
 		
-		return "redirect:/payment";
+		return "/product/payment";
 
 	}
-	
 	  
 	   
 	   /**
@@ -58,8 +56,7 @@ public class PaymentController {
 	// TODO: photo 정보 추후 받아 올 예정(2024.02.21 경진) 
 	@GetMapping("/payment")
 	private String paymentPage() {
-	    // TODO: 상품 정보 및 결제 관련 데이터를 모델에 추가하여 결제 페이지로 전달합니다.
-	    // 결제 페이지로 이동
+		
 	    return "/product/payment";
 	}
 	
