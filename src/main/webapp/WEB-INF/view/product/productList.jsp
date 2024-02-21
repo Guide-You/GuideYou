@@ -4,7 +4,8 @@
 
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
 
 	<!-- Search Start -->
@@ -21,7 +22,7 @@
 		<div class="container py-5">
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img class="d-block w-100" src="img/banner1.png" alt="First slide" />
+					<img class="d-block w-100" src="/img/banner1.png" alt="First slide" />
 				</div>
 			</div>
 		</div>
@@ -35,76 +36,82 @@
 				<h1>어디가유?</h1>
 			</div>
 			<div>
-				<button class="city-button" id="seoulButton">
-					<img src="img/main-seoul.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('1')">
+					<img src="/img/main-seoul.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">서울</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-busan.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('2')">
+					<img src="/img/main-busan.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">부산</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-incheon.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('3')">
+					<img src="/img/main-incheon.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">인천</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-daegu.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('4')">
+					<img src="/img/main-daegu.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">대구</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-daejeon.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('5')">
+					<img src="/img/main-daejeon.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">대전</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-gwangju.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('6')">
+					<img src="/img/main-gwangju.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">광주</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-gyeonggi-do.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('7')">
+					<img src="/img/main-gyeonggi-do.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">경기도</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-chungcheong-do.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('8')">
+					<img src="/img/main-chungcheong-do.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">충청도</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-jeolla-do.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('9')">
+					<img src="/img/main-jeolla-do.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">전라도</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-gyeongsang-do.jpeg" class="city-image" />
+				<button class="city-button" onclick="showCity('1')">
+					<img src="/img/main-gyeongsang-do.jpeg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">경상도</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-gangwon-do.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('11')">
+					<img src="/img/main-gangwon-do.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">강원도</p>
 					</div>
 				</button>
-				<button class="city-button">
-					<img src="img/main-jeju.jpg" class="city-image" />
+				<button class="city-button" onclick="showCity('12')">
+					<img src="/img/main-jeju.jpg" class="city-image" />
 					<div class="city-info">
 						<p class="city-name">제주도</p>
+					</div>
+				</button>
+				<button class="city-button" onclick="showCity('13')">
+					<img src="/img/main-jeju.jpg" class="city-image" />
+					<div class="city-info">
+						<p class="city-name">기타</p>
 					</div>
 				</button>
 			</div>
@@ -128,7 +135,7 @@
 								<div class="col-lg-12">
 									<div class="row g-4">
 
-										<c:forEach items="${dto}" var="prod" varStatus="loop">
+										<c:forEach items="${productList}" var="prod" varStatus="loop">
 											<div class="col-md-6 col-lg-4 col-xl-3">
 												<div class="rounded position-relative fruite-item card"
 													id="card-${loop.index}">
@@ -137,9 +144,9 @@
 														<img src="/images/upload/${prod.uploadFileName}"
 															class="img-fluid w-100 rounded-top" />
 													</div>
-													<div 
+													<div
 														class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-														style="top: 10px; left: 10px">부산</div>
+														style="top: 10px; left: 10px;">${prod.cityCodeId}</div>
 													<div
 														class="p-4 border border-secondary border-top-0 rounded-bottom"
 														style="max-height: 300px; overflow: hidden;">
@@ -162,15 +169,37 @@
 											</div>
 										</c:forEach>
 
-										<div class="col-12">
-											<div class="pagination d-flex justify-content-center mt-5">
-												<a href="#" class="rounded">&laquo;</a> <a href="#"
-													class="active rounded">1</a> <a href="#" class="rounded">2</a>
-												<a href="#" class="rounded">3</a> <a href="#"
-													class="rounded">4</a> <a href="#" class="rounded">5</a> <a
-													href="#" class="rounded">6</a> <a href="#" class="rounded">&raquo;</a>
-											</div>
-										</div>
+
+
+
+
+
+										<!-- 페이징 처리 -->
+                <div class="pagination justify-content-center mb-5">
+                    <c:if test="${page > 1}">
+                        <a href="?page=1&size=${size}">&laquo; 첫 페이지</a>
+                        <a href="?page=${page - 1}&size=${size}">&laquo; 이전</a>
+                    </c:if>
+                    <c:forEach begin="${startPage}" end="${endPage}" var="i">
+                        <c:choose>
+                            <c:when test="${i eq page}">
+                                <a href="?page=${i}&size=${size}" class="active">${i}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="?page=${i}&size=${size}">${i}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${page < totalPages}">
+                        <a href="?page=${page + 1}&size=${size}">다음 &raquo;</a>
+                        <a href="?page=${totalPages}&size=${size}">마지막 페이지 &raquo;</a>
+                    </c:if>
+                </div>
+
+
+
+
+
 									</div>
 								</div>
 							</div>
@@ -181,7 +210,6 @@
 		</div>
 	</div>
 </body>
-
 
 
 

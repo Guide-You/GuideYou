@@ -6,12 +6,15 @@ import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.guideyou.dto.PageReq;
+import com.guideyou.dto.PageRes;
 import com.guideyou.dto.ProductSaveFormDto;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.ProductPhotos;
@@ -19,12 +22,7 @@ import com.guideyou.repository.interfaces.ProductPhotosRepository;
 import com.guideyou.repository.interfaces.ProductRepository;
 import com.guideyou.utils.Define;
 
-/**
- * 
- */
-/**
- * 
- */
+
 @Service
 public class ProductService {
 
@@ -132,8 +130,10 @@ public class ProductService {
 	}
 	
 	
-	
-	
+	// citycode로 인한 출력
+	public List<ProductSaveFormDto> getProductsByCityCode(String cityCode) {
+        return productRepository.findProductsByCityCode(cityCode);
+    }
 	
 	
 	
@@ -160,12 +160,14 @@ public class ProductService {
 	}
 		          
 	// 해당 상품 이미지 전부 찾기
-	public List<ProductPhotos> findAllByProductId(Integer productId) {
+	public List<ProductSaveFormDto> findAllByProductId(Integer productId) {
 	    return photosRepository.findAllByProductId(productId);
 	}
     
-	public List<ProductPhotos> findFileName(Integer productId) {		
-		List<ProductPhotos> list = photosRepository.findAllByProductId(productId);		
+	
+	
+	public List<ProductSaveFormDto> findFileName(Integer productId) {		
+		List<ProductSaveFormDto> list = photosRepository.findAllByProductId(productId);		
 			return list;					
 	}
 	
@@ -229,19 +231,68 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public void updatePhoto(Integer id, ProductSaveFormDto dto) {
-		ProductPhotos photos = ProductPhotos.builder()
-				.id(id)
-				.productPhotoPath(dto.getProductPhotoPath())
-				.originFileName(dto.getOriginFileName())
-				.uploadFileName(dto.getUploadFileName())
-				.build();
-		photosRepository.updateById(photos);
+	public Boolean updatePhoto(Integer id, ProductSaveFormDto dto) {
+		
+		MultipartFile[] files = dto.getCustomFile();
+		for (int i = 0; i < files.length; i++) {
+			String filename = files[i].getOriginalFilename();
+			String path = Define.UPLOAD_FILE_DERECTORY;
+			String ext = StringUtils.getFilenameExtension(filename);
+
+			LocalDateTime now = LocalDateTime.now();
+			String uploadFileName = "P" + now.getYear() + now.getMonthValue() + now.getDayOfMonth() + now.getHour()
+					+ now.getMinute() + now.getSecond() + (int) (Math.random() * 100) + "." + ext;
+
+			try {
+				BufferedOutputStream bos = new BufferedOutputStream(
+						new FileOutputStream(new File(path + "/" + uploadFileName)));
+				bos.write(files[i].getBytes());
+				bos.close();
+
+				ProductPhotos photos = ProductPhotos.builder()
+						.productPhotoPath(dto.getProductPhotoPath())
+						.originFileName(dto.getOriginFileName())
+						.uploadFileName(dto.getUploadFileName())
+						.build();
+				
+				int result = photosRepository.updateById(photos);
+				
+				if (result == 0) {
+					throw new Exception();
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+		}
+		return true;
+				
+		
 	}
 	
+	// 페이징 처리 - 총 제품 수 조회
+	public int getTotalProductCount() {
+		return productRepository.getTotalCount();
+	}
 	
-	
-	
+	// 페이징 된 제품 목록 조회
+	public PageRes<Product> getProductUsingPage(PageReq pageReq) {
+		int page = pageReq.getPage();
+        int size = pageReq.getSize();
+        int offset = (page - 1) * size; // 오프셋 계산
+
+        // 총 데이터 개수 조회
+        long totalElements = productRepository.getTotalCount();
+
+        // 페이징 처리된 유저 목록 조회
+        List<Product> ads = productRepository.findAllwithPasing(offset, size);
+
+        // 페이징 결과 객체 생성
+        PageRes<Product> pageRes = new PageRes<>(ads, page, totalElements, size);
+
+        return pageRes;
+	}
 	
 	
 	

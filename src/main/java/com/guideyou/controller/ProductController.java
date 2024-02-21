@@ -1,6 +1,5 @@
 package com.guideyou.controller;
 
-import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.guideyou.dto.PageReq;
+import com.guideyou.dto.PageRes;
 import com.guideyou.dto.ProductSaveFormDto;
 import com.guideyou.repository.entity.Product;
-import com.guideyou.repository.entity.ProductPhotos;
 import com.guideyou.service.ProductService;
 
 import jakarta.servlet.http.HttpSession;
@@ -61,8 +60,9 @@ public class ProductController {
        
    // 상품 목록 페이지 
    @GetMapping("/list")
-   public String productList(Model model, Integer productId) {    	
-   	  	
+   public String productList(Model model) {    	
+   	
+	   
 	List<ProductSaveFormDto> dto = productService.selectPhotoList();
 	model.addAttribute("dto", dto);
 	
@@ -78,8 +78,8 @@ public class ProductController {
    // 상품 상세 페이지
    @GetMapping("/detail/{productId}")
    public String productDetail(@PathVariable("productId") Integer productId, Model model) {
-       List<ProductPhotos> findName = productService.findFileName(productId);    	
-       model.addAttribute("findName", findName);
+//       List<ProductSaveFormDto> photos = productService.findAllByProductId(productId);    	
+//       model.addAttribute("photos", photos);
        
        Product product = productService.findByProductId(productId);
        model.addAttribute("product", product);
@@ -91,7 +91,7 @@ public class ProductController {
    @GetMapping("/update/{productId}")
    public String productUpdatePage(@PathVariable("productId") Integer productId, Model model) {
 	   
-	   List<ProductPhotos> photoResult = productService.findAllByProductId(productId);
+	   List<ProductSaveFormDto> photoResult = productService.findAllByProductId(productId);
 	   model.addAttribute("photoResult", photoResult);
 	   
 //	   List<ProductPhotos> findName = productService.findFileName(productId);    	
@@ -104,18 +104,17 @@ public class ProductController {
    }
    
    // 상품 수정 기능
+   // TODO : 24.02.21 이미지 삭제 미구현
    @PostMapping("/update/{productId}")
    public String updateProduct(@PathVariable("productId") Integer productId, ProductSaveFormDto dto, @RequestParam("region") Integer cityCodeId, @RequestParam("removeImgs") String removeImgs) {
    	
   	dto.setCityCodeId(cityCodeId);
   	
-  	if (!removeImgs.equals("")) {
-  		productService.deleteMutiPhoto(productId, removeImgs);
-  	}
   	
    	productService.updateProduct(productId, dto);
+   	productService.updatePhoto(productId, dto);
    	
-    productService.insertPhoto(dto, productId);
+//    productService.insertPhoto(dto, productId);
 	
    	
    	
@@ -141,7 +140,30 @@ public class ProductController {
    }
    
    
-   
+   @GetMapping("/list/pagsing")
+   public String getAllProduct(PageReq pageReq, Model model) {
+	   if (pageReq.getPage() <= 0) {
+		   pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
+	   }
+	   
+	   if (pageReq.getSize() <= 0) {
+		   pageReq.setSize(5); // 페이지 당 보여줄 개수
+	   }
+	   
+	   PageRes<Product> pageRes = productService.getProductUsingPage(pageReq); // 페이징 처리함
+	   List<Product> list = pageRes.getContent(); // 내용을 보여줄거다
+	   
+	   // 페이징 정보를 모델에 추가
+	   model.addAttribute("productList", list);
+	   model.addAttribute("page", pageReq.getPage());
+       model.addAttribute("size", pageRes.getSize());
+       model.addAttribute("totalPages", pageRes.getTotalPages());
+       model.addAttribute("startPage", pageRes.getStartPage());
+       model.addAttribute("endPage", pageRes.getEndPage());
+       
+       return "product/productList";
+
+   }
    
    
    

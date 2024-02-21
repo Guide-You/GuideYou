@@ -20,7 +20,7 @@
         
         <!-- 지역 선택 콤보박스 -->
         <label for="region"></label><br>
-        <select id="region" name="region">
+        <select id="region" name="region" onchange="displaySelectedRegion()">
             <option value="1">서울</option>
             <option value="2">부산</option>
             <option value="3">인천</option>
