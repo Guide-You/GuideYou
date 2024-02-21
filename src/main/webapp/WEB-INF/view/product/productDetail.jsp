@@ -5,8 +5,6 @@
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
-
-  <body  style="margin-top: 10%;">
     <!-- Search Start -->
       <section class="sc-a37b6b4d-0 iVnkhP">
         <div class="sc-a37b6b4d-1 bBhtyX">
@@ -78,9 +76,21 @@
     </div>
     <!-- Purchase detail End -->
 
+
+	<!-- Request Info to Server -->
+	<form id="send--detail--form">
+		<input type="hidden" name ="productId" id="product--id" value="${product.id}">
+			<!-- 추후 photo 정보 받아오기 -->
+		<input type="hidden" name ="productTitle" id="product--title" value="${product.title}">
+			<!-- 추후 user nickname으로 변경 -->
+		<input type="hidden" name ="productSeller" id="product--seller" value="${product.userId}">
+		<input type="hidden" name ="productPrice" id="product--price" value="${product.price}">
+	</form>
+	
+	
     <!-- Plan Selling Button Start -->
     <div class="container plan--selling--button">
-      <button >일정 구매하러 가유 😘</button>
+      <button type="button" id="order--button" >일정 구매하러 가유 😘</button>
     </div>
     <!-- Plan Selling Button End -->
 
@@ -268,10 +278,13 @@
     </section>
   </div>
     <!-- review Section End -->
-  </body>
-
-
-<!-- footer -->
-<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-
+    
+	    
+	<!-- footer -->
+	<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
+        
+        
+        
+        
+        
   

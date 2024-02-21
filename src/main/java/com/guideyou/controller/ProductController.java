@@ -103,6 +103,7 @@ public class ProductController {
        return "product/testupdate";
    }
    
+   // TODO: [front]수정 버튼 현재 detail 페이지에 있음 추후 member upload list 페이지로 옮길 예정 (2024.02.21)
    // 상품 수정 기능
    // TODO : 24.02.21 이미지 삭제 미구현
    @PostMapping("/update/{productId}")
@@ -121,6 +122,7 @@ public class ProductController {
    	return "redirect:/list";
    }
    
+   // TODO: [front]삭제 버튼 현재 detail 페이지에 있음 추후 member upload list 페이지로 옮길 예정 (2024.02.21)
    // 상품 삭제 기능
    @PostMapping("/delete/{productId}")
    public String deleteProduct(@PathVariable("productId") Integer productId) {
@@ -179,86 +181,67 @@ public class ProductController {
    
    
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-    
-   
-   
-   
-   
-   
   
    
-	   /**
-	  * @Method Name : paymentPage
-	  * @작성일 : 2024. 2. 20.
-	  * @작성자 : 박경진
-	  * @변경이력 : 
-	  * @Method 설명 :
-	  */
-	@GetMapping("/payment")
-	private String paymentPage() {
-		
-		return "/product/productPayment";	
-	
-	}
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+
+    
+   
    
    
 }

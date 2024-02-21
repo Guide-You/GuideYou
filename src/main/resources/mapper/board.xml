@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guideyou.repository.interfaces.admin.BoardRepository">
+
+	<insert id="insert" parameterType="com.guideyou.dto.admin.BoardDto">
+		insert into board_contents (type, writer, title,
+		content) values (#{type}, #{writer},
+		#{title}, #{content})
+	</insert>
+	
+</mapper>

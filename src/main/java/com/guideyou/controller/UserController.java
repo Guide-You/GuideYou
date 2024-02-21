@@ -3,6 +3,7 @@ package com.guideyou.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -44,15 +45,15 @@ public class UserController {
 	}
 	
 	/**
-	  * @Method Name : userInfoDetail
-	  * @작성일 : 2024. 2. 20.
+	  * @Method Name : userSignUpPage
+	  * @작성일 : 2024. 2. 21.
 	  * @작성자 : 최장호
 	  * @변경이력 : 
-	  * @Method 설명 : 사용자정보 변경 페이지 요청
+	  * @Method 설명 : 사용자 회원가입 페이지 요청
 	  */
-	@GetMapping("/userInfoDetail")
-	public String userInfoDetail() {
-		return "user/test_userInfoDetail";
+	@GetMapping("/userSignUp")
+	public String userSignUpPage() {
+		return "user/test_userSignUp";
 	}
 
 	/**
@@ -92,6 +93,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/login/oauth2/code/naver")
+	@ResponseBody
 	public String signInProcByNaver(@RequestParam String code, @RequestParam String state) {
 		SignUpDTO naverUser = userService.signInProcByNaver(code, state);
 
@@ -101,10 +103,11 @@ public class UserController {
 			signUpProc(naverUser);
 			User newUser = userService.readUserByNameAndPhone(naverUser.getName(), naverUser.getPhone());
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
-			return "redirect:/userInfoDetail";
+			return "redirect:/userSignUp";
 		}
 		httpSession.setAttribute(Define.PRINCIPAL, naverUser);
-		return "redirect:/signIn";
+
+		return "main";
 	}
 	
 	/**
@@ -137,12 +140,12 @@ public class UserController {
 			signUpProc(kakaoUser);
 			User newUser = userService.readUserByNameAndPhone(kakaoUser.getName(), kakaoUser.getPhone());
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
-			return "redirect:/userInfoDetail";
+			return "redirect:/userSignUp";
 		}
 		
 		
 		httpSession.setAttribute(Define.PRINCIPAL, user);
-		return "redirect:/signIn";
+		return "main";
 	}
 	
 	
@@ -179,11 +182,11 @@ public class UserController {
 				signUpProc(googleUser);
 				User newUser = userService.readUserByNameAndPhone(googleUser.getName(), googleUser.getPhone());
 				httpSession.setAttribute(Define.PRINCIPAL, googleUser);
-				return "redirect:/userInfoDetail";
+				return "redirect:/userSignUp";
 			}
 		}
 		
 		httpSession.setAttribute(Define.PRINCIPAL, googleUser);
-		return "redirect:/signIn";
+		return "main";
 	}
 }

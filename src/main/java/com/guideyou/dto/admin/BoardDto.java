@@ -1,6 +1,9 @@
 package com.guideyou.dto.admin;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import lombok.Data;
 /**
   * @FileName : BoardDto.java
   * @Project : GuideYou
@@ -9,18 +12,13 @@ import java.sql.Timestamp;
   * @변경이력 :
   * @프로그램 설명 : 
   */
+@Data
 public class BoardDto {
 
-	int boardNo;
-	String writer;
-	String title;
-	String content;
-	int viewCount;
-	Timestamp createdAt;
-
-
-
-
-
+	private String type;
+	private String writer;
+	private String title;
+	private String content;
+	private Integer viewCount;
 
 }

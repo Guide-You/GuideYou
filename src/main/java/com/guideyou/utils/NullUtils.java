@@ -45,4 +45,15 @@ public class NullUtils {
         return list == null || list.isEmpty();
     }
 	
+    /**
+      * @Method Name : isNullOrEmpty
+      * @작성일 : 2024. 2. 21.
+      * @작성자 : 최장호
+      * @변경이력 : 
+      * @Method 설명 : String 값 null 또는 빈값이면 true
+      * todo : 
+      */
+    public static boolean isNull(String str) {
+        return str == null || str.isEmpty();
+    }
 }

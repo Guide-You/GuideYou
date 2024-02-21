@@ -7,7 +7,6 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
-
 	<!-- Search Start -->
 	<section class="sc-a37b6b4d-0 iVnkhP">
 		<div class="sc-a37b6b4d-1 bBhtyX">
@@ -210,7 +209,6 @@
 		</div>
 	</div>
 </body>
-
 
 
 <!-- footer -->

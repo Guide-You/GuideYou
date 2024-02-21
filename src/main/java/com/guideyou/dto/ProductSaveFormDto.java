@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import lombok.Data;
 
+// TODO: DTO명 수정 (2024.02.21 경진) - 확인자 : 명근 
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductSaveFormDto {
@@ -26,3 +27,5 @@ public class ProductSaveFormDto {
 	
 	private String keyword;
 }
+
+
