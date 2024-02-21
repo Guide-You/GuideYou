@@ -3,6 +3,7 @@ package com.guideyou.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -92,6 +93,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/login/oauth2/code/naver")
+	@ResponseBody
 	public String signInProcByNaver(@RequestParam String code, @RequestParam String state) {
 		SignUpDTO naverUser = userService.signInProcByNaver(code, state);
 
@@ -104,6 +106,7 @@ public class UserController {
 			return "redirect:/userInfoDetail";
 		}
 		httpSession.setAttribute(Define.PRINCIPAL, naverUser);
+
 		return "main";
 	}
 	

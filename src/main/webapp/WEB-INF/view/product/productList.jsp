@@ -5,8 +5,6 @@
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
-<body>
-
 	<!-- Search Start -->
 	<section class="sc-a37b6b4d-0 iVnkhP">
 		<div class="sc-a37b6b4d-1 bBhtyX">
@@ -180,10 +178,8 @@
 			</div>
 		</div>
 	</div>
-</body>
-
-
-
+	
+	
 
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
