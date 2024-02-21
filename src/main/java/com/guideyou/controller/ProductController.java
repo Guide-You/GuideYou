@@ -60,8 +60,26 @@ public class ProductController {
        
    // 상품 목록 페이지 
    @GetMapping("/list")
-   public String productList(Model model) {    	
-   	
+   public String productList(PageReq pageReq, Model model) {    	
+	   if (pageReq.getPage() <= 0) {
+		   pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
+	   }
+	   
+	   if (pageReq.getSize() <= 0) {
+		   pageReq.setSize(8); // 페이지 당 보여줄 개수
+	   }
+	   
+	   PageRes<Product> pageRes = productService.getProductUsingPage(pageReq); // 페이징 처리함
+	   List<Product> list = pageRes.getContent(); // 내용을 보여줄거다
+	   
+	   // 페이징 정보를 모델에 추가
+	   model.addAttribute("productList", list); // 프로젝트 마다 다른 코드
+	   // 공통 코드
+	   model.addAttribute("page", pageReq.getPage());
+       model.addAttribute("size", pageRes.getSize());
+       model.addAttribute("totalPages", pageRes.getTotalPages());
+       model.addAttribute("startPage", pageRes.getStartPage());
+       model.addAttribute("endPage", pageRes.getEndPage());
 	   
 	List<ProductSaveFormDto> dto = productService.selectPhotoList();
 	model.addAttribute("dto", dto);
@@ -149,7 +167,7 @@ public class ProductController {
 	   }
 	   
 	   if (pageReq.getSize() <= 0) {
-		   pageReq.setSize(5); // 페이지 당 보여줄 개수
+		   pageReq.setSize(8); // 페이지 당 보여줄 개수
 	   }
 	   
 	   PageRes<Product> pageRes = productService.getProductUsingPage(pageReq); // 페이징 처리함
