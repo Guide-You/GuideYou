@@ -168,8 +168,13 @@ public class UserService {
 		NaverProfileRespDTO profileResult = profileRespResult.getBody();
 
 		SignUpDTO signUpDTO = SignUpDTO.builder().name(profileResult.getResponse().getName())
-				.nickname(profileResult.getResponse().getNickname()).gender(profileResult.getResponse().getGender())
-				.email(profileResult.getResponse().getEmail()).phone(profileResult.getResponse().getMobile())
+				.nickname((profileResult.getResponse().getNickname() == null || profileResult.getResponse().getNickname().isEmpty()) ?
+						Define.DEFAULT_NICKNAME : profileResult.getResponse().getNickname())
+				.gender((profileResult.getResponse().getGender() == null || profileResult.getResponse().getGender().isEmpty()) ?
+						Define.DEFAULT_GENDER : profileResult.getResponse().getGender())
+				.email(profileResult.getResponse().getEmail())
+				.phone((profileResult.getResponse().getMobile() == null || profileResult.getResponse().getMobile().isEmpty()) ?
+						Define.DEFAULT_PHONENUMBER :profileResult.getResponse().getMobile())
 				.comment(null).build();
 		return signUpDTO;
 	}
@@ -231,9 +236,14 @@ public class UserService {
 
 		// 회원가입 DTO
 		SignUpDTO signUpDTO = SignUpDTO.builder().name(profileResult.getKakaoAccount().getName())
-				.nickname(profileResult.getProperties().getNickname())
-				.gender(profileResult.getKakaoAccount().getGender()).email(profileResult.getKakaoAccount().getEmail())
-				.phone(profileResult.transPhoneNumber()).comment(null).build();
+				.nickname((profileResult.getProperties().getNickname() == null || profileResult.getProperties().getNickname().isEmpty()) ?
+						Define.DEFAULT_NICKNAME : profileResult.getProperties().getNickname())
+				.gender((profileResult.getKakaoAccount() == null || profileResult.getKakaoAccount().getGender() == null) ? 
+						Define.DEFAULT_GENDER :profileResult.getKakaoAccount().getGender()
+						)
+				.email(profileResult.getKakaoAccount().getEmail())
+				.phone((profileResult.transPhoneNumber() == null || profileResult.transPhoneNumber().isEmpty())?
+						Define.DEFAULT_PHONENUMBER : profileResult.transPhoneNumber()).comment(null).build();
 
 		return signUpDTO;
 	}
@@ -308,7 +318,8 @@ public class UserService {
 		// 회원가입 DTO
 		SignUpDTO signUpDTO = SignUpDTO.builder().name(googleProfileRespDTO.getName())
 				.nickname(Define.DEFAULT_NICKNAME)
-				.gender(googlePersonRespDTO.getGenders().get(0).getValue())
+				.gender((googlePersonRespDTO.getGenders() == null) ?
+						Define.DEFAULT_GENDER : googlePersonRespDTO.getGenders().get(0).getValue())
 				.email(googleProfileRespDTO.getEmail())
 				// 전화번호가 없으면 Define.GOOGLE_PHONENUMBER로 세팅
 				.phone((googlePersonRespDTO.getPhoneNumbers() == null) ?
