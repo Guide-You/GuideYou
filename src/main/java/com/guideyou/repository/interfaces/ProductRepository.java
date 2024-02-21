@@ -3,6 +3,7 @@ package com.guideyou.repository.interfaces;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.guideyou.dto.ProductSaveFormDto;
 import com.guideyou.repository.entity.Product;
@@ -25,5 +26,13 @@ public interface ProductRepository {
 	
 	// 상품 대표 이미지 찾기
 	public List<Product> findProductsWithImages();
-
+	
+	// citycode로 페이지 출력
+	public List<ProductSaveFormDto> findProductsByCityCode(String cityCode);	
+	
+	// 페이징 처리
+	public List<Product> findAllwithPasing(@Param ("offset") int offset, @Param ("limit") int limit);
+	
+	public int getTotalCount();
+	
 }

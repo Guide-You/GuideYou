@@ -53,6 +53,21 @@
 	</select>
 	
 	
+	<!-- citycode로 인한 출력 -->
+	<select id="findProductsByCityCode" resultType="com.guideyou.repository.entity.Product">
+		SELECT p FROM Product p WHERE p.city_code_id = #{cityCodeId}
+	</select>
+	
+	<!-- 페이지 처리 -->
+	<select id="findAllwithPasing" resultType="com.guideyou.dto.ProductSaveFormDto">
+		select * from product p
+		left join product_photos ph on p.id = ph.product_id
+        limit #{limit} offset #{offset}	
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from product
+	</select>
 	
 	
 </mapper>

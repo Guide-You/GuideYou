@@ -23,17 +23,11 @@
     <!-- Title Image 확인 후 사이즈 변경 필요-->
     <div class="container py-5 product--title">
       <div id="carouselExample" class="carousel slide">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="img/banner1.png" class="d-block w-100" alt="..." />
-          </div>
-          <div class="carousel-item">
-            <img src="img/banner2.png" class="d-block w-100" alt="..." />
-          </div>
-          <div class="carousel-item">
-            <img src="img/banner3.png" class="d-block w-100" alt="..." />
-          </div>
-        </div>
+	        <div class="carousel-inner">
+	          <div class="carousel-item active">
+	            <img src="/images/upload/${dto.uploadFileName}" class="d-block w-100"/>
+	          </div>          
+	        </div>
         <button
           class="carousel-control-prev"
           type="button"
@@ -147,11 +141,12 @@
     <!-- Detail Image End -->
     
     <!-- Detail Image Start -->
-    <div class="container">
-      <div class="card content--card">
-        <img src="http://via.placeholder.com/1000" alt="" />
-      </div>
-       <div class="d-flex">
+	    <div class="container">
+	      <div class="card content--card">
+	        <img src="/images/upload/${dto.uploadFileName}"/>
+	      </div>       
+	    </div>
+    <div class="d-flex">
 			<form action="/delete/${product.id}" method="post">
 				<button class="btn btn-danger">삭제</button>
 			</form>
@@ -160,7 +155,6 @@
 				<input type="hidden" name="productId" value="${product.id}">
 			</form>
 		</div>
-    </div>
     <!-- Detail Image End -->
 
     <div class="container" style="margin-top: 4%">

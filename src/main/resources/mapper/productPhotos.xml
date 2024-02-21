@@ -17,11 +17,14 @@
 	</delete>
 	
 	<delete id="deleteMutiPhoto">
-		delete from product_photos where product_id = #{productId} 
-		and id in (#{id})
+		 delete from product_photos 
+	     where product_id = #{productId} in
+	     <foreach collection="ids" item="id" open="(" close=")" separator=",">
+		    #{id}
+	    </foreach>
 	</delete>	
 	
-	<select id="findAllByProductId" resultType="com.guideyou.repository.entity.ProductPhotos">
+	<select id="findAllByProductId" resultType="com.guideyou.dto.ProductSaveFormDto">
 		select * from product_photos where product_id = #{productId}
 	</select>
 	
@@ -41,6 +44,7 @@
 		SELECT p.*, pi.upload_file_name AS uploadFileName
 	    FROM product p
 	    LEFT JOIN product_photos pi ON p.id = pi.product_id
+	    GROUP BY p.id
 	    ORDER BY p.created_at DESC
 	</select>
 	
