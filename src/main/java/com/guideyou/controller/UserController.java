@@ -3,6 +3,7 @@ package com.guideyou.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -44,12 +45,32 @@ public class UserController {
 		return "user/test_userSignUp";
 	}
 
-	@GetMapping("/testUser1")
-	@ResponseBody
-	public String test1() {
-		System.out.println("이거 탔지?");
+	/**
+	  * @Method Name : signUpProc
+	  * @작성일 : 2024. 2. 21.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 회원가입 처리 메서드입니다.
+	  * @return
+	  */
+	@PostMapping("/signUp")
+	public String signUpProc() {
+		// TODO : 1.form에서 받아온 dto 만들기 2.db조회해서 user update하기.
 		return "main";
 	}
+	
+	/**
+	 * @Method Name : userSignUpPage
+	 * @작성일 : 2024. 2. 21.
+	 * @작성자 : 최장호
+	 * @변경이력 : 
+	 * @Method 설명 : 사용자 회원가입 페이지 요청
+	 */
+	@GetMapping("/userSignUp")
+	public String userSignUpPage() {
+		return "user/test_userSignUp";
+	}
+	
 /* ------------------------------------------------------------------------------------*/	
 
 	/**
@@ -65,17 +86,6 @@ public class UserController {
 		return "user/test_signIn";
 	}
 	
-	/**
-	  * @Method Name : userSignUpPage
-	  * @작성일 : 2024. 2. 21.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 사용자 회원가입 페이지 요청
-	  */
-	@GetMapping("/userSignUp")
-	public String userSignUpPage() {
-		return "user/test_userSignUp";
-	}
 
 
 	/**
