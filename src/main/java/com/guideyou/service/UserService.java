@@ -256,14 +256,12 @@ public class UserService {
 	 * @Method 설명 : 구글 로그인 요청 Url
 	 */
 	public String googleLoginUrl() {
-		String googleLoginUrl = String.format("%s?client_id=%s&redirect_uri=%s&response_type=code&scope=%s %s %s %s" , 
+		String googleLoginUrl = String.format("%s?client_id=%s&redirect_uri=%s&response_type=code&scope=%s %s" , 
 				googleConfig.getGoogleAuthorizationUri(),
 				googleConfig.getGoogleClientId(),
 				googleConfig.getGoogleRedirectUri(),
 				googleConfig.getGoogleScopeEmailUrl(),
-				googleConfig.getGoogleScopeProfileUrl(),
-				googleConfig.getGoogleScopeGenderUrl(),
-				googleConfig.getGoogleScopePhonenumbersUrl()
+				googleConfig.getGoogleScopeProfileUrl()
 				);
 		return googleLoginUrl;
 	}
@@ -318,12 +316,9 @@ public class UserService {
 		// 회원가입 DTO
 		SignUpDTO signUpDTO = SignUpDTO.builder().name(googleProfileRespDTO.getName())
 				.nickname(Define.DEFAULT_NICKNAME)
-				.gender((googlePersonRespDTO.getGenders() == null) ?
-						Define.DEFAULT_GENDER : googlePersonRespDTO.getGenders().get(0).getValue())
+				.gender(Define.DEFAULT_GENDER)
 				.email(googleProfileRespDTO.getEmail())
-				// 전화번호가 없으면 Define.GOOGLE_PHONENUMBER로 세팅
-				.phone((googlePersonRespDTO.getPhoneNumbers() == null) ?
-						Define.DEFAULT_PHONENUMBER : googlePersonRespDTO.getPhoneNumbers().get(0).getValue())
+				.phone(Define.DEFAULT_PHONENUMBER)
 				.comment(null).build();
 
 		// TODO : 이미지 불러오기 해야함 - 최장호 - 240220
