@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,6 +91,52 @@ public class ProductService {
 		}
 		return true;
 	}
+	
+	
+	@Transactional
+	public boolean insertPhoto(ProductSaveFormDto dto, Integer productId) {
+		MultipartFile[] files = dto.getCustomFile();
+		for (int i = 0; i < files.length; i++) {
+			String filename = files[i].getOriginalFilename();
+			String path = Define.UPLOAD_FILE_DERECTORY;
+			String ext = StringUtils.getFilenameExtension(filename);
+
+			LocalDateTime now = LocalDateTime.now();
+			String uploadFileName = "P" + now.getYear() + now.getMonthValue() + now.getDayOfMonth() + now.getHour()
+					+ now.getMinute() + now.getSecond() + (int) (Math.random() * 100) + "." + ext;
+
+			try {
+				BufferedOutputStream bos = new BufferedOutputStream(
+						new FileOutputStream(new File(path + "/" + uploadFileName)));
+				bos.write(files[i].getBytes());
+				bos.close();
+
+				ProductPhotos photos = new ProductPhotos();
+				photos.setProductId(productId);
+				photos.setProductPhotoPath(path);
+				photos.setOriginFileName(filename);
+				photos.setUploadFileName(uploadFileName);
+				
+				int result = photosRepository.insert(photos);
+				
+				if (result == 0) {
+					throw new Exception();
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+		}
+		return true;
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	public List<Product> readProduct() {
 		return productRepository.findAll();
@@ -103,14 +148,20 @@ public class ProductService {
 	}
 	
 	
+	// 상품에 해당하는 사진 한 장 찾기
+	public List<ProductSaveFormDto> selectPhotoList() {
+		return photosRepository.selectPhotoList(); 
+	}
+	
+	
 	public Product findByProductId(Integer id) {
 		return productRepository.findByProductId(id);
 				
 	}
 		          
-	// 사진 한 장 찾기
-	public List<ProductPhotos> readRepresentativePhoto() {
-	    return photosRepository.findRepresentativePhotos();
+	// 해당 상품 이미지 전부 찾기
+	public List<ProductPhotos> findAllByProductId(Integer productId) {
+	    return photosRepository.findAllByProductId(productId);
 	}
     
 	public List<ProductPhotos> findFileName(Integer productId) {		
@@ -135,8 +186,17 @@ public class ProductService {
 	}
 	
 	
-	
-	
+	// 이미지 부분 삭제
+	@Transactional
+	public int deleteMutiPhoto(Integer productId, String id) {
+		System.out.println("-----------------------------------");
+		System.out.println(productId);
+		System.out.println(id);
+		
+		String[] ids = id.split(",");
+		
+		return photosRepository.deleteMutiPhoto(productId, ids);
+	}
 	
 	
 	

@@ -29,7 +29,7 @@
 	<!-- City Photo End -->
 
 	<!-- Featurs Section Start -->
-	<div class="" >
+	<div class="">
 		<div class="container py-5">
 			<div class="col-lg-4 text-start">
 				<h1>어디가유?</h1>
@@ -119,7 +119,7 @@
 			<div class="tab-class text-center">
 				<div class="row g-4">
 					<div class="col-lg-4 text-start">
-						<h1>부산 가유</h1>
+						<h1>어디든 가유</h1>
 					</div>
 
 					<div class="tab-content">
@@ -128,21 +128,24 @@
 								<div class="col-lg-12">
 									<div class="row g-4">
 
-										<c:forEach items="${product}" var="prod" varStatus="loop">
+										<c:forEach items="${dto}" var="prod" varStatus="loop">
 											<div class="col-md-6 col-lg-4 col-xl-3">
-												<div class="rounded position-relative fruite-item card" id="card-${loop.index}">
+												<div class="rounded position-relative fruite-item card"
+													id="card-${loop.index}">
 													<!-- Your existing card content -->
 													<div class="fruite-img">
-														<img src="/images/upload/"
+														<img src="/images/upload/${prod.uploadFileName}"
 															class="img-fluid w-100 rounded-top" />
 													</div>
-													<div
+													<div 
 														class="text-white bg-secondary px-3 py-1 rounded position-absolute"
 														style="top: 10px; left: 10px">부산</div>
 													<div
 														class="p-4 border border-secondary border-top-0 rounded-bottom"
 														style="max-height: 300px; overflow: hidden;">
-														<h4>${prod.title}</h4>
+														<!-- Link added to the title -->
+														<a href="/detail/${prod.id}"><h4>${prod.title}</h4></a>
+														<!-- Assuming "id" is the unique identifier for each product -->
 														<!-- Adjusted prod.content -->
 														<p
 															style="font-size: 14px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">

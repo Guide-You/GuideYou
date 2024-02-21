@@ -58,7 +58,7 @@
 
       <div class="container title--title">
         <div class="col-lg-12">
-          <h1 class="mb-0">[부산] 현지인이 추천하는 맛도리 여행지</h1>
+          <h1 class="mb-0">${product.title}</h1>
         </div>
 
         <div class="col-lg-12 detail--title--info">
@@ -70,7 +70,7 @@
         </div>
         <div class="title--rate--price">
           <span class="title--rate"></span>
-          <span class="title--price">3,000원</span>
+          <span class="title--price">${product.price}</span>
         </div>
       </div>
     </div>
@@ -100,8 +100,7 @@
         <div class="card-body">
           <h5 class="card-title">❣️ 이런 상품이에요!</h5>
           <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            ${product.content}
           </p>
           <div class="space"></div>
           <h6 class="card-subtitle mb-2 text-body-secondary content--email">
@@ -142,6 +141,15 @@
       <div class="card content--card">
         <img src="http://via.placeholder.com/1000" alt="" />
       </div>
+       <div class="d-flex">
+			<form action="/delete/${product.id}" method="post">
+				<button class="btn btn-danger">삭제</button>
+			</form>
+			<form action="/update/${product.id}" method="get">
+				<button class="btn btn-warning updateBtn">수정</button>
+				<input type="hidden" name="productId" value="${product.id}">
+			</form>
+		</div>
     </div>
     <!-- Detail Image End -->
 
@@ -168,6 +176,7 @@
               height="150"
             />
           </div>
+                             
           <h5 class="mb-3">Maria Smantha</h5>
           <h6 class="text-primary mb-3">11h ago</h6>
           <p class="px-xl-3">

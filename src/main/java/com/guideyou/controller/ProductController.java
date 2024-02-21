@@ -1,5 +1,6 @@
 package com.guideyou.controller;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.guideyou.dto.ProductSaveFormDto;
 import com.guideyou.repository.entity.Product;
@@ -61,8 +63,12 @@ public class ProductController {
    @GetMapping("/list")
    public String productList(Model model, Integer productId) {    	
    	  	
-   	List<Product> product = productService.readProduct();
-   	model.addAttribute("product", product);   	
+	List<ProductSaveFormDto> dto = productService.selectPhotoList();
+	model.addAttribute("dto", dto);
+	
+	
+//   	List<Product> product = productService.readProduct();
+//   	model.addAttribute("product", product);   	
    	
    	
    	
@@ -84,8 +90,12 @@ public class ProductController {
    // 상품 수정 페이지
    @GetMapping("/update/{productId}")
    public String productUpdatePage(@PathVariable("productId") Integer productId, Model model) {
-   	List<ProductPhotos> findName = productService.findFileName(productId);    	
-       model.addAttribute("findName", findName);
+	   
+	   List<ProductPhotos> photoResult = productService.findAllByProductId(productId);
+	   model.addAttribute("photoResult", photoResult);
+	   
+//	   List<ProductPhotos> findName = productService.findFileName(productId);    	
+//     model.addAttribute("findName", findName);
        
        Product product = productService.findByProductId(productId);
        model.addAttribute("product", product);
@@ -95,9 +105,20 @@ public class ProductController {
    
    // 상품 수정 기능
    @PostMapping("/update/{productId}")
-   public String updateProduct(@PathVariable("productId") Integer productId, ProductSaveFormDto dto) {
+   public String updateProduct(@PathVariable("productId") Integer productId, ProductSaveFormDto dto, @RequestParam("region") Integer cityCodeId, @RequestParam("removeImgs") String removeImgs) {
    	
+  	dto.setCityCodeId(cityCodeId);
+  	
+  	if (!removeImgs.equals("")) {
+  		productService.deleteMutiPhoto(productId, removeImgs);
+  	}
+  	
    	productService.updateProduct(productId, dto);
+   	
+    productService.insertPhoto(dto, productId);
+	
+   	
+   	
    	return "redirect:/list";
    }
    

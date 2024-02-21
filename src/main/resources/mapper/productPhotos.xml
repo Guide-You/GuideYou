@@ -16,6 +16,11 @@
 		delete from product_photos where product_id = #{productId}
 	</delete>
 	
+	<delete id="deleteMutiPhoto">
+		delete from product_photos where product_id = #{productId} 
+		and id in (#{id})
+	</delete>	
+	
 	<select id="findAllByProductId" resultType="com.guideyou.repository.entity.ProductPhotos">
 		select * from product_photos where product_id = #{productId}
 	</select>
@@ -30,6 +35,13 @@
 	
 	<select id="findPhoto" resultType="com.guideyou.repository.entity.ProductPhotos">
 		SELECT upload_file_name FROM product_photos WHERE product_id = #{productId} ORDER BY created_at DESC LIMIT 1
+	</select>
+	
+	<select id="selectPhotoList" resultType="com.guideyou.dto.ProductSaveFormDto">
+		SELECT p.*, pi.upload_file_name AS uploadFileName
+	    FROM product p
+	    LEFT JOIN product_photos pi ON p.id = pi.product_id
+	    ORDER BY p.created_at DESC
 	</select>
 	
 </mapper>
