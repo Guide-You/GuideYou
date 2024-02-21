@@ -4,6 +4,10 @@
 	
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script>
+
 
     <!-- Search Start -->
       <section class="sc-a37b6b4d-0 iVnkhP">
@@ -25,27 +29,27 @@
       <div id="carouselExample" class="carousel slide">
 	        <div class="carousel-inner">
 	          <div class="carousel-item active">
-	            <img src="/images/upload/${dto.uploadFileName}" class="d-block w-100"/>
+	            <img src="/images/upload/${prod.uploadFileName}" class="d-block w-100"/>
 	          </div>          
 	        </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExample"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExample"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+<!--         <button -->
+<!--           class="carousel-control-prev" -->
+<!--           type="button" -->
+<!--           data-bs-target="#carouselExample" -->
+<!--           data-bs-slide="prev" -->
+<!--         > -->
+<!--           <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+<!--           <span class="visually-hidden">Previous</span> -->
+<!--         </button> -->
+<!--         <button -->
+<!--           class="carousel-control-next" -->
+<!--           type="button" -->
+<!--           data-bs-target="#carouselExample" -->
+<!--           data-bs-slide="next" -->
+<!--         > -->
+<!--           <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+<!--           <span class="visually-hidden">Next</span> -->
+<!--         </button> -->
       </div>
 
       <div class="container title--title">
@@ -278,7 +282,21 @@
     </section>
   </div>
     <!-- review Section End -->
-    
+<script>
+$(document).ready(function(){
+	$('.carousel-item').bxSlider({
+		auto: true,
+		speed: 500,
+		pause: 4000,
+		mode:'fade',
+		autoControls: true,
+		pager:true,
+	});
+});
+
+
+
+</script>
 	    
 	<!-- footer -->
 	<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
