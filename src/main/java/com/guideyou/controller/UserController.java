@@ -106,7 +106,8 @@ public class UserController {
 			return "redirect:/userInfoDetail";
 		}
 		httpSession.setAttribute(Define.PRINCIPAL, naverUser);
-		return "redirect:/Test";
+
+		return "main";
 	}
 	
 	/**
@@ -144,7 +145,7 @@ public class UserController {
 		
 		
 		httpSession.setAttribute(Define.PRINCIPAL, user);
-		return "redirect:/signIn";
+		return "main";
 	}
 	
 	
@@ -186,6 +187,6 @@ public class UserController {
 		}
 		
 		httpSession.setAttribute(Define.PRINCIPAL, googleUser);
-		return "redirect:/signIn";
+		return "main";
 	}
 }

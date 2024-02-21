@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.guideyou.handler.exception.CustomRestfulException;
+import com.guideyou.handler.exception.UnAuthorizedException;
 
 
 @Order(1)
@@ -29,6 +30,14 @@ public class MyRestfulExceptionHandler {
 		return sb.toString();
 	}
 	
-	
+	@ExceptionHandler(UnAuthorizedException.class)
+	public String unAuthorizedException(UnAuthorizedException e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert('" + e.getMessage() + "'); ");		// alert 화면 메세지
+		sb.append("location.href='/user/test_signIn'; ");  // user 로그인 화면으로 이동
+		sb.append("</script>");
+		return sb.toString();
+	}
 	
 }
