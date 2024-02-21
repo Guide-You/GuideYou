@@ -5,7 +5,6 @@
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
-  <body >
     <div class="container-fluid contact py-5">
       <div class="container py-5">
         <div class="p-5 bg-light rounded">
@@ -81,15 +80,21 @@
                 </div>
             </div>
           </div>
+          <h1>여기!!</h1>
+          ${orderDto.productId}
+          
         </div>
       </div>
     </div>
 
     <!--  payment End -->
+    
+    
+    
+  
+<!-- footer -->
+<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
   </body>
   
   
 
-  
-<!-- footer -->
-<%@ include file="/WEB-INF/view/layout/footer.jsp"%>

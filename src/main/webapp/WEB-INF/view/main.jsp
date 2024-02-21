@@ -5,8 +5,6 @@
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
 
-  <body >
-
 
     <!-- Hero Start -->
     <div class="container-fluid mb-5 hero-header">
@@ -716,11 +714,13 @@
         </div>
       </div>
     </div>
-  </body>
-  
+    
+    
   	
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
+  
+  </body>
   
   
   
