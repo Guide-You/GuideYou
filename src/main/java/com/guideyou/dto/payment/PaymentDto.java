@@ -4,21 +4,22 @@ import lombok.Data;
 import lombok.ToString;
 
 /**
-  * @FileName : OrderDto.java
+  * @FileName : PaymentResponse.java
   * @Project : GuideYou
-  * @Date : 2024. 2. 21. 
+  * @Date : 2024. 2. 22. 
   * @작성자 : 박경진
   * @변경이력 :
-  * @프로그램 설명 : payment로 전송할 order 정보를 담을 dto
+  * @프로그램 설명 : kakaopay 결제 정보를 받아 올 DTO
   */
-// TODO: productSeller -> 추후 닉네임으로 변경
 @Data
 @ToString
-public class OrderDto {
-	
+public class PaymentDto {
+	private String merchantUid;
+	private int userId;
 	private int productId;
 	private String productTitle;
-	private int productSeller;
 	private Long productPrice;
+	private String paymentStatus;
 	
+
 }
