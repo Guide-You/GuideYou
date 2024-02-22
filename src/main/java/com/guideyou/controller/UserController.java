@@ -32,17 +32,17 @@ public class UserController {
 	private HttpSession httpSession;
 	
 	/* ------------------------------------------------------------------------------------*/	
+
 	/**
-	  * @Method Name : test
-	  * @작성일 : 2024. 2. 21.
+	  * @Method Name : profilePage
+	  * @작성일 : 2024. 2. 22.
 	  * @작성자 : 최장호
 	  * @변경이력 : 
-	  * @Method 설명 : test중
-	  * @return
+	  * @Method 설명 : 사용자 프로필 화면 요청
 	  */
-	@GetMapping("/testUser")
-	public String test() {
-		return "user/test_userSignUp";
+	@GetMapping("/profile")
+	public String profilePage() {
+		return "user/userProfile";
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class UserController {
 	 */
 	@GetMapping("/userSignUp")
 	public String userSignUpPage() {
-		return "user/test_userSignUp";
+		return "user/userSignUp";
 	}
 	
 /* ------------------------------------------------------------------------------------*/	
@@ -86,20 +86,6 @@ public class UserController {
 		return "user/test_signIn";
 	}
 	
-
-
-	/**
-	 * @Method Name : signUpProc
-	 * @작성일 : 2024. 2. 18.
-	 * @작성자 : 최장호
-	 * @변경이력 :
-	 * @Method 설명 : 사용자 회원가입 처리
-	 * @param signUpDTO
-	 */
-	public void signUpProc(SignUpDTO signUpDTO) {
-		userService.signUpProc(signUpDTO);
-	}
-
 	/**
 	 * @Method Name : naverLoginPage
 	 * @작성일 : 2024. 2. 18.
@@ -131,7 +117,7 @@ public class UserController {
 		User user = userService.readUserByNameAndPhone(naverUser.getName(), naverUser.getPhone());
 		if (user == null) {
 			// 회원가입
-			signUpProc(naverUser);
+			userService.signUpProc(naverUser);
 			User newUser = userService.readUserByNameAndPhone(naverUser.getName(), naverUser.getPhone());
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
 			return "redirect:/userSignUp";
@@ -168,7 +154,7 @@ public class UserController {
 		User user = userService.readUserByNameAndPhone(kakaoUser.getName(), kakaoUser.getPhone());
 		if (user == null) {
 			// 회원가입
-			signUpProc(kakaoUser);
+			userService.signUpProc(kakaoUser);
 			User newUser = userService.readUserByNameAndPhone(kakaoUser.getName(), kakaoUser.getPhone());
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
 			return "redirect:/userSignUp";
@@ -210,9 +196,9 @@ public class UserController {
 			user = userService.readUserByNameAndEmail(googleUser.getName(), googleUser.getEmail());
 			if (user == null) {
 				// 회원가입
-				signUpProc(googleUser);
+				userService.signUpProc(googleUser);
 				User newUser = userService.readUserByNameAndPhone(googleUser.getName(), googleUser.getPhone());
-				httpSession.setAttribute(Define.PRINCIPAL, googleUser);
+				httpSession.setAttribute(Define.PRINCIPAL, newUser);
 				return "redirect:/userSignUp";
 			}
 		}
