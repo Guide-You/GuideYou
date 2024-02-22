@@ -28,6 +28,7 @@ import com.guideyou.dto.oauth.kakao.KakaoTokenRespDTO;
 import com.guideyou.dto.oauth.naver.NaverProfileRespDTO;
 import com.guideyou.dto.oauth.naver.NaverTokenRespDTO;
 import com.guideyou.dto.user.SignUpDTO;
+import com.guideyou.dto.user.UserDTO;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.User;
 import com.guideyou.repository.interfaces.user.UserRepository;
@@ -345,9 +346,12 @@ public class UserService {
 	  * @변경이력 : 
 	  * @Method 설명 : 사용자 정보 수정 메소드
 	  */
-	public int updateUserProfile(User user, SignUpDTO signUpDTO) {
-	    user.setNickname(signUpDTO.getNickname());
-        user.setPhone(signUpDTO.getPhone());
+	public int updateUserProfile(User user, UserDTO userDTO) {
+		System.out.println("aaaaaaaaaaaa" + userDTO.toString());
+		System.out.println("bbbbbbbbbbbbbb" + user.toString());
+	    user.setNickname(userDTO.getNickname());
+        user.setPhone(userDTO.getPhone());
+        // TODO : 사용자 프로필 사진 변경시 추가 해야함 - 최장호 240222
         // updateUser 메서드는 user 엔티티를 업데이트하는 로직을 수행
 		int result = updateById(user);
 		return result;

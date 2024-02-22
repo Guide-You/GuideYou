@@ -17,6 +17,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		// 닉네임 및 휴대폰번호 확인이 성공하면 폼제출
 		if (isNicknameValid && checkPhoneNumber()) {
+
+			signUpForm.nickname.value = nicknameInput.value.trim();
+			signUpForm.phone.value = phoneInput.value.trim();
+
 			alert("회원가입 되었습니다");
 			signUpForm.submit();
 		} else {
@@ -61,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			// AJAX 호출
 			$.ajax({
 				type: 'POST',
-				url: "/checkNickname",
+				url: "/member/checkNickname",
 				data: { nickname: nickname },
 				error: function(err) {
 					alert("실행중오류가발생하였습니다.");
@@ -93,3 +97,29 @@ document.addEventListener("DOMContentLoaded", function() {
 		return true
 	}
 });
+
+
+/*  document.addEventListener('DOMContentLoaded', function() {
+	  // 네비게이션 바의 각 링크 요소들을 가져옵니다.
+	  var navLinks = document.querySelectorAll('.aside--mypage .nav-link');
+
+	  // 모든 링크에 'link-dark' 클래스를 추가합니다.
+	  navLinks.forEach(function(navLink) {
+		  navLink.classList.add('link-dark');
+	  });
+
+	  // 링크가 클릭될 때의 이벤트 리스너를 등록합니다.
+	  navLinks.forEach(function(link) {
+		  link.addEventListener('click', function() {
+			  // 모든 링크에서 'active' 클래스를 제거하고 'link-dark' 클래스를 추가합니다.
+			  navLinks.forEach(function(navLink) {
+			   navLink.classList.remove('active', 'link-dark');
+				  navLink.classList.add('link-dark');
+			  });
+
+			  // 클릭된 링크에 'active' 클래스를 추가하고 'link-dark' 클래스를 제거합니다.
+			  this.classList.add('active');
+			  this.classList.remove('link-dark');
+		  });
+	  });
+  });*/

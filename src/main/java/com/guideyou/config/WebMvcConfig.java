@@ -22,7 +22,9 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// TODO : 인증 필요한 인터셉터 2개. 1) payment 2) login auth
-//		registry.addInterceptor(authInterceptor).addPathPatterns("/product/details/**").addPathPatterns("/member/**");
+		registry.addInterceptor(authInterceptor)
+//		.addPathPatterns("/product/details/**")
+		.addPathPatterns("/member/**");
 	}
 	
 	@Bean

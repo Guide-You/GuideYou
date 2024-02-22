@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.guideyou.dto.user.SignUpDTO;
+import com.guideyou.dto.user.UserDTO;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.User;
 import com.guideyou.service.UserService;
@@ -35,7 +36,7 @@ public class UserController {
 	private HttpSession httpSession;
 	
 	/* ------------------------------------------------------------------------------------*/	
-
+	
 	/**
 	  * @Method Name : profilePage
 	  * @작성일 : 2024. 2. 22.
@@ -43,12 +44,43 @@ public class UserController {
 	  * @변경이력 : 
 	  * @Method 설명 : 사용자 프로필 화면 요청
 	  */
-	@GetMapping("/profile")
+	@GetMapping("/member/profile")
 	public String profilePage() {
 		return "user/userProfile";
 	}
 
-	@PostMapping("/checkNickname")
+	/**
+	  * @Method Name : profileUpdateProc
+	  * @작성일 : 2024. 2. 22.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 프로필 수정 처리
+	  * @return
+	  */
+	@PostMapping("/member/profile")
+	public String profileUpdateProc(UserDTO userDTO) {
+		User profileUpdateUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
+		profileUpdateUser.setNickname(userDTO.getNickname());
+		profileUpdateUser.setPhone(userDTO.getPhone());
+		// 유저 업데이트 서비스 생성
+		int result = userService.updateUserProfile(profileUpdateUser, userDTO);
+		
+		if(result != 1) {
+			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return "redirect:/member/profile";
+	}
+	
+	/**
+	  * @Method Name : checkDuplicateNickname
+	  * @작성일 : 2024. 2. 22.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 nickname 중복체크
+	  * @param nickname
+	  * @return
+	  */
+	@PostMapping("/member/checkNickname")
 	public @ResponseBody String checkDuplicateNickname(@RequestParam String nickname) {
 		User user = userService.readUserByNickname(nickname);
 		return (user == null) ? "Y" : "N";
@@ -62,18 +94,16 @@ public class UserController {
 	  * @Method 설명 : 회원가입 처리 메서드입니다.
 	  * @return
 	  */
-	@PostMapping("/signUp")
-	public String signUpProc(SignUpDTO signUpDTO) {
+	@PostMapping("/member/signUp")
+	public String signUpProc(UserDTO userDTO) {
 		User signUpUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
-		signUpUser.setNickname(signUpDTO.getNickname());
-		signUpUser.setPhone(signUpDTO.getPhone());
 		// 유저 업데이트 서비스 생성
-		int result = userService.updateUserProfile(signUpUser, signUpDTO);
+		int result = userService.updateUserProfile(signUpUser, userDTO);
 		
 		if(result != 1) {
 			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return "main";
+		return "redirect:/main";
 	}
 	
 	/**
@@ -81,9 +111,9 @@ public class UserController {
 	 * @작성일 : 2024. 2. 21.
 	 * @작성자 : 최장호
 	 * @변경이력 : 
-	 * @Method 설명 : 사용자 회원가입 페이지 요청
+	 * @Method 설명 : 최초 소셜 로그인한 사용자 회원가입 페이지 요청
 	 */
-	@GetMapping("/signUp")
+	@GetMapping("/member/signUp")
 	public String userSignUpPage() {
 		return "user/userSignUp";
 	}
@@ -137,11 +167,11 @@ public class UserController {
 			userService.signUpProc(naverUser);
 			User newUser = userService.readUserByNameAndPhone(naverUser.getName(), naverUser.getPhone());
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
-			return "redirect:/signUp";
+			return "redirect:/member/signUp";
 		}
 		httpSession.setAttribute(Define.PRINCIPAL, naverUser);
 
-		return "main";
+		return "redirect:/main";
 	}
 	
 	/**
@@ -174,12 +204,12 @@ public class UserController {
 			userService.signUpProc(kakaoUser);
 			User newUser = userService.readUserByNameAndPhone(kakaoUser.getName(), kakaoUser.getPhone());
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
-			return "redirect:/signUp";
+			return "redirect:/member/signUp";
 		}
 		
 		
 		httpSession.setAttribute(Define.PRINCIPAL, user);
-		return "main";
+		return "redirect:/main";
 	}
 	
 	
@@ -216,11 +246,11 @@ public class UserController {
 				userService.signUpProc(googleUser);
 				User newUser = userService.readUserByNameAndPhone(googleUser.getName(), googleUser.getPhone());
 				httpSession.setAttribute(Define.PRINCIPAL, newUser);
-				return "redirect:/signUp";
+				return "redirect:/member/signUp";
 			}
 		}
 		
 		httpSession.setAttribute(Define.PRINCIPAL, googleUser);
-		return "main";
+		return "redirect:/main";
 	}
 }

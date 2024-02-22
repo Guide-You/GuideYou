@@ -35,7 +35,7 @@ public class MyRestfulExceptionHandler {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
 		sb.append("alert('" + e.getMessage() + "'); ");		// alert 화면 메세지
-		sb.append("location.href='/user/test_signIn'; ");  // user 로그인 화면으로 이동
+		sb.append("location.href='/signIn'; ");  // user 로그인 화면으로 이동
 		sb.append("</script>");
 		return sb.toString();
 	}

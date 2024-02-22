@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guideyou.repository.interfaces.user.UserRepository">
+<mapper
+	namespace="com.guideyou.repository.interfaces.user.UserRepository">
 
 	<insert id="insert">
-		INSERT INTO user (name, nickname, gender, email, phone, comment)
-		VALUES (#{name}, #{nickname}, #{gender}, #{email}, #{phone}, #{comment})
+		INSERT INTO user (name, nickname, gender, email,
+		phone, comment)
+		VALUES (#{name}, #{nickname}, #{gender}, #{email},
+		#{phone}, #{comment})
 	</insert>
 
-	<select id="findByNameAndPhone" parameterType="map" resultType="com.guideyou.repository.entity.User"> 
+	<select id="findByNameAndPhone" parameterType="map"
+		resultType="com.guideyou.repository.entity.User">
 		select * from user where name = #{name} and phone = #{phone}
 	</select>
 
-	<select id="findByNameAndEmail" parameterType="map" resultType="com.guideyou.repository.entity.User"> 
+	<select id="findByNameAndEmail" parameterType="map"
+		resultType="com.guideyou.repository.entity.User">
 		select * from user where name = #{name} and email = #{email}
 	</select>
-	
-	<select id="findByNickname" resultType="com.guideyou.repository.entity.User">
+
+	<select id="findByNickname"
+		resultType="com.guideyou.repository.entity.User">
 		select * from user where nickname = #{nickname}
 	</select>
-	
+
 	<update id="updateById">
-		
+		update user set name = #{name}, nickname =
+		#{nickname}, gender = #{gender}, email = #{email}, phone = #{phone},
+		comment = #{comment}
+		where id = #{id}
 	</update>
-	
+
 </mapper>
