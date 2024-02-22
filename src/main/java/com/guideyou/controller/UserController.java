@@ -1,13 +1,16 @@
 package com.guideyou.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.guideyou.dto.user.SignUpDTO;
+import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.User;
 import com.guideyou.service.UserService;
 import com.guideyou.utils.Define;
@@ -45,6 +48,12 @@ public class UserController {
 		return "user/userProfile";
 	}
 
+	@PostMapping("/checkNickname")
+	public boolean checkDuplicateNickname(String nickname) {
+		User user = userService.readUserByNickname(nickname);
+		return (user == null);
+	}
+	
 	/**
 	  * @Method Name : signUpProc
 	  * @작성일 : 2024. 2. 21.
@@ -54,8 +63,16 @@ public class UserController {
 	  * @return
 	  */
 	@PostMapping("/signUp")
-	public String signUpProc() {
-		// TODO : 1.form에서 받아온 dto 만들기 2.db조회해서 user update하기.
+	public String signUpProc(SignUpDTO signUpDTO) {
+		User signUpUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
+		signUpUser.setNickname(signUpDTO.getNickname());
+		signUpUser.setPhone(signUpDTO.getPhone());
+		// 유저 업데이트 서비스 생성
+		int result = userService.updateUserProfile(signUpUser, signUpDTO);
+		
+		if(result != 1) {
+			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		return "main";
 	}
 	
@@ -66,7 +83,7 @@ public class UserController {
 	 * @변경이력 : 
 	 * @Method 설명 : 사용자 회원가입 페이지 요청
 	 */
-	@GetMapping("/userSignUp")
+	@GetMapping("/signUp")
 	public String userSignUpPage() {
 		return "user/userSignUp";
 	}
@@ -120,7 +137,7 @@ public class UserController {
 			userService.signUpProc(naverUser);
 			User newUser = userService.readUserByNameAndPhone(naverUser.getName(), naverUser.getPhone());
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
-			return "redirect:/userSignUp";
+			return "redirect:/signUp";
 		}
 		httpSession.setAttribute(Define.PRINCIPAL, naverUser);
 
@@ -157,7 +174,7 @@ public class UserController {
 			userService.signUpProc(kakaoUser);
 			User newUser = userService.readUserByNameAndPhone(kakaoUser.getName(), kakaoUser.getPhone());
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
-			return "redirect:/userSignUp";
+			return "redirect:/signUp";
 		}
 		
 		
@@ -199,7 +216,7 @@ public class UserController {
 				userService.signUpProc(googleUser);
 				User newUser = userService.readUserByNameAndPhone(googleUser.getName(), googleUser.getPhone());
 				httpSession.setAttribute(Define.PRINCIPAL, newUser);
-				return "redirect:/userSignUp";
+				return "redirect:/signUp";
 			}
 		}
 		

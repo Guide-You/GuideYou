@@ -15,4 +15,12 @@
 		select * from user where name = #{name} and email = #{email}
 	</select>
 	
+	<select id="findByNickname" resultType="com.guideyou.repository.entity.User">
+		select * from user where nicknmae = #{nickname}
+	</select>
+	
+	<update id="updateById">
+		
+	</update>
+	
 </mapper>
