@@ -8,7 +8,7 @@
 <div class="col-md-12 col-lg-6 col-xl-9">
 	<div class="container profile--main">
 		<div class="registration-form profile--form">
-			<form action="/signUp" method="post">
+			<form action="/signUp" method="post" name="signUpForm">
 				<div class="form-icon">
 					<span><i class="icon icon-user"></i></span>
 				</div>
@@ -17,7 +17,7 @@
 						${principal.name}</div>
 					<input type="text" class="form-control item" id="nickname"
 						placeholder="닉네임을 입력해주세요"
-						value="${not empty principal.nickname ? principal.nickname : ''}">
+						value="${not empty principal.nickname && principal.nickname ne 'DEFAULT_NICKNAME' ? principal.nickname : ''}">
 					<div class="form-control item" id="email">${principal.email}
 					</div>
 					<input type="text" class="form-control item" id="phone"
@@ -30,13 +30,13 @@
 					<input type="text" class="form-control item" id="profile--intro"
 						placeholder="소개글">
 				</div>
+			</form>
 				<div class="social-media">
 					<div class="form-group">
-						<button type="submit" class="btn btn-block create--account"
+						<button type="submit" class="btn btn-block create--account" id="signUpBtn"
 							onclick="validateSignUpProfile()">회원가입</button>
 					</div>
 				</div>
-			</form>
 		</div>
 	</div>
 </div>
