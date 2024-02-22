@@ -49,9 +49,9 @@ public class UserController {
 	}
 
 	@PostMapping("/checkNickname")
-	public boolean checkDuplicateNickname(String nickname) {
+	public @ResponseBody String checkDuplicateNickname(@RequestParam String nickname) {
 		User user = userService.readUserByNickname(nickname);
-		return (user == null);
+		return (user == null) ? "Y" : "N";
 	}
 	
 	/**

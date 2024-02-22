@@ -1,72 +1,95 @@
 document.addEventListener("DOMContentLoaded", function() {
 	var signUpBtn = document.getElementById('signUpBtn');
+	var nicknameInput = document.getElementById('nickname');
+	var phoneInput = document.getElementById('phone');
+	var signUpForm = document.forms['signUpForm'];
+	var isNicknameValid = false // 닉네임유효성및중복여부를저장하는변수
 
-	// 클릭 이벤트 리스너
+	// 닉네임입력란의blur 이벤트리스너
+	nicknameInput.addEventListener('blur', function(event) {
+		// validateSignUpProfile 함수호출- 회원가입시true 반환
+		isNicknameValid = checkNickName();
+	});
+
+	// 회원가입버튼클릭이벤트리스너
 	signUpBtn.addEventListener('click', function(event) {
 		event.preventDefault();
 
-		// validateSignUpProfile 함수 호출 - 회원 가입시 true 반환
-		if (checkNickName()) {
-			// 회원가입 폼 submit
+		// 닉네임 및 휴대폰번호 확인이 성공하면 폼제출
+		if (isNicknameValid && checkPhoneNumber()) {
+			alert("회원가입 되었습니다");
 			signUpForm.submit();
+		} else {
+			// 입력값을 확인해주세요.
+			if (!isNicknameValid) {
+				alert("닉네임 입력값을 확인해주세요.");
+			} else {
+				phoneInput.focus(); // 에러 메시지 후 입력란에 포커스 맞추기
+			}
 		}
 	});
 
-	// 회원가입 유효성 함수
+	// 닉네임유효성및중복체크함수
 	function checkNickName() {
-		var nickname = document.getElementById('nickname').value.trim(); // 닉네임 입력값 받아오기
-		var phone = document.getElementById('phone').value.trim(); // 전화번호 입력값 받아오기
-		var nickLength = 0;
+		var nickname = nicknameInput.value.trim(); // 닉네임입력값받아오기
+		var phone = phoneInput.value.trim(); // 휴대폰번호입력값받아오기
+		var nickLength = 0
 
-		// 정규식 패턴
-		var engCheck = /[a-z]/;
-		var numCheck = /[0-9]/;
-		var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+		// 정규식패턴
+		var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi
 
-		// 닉네임 길이 계산
+		// 닉네임길이계산
 		for (var i = 0; i < nickname.length; i++) {
 			nick = nickname.charAt(i);
-			nickLength += escape(nick).length > 4 ? 2 : 1; // 한글 2, 영문 1로 치환
+			nickLength += escape(nick).length > 4 ? 2 : 1 // 한글2, 영문1로치환
 		}
 
-		// 닉네임 유효성 검사
+		// 닉네임유효성검사
 		if (!nickname) {
-			alert("닉네임 입력은 필수입니다.");
-			return false;
+			alert("닉네임입력은 필수입니다.");
+			return false
 		} else if (nickname.includes(" ")) {
-			alert("닉네임은 빈 칸을 포함할 수 없습니다.");
-			return false;
+			alert("닉네임은 빈칸을 포함할수없습니다.");
+			return false
 		} else if (nickLength < 2 || nickLength > 20) {
-			alert("닉네임은 한글 1~10자, 영문 및 숫자 2~20자 입니다.");
-			return false;
+			alert("닉네임은 한글1~10자, 영문 및 숫자2~20자입니다.");
+			return false
 		} else if (specialCheck.test(nickname)) {
-			alert("닉네임은 특수문자를 포함할 수 없습니다.");
-			return false;
+			alert("닉네임은 특수문자를 포함할수 없습니다.");
+			return false
 		} else {
+			// AJAX 호출
 			$.ajax({
 				type: 'POST',
 				url: "/checkNickname",
-				data: { data: nickname },
+				data: { nickname: nickname },
 				error: function(err) {
-					alert("실행중 오류가 발생하였습니다.");
+					alert("실행중오류가발생하였습니다.");
 				},
 				success: function(data) {
-					if (data != null) {
-						alert("이미 존재하는 닉네임입니다.");
-						return false;
+					if (data != "Y") {
+						alert("이미존재하는닉네임입니다.");
+						isNicknameValid = false
 					} else {
-						alert("사용할 수 있는 닉네임입니다.");
-						return true;
+						alert("사용할수있는닉네임입니다.");
+						isNicknameValid = true
 					}
 				}
 			});
 		}
+		return isNicknameValid
+	}
 
+	// 휴대폰번호유효성함수
+	function checkPhoneNumber() {
+		var phone = phoneInput.value.trim(); // 휴대폰번호입력값받아오기
 
 		if (!phone) {
-			alert("휴대폰 번호는 필수 입력 사항입니다.");
-			return false;
+			alert("휴대폰번호 입력은 필수입니다.");
+			return false
 		}
+		// 추가적인휴대폰번호유효성검사로직을추가할수있습니다.
 
+		return true
 	}
 });
