@@ -76,6 +76,9 @@
             >
           </div>
           <div class="top-link pe-2">
+          	<a href="/signIn" class="text-white"
+              ><small class="text-white mx-2">로그인</small>/</a
+            >
           	<a href="/save" class="text-white"
               ><small class="text-white mx-2">글쓰기</small>/</a
             >
