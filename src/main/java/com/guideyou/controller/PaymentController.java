@@ -2,6 +2,7 @@ package com.guideyou.controller;
 
 import java.io.Console;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.guideyou.dto.ProductSaveFormDto;
 import com.guideyou.dto.payment.OrderDto;
 import com.guideyou.dto.payment.PaymentDto;
+import com.guideyou.service.PaymentService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PaymentController {
 
-	  
+	  @Autowired
+	  private PaymentService paymentService;
 	   
 	   /**
 	  * @Method Name : paymentPage
@@ -69,13 +72,22 @@ public class PaymentController {
 	  * @작성일 : 2024. 2. 22.
 	  * @작성자 : 박경진
 	  * @변경이력 : 
-	  * @Method 설명 : kakaopay 결제 성공 시 넘어 올 jsonData를 받기 위한 method
+	  * @Method 설명 : kakaopay 결제 성공 시 넘어 올 jsonData를 받아 db에 insert
 	  */
 	@PostMapping("/paySuccess")
-	private void paySuccess(PaymentDto paymentDto) {
+	private String createPayment(PaymentDto paymentDto) {
 		
-		System.out.println(paymentDto.toString());
+		// TODO : 인증 검사(2024.02.22 경진)
 		
+		paymentService.createPayment(paymentDto);
+		
+		
+		log.info("PaymentController payment dto : "+paymentDto.toString());
+		
+		
+		
+		
+		return "redirect:/list";
 
 	}
 
