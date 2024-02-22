@@ -70,6 +70,8 @@
 								<!-- 추후 user nickname으로 변경 -->
 							<input type="text" name ="orderSeller" id="order--seller" value="${order.productSeller }">
 							<input type="text" name ="orderPrice" id="order--price" value="${order.productPrice }">
+							
+							
 						</form>
 	
 
@@ -92,14 +94,6 @@
     
     <script type="text/javascript">
     
-	// payment -> paymentAPI
-	const orderId = document.getElementById('order--id').value;
-	const orderTitle = document.getElementById('order--title').value;
-	const orderSeller = document.getElementById('order--seller').value;
-	const orderPrice = document.getElementById('order--price').value;
-
-		
-
 	
     
     

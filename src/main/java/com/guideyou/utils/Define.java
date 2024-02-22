@@ -15,6 +15,10 @@ public class Define {
 
 
 	public static final String FAIL_TO_CREATE_USER = "회원가입 실패.";
+  
+	public static final String FAIL_TO_CREATE_PAYMENT = "결제에 실패했습니다.";
+  
+	public static final String INTERNAL_SERVER_ERROR = "내부 서버 오류가 발생했습니다.";
 
 	public static final String NOT_AN_AUTHENTICATED_USER = "인증된 사용자가 아닙니다.";
 
