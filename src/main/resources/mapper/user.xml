@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="findByNickname" resultType="com.guideyou.repository.entity.User">
-		select * from user where nicknmae = #{nickname}
+		select * from user where nickname = #{nickname}
 	</select>
 	
 	<update id="updateById">
