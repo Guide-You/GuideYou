@@ -8,12 +8,14 @@ import org.apache.ibatis.annotations.Param;
 import com.guideyou.dto.ProductSaveFormDto;
 import com.guideyou.repository.entity.Product;
 
+
+// TODO: 패키지 변경 (2024.02.22-경진) - 확인자 : 명근 
 @Mapper
 public interface ProductRepository {
 	
 	public int insert(Product product);
 	public int updateById(Product product);
-	public int updateBySoldCount(Product product);
+	public int updateBySoldCount(Integer productId);
 	public int updateByWishCount(Product product);
 	public int updateByViewCount(Product product);
 	public int deletById(Integer id);
