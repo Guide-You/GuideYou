@@ -2,7 +2,9 @@ package com.guideyou.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
 import com.guideyou.dto.ProductSaveFormDto;
+import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Product;
+import com.guideyou.repository.entity.User;
 import com.guideyou.service.ProductService;
+import com.guideyou.utils.Define;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -25,11 +30,13 @@ public class ProductController {
 	private ProductService productService;
 
 	@Autowired
-	private HttpSession httpSession;
+	private HttpSession session;
 
 	// 상품 등록 페이지
 	@GetMapping("/save")
 	public String savePage() {
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		
 		return "product/testsaveForm";
 	}
 
@@ -43,13 +50,16 @@ public class ProductController {
 	 */
 	// TODO : 24.02.20 이미지 불러오기
 	@PostMapping("/save")
-	public String saveProduct(ProductSaveFormDto dto, @RequestParam("region") Integer cityCodeId) throws Exception {
+	public String saveProduct(ProductSaveFormDto dto, @RequestParam("region") Integer cityCodeId) {
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		dto.setUserId(principal.getId());
+		
 		dto.setCityCodeId(cityCodeId);
 
 		boolean result = productService.createProduct(dto);
 
 		if (result == false) {
-			throw new Exception();
+			throw new CustomRestfulException("상품 등록에 실패하였습니다.", HttpStatus.BAD_REQUEST);
 
 		}
 		return "redirect:/list";
@@ -57,7 +67,8 @@ public class ProductController {
 
 	// 상품 목록 페이지
 	@GetMapping("/list")
-	public String productList(PageReq pageReq, Model model, @RequestParam(required = false) String title) {
+	public String productList(PageReq pageReq, Model model, @Param("searchText") String searchText, @Param("cityCodeId") String cityCodeId) {
+		System.out.println(searchText);
 		if (pageReq.getPage() <= 0) {
 			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
 		}
@@ -65,10 +76,9 @@ public class ProductController {
 		if (pageReq.getSize() <= 0) {
 			pageReq.setSize(12); // 페이지 당 보여줄 개수
 		}
-
-		PageRes<Product> pageRes = productService.getProductUsingPage(pageReq, title); // 페이징 처리함
+		
+		PageRes<Product> pageRes = productService.getProductUsingPage(pageReq, searchText, cityCodeId); // 페이징 처리함
 		List<Product> list = pageRes.getContent(); // 내용을 보여줄거다
-
 		// 페이징 정보를 모델에 추가
 		model.addAttribute("productList", list); // 프로젝트 마다 다른 코드
 		// 공통 코드
@@ -79,13 +89,13 @@ public class ProductController {
 		model.addAttribute("endPage", pageRes.getEndPage());
 
 		List<ProductSaveFormDto> dto = productService.selectPhotoList();
-		model.addAttribute("dto", dto);
-
-//   	List<Product> product = productService.readProduct();
-//   	model.addAttribute("product", product);   	
+		model.addAttribute("dto", dto); 
+		
 
 		return "product/productList";
 	}
+	
+	
 
 	// 상품 상세 페이지
 	@GetMapping("/detail/{productId}")
@@ -93,12 +103,15 @@ public class ProductController {
 //       List<ProductSaveFormDto> photos = productService.findAllByProductId(productId);    	
 //       model.addAttribute("photos", photos);
 
-		Product product = productService.findByProductId(productId);
+		ProductSaveFormDto product = productService.findByProductId(productId);
 		model.addAttribute("product", product);
 
 		return "product/productDetail";
 	}
-
+	
+	
+	
+	
 	// 상품 수정 페이지
 	@GetMapping("/update/{productId}")
 	public String productUpdatePage(@PathVariable("productId") Integer productId, Model model) {
@@ -109,7 +122,7 @@ public class ProductController {
 //	   List<ProductPhotos> findName = productService.findFileName(productId);    	
 //     model.addAttribute("findName", findName);
 
-		Product product = productService.findByProductId(productId);
+		ProductSaveFormDto product = productService.findByProductId(productId);
 		model.addAttribute("product", product);
 
 		return "product/testupdate";
@@ -124,11 +137,11 @@ public class ProductController {
 			@RequestParam("region") Integer cityCodeId, @RequestParam("removeImgs") String removeImgs) {
 
 		dto.setCityCodeId(cityCodeId);
-
+		
+		
+		productService.deleteMutiPhoto(removeImgs);
 		productService.updateProduct(productId, dto);
-		productService.updatePhoto(productId, dto);
-
-//    productService.insertPhoto(dto, productId);
+		productService.insertPhoto(dto, productId);
 
 		return "redirect:/list";
 	}

@@ -8,6 +8,18 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script>
 
+<style>
+.carousel-inner {
+	width: 300px;
+	height: 300px;
+
+}
+
+
+
+
+</style>
+
 
     <!-- Search Start -->
       <section class="sc-a37b6b4d-0 iVnkhP">
@@ -29,7 +41,9 @@
       <div id="carouselExample" class="carousel slide">
 	        <div class="carousel-inner">
 	          <div class="carousel-item active">
-	            <img src="/images/upload/${photos.uploadFileName}" class="d-block w-100"/>
+	            <img src="/images/upload/${product.uploadFileName}" class="d-block w-100"/>
+	            <img src="/images/upload/${product.uploadFileName}" class="d-block w-100"/>
+	            <img src="/images/upload/${product.uploadFileName}" class="d-block w-100"/>
 	          </div>          
 	        </div>
         <button
@@ -295,14 +309,11 @@ $(document).ready(function(){
 });
 
 
-
 </script>
 	    
 	<!-- footer -->
 	<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-        
-        
-        
+          
         
         
   

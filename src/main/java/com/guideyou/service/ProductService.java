@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,10 @@ import com.guideyou.repository.interfaces.ProductPhotosRepository;
 import com.guideyou.repository.interfaces.ProductRepository;
 import com.guideyou.utils.Define;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class ProductService {
 
 	@Autowired
@@ -35,8 +39,13 @@ public class ProductService {
 	public boolean createProduct(ProductSaveFormDto dto) {
 
 		// Product 저장
-		Product product = Product.builder().cityCodeId(dto.getCityCodeId()).title(dto.getTitle()).price(dto.getPrice())
-				.content(dto.getContent()).build();
+		Product product = Product.builder()
+				.userId(dto.getUserId())
+				.cityCodeId(dto.getCityCodeId())
+				.title(dto.getTitle())
+				.price(dto.getPrice())
+				.content(dto.getContent())
+				.build();
 
 		productRepository.insert(product);
 		int productId = product.getId();
@@ -141,7 +150,7 @@ public class ProductService {
 		return photosRepository.selectPhotoList();
 	}
 
-	public Product findByProductId(Integer id) {
+	public ProductSaveFormDto findByProductId(Integer id) {
 		return productRepository.findByProductId(id);
 
 	}
@@ -167,20 +176,31 @@ public class ProductService {
 	}
 
 	// 사진 한 장과 상품 설명
-	public List<Product> getProductsWithImages() {
-		return productRepository.findProductsWithImages();
+	public List<Product> getProductsWithImages(int offset, int limit, String searchText) {
+		return productRepository.findProductsWithImages(offset, limit, searchText);
 	}
 
 	// 이미지 부분 삭제
 	@Transactional
-	public int deleteMutiPhoto(Integer productId, String id) {
-		System.out.println("-----------------------------------");
-		System.out.println(productId);
-		System.out.println(id);
+	public int deleteMutiPhoto(String id) {
+		log.info("----------------------");
+		log.info(id);
 
 		String[] ids = id.split(",");
-
-		return photosRepository.deleteMutiPhoto(productId, ids);
+		
+		int result = 0;
+		
+		for (int i = 0; i < ids.length; i++) {			
+			result += photosRepository.deleteMutiPhoto(ids[i]);
+			
+		}
+		
+		if (result != 0) {
+			return 1;
+		} else {
+			return 0;
+		}
+				
 	}
 
 	// 상품 삭제
@@ -225,7 +245,7 @@ public class ProductService {
 				ProductPhotos photos = ProductPhotos.builder().productPhotoPath(dto.getProductPhotoPath())
 						.originFileName(dto.getOriginFileName()).uploadFileName(dto.getUploadFileName()).build();
 
-				int result = photosRepository.updateById(photos);
+				int result = photosRepository.insert(photos);
 
 				if (result == 0) {
 					throw new Exception();
@@ -241,21 +261,22 @@ public class ProductService {
 	}
 
 	// 페이징 처리 - 총 제품 수 조회
-	public int getTotalProductCount() {
-		return productRepository.getTotalCount();
+	public int getTotalProductCount(String searchText, String cityCodeId) {
+		return productRepository.getTotalCount(searchText, cityCodeId);
 	}
 
 	// 페이징 된 제품 목록 조회
-	public PageRes<Product> getProductUsingPage(PageReq pageReq, String title) {
+	public PageRes<Product> getProductUsingPage(PageReq pageReq, String searchText, String cityCodeId) {
 		int page = pageReq.getPage();
 		int size = pageReq.getSize();
 		int offset = (page - 1) * size; // 오프셋 계산
 
 		// 총 데이터 개수 조회
-		long totalElements = productRepository.getTotalCount();
+		long totalElements = productRepository.getTotalCount(searchText, cityCodeId);
 
 		// 페이징 처리된 유저 목록 조회
-		List<Product> ads = productRepository.findAllwithPasing(offset, size, title);
+		List<Product> ads = productRepository.findAllwithPasing(offset, size, searchText, cityCodeId);
+		System.out.println(searchText);
 
 		// 페이징 결과 객체 생성
 		PageRes<Product> pageRes = new PageRes<>(ads, page, totalElements, size);

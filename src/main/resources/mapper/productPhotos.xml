@@ -17,11 +17,7 @@
 	</delete>
 	
 	<delete id="deleteMutiPhoto">
-		 delete from product_photos 
-	     where product_id = #{productId} in
-	     <foreach collection="ids" item="id" open="(" close=")" separator=",">
-		    #{id}
-	    </foreach>
+		 delete from product_photos where id = #{id}	     
 	</delete>	
 	
 	<select id="findAllByProductId" resultType="com.guideyou.dto.ProductSaveFormDto">
@@ -45,7 +41,7 @@
 	    FROM product p
 	    LEFT JOIN product_photos pi ON p.id = pi.product_id
 	    GROUP BY p.id
-	    ORDER BY p.created_at DESC
+	    ORDER BY pi.created_at DESC
 	</select>
 	
 </mapper>

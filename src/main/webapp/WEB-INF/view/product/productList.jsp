@@ -6,13 +6,40 @@
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+<style>
+.fruite .fruite-item .fruite-img img {
+    height: 170px;
+}
+
+.title-text {
+	background-color: rgba(255,255,255,0.8);
+	border-radius: 2px;
+	
+}
+
+.searchBtn {
+	background-color: #91caff;
+	border-radius: 5px;
+	padding: 15px 25px;
+	margin-left: 25px;
+	font-size: 20px;
+
+}
+
+</style>	
+	
 <body>
 	<!-- Search Start -->
 	<section class="sc-a37b6b4d-0 iVnkhP">
-		<div class="sc-a37b6b4d-1 bBhtyX">
-			<input id="searchInput" maxlength="20" class="sc-a37b6b4d-2 cpWeqo" value="" placeholder="🔍 어느 도시로 떠나시나요?" />
-			<button id="searchButton">검색</button>
-		</div>
+		<form action="list" id="searchForm">
+			<div class="sc-a37b6b4d-1 bBhtyX">
+				<input id="searchText" maxlength="20" class="sc-a37b6b4d-2 cpWeqo" value="" placeholder="🔍 어느 도시로 떠나시나요?" name="searchText"/>
+<!-- 				<button id="searchButton">검색</button> -->
+					<span class="searchBtn btn">검색</span>
+				<input type="hidden" id="cityCodeId" name="cityCodeId">
+			</div>
+		</form>
 	</section>
 	<!-- Search End -->
 
@@ -144,8 +171,8 @@
 															class="img-fluid w-100 rounded-top" />
 													</div>
 													<div
-														class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-														style="top: 10px; left: 10px;">${prod.cityCodeId}</div>
+														class="title-text bg-secondary px-3 py-1 rounded position-absolute"
+														style="top: 10px; left: 10px;">${prod.cityName}</div>
 													<div
 														class="p-4 border border-secondary border-top-0 rounded-bottom"
 														style="max-height: 300px; overflow: hidden;">
@@ -202,7 +229,14 @@
 	</div>
 </body>
 
+<script>
+function showCity(id) {
+	$("#cityCodeId").val(id);
+	$("#searchForm").submit();
+	
 
+}
+</script>
 
 
 <!-- footer -->

@@ -60,73 +60,73 @@
         </div>
         <div>
           <button class="city-button">
-            <img src="img/main-seoul.jpg" class="city-image" />
+            <img src="/img/main-seoul.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">서울</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-busan.jpg" class="city-image" />
+            <img src="/img/main-busan.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">부산</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-incheon.jpg" class="city-image" />
+            <img src="/img/main-incheon.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">인천</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-daegu.jpg" class="city-image" />
+            <img src="/img/main-daegu.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">대구</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-daejeon.jpg" class="city-image" />
+            <img src="/img/main-daejeon.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">대전</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-gwangju.jpg" class="city-image" />
+            <img src="/img/main-gwangju.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">광주</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-gyeonggi-do.jpg" class="city-image" />
+            <img src="/img/main-gyeonggi-do.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">경기도</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-chungcheong-do.jpg" class="city-image" />
+            <img src="/img/main-chungcheong-do.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">충청도</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-jeolla-do.jpg" class="city-image" />
+            <img src="/img/main-jeolla-do.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">전라도</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-gyeongsang-do.jpeg" class="city-image" />
+            <img src="/img/main-gyeongsang-do.jpeg" class="city-image" />
             <div class="city-info">
               <p class="city-name">경상도</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-gangwon-do.jpg" class="city-image" />
+            <img src="/img/main-gangwon-do.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">강원도</p>
             </div>
           </button>
           <button class="city-button">
-            <img src="img/main-jeju.jpg" class="city-image" />
+            <img src="/img/main-jeju.jpg" class="city-image" />
             <div class="city-info">
               <p class="city-name">제주도</p>
             </div>
@@ -147,7 +147,7 @@
           >
             <div class="vesitable-img">
               <img
-                src="img/main-busan.jpg"
+                src="/img/main-busan.jpg"
                 class="img-fluid w-100 rounded-top top-city"
                 alt=""
               />
@@ -164,7 +164,7 @@
           >
             <div class="vesitable-img">
               <img
-                src="img/main-seoul.jpg"
+                src="/img/main-seoul.jpg"
                 class="img-fluid w-100 rounded-top top-city"
                 alt=""
               />
@@ -181,7 +181,7 @@
           >
             <div class="vesitable-img">
               <img
-                src="img/main-jeju.jpg"
+                src="/img/main-jeju.jpg"
                 class="img-fluid w-100 rounded-top bg-light top-city"
                 alt=""
               />
@@ -198,7 +198,7 @@
           >
             <div class="vesitable-img">
               <img
-                src="img/main-incheon.jpg"
+                src="/img/main-incheon.jpg"
                 class="img-fluid w-100 rounded-top top-city"
                 alt=""
               />
@@ -215,7 +215,7 @@
           >
             <div class="vesitable-img">
               <img
-                src="img/main-gyeonggi-do.jpg"
+                src="/img/main-gyeonggi-do.jpg"
                 class="img-fluid w-100 rounded-top top-city"
                 alt=""
               />

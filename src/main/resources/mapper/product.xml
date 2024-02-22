@@ -3,8 +3,8 @@
 <mapper namespace="com.guideyou.repository.interfaces.ProductRepository">
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-		insert into product(city_code_id, title, price, content)
-		values (#{cityCodeId}, #{title}, #{price}, #{content})
+		insert into product(user_id, city_code_id, title, price, content)
+		values (#{userId}, #{cityCodeId}, #{title}, #{price}, #{content})
 	</insert>
 	
 	<update id="updateById">
@@ -32,25 +32,36 @@
 		select * from product where user_id = #{userId}
 	</select>
 	
-	<select id="findByProductId" resultType="com.guideyou.repository.entity.Product">
-		select * from product where id = #{id}
+	<select id="findByProductId" resultType="com.guideyou.dto.ProductSaveFormDto">
+		SELECT p.*, pi.upload_file_name AS uploadFileName
+	    FROM product p
+	    LEFT JOIN product_photos pi ON p.id = pi.product_id
+	   	where pi.id = #{id}
 	</select>
 		
 	<select id="findAll" resultType="com.guideyou.repository.entity.Product">
-		select * from product
+		select * from product ORDER BY created_at DESC
 	</select>
 	
 	<select id="selectByTitle" resultType="com.guideyou.repository.entity.Product">
 		select * from product where title like CONCAT('%', #{title}, '%')
 	</select>	
 	
-	
+	<!-- 검색과 페이징 -->
 	<select id="findProductsWithImages" resultType="com.guideyou.repository.entity.Product">
 		SELECT p.*, pi.upload_file_name AS uploadFileName
 	    FROM product p
 	    LEFT JOIN product_photos pi ON p.id = pi.product_id
+	    where 1 = 1
+	    <if test="searchText != null and searchText != ''">
+		    and title like CONCAT('%', #{searchText}, '%') or content like CONCAT('%', #{searchText} , '%')
+	    </if>
+	    <if test="cityCodeId != null and cityCodeId != ''">
+	    	and city_code_id = #{cityCodeId} 	
+	    </if>
 	    GROUP BY p.id
 	    ORDER BY p.created_at DESC
+	    limit #{limit} offset #{offset}
 	</select>
 	
 	
@@ -63,23 +74,27 @@
 	<select id="findAllwithPasing" resultType="com.guideyou.dto.ProductSaveFormDto">
 		select * from product p
 		left join product_photos ph on p.id = ph.product_id
+		left join city_code c on p.city_code_id = c.id
+		where 1 = 1
+	    <if test="searchText != null and searchText != ''">
+		    and title like CONCAT('%', #{searchText}, '%') or content like CONCAT('%', #{searchText} , '%')
+	    </if>
+	    <if test="cityCodeId != null and cityCodeId != ''">
+	    	and city_code_id = #{cityCodeId} 	
+	    </if>
 		group by p.id
-        limit #{limit} offset #{offset}	
+        limit #{limit} offset #{offset}
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
 		select count(*) from product
-	</select>
-	
-	
-	<!-- 비동기적 페이징 처리 -->
-	<select id="getProductsWithPaging" resultType="com.guideyou.dto.ProductSaveFormDto">
-	    SELECT * FROM product
-	    LIMIT #{size} OFFSET #{offset}
-	</select>
-	
-	<select id="getTotalProductCount" resultType="int">
-	    SELECT COUNT(*) FROM product
+		where 1 = 1
+	    <if test="searchText != null and searchText != ''">
+		    and title like CONCAT('%', #{searchText}, '%') or content like CONCAT('%', #{searchText} , '%')
+	    </if>
+	    <if test="cityCodeId != null and cityCodeId != ''">
+	    	and city_code_id = #{cityCodeId} 	
+	    </if>
 	</select>
 	
 	
@@ -91,18 +106,7 @@
 	    GROUP BY p.id
 	    ORDER BY p.sold_count DESC;
 	</select>
-	
-	<!-- title 검색 -->
-	<select id="searchTitle" resultType="com.guideyou.dto.ProductSaveFormDto">
-		SELECT *
-	    FROM product p
-	    LEFT JOIN product_photos ph ON p.id = ph.product_id
-	    WHERE p.title LIKE CONCAT('%', #{title}, '%')
-	    GROUP BY p.id
-	    LIMIT #{limit} OFFSET #{offset} 
-	
-	</select>
-	
+		
 		
 	
 </mapper>
