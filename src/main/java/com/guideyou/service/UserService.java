@@ -325,4 +325,43 @@ public class UserService {
 		
 		return signUpDTO;
 	}
+	
+	/**
+	  * @Method Name : updateUser
+	  * @작성일 : 2024. 2. 22.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 업데이트
+	  */
+	public int updateById(User user) {
+		int result = userRepository.updateById(user);
+		return result;
+	}
+	
+	/**
+	  * @Method Name : updateUserProfile
+	  * @작성일 : 2024. 2. 22.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 정보 수정 메소드
+	  */
+	public int updateUserProfile(User user, SignUpDTO signUpDTO) {
+	    user.setNickname(signUpDTO.getNickname());
+        user.setPhone(signUpDTO.getPhone());
+        // updateUser 메서드는 user 엔티티를 업데이트하는 로직을 수행
+		int result = updateById(user);
+		return result;
+	}
+	
+	/**
+	  * @Method Name : readUserByNickname
+	  * @작성일 : 2024. 2. 22.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 닉네임으로 사용자 검색
+	  */
+	public User readUserByNickname(String nickname) {
+		User user = userRepository.findByNickname(nickname);
+		return user;
+	}
 }
