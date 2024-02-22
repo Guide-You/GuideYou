@@ -29,27 +29,27 @@
       <div id="carouselExample" class="carousel slide">
 	        <div class="carousel-inner">
 	          <div class="carousel-item active">
-	            <img src="/images/upload/${prod.uploadFileName}" class="d-block w-100"/>
+	            <img src="/images/upload/${photos.uploadFileName}" class="d-block w-100"/>
 	          </div>          
 	        </div>
-<!--         <button -->
-<!--           class="carousel-control-prev" -->
-<!--           type="button" -->
-<!--           data-bs-target="#carouselExample" -->
-<!--           data-bs-slide="prev" -->
-<!--         > -->
-<!--           <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
-<!--           <span class="visually-hidden">Previous</span> -->
-<!--         </button> -->
-<!--         <button -->
-<!--           class="carousel-control-next" -->
-<!--           type="button" -->
-<!--           data-bs-target="#carouselExample" -->
-<!--           data-bs-slide="next" -->
-<!--         > -->
-<!--           <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
-<!--           <span class="visually-hidden">Next</span> -->
-<!--         </button> -->
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExample"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExample"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
 
       <div class="container title--title">
@@ -147,7 +147,7 @@
     <!-- Detail Image Start -->
 	    <div class="container">
 	      <div class="card content--card">
-	        <img src="/images/upload/${dto.uploadFileName}"/>
+	        <img src="/images/upload/${photo.uploadFileName}"/>
 	      </div>       
 	    </div>
     <div class="d-flex">

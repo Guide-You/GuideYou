@@ -37,6 +37,8 @@ public class PageRes<Object> {
 	
 	// 끝 블럭 페이지 번호
 	private int endPage;
+	
+	private String Keyword;
 
 	 public PageRes(List<Object> content, int number, long totalElements, int size) {
 	        this.content = content;

@@ -35,16 +35,17 @@
             <option value="12">제주도</option>
             <option value="13">기타</option>
         </select><br><br>
+        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;" id="cityCodeId"></div>
         
         <!-- 글 정보 입력 -->
         <label for="title">글 제목:</label><br>
-        <input type="text" id="title" name="title" maxlength="50" value="sss"><br><br>
+        <input type="text" id="title" name="title" maxlength="50"><br><br>
         
         <label for="price">가격:</label><br>
         <input type="text" id="price" name="price" maxlength="10" value="1000"><br><br>
         
         <label for="content">글 내용:</label><br>
-        <textarea id="content" name="content" style="height:150px; resize: none;">aaa</textarea><br><br>
+        <textarea id="content" name="content" style="height:150px; resize: none;"></textarea><br><br>
         
         
         
@@ -83,7 +84,18 @@ $(document).ready(function() {
             selectedFilesContainer.append('<p>선택된 파일 없음</p>');
         }
     });
+    
+    function displaySelectedRegion() {
+        var regionSelect = document.getElementById("region");
+        var selectedText = regionSelect.options[regionSelect.selectedIndex].text;
+        var cityCodeIdElement = document.getElementById("cityCodeId");
+        cityCodeIdElement.textContent = selectedText;
+    }
+    
+    
 });
+
+
 </script>    
 </body>
 </html>

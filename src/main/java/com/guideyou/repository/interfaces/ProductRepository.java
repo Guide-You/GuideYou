@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.guideyou.dto.PageReq;
+import com.guideyou.dto.PageRes;
 import com.guideyou.dto.ProductSaveFormDto;
 import com.guideyou.repository.entity.Product;
 
@@ -31,8 +33,19 @@ public interface ProductRepository {
 	public List<ProductSaveFormDto> findProductsByCityCode(String cityCode);	
 	
 	// 페이징 처리
-	public List<Product> findAllwithPasing(@Param ("offset") int offset, @Param ("limit") int limit);
+	public List<Product> findAllwithPasing(@Param ("offset") int offset, @Param ("limit") int limit, 
+											@Param("title") String title);
 	
 	public int getTotalCount();
 	
+	
+	// 비동기적 페이징 처리
+	PageRes<Product> getProductsWithPaging(PageReq pageReq);
+
+    int getTotalProductCount();
+    
+    
+    // 인기 플랜 조회
+    List<Product> popularProduct();
+    	
 }

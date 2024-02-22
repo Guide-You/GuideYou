@@ -16,6 +16,7 @@ public class ProductSaveFormDto {
 	private Integer cityCodeId;
 	private String title;
 	private String content;
+	private String writer;
 	private Long price;	
 	private MultipartFile[] customFile;	
 	private String productPhotoPath;

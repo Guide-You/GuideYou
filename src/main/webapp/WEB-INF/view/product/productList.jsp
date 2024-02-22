@@ -10,8 +10,8 @@
 	<!-- Search Start -->
 	<section class="sc-a37b6b4d-0 iVnkhP">
 		<div class="sc-a37b6b4d-1 bBhtyX">
-			<input maxlength="20" class="sc-a37b6b4d-2 cpWeqo" value=""
-				placeholder="🔍 어느 도시로 떠나시나요?" />
+			<input id="searchInput" maxlength="20" class="sc-a37b6b4d-2 cpWeqo" value="" placeholder="🔍 어느 도시로 떠나시나요?" />
+			<button id="searchButton">검색</button>
 		</div>
 	</section>
 	<!-- Search End -->
@@ -168,37 +168,29 @@
 											</div>
 										</c:forEach>
 
-
-
-
-
-
 										<!-- 페이징 처리 -->
-                <div class="pagination justify-content-center mb-5">
-                    <c:if test="${page > 1}">
-                        <a href="?page=1&size=${size}">&laquo; 첫 페이지</a>
-                        <a href="?page=${page - 1}&size=${size}">&laquo; 이전</a>
-                    </c:if>
-                    <c:forEach begin="${startPage}" end="${endPage}" var="i">
-                        <c:choose>
-                            <c:when test="${i eq page}">
-                                <a href="?page=${i}&size=${size}" class="active">${i}</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="?page=${i}&size=${size}">${i}</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <c:if test="${page < totalPages}">
-                        <a href="?page=${page + 1}&size=${size}">다음 &raquo;</a>
-                        <a href="?page=${totalPages}&size=${size}">마지막 페이지 &raquo;</a>
-                    </c:if>
-                </div>
-
-
-
-
-
+										<div class="pagination justify-content-center mb-5">
+											<c:if test="${page > 1}">
+												<a href="?page=1&size=${size}">&laquo; 첫 페이지</a>
+												<a href="?page=${page - 1}&size=${size}">&laquo; 이전</a>
+											</c:if>
+											<c:forEach begin="${startPage}" end="${endPage}" var="i">
+												<c:choose>
+													<c:when test="${i eq page}">
+														<a href="?page=${i}&size=${size}" class="active">${i}</a>
+													</c:when>
+													<c:otherwise>
+														<a href="?page=${i}&size=${size}">${i}</a>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+											<c:if test="${page < totalPages}">
+												<a href="?page=${page + 1}&size=${size}">다음 &raquo;</a>
+												<a href="?page=${totalPages}&size=${size}">마지막 페이지
+													&raquo;</a>
+											</c:if>
+										</div>
+										
 									</div>
 								</div>
 							</div>
@@ -209,6 +201,8 @@
 		</div>
 	</div>
 </body>
+
+
 
 
 <!-- footer -->
