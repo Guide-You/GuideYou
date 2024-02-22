@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.guideyou.dto.PageReq;
+import com.guideyou.dto.PageRes;
 import com.guideyou.dto.ProductSaveFormDto;
 import com.guideyou.repository.entity.Product;
 
@@ -21,20 +23,32 @@ public interface ProductRepository {
 	public int deletById(Integer id);
 	
 	public List<Product> findAllByUserId(Integer userId);
-	public Product findByProductId(Integer id);
+	public ProductSaveFormDto findByProductId(Integer id);
 	public List<Product> findAll();
 	
 	public List<Product> findByTitleContaining(String keyword);	
 	
 	// 상품 대표 이미지 찾기
-	public List<Product> findProductsWithImages();
+	public List<Product> findProductsWithImages(@Param ("offset") int offset, @Param ("limit") int limit, 
+			@Param("searchText") String searchText);
 	
 	// citycode로 페이지 출력
 	public List<ProductSaveFormDto> findProductsByCityCode(String cityCode);	
 	
 	// 페이징 처리
-	public List<Product> findAllwithPasing(@Param ("offset") int offset, @Param ("limit") int limit);
+	public List<Product> findAllwithPasing(@Param ("offset") int offset, @Param ("limit") int limit,
+											@Param("searchText") String searchText, @Param("cityCodeId") String cityCodeId);
 	
-	public int getTotalCount();
+	public int getTotalCount(@Param("searchText") String searchText, @Param("cityCodeId") String cityCodeId);
 	
+	
+	// 비동기적 페이징 처리
+	PageRes<Product> getProductsWithPaging(PageReq pageReq);
+
+    int getTotalProductCount();
+    
+    
+    // 인기 플랜 조회
+    List<Product> popularProduct();
+    	
 }

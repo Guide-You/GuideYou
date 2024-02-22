@@ -6,13 +6,40 @@
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+<style>
+.fruite .fruite-item .fruite-img img {
+    height: 170px;
+}
+
+.title-text {
+	background-color: rgba(255,255,255,0.8);
+	border-radius: 2px;
+	
+}
+
+.searchBtn {
+	background-color: #91caff;
+	border-radius: 5px;
+	padding: 15px 25px;
+	margin-left: 25px;
+	font-size: 20px;
+
+}
+
+</style>	
+	
 <body>
 	<!-- Search Start -->
 	<section class="sc-a37b6b4d-0 iVnkhP">
-		<div class="sc-a37b6b4d-1 bBhtyX">
-			<input maxlength="20" class="sc-a37b6b4d-2 cpWeqo" value=""
-				placeholder="🔍 어느 도시로 떠나시나요?" />
-		</div>
+		<form action="list" id="searchForm">
+			<div class="sc-a37b6b4d-1 bBhtyX">
+				<input id="searchText" maxlength="20" class="sc-a37b6b4d-2 cpWeqo" value="" placeholder="🔍 어느 도시로 떠나시나요?" name="searchText"/>
+<!-- 				<button id="searchButton">검색</button> -->
+					<span class="searchBtn btn">검색</span>
+				<input type="hidden" id="cityCodeId" name="cityCodeId">
+			</div>
+		</form>
 	</section>
 	<!-- Search End -->
 
@@ -144,8 +171,8 @@
 															class="img-fluid w-100 rounded-top" />
 													</div>
 													<div
-														class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-														style="top: 10px; left: 10px;">${prod.cityCodeId}</div>
+														class="title-text bg-secondary px-3 py-1 rounded position-absolute"
+														style="top: 10px; left: 10px;">${prod.cityName}</div>
 													<div
 														class="p-4 border border-secondary border-top-0 rounded-bottom"
 														style="max-height: 300px; overflow: hidden;">
@@ -168,37 +195,29 @@
 											</div>
 										</c:forEach>
 
-
-
-
-
-
 										<!-- 페이징 처리 -->
-                <div class="pagination justify-content-center mb-5">
-                    <c:if test="${page > 1}">
-                        <a href="?page=1&size=${size}">&laquo; 첫 페이지</a>
-                        <a href="?page=${page - 1}&size=${size}">&laquo; 이전</a>
-                    </c:if>
-                    <c:forEach begin="${startPage}" end="${endPage}" var="i">
-                        <c:choose>
-                            <c:when test="${i eq page}">
-                                <a href="?page=${i}&size=${size}" class="active">${i}</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="?page=${i}&size=${size}">${i}</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <c:if test="${page < totalPages}">
-                        <a href="?page=${page + 1}&size=${size}">다음 &raquo;</a>
-                        <a href="?page=${totalPages}&size=${size}">마지막 페이지 &raquo;</a>
-                    </c:if>
-                </div>
-
-
-
-
-
+										<div class="pagination justify-content-center mb-5">
+											<c:if test="${page > 1}">
+												<a href="?page=1&size=${size}">&laquo; 첫 페이지</a>
+												<a href="?page=${page - 1}&size=${size}">&laquo; 이전</a>
+											</c:if>
+											<c:forEach begin="${startPage}" end="${endPage}" var="i">
+												<c:choose>
+													<c:when test="${i eq page}">
+														<a href="?page=${i}&size=${size}" class="active">${i}</a>
+													</c:when>
+													<c:otherwise>
+														<a href="?page=${i}&size=${size}">${i}</a>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+											<c:if test="${page < totalPages}">
+												<a href="?page=${page + 1}&size=${size}">다음 &raquo;</a>
+												<a href="?page=${totalPages}&size=${size}">마지막 페이지
+													&raquo;</a>
+											</c:if>
+										</div>
+										
 									</div>
 								</div>
 							</div>
@@ -209,6 +228,15 @@
 		</div>
 	</div>
 </body>
+
+<script>
+function showCity(id) {
+	$("#cityCodeId").val(id);
+	$("#searchForm").submit();
+	
+
+}
+</script>
 
 
 <!-- footer -->

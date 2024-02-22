@@ -16,7 +16,9 @@ public class ProductSaveFormDto {
 	private Integer cityCodeId;
 	private String title;
 	private String content;
+	private String writer;
 	private Long price;	
+	private Integer productId;
 	private MultipartFile[] customFile;	
 	private String productPhotoPath;
 	private String originFileName;
@@ -24,8 +26,7 @@ public class ProductSaveFormDto {
 	private Integer soldCount;
 	private Integer wishCount;
 	private Integer viewCount;
-	
-	private String keyword;
+	private String cityName;
 }
 
 
