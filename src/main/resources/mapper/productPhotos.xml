@@ -15,7 +15,7 @@
 		 delete from product_photos where id = #{id}	     
 	</delete>	
 	
-	<select id="findAllByProductId" resultType="com.guideyou.dto.ProductSaveFormDto">
+	<select id="findAllByProductId" resultType="com.guideyou.dto.ProductDto">
 		select * from product_photos where product_id = #{productId}
 	</select>
 	
@@ -35,7 +35,7 @@
 		DESC LIMIT 1 
 	</select>
 	
-	<select id="selectPhotoList" resultType="com.guideyou.dto.ProductSaveFormDto">
+	<select id="selectPhotoList" resultType="com.guideyou.dto.ProductDto">
 		SELECT p.*, MAX(pi.upload_file_name) AS uploadFileName
 		FROM product p
 		LEFT JOIN product_photos pi ON p.id = pi.product_id

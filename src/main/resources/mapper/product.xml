@@ -33,7 +33,7 @@
 		select * from product where user_id = #{userId}
 	</select>
 	
-	<select id="findByProductId" resultType="com.guideyou.dto.ProductSaveFormDto">
+	<select id="findByProductId" resultType="com.guideyou.dto.ProductDto">
 		select * from product a 
 		left join product_photos b on a.id = b.product_id 
 		where b.thumbnail is not null
@@ -63,7 +63,7 @@
 		
 	
 	<!-- 페이지 처리 -->
-	<select id="findAllwithPasing" resultType="com.guideyou.dto.ProductSaveFormDto">
+	<select id="findAllwithPasing" resultType="com.guideyou.dto.ProductDto">
 		select p.*, ph.product_id, c.id from product p
 		left join product_photos ph on p.id = ph.product_id
 		left join city_code c on p.city_code_id = c.id
@@ -91,7 +91,7 @@
 	
 	
 	<!-- 인기 상품 목록 조회 - 판매 순 -->
-	<select id="popularProduct" resultType="com.guideyou.dto.ProductSaveFormDto">
+	<select id="popularProduct" resultType="com.guideyou.dto.ProductDto">
 		SELECT p.*, pi.upload_file_name AS uploadFileName
 	    FROM product p
 	    LEFT JOIN product_photos pi ON p.id = pi.product_id
