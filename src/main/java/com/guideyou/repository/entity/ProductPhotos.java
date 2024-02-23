@@ -17,5 +17,6 @@ public class ProductPhotos {
 	private String productPhotoPath;
 	private String originFileName;
 	private String uploadFileName;
+	private String thumbnail;
 	private Timestamp createdAt;
 }
