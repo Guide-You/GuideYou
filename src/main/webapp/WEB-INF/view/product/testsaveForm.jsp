@@ -50,40 +50,57 @@
         
         
         <!-- 파일 선택 input 대신 label을 사용하여 버튼으로 보여줌 -->
-        <label for="fileInput" class="custom-file-input">사진 추가</label>
-        <input type="file" id="fileInput" name="customFile"  multiple>
-
+        <label for="customFile" class="custom-file-input">사진 추가</label>
+        <input type="file" id="customFile" name="customFile"  multiple>
+		
+		<input type="hidden" value="" id="removeImgs" name="removeImgs">
+		
+		
+		<style>
+			.imgNameBox {
+				background-color: #ccc;
+				width: 100%;
+				height: 300px;
+				overflow: scroll;
+			
+			}
+			
+			.removeImg {
+				color: red;
+				margin-left: 20px;
+			}
+		</style>
+		<div class="imgNameBox">
+			<c:forEach items="${photoResult}" var="pho">
+				<p id="imgName_${pho.id}">${pho.originFileName}<span onclick="deleteImg(${pho.id})" class="removeImg">O</span></p>
+				
+				
+			</c:forEach>
+		</div>
+		
+		
+		
+		
+		
 
         <!-- 등록 버튼 -->
         <input type="submit" value="등록">
     </form>
 </div>
 <script>
-$(document).ready(function() {
-    $('#region').change(function() {
-        var selectedCityCodeId = $(this).val(); // 선택된 지역의 cityCodeId 값을 가져옴
-        $('#cityCodeId').val(selectedCityCodeId); // 숨은 필드에 cityCodeId 값을 설정
-    });
-});
+function deleteImg(id) {
+	let removeImgNum = $("#removeImgs").val();
+	if (removeImgNum == "") {
+		removeImgNum += id; 
+	} else {
+		removeImgNum += "," + id;
+	}
+	
+	$("#removeImgs").val(removeImgNum);
+	$("#imgName_" + id).css("display","none");
+}
 
-$(document).ready(function() {
-    // 파일 선택이 변경되었을 때 실행되는 함수
-    $('#fileInput').change(function() {
-        // 선택된 파일 목록 가져오기
-        var files = $(this)[0].files;
-        // 선택된 파일 이름을 보여줄 공간 선택
-        var selectedFilesContainer = $('#selectedFiles');
-        // 선택된 파일 이름을 초기화
-        selectedFilesContainer.empty();
-        // 선택된 파일이 있으면 파일 이름을 표시
-        if (files.length > 0) {
-            for (var i = 0; i < files.length; i++) {
-                selectedFilesContainer.append('<p>' + files[i].name + '</p>');
-            }
-        } else {
-            selectedFilesContainer.append('<p>선택된 파일 없음</p>');
-        }
-    });
+
     
     function displaySelectedRegion() {
         var regionSelect = document.getElementById("region");
@@ -94,6 +111,26 @@ $(document).ready(function() {
     
     
 });
+
+$(document).ready(function() {
+    // 파일이 선택되면 실행되는 이벤트 핸들러
+    $('#customFile').change(function() {
+        // 선택된 파일 목록을 가져옴
+        var files = $(this)[0].files; 
+        
+        // 선택된 파일 목록을 순회하며 파일 이름을 표시
+        for (var i = 0; i < files.length; i++) {
+            // 새로운 파일 이름을 추가하는 HTML 코드 생성
+            var fileName = files[i].name;
+            var newFileNameElement = fileName;
+            
+            // 새로운 파일 이름을 imgNameBox에 추가
+            $('.imgNameBox').append(newFileNameElement);
+        }
+    });
+});
+
+
 
 
 </script>    

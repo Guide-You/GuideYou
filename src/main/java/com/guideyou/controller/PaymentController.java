@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.guideyou.dto.ProductSaveFormDto;
+import com.guideyou.dto.ProductDto;
 import com.guideyou.dto.payment.OrderDto;
 import com.guideyou.dto.payment.PaymentDto;
 import com.guideyou.service.PaymentService;

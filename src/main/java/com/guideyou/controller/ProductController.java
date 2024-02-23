@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
-import com.guideyou.dto.ProductSaveFormDto;
+import com.guideyou.dto.ProductDto;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.User;
@@ -34,14 +34,17 @@ public class ProductController {
 
 	// 상품 등록 페이지
 	@GetMapping("/save")
-	public String savePage() {
+	public String savePage(Model model, Integer productId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		
+		List<ProductDto> photoResult = productService.findAllByProductId(productId);
+		model.addAttribute("photoResult", photoResult);
 		
 		return "product/testsaveForm";
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws 
 	 * @Method Name : createProduct
 	 * @작성일 : 2024. 2. 16.
 	 * @작성자 : 장명근
@@ -50,13 +53,13 @@ public class ProductController {
 	 */
 	// TODO : 24.02.20 이미지 불러오기
 	@PostMapping("/save")
-	public String saveProduct(ProductSaveFormDto dto, @RequestParam("region") Integer cityCodeId) {
+	public String saveProduct(ProductDto dto, @RequestParam("region") Integer cityCodeId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		dto.setUserId(principal.getId());
-		
+		dto.setUserId(principal.getId());		
 		dto.setCityCodeId(cityCodeId);
 
 		boolean result = productService.createProduct(dto);
+		
 
 		if (result == false) {
 			throw new CustomRestfulException("상품 등록에 실패하였습니다.", HttpStatus.BAD_REQUEST);
@@ -88,8 +91,8 @@ public class ProductController {
 		model.addAttribute("startPage", pageRes.getStartPage());
 		model.addAttribute("endPage", pageRes.getEndPage());
 
-		List<ProductSaveFormDto> dto = productService.selectPhotoList();
-		model.addAttribute("dto", dto); 
+		List<ProductDto> dto = productService.selectPhotoList();
+		model.addAttribute("dto", dto);
 		
 
 		return "product/productList";
@@ -100,29 +103,23 @@ public class ProductController {
 	// 상품 상세 페이지
 	@GetMapping("/detail/{productId}")
 	public String productDetail(@PathVariable("productId") Integer productId, Model model) {
-//       List<ProductSaveFormDto> photos = productService.findAllByProductId(productId);    	
-//       model.addAttribute("photos", photos);
 
-		ProductSaveFormDto product = productService.findByProductId(productId);
+		ProductDto product = productService.findByProductId(productId);
 		model.addAttribute("product", product);
 
 		return "product/productDetail";
 	}
-	
-	
-	
+		
 	
 	// 상품 수정 페이지
 	@GetMapping("/update/{productId}")
 	public String productUpdatePage(@PathVariable("productId") Integer productId, Model model) {
 
-		List<ProductSaveFormDto> photoResult = productService.findAllByProductId(productId);
+		List<ProductDto> photoResult = productService.findAllByProductId(productId);
 		model.addAttribute("photoResult", photoResult);
 
-//	   List<ProductPhotos> findName = productService.findFileName(productId);    	
-//     model.addAttribute("findName", findName);
 
-		ProductSaveFormDto product = productService.findByProductId(productId);
+		ProductDto product = productService.findByProductId(productId);
 		model.addAttribute("product", product);
 
 		return "product/testupdate";
@@ -131,9 +128,8 @@ public class ProductController {
 	// TODO: [front]수정 버튼 현재 detail 페이지에 있음 추후 member upload list 페이지로 옮길 예정
 	// (2024.02.21)
 	// 상품 수정 기능
-	// TODO : 24.02.21 이미지 삭제 미구현
 	@PostMapping("/update/{productId}")
-	public String updateProduct(@PathVariable("productId") Integer productId, ProductSaveFormDto dto,
+	public String updateProduct(@PathVariable("productId") Integer productId, ProductDto dto,
 			@RequestParam("region") Integer cityCodeId, @RequestParam("removeImgs") String removeImgs) {
 
 		dto.setCityCodeId(cityCodeId);

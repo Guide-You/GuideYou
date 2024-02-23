@@ -3,15 +3,10 @@
 <mapper namespace="com.guideyou.repository.interfaces.ProductPhotosRepository">
 
 	<insert id="insert">
-		insert into product_photos(product_id, product_photo_path, origin_file_name, upload_file_name)
-		values(#{productId}, #{productPhotoPath}, #{originFileName}, #{uploadFileName})
+		insert into product_photos(product_id, product_photo_path, origin_file_name, upload_file_name, thumbnail)
+		values(#{productId}, #{productPhotoPath}, #{originFileName}, #{uploadFileName}, #{thumbnail})
 	</insert>
-
-	<update id="updateById">
-		update product_photos set product_photo = #{productPhoto}, origin_file_name = #{originFileName}, 
-		upload_file_name = #{uploadFileName} where product_id = #{productId}
-	</update>
-
+	
 	<delete id="deleteByPhoto">
 		delete from product_photos where product_id = #{productId}
 	</delete>
@@ -33,15 +28,19 @@
 	</select>
 	
 	<select id="findPhoto" resultType="com.guideyou.repository.entity.ProductPhotos">
-		SELECT upload_file_name FROM product_photos WHERE product_id = #{productId} ORDER BY created_at DESC LIMIT 1
+		SELECT upload_file_name 
+		FROM product_photos 
+		WHERE product_id = #{productId} 
+		ORDER BY created_at 
+		DESC LIMIT 1 
 	</select>
 	
 	<select id="selectPhotoList" resultType="com.guideyou.dto.ProductSaveFormDto">
-		SELECT p.*, pi.upload_file_name AS uploadFileName
-	    FROM product p
-	    LEFT JOIN product_photos pi ON p.id = pi.product_id
-	    GROUP BY p.id
-	    ORDER BY pi.created_at DESC
+		SELECT p.*, MAX(pi.upload_file_name) AS uploadFileName
+		FROM product p
+		LEFT JOIN product_photos pi ON p.id = pi.product_id
+		GROUP BY p.id
+		ORDER BY MAX(pi.created_at) DESC
 	</select>
 	
 </mapper>
