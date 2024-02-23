@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 
     <!-- mypage Start -->
@@ -16,50 +16,50 @@
               <div class="dropdown ">
                 <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle profile--myinfo" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="" width="32" height="32" class="rounded-circle me-2">
-                  <strong >¹Ú°æÁø ´Ô</strong>
+                  <strong >ï¿½Ú°ï¿½ï¿½ï¿½ ï¿½ï¿½</strong>
                 </a>
                 <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                  <li><a class="dropdown-item profile--logout" href="#">·Î±×¾Æ¿ô</a></li>
+                  <li><a class="dropdown-item profile--logout" href="#">ï¿½Î±×¾Æ¿ï¿½</a></li>
                 </ul>
               </div>
 
               <hr>
-              <ul class="nav nav-pills flex-column mb-auto aside--mypage">¸¶ÀÌ ÆäÀÌÁö
+              <ul class="nav nav-pills flex-column mb-auto aside--mypage">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 <li class="nav-item"> 
                   <a href="#" class="nav-link active" aria-current="page">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg><i class="bi bi-person-circle"></i>
-                    ÇÁ·ÎÇÊ ¼öÁ¤
+                    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                   </a>
                 </li>
                 <li>
                   <a href="#" class="nav-link link-dark">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg><i class="bi bi-bell-fill"></i>
-                    ¾Ë¸²
+                    ï¿½Ë¸ï¿½
                   </a>
                 </li>
               </ul>
-              <ul class="nav nav-pills flex-column mb-auto aside--mypage">³ªÀÇ ¿©Çà ÀÏÁ¤
+              <ul class="nav nav-pills flex-column mb-auto aside--mypage">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 <li>
                   <a href="#" class="nav-link link-dark">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg><i class="bi bi-map"></i>
-                    ³ªÀÇ ¿©Çà ¸Ê
+                    ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                   </a>
                 </li>
                 <li>
                   <a href="#" class="nav-link link-dark">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg><i class="bi bi-geo-alt"></i>
-                    ±¸¸ÅÇÑ ÀÏÁ¤ ³»¿ª
+                    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                   </a>
                 </li>
                 <li>
                   <a href="#" class="nav-link link-dark">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg><i class="bi bi-heart"></i>
-                    Âò¸ñ·Ï
+                    ï¿½ï¿½ï¿½ï¿½
                   </a>
                 </li>
               </ul>
               <hr>
-              <button class="aside--Withdrawal">È¸¿øÅ»Åð</button>
+              <button class="aside--Withdrawal">È¸ï¿½ï¿½Å»ï¿½ï¿½</button>
             </div>
           </div>
           <!-- aside End -->
