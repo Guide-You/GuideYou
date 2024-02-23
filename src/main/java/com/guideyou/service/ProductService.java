@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
-import com.guideyou.dto.ProductSaveFormDto;
+import com.guideyou.dto.ProductDto;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.ProductPhotos;
 import com.guideyou.repository.interfaces.ProductPhotosRepository;
@@ -36,7 +36,7 @@ public class ProductService {
 
 	// 상품 등록
 	@Transactional
-	public boolean createProduct(ProductSaveFormDto dto) {
+	public boolean createProduct(ProductDto dto) {
 
 		// Product 저장
 		Product product = Product.builder()
@@ -62,7 +62,7 @@ public class ProductService {
 			String filename = files[i].getOriginalFilename();
 			String path = Define.UPLOAD_FILE_DERECTORY;
 			String ext = StringUtils.getFilenameExtension(filename);
-
+			
 			LocalDateTime now = LocalDateTime.now();
 			String uploadFileName = "P" + now.getYear() + now.getMonthValue() + now.getDayOfMonth() + now.getHour()
 					+ now.getMinute() + now.getSecond() + (int) (Math.random() * 100) + "." + ext;
@@ -94,7 +94,15 @@ public class ProductService {
 	}
 
 	@Transactional
-	public boolean insertPhoto(ProductSaveFormDto dto, Integer productId) {
+	public boolean insertPhoto(ProductDto dto, Integer productId) {
+		String saveDirectory = Define.UPLOAD_FILE_DERECTORY;
+		// 폴더가 없다면 오류 발생(파일 생성시)
+		File dir = new File(saveDirectory);
+		if (dir.exists() == false) {
+			dir.mkdir(); // 폴더가 없으면 폴더 생성
+		}
+		
+		
 		MultipartFile[] files = dto.getCustomFile();
 		for (int i = 0; i < files.length; i++) {
 			String filename = files[i].getOriginalFilename();
@@ -131,50 +139,41 @@ public class ProductService {
 		return true;
 	}
 
-	// citycode로 인한 출력
-	public List<ProductSaveFormDto> getProductsByCityCode(String cityCode) {
-		return productRepository.findProductsByCityCode(cityCode);
-	}
+	
 
 	public List<Product> readProduct() {
 		return productRepository.findAll();
 	}
-
+	
 	public ProductPhotos readPhoto() {
 
 		return photosRepository.findPhoto();
 	}
 
 	// 상품에 해당하는 사진 한 장 찾기
-	public List<ProductSaveFormDto> selectPhotoList() {
+	public List<ProductDto> selectPhotoList() {
 		return photosRepository.selectPhotoList();
 	}
-
-	public ProductSaveFormDto findByProductId(Integer id) {
+	
+	
+	
+	
+	public ProductDto findByProductId(Integer id) {
 		return productRepository.findByProductId(id);
 
 	}
 
 	// 해당 상품 이미지 전부 찾기
-	public List<ProductSaveFormDto> findAllByProductId(Integer productId) {
+	public List<ProductDto> findAllByProductId(Integer productId) {
 		return photosRepository.findAllByProductId(productId);
 	}
 
-	public List<ProductSaveFormDto> findFileName(Integer productId) {
-		List<ProductSaveFormDto> list = photosRepository.findAllByProductId(productId);
+	public List<ProductDto> findFileName(Integer productId) {
+		List<ProductDto> list = photosRepository.findAllByProductId(productId);
 		return list;
 	}
 
-	// 검색
-	@Transactional
-	public List<Product> search(String keyword) {
-
-		List<Product> productList = productRepository.findByTitleContaining(keyword);
-
-		return productList;
-
-	}
-
+	
 	// 사진 한 장과 상품 설명
 	public List<Product> getProductsWithImages(int offset, int limit, String searchText) {
 		return productRepository.findProductsWithImages(offset, limit, searchText);
@@ -217,14 +216,14 @@ public class ProductService {
 
 	// 상품 정보 업데이트
 	@Transactional
-	public void updateProduct(Integer id, ProductSaveFormDto dto) {
+	public void updateProduct(Integer id, ProductDto dto) {
 		Product product = Product.builder().id(id).cityCodeId(dto.getCityCodeId()).title(dto.getTitle())
 				.price(dto.getPrice()).content(dto.getContent()).build();
 		productRepository.updateById(product);
 	}
 
 	@Transactional
-	public Boolean updatePhoto(Integer id, ProductSaveFormDto dto) {
+	public Boolean updatePhoto(Integer id, ProductDto dto) {
 
 		MultipartFile[] files = dto.getCustomFile();
 		for (int i = 0; i < files.length; i++) {
@@ -284,11 +283,7 @@ public class ProductService {
 		return pageRes;
 	}
 
-	// 비동기적 페이징 처리
-	public PageRes<Product> productUsingPage(PageReq pageReq) {
-		return productRepository.getProductsWithPaging(pageReq);
-	}
-	
+
 	
 	// 인기 상품 조회
 	public List<Product> popularProduct() {

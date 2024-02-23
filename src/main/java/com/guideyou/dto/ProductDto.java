@@ -10,7 +10,7 @@ import lombok.Data;
 // TODO: DTO명 수정 (2024.02.21 경진) - 확인자 : 명근 
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ProductSaveFormDto {
+public class ProductDto {
 	private Integer id;
 	private Integer userId;
 	private Integer cityCodeId;
@@ -23,6 +23,7 @@ public class ProductSaveFormDto {
 	private String productPhotoPath;
 	private String originFileName;
 	private String uploadFileName;
+	private String thumbnail;
 	private Integer soldCount;
 	private Integer wishCount;
 	private Integer viewCount;

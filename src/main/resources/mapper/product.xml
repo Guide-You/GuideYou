@@ -17,11 +17,11 @@
 	</update>
 	
 	<update id="updateByWishCount">
-		update product set wish_count = #{wishCount} where id = #{id}
+		update product set wish_count += 1 #{wishCount} where id = #{id}
 	</update>
 	
 	<update id="updateByViewCount">
-		update product set view_count = #{viewCount} where id = #{id}
+		update product set view_count += 1 #{viewCount} where id = #{id}
 	</update>
 
 
@@ -34,19 +34,15 @@
 	</select>
 	
 	<select id="findByProductId" resultType="com.guideyou.dto.ProductSaveFormDto">
-		SELECT p.*, pi.upload_file_name AS uploadFileName
-	    FROM product p
-	    LEFT JOIN product_photos pi ON p.id = pi.product_id
-	   	where pi.id = #{id}
+		select * from product a 
+		left join product_photos b on a.id = b.product_id 
+		where b.thumbnail is not null
 	</select>
 		
 	<select id="findAll" resultType="com.guideyou.repository.entity.Product">
 		select * from product ORDER BY created_at DESC
 	</select>
 	
-	<select id="selectByTitle" resultType="com.guideyou.repository.entity.Product">
-		select * from product where title like CONCAT('%', #{title}, '%')
-	</select>	
 	
 	<!-- 검색과 페이징 -->
 	<select id="findProductsWithImages" resultType="com.guideyou.repository.entity.Product">
@@ -64,16 +60,11 @@
 	    ORDER BY p.created_at DESC
 	    limit #{limit} offset #{offset}
 	</select>
-	
-	
-	<!-- citycode로 인한 출력 -->
-	<select id="findProductsByCityCode" resultType="com.guideyou.repository.entity.Product">
-		SELECT p FROM Product p WHERE p.city_code_id = #{cityCodeId}
-	</select>
+		
 	
 	<!-- 페이지 처리 -->
 	<select id="findAllwithPasing" resultType="com.guideyou.dto.ProductSaveFormDto">
-		select * from product p
+		select p.*, ph.product_id, c.id from product p
 		left join product_photos ph on p.id = ph.product_id
 		left join city_code c on p.city_code_id = c.id
 		where 1 = 1
@@ -105,7 +96,7 @@
 	    FROM product p
 	    LEFT JOIN product_photos pi ON p.id = pi.product_id
 	    GROUP BY p.id
-	    ORDER BY p.sold_count DESC;
+	    ORDER BY p.sold_count DESC
 	</select>
 		
 		

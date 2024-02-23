@@ -84,14 +84,6 @@
     </form>
 </div>
 <script>
-$(document).ready(function() {
-    $('#region').change(function() {
-        var selectedCityCodeId = $(this).val(); // 선택된 지역의 cityCodeId 값을 가져옴
-        $('#cityCodeId').val(selectedCityCodeId); // 숨은 필드에 cityCodeId 값을 설정
-    });
-});
-
-
 
 function deleteImg(id) {
 	let removeImgNum = $("#removeImgs").val();
