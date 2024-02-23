@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
+    pageEncoding="UTF-8"%>
+    
 
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
@@ -14,17 +14,17 @@
 			<div class="registration-form profile--form">
 				<form action="/member/profile" method="post" name="signUpForm">
 					<div class="form-icon">
-						<span><i class="icon icon-user"></i></span>
+						<span><i class="icon icon-user"></i> </span>
 					</div>
 					<div class="form-group">
 						<div class="form-control item" id="username">
 							${principal.name}</div>
-						<input type="text" class="form-control item" id="nickname"
+						<input type="text" class="form-control item" name="nickname" id="nickname"
 							placeholder="닉네임을 입력해주세요"
 							value="${not empty principal.nickname && principal.nickname ne 'DEFAULT_NICKNAME' ? principal.nickname : ''}">
 						<div class="form-control item" id="email">${principal.email}
 						</div>
-						<input type="text" class="form-control item" id="phone"
+						<input type="text" class="form-control item" name="phone" id="phone"
 							placeholder="휴대폰 번호를 입력해주세요"
 							value="${not empty principal.phone && principal.phone ne 'DEFAULT_PHONENUMBER' ? principal.phone : ''}">
 					</div>

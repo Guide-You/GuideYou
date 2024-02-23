@@ -125,7 +125,7 @@
                   >3</span
                 >
               </a>
-              <a href="#" class="my-auto">
+              <a href="/member/profile" class="my-auto">
                 <i class="fas fa-user fa-2x"></i>
               </a>
             </div>
