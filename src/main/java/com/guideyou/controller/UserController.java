@@ -169,7 +169,7 @@ public class UserController {
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
 			return "redirect:/member/signUp";
 		}
-		httpSession.setAttribute(Define.PRINCIPAL, naverUser);
+		httpSession.setAttribute(Define.PRINCIPAL, user);
 
 		return "redirect:/main";
 	}
@@ -250,7 +250,7 @@ public class UserController {
 			}
 		}
 		
-		httpSession.setAttribute(Define.PRINCIPAL, googleUser);
+		httpSession.setAttribute(Define.PRINCIPAL, user);
 		return "redirect:/main";
 	}
 }

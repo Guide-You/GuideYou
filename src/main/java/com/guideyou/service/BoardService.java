@@ -1,5 +1,7 @@
 package com.guideyou.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +23,6 @@ public class BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
 
-	public BoardService(BoardRepository boardRepository) {
-		this.boardRepository = boardRepository;
-	}
-
 	/**
 	  * @Method Name : insert
 	  * @작성일 : 2024. 2. 21.
@@ -43,4 +41,28 @@ public class BoardService {
 		boardRepository.insert(board);
 		
 	}
+	/**
+	  * @Method Name : boardList
+	  * @작성일 : 2024. 2. 22.
+	  * @작성자 : 김수현
+	  * @변경이력 : 
+	  * @Method 설명 : 글 전체 불러오기
+	  */
+	public List<Board> boardList() {
+		List<Board> boardList = boardRepository.findAll();
+		return boardList;
+	}
+	/**
+	  * @Method Name : getBoard
+	  * @작성일 : 2024. 2. 23.
+	  * @작성자 : 김수현
+	  * @변경이력 : 
+	  * @Method 설명 : Board 삭제입니다
+	  */
+	// 글삭제 
+	public int deleteById(Integer id) {
+		
+		return boardRepository.deleteById(id);
+	}
+	
 }

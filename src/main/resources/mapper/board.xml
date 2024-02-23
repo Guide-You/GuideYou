@@ -8,4 +8,22 @@
 		#{title}, #{content})
 	</insert>
 	
+	<select id="findAll" resultType="com.guideyou.repository.entity.Board">
+		select * from board_contents 
+	</select>
+	<!-- 페이징 처리 쿼리 -->
+	<select id="findAllPgs" resultType="com.guideyou.repository.entity.Board">
+		select * from board_contents 
+		limit = #{limit}, offset = #{offset}
+	</select>
+	<!-- 전체 데이터 개수 쿼리 -->
+	<select id="getAllPgCount" resultType="int">
+	 	select count(*) from board_contents
+	</select>
+	<!-- 삭제 쿼리 -->
+	<delete id="deleteById">
+		delete from board_contents where id = #{id}	
+	</delete>
+	<!-- update 쿼리 -->
+	<!-- 수정 쿼리 -->
 </mapper>

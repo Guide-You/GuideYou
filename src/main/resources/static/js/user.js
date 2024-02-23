@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-/*  document.addEventListener('DOMContentLoaded', function() {
+ document.addEventListener('DOMContentLoaded', function() {
 	  // 네비게이션 바의 각 링크 요소들을 가져옵니다.
 	  var navLinks = document.querySelectorAll('.aside--mypage .nav-link');
 
@@ -122,4 +122,4 @@ document.addEventListener("DOMContentLoaded", function() {
 			  this.classList.remove('link-dark');
 		  });
 	  });
-  });*/
+  });
