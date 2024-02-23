@@ -24,6 +24,7 @@
 		update product set view_count = #{viewCount} where id = #{id}
 	</update>
 
+
 	<delete id="deletById">
 		delete from product where id = #{id}
 	</delete>
