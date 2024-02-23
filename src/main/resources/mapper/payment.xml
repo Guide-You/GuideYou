@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guideyou.repository.interfaces.user.UserRepository">
+<mapper namespace="com.guideyou.repository.interfaces.payment.PaymentRepository">
 
 	<insert id="insert">
 		INSERT INTO payment (
 			merchant_uid, user_id, product_id, product_title, product_price, payment_status,
 			payment_date, cancel_date, refund_price, refund_cause, refund_date, refund_yn, created_at)
 		VALUES (
-			#{merchant_uid}, #{user_id}, #{product_id}, #{product_title}, #{product_price}, #{payment_status},
-			#{payment_date}, #{cancel_date}, #{refund_price}, #{refund_cause}, #{refund_date}, #{refund_yn})
+			#{merchantUid}, #{userId}, #{productId}, #{productTitle}, #{productPrice}, #{paymentStatus},
+			#{paymentDate}, #{cancelDate}, #{refundPrice}, #{refundCause}, #{refundDate}, #{refundYn}, now())
 	</insert>
 
 

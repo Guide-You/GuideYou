@@ -77,6 +77,8 @@ public class PaymentController {
 	@PostMapping("/paySuccess")
 	private String createPayment(PaymentDto paymentDto) {
 		
+		log.info("controller paymentDto : "+paymentDto);
+		
 		// TODO : 인증 검사(2024.02.22 경진)
 		
 		paymentService.createPayment(paymentDto);

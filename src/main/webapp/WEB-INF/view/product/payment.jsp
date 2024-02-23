@@ -64,12 +64,12 @@
                       
                       	<!-- Request Info to paymentAPI -->
 						<form id="send--payment--form">
-							<input type="text" name ="orderId" id="order--id" value="${order.productId}">
+							<p>productId : </p><input type="text" name ="orderId" id="order--id" value="${order.productId}">
 								<!-- 추후 photo 정보 받아오기 -->
-							<input type="text" name ="orderTitle" id="order--title" value="${order.productTitle}">
+							<p>productTitle : </p><input type="text" name ="orderTitle" id="order--title" value="${order.productTitle}">
 								<!-- 추후 user nickname으로 변경 -->
-							<input type="text" name ="orderSeller" id="order--seller" value="${order.productSeller }">
-							<input type="text" name ="orderPrice" id="order--price" value="${order.productPrice }">
+							<p>productSellerId : </p><input type="text" name ="orderSeller" id="order--seller" value="${order.productSeller }">
+							<p>productPrice : </p><input type="text" name ="orderPrice" id="order--price" value="${order.productPrice }">
 							
 							
 						</form>

@@ -12,6 +12,8 @@ import com.guideyou.repository.interfaces.ProductRepository;
 import com.guideyou.repository.interfaces.payment.PaymentRepository;
 import com.guideyou.utils.Define;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
   * @FileName : PaymentService.java
   * @Project : GuideYou
@@ -21,6 +23,7 @@ import com.guideyou.utils.Define;
   * @프로그램 설명 : PaymentService
   */
 @Service
+@Slf4j
 public class PaymentService {
 	
 	@Autowired
@@ -39,19 +42,27 @@ public class PaymentService {
 	@Transactional
 	public void createPayment(PaymentDto paymentDto) {
 		
+		log.info("servicePaymentDto : "+paymentDto.toString());
 		Payment payment = Payment.builder()
 				.merchantUid(paymentDto.getMerchantUid())
+				.productId(paymentDto.getProductId())
 				.userId(paymentDto.getUserId())
 				.productTitle(paymentDto.getProductTitle())
 				.productPrice(paymentDto.getProductPrice())
 				.paymentStatus(paymentDto.getPaymentStatus())
 				.build();
 		
+		log.info("servicepayment Entity : "+payment.toString());
+		
 		int result = paymentRepository.insert(payment);
+		
+		log.info("serviceResult : "+result);
+		
 		if(result == 1) {
-			
+			log.info("serviceResult == 1 실행");
 			productRepository.updateBySoldCount(paymentDto.getProductId());
 		}else {
+			log.info("serviceResult != 1 exception");
 			throw new CustomRestfulException(Define.FAIL_TO_CREATE_PAYMENT, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		

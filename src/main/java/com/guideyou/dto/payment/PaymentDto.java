@@ -2,6 +2,7 @@ package com.guideyou.dto.payment;
 
 import lombok.Data;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 /**
   * @FileName : PaymentResponse.java
