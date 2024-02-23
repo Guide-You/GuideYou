@@ -18,14 +18,14 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
-        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+        <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
         <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <link href="/css/style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -136,7 +136,7 @@
                         </div>
                        
                         <div class="col-lg-12">
-                            
+                            <form action="/company/testInsert" method="post" id="insert">
                                 <input type="text" name="writer" class="w-100 form-control border-0 py-3 mb-4" placeholder="작성자">
                                 <input type="text" name="title" class="w-100 form-control border-0 py-3 mb-4" placeholder="제목을 입력해주세요">
                                 <textarea class="w-100 form-control border-0 mb-4" name="content" rows="5" cols="10" placeholder="내용을 입력해주세요"></textarea>
@@ -149,17 +149,16 @@
                                   
                                 <div class="col-lg-2 row-sm-1">
                                 
-                                <form action="/company/testInsert" method="post" id="insert">
+                                
                                 <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="submit" value="등록">등록하기</button>
-                                </form>
+                                
                                 
                                 <div class="col-lg-2 row-sm-1">
-                                <form action="/company/testList" method="post" id="deletebyId">
-                                <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="delete" value="삭제">삭제하기</button>
-                                </form>
-                                </div> 
+                                <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="button" value="삭제">삭제하기</button>
+                                </div>  <!-- a tag로 페이지 이동 -->
                         	</div>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -176,13 +175,13 @@
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/lightbox/js/lightbox.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     </body>
 
 </html>

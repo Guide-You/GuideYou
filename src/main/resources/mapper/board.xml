@@ -7,9 +7,9 @@
 		content) values (#{type}, #{writer},
 		#{title}, #{content})
 	</insert>
-	
+	<!-- list 출력 -->
 	<select id="findAll" resultType="com.guideyou.repository.entity.Board">
-		select * from board_contents 
+		select * from board_contents order by id desc
 	</select>
 	<!-- 페이징 처리 쿼리 -->
 	<select id="findAllPgs" resultType="com.guideyou.repository.entity.Board">
