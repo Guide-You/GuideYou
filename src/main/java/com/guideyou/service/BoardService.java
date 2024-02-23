@@ -61,8 +61,7 @@ public class BoardService {
 	  */
 	// 글삭제 
 	public int deleteById(Integer id) {
-		
 		return boardRepository.deleteById(id);
 	}
-	
+	// 글 디테일 뷰 불러오기 
 }

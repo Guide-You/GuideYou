@@ -78,7 +78,6 @@ public class BoardController {
 		System.out.println("BoardDto" + "여기까지오나");
 		return "/company/testList"; 
 	}
-	
 	/** TODO : 글 수정 기능 구현 예정입니다.
 	  * @FileName : BoardController.java
 	  * @Project : GuideYou
@@ -87,15 +86,19 @@ public class BoardController {
 	  * @변경이력 : 
 	  * @프로그램 설명 : 관리자 글 delete test 중입니다.
 	  */
-	
 	// 글 삭제
 	@GetMapping("/delete/{id}")
 	public String deleteById(@PathVariable("id") Integer boardId) {
-			  boardService.deleteById(boardId); 
-			 return "/company/testList";
+			boardService.deleteById(boardId); 
+			 return "redirect:/company/testList";
 	}
-	
+	// 글 디테일 뷰 불러오기 우선 페이지 뜨는지 
+	@GetMapping("/testDetail")
+	public Board findByNumber() {
+		return null;
+	};
 	// 글 수정
+	
 
 }
 	

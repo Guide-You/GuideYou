@@ -149,6 +149,7 @@
                     <td>${board.viewCount}</td>
                     <td>${board.createdAt}
                     <button type="button" class="btn btn-outline-info" onclick="location.href='/company/delete/${board.id}'">삭제</button>
+                    <button type="button" class="btn btn-primary">수정</button>
                     </td>
                   </tr>
                 </c:forEach>
