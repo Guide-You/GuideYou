@@ -34,7 +34,7 @@
 				<hr>
 				<ul class="nav nav-pills flex-column mb-auto aside--mypage">
 					마이 페이지
-					<li class="nav-item"><a href="#" class="nav-link active"
+					<li class="nav-item"><a href="/member/profile" class="nav-link active"
 						aria-current="page"> <svg class="bi me-2" width="16"
 								height="16">
 								<use xlink:href="#home"></use></svg><i class="bi bi-person-circle"></i>

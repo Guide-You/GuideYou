@@ -38,6 +38,46 @@ public class UserController {
 	/* ------------------------------------------------------------------------------------*/	
 	
 	/**
+	  * @Method Name : uploadListPage
+	  * @작성일 : 2024. 2. 24.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 작성한 상품 목록 페이지
+	  * @return
+	  */
+	@GetMapping("/uploadList")
+	public String uploadListPage() {
+		return "user/userUploadList";
+	}
+	
+	/**
+	  * @Method Name : purchasedListPage
+	  * @작성일 : 2024. 2. 24.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 구매한 목록 페이지
+	  * @return
+	  */
+	@GetMapping("/perchasedList")
+	public String purchasedListPage() {
+		return "user/userPurchasedList";
+	}
+	
+	/**
+	  * @Method Name : cartListPage
+	  * @작성일 : 2024. 2. 24.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 찜 목록 페이지
+	  * @return
+	  */
+	@GetMapping("/cartList")
+	public String cartListPage() {
+		
+		return "user/userCartList";
+	}
+	
+	/**
 	  * @Method Name : profilePage
 	  * @작성일 : 2024. 2. 22.
 	  * @작성자 : 최장호

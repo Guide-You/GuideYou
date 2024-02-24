@@ -22,7 +22,9 @@
                           <th scope="col">price</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
+                    
                         <tr>
                           <th scope="row">
                             <div class="form-check my-3">
@@ -39,41 +41,10 @@
                           <td class="py-5">박경진</td>
                           <td class="py-5">￦ 3,000</td>
                         </tr>
-                        <tr>
-                          <th scope="row">
-                            <div class="form-check my-3">
-                                <input class="form-check-input" type="checkbox" id="cart--checkbox">
-                                <label class="form-check-label" for="cart--checkbox"></label>
-                            </div>
-                          </th>
-                          
-                          <td scope="row">
-                              <div class="d-flex align-items-center mt-2">
-                                  <img src="img/vegetable-item-2.jpg" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                              </div>
-                          </td>
-                          <td class="py-5">[부산] 현지인이 추천하는 맛도리 여행지</td>
-                          <td class="py-5">박경진</td>
-                          <td class="py-5">￦ 3,000</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">
-                            <div class="form-check my-3">
-                                <input class="form-check-input" type="checkbox" id="cart--checkbox">
-                                <label class="form-check-label" for="cart--checkbox"></label>
-                            </div>
-                          </th>
-                          
-                          <td scope="row">
-                              <div class="d-flex align-items-center mt-2">
-                                  <img src="img/vegetable-item-2.jpg" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                              </div>
-                          </td>
-                          <td class="py-5">[부산] 현지인이 추천하는 맛도리 여행지</td>
-                          <td class="py-5">박경진</td>
-                          <td class="py-5">￦ 3,000</td>
-                        </tr>
+                        
+                        
                     </tbody>
+                    
                 </table>
               </form>
               <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
@@ -93,4 +64,4 @@
     
     
 <!-- footer -->
-<%@ include file="/WEB-INF/view/layout/header.jsp"%>
+<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
