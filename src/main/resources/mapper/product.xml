@@ -13,15 +13,15 @@
 	</update>
 	
 	<update id="updateBySoldCount">
-		update product set sold_count += 1  where id = #{id}
+		update product set sold_count = sold_count + 1  where id = #{id}
 	</update>
 	
 	<update id="updateByWishCount">
-		update product set wish_count += 1 #{wishCount} where id = #{id}
+		update product set wish_count = wish_count + 1 #{wishCount} where id = #{id}
 	</update>
 	
 	<update id="updateByViewCount">
-		update product set view_count += 1 #{viewCount} where id = #{id}
+		update product set view_count = view_count + 1 #{viewCount} where id = #{id}
 	</update>
 
 
@@ -36,7 +36,7 @@
 	<select id="findByProductId" resultType="com.guideyou.dto.ProductDto">
 		select * from product a 
 		left join product_photos b on a.id = b.product_id 
-		where b.thumbnail is not null
+		where a.id = #{id} and b.thumbnail is not null
 	</select>
 		
 	<select id="findAll" resultType="com.guideyou.repository.entity.Product">
