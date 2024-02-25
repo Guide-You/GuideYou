@@ -99,27 +99,54 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
- document.addEventListener('DOMContentLoaded', function() {
-	  // 네비게이션 바의 각 링크 요소들을 가져옵니다.
-	  var navLinks = document.querySelectorAll('.aside--mypage .nav-link');
+document.addEventListener('DOMContentLoaded', function() {
+	// nav bar 링크
+	var navLinks = document.querySelectorAll('.aside--mypage .nav-link');
 
-	  // 모든 링크에 'link-dark' 클래스를 추가합니다.
-	  navLinks.forEach(function(navLink) {
-		  navLink.classList.add('link-dark');
-	  });
+	// 클릭 이벤트
+	navLinks.forEach(function(link) {
+		link.addEventListener('click', function() {
+			// 활성화(active), 비활성화(link-dark) 제거, 전부 비활성화(link-dark) 추가
+			navLinks.forEach(function(navLink) {
+				navLink.classList.remove('active', 'link-dark');
+				navLink.classList.add('link-dark');
+			});
 
-	  // 링크가 클릭될 때의 이벤트 리스너를 등록합니다.
-	  navLinks.forEach(function(link) {
-		  link.addEventListener('click', function() {
-			  // 모든 링크에서 'active' 클래스를 제거하고 'link-dark' 클래스를 추가합니다.
-			  navLinks.forEach(function(navLink) {
-			   navLink.classList.remove('active', 'link-dark');
-				  navLink.classList.add('link-dark');
-			  });
+			// 클릭하면 활성화(active) 추가, 비활성화(link-dark) 제거
+			this.classList.add('active');
+			this.classList.remove('link-dark');
+		});
+	});
+});
 
-			  // 클릭된 링크에 'active' 클래스를 추가하고 'link-dark' 클래스를 제거합니다.
-			  this.classList.add('active');
-			  this.classList.remove('link-dark');
-		  });
-	  });
-  });
+document.addEventListener('DOMContentLoaded', function() {
+	// 체크박스들 세팅
+	var checkboxes = document.querySelectorAll('.form-check-input');
+
+	// 총합 화면
+	var totalPriceDisplay = document.getElementById('totalPrice');
+
+	// 총합 변수.
+	var totalPrice = 0;
+
+	//change 이벤트 (input 상태 변경될때 마다)
+	checkboxes.forEach(function(checkbox) {
+		checkbox.addEventListener('change', function() {
+			// 체크 시 금액 추가
+			if (checkbox.checked) {
+				// 체크일때 ',' '원' 제거 후 금액 더하기
+				var productPriceElement = checkbox.closest('tr').querySelector('#productPrice');
+				var price = parseFloat(productPriceElement.textContent.replace('원', '').replace(',', '').trim());
+				totalPrice += price;
+			} else {
+				// 체크 해제 일때 ',' '원' 제거 후 금액 빼기
+				var productPriceElement = checkbox.closest('tr').querySelector('#productPrice');
+				var price = parseFloat(productPriceElement.textContent.replace('원', '').replace(',', '').trim());
+				totalPrice -= price;
+			}
+
+			// 총합 화면에서 금액 형식 + 원
+			totalPriceDisplay.textContent = totalPrice.toLocaleString() + "원";
+		});
+	});
+});

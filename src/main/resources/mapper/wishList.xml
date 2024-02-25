@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.guideyou.repository.interfaces.wishList.WishListRepository">
-	
-	
-	
-	
+
+	<select id="findwishListProductUserByUserId" resultType="com.guideyou.dto.wishList.WishListProductUserDTO">
+		SELECT
+		a.user_id AS user_id, -- 로그인한 사용자ID
+		b.title AS product_title, -- 장바구니에 담은 상품 제목
+		b.price AS product_price, -- 장바구니에 담은 상품 가격
+		c.name AS writer_name,
+		c.id AS author_id,
+		d.product_photo_path AS product_image
+		FROM
+		wish_list a
+		JOIN
+		product b ON a.product_id = b.id
+		JOIN
+		user c ON b.user_id = c.id
+		LEFT JOIN
+		product_photos d ON b.id = d.product_id
+		WHERE
+		a.user_id = #{userId}
+		AND d.thumbnail IS NOT NULL
+	</select>
+
+
 </mapper>
