@@ -35,12 +35,14 @@
 		DESC LIMIT 1 
 	</select>
 	
-	<select id="selectPhotoList" resultType="com.guideyou.dto.ProductDto">
-		SELECT p.*, MAX(pi.upload_file_name) AS uploadFileName
-		FROM product p
-		LEFT JOIN product_photos pi ON p.id = pi.product_id
-		GROUP BY p.id
-		ORDER BY MAX(pi.created_at) DESC
+	<select id="selectPhoto" resultType="com.guideyou.dto.ProductDto">
+		SELECT p.*
+       , (
+          SELECT ph.upload_file_name FROM product_photos ph WHERE product_id = p.id
+          ORDER BY ph.id LIMIT 1
+        ) AS uploadFileName 
+              FROM product p                 
+       ORDER BY p.id DESC
 	</select>
 	
 </mapper>

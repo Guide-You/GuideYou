@@ -116,7 +116,13 @@ public class ProductController {
 	// 상품 수정 페이지
 	@GetMapping("/update/{productId}")
 	public String productUpdatePage(@PathVariable("productId") Integer productId, Model model) {
-
+		
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		   
+	    if (principal == null) {
+	    	throw new CustomRestfulException("로그인을 해주세요", HttpStatus.UNAUTHORIZED);
+   		}
+		
 		List<ProductDto> photoResult = productService.findAllByProductId(productId);
 		model.addAttribute("photoResult", photoResult);
 
@@ -133,13 +139,25 @@ public class ProductController {
 	@PostMapping("/update/{productId}")
 	public String updateProduct(@PathVariable("productId") Integer productId, ProductDto dto,
 			@RequestParam("region") Integer cityCodeId, @RequestParam("removeImgs") String removeImgs) {
-
-		dto.setCityCodeId(cityCodeId);
 		
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);   
 		
-		productService.deleteMutiPhoto(removeImgs);
-		productService.updateProduct(productId, dto);
-		productService.insertPhoto(dto, productId);
+	    if (principal == null) {
+			throw new CustomRestfulException("로그인을 해주세요", HttpStatus.UNAUTHORIZED);
+		}
+	    
+	  	dto.setCityCodeId(cityCodeId);
+	  	System.out.println("++++++++++++++++++++++++++ updete");
+	  	
+	   	productService.updateProduct(productId, dto);
+	   	
+	   	System.out.println("++++++++++++++++++++++++++ deleteMutiPhoto");
+	   	if (removeImgs != null && !removeImgs.isEmpty() && !removeImgs.equals("")) {
+	   		productService.deleteMutiPhoto(removeImgs);
+			
+		}
+	   	System.out.println("++++++++++++++++++++++++++ insert");
+	   	productService.insertPhoto(dto, productId);
 
 		return "redirect:/list";
 	}
@@ -149,7 +167,9 @@ public class ProductController {
 	// 상품 삭제 기능
 	@PostMapping("/delete/{productId}")
 	public String deleteProduct(@PathVariable("productId") Integer productId) {
+		
 
+		
 		productService.deleteProduct(productId);
 		productService.deletePhotos(productId);
 		return "redirect:/list";

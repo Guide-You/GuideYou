@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
+import com.guideyou.dto.ProductDetailDto;
 import com.guideyou.dto.ProductDto;
 import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.repository.entity.Product;
@@ -56,10 +57,21 @@ public interface ProductRepository {
 											@Param("searchText") String searchText, @Param("cityCodeId") String cityCodeId);
 	// 상품 총 개수 찾기
 	public int getTotalCount(@Param("searchText") String searchText, @Param("cityCodeId") String cityCodeId);
-		   
-    
+		       
     // 인기 플랜 조회
     List<Product> popularProduct();
+    
+ // 상품 상세 보기에 필요한 모든 내용 조회
+ 	public List<ProductDetailDto> findAllProductDetail(Integer productId); 
+    
+    // detail 상품 정보
+ 	public List<Product> findProductAndUser(Integer productId);
+ 	
+ 	// 상품 사진 리스트
+ 	public List<ProductDetailDto> findByProductImg(Integer productId);
+
+ 	// 상품 리뷰리스트
+ 	public List<ProductDetailDto> findReviewByProduct(Integer productId);
     
 	
 	// 마이페이지 사용자가 작성한 상품 목록 조회 - 최장호 추가 02/26

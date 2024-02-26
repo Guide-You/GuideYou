@@ -16,10 +16,10 @@ public class ProductDto {
 	private Integer cityCodeId;
 	private String title;
 	private String content;
-	private String writer;
-	private Long price;	
+	private Long price;
 	private Integer productId;
-	private MultipartFile[] customFile;	
+	private MultipartFile[] customFile;
+	private MultipartFile thumbFile;
 	private String productPhotoPath;
 	private String originFileName;
 	private String uploadFileName;

@@ -31,4 +31,9 @@ public interface ProductPhotosRepository {
 	//
 	List<ProductDto> selectPhotoList();
 	
+	
+	List<ProductPhotos> findRepresentativePhotos();
+	
+	
+	List<ProductDto> selectPhoto();
 }

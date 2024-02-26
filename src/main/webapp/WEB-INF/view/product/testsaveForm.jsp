@@ -35,104 +35,76 @@
             <option value="12">제주도</option>
             <option value="13">기타</option>
         </select><br><br>
-        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;" id="cityCodeId"></div>
         
         <!-- 글 정보 입력 -->
         <label for="title">글 제목:</label><br>
-        <input type="text" id="title" name="title" maxlength="50"><br><br>
+        <input type="text" id="title" name="title" maxlength="50" value="sss"><br><br>
         
         <label for="price">가격:</label><br>
         <input type="text" id="price" name="price" maxlength="10" value="1000"><br><br>
         
         <label for="content">글 내용:</label><br>
-        <textarea id="content" name="content" style="height:150px; resize: none;"></textarea><br><br>
+        <textarea id="content" name="content" style="height:150px; resize: none;">aaa</textarea><br><br>
         
         
         
         <!-- 파일 선택 input 대신 label을 사용하여 버튼으로 보여줌 -->
-        <label for="customFile" class="custom-file-input">사진 추가</label>
-        <input type="file" id="customFile" name="customFile"  multiple>
-		
-		<input type="hidden" value="" id="removeImgs" name="removeImgs">
-		
-		
-		<style>
-			.imgNameBox {
-				background-color: #ccc;
-				width: 100%;
-				height: 300px;
-				overflow: scroll;
-			
-			}
-			
-			.removeImg {
-				color: red;
-				margin-left: 20px;
-			}
-		</style>
-		<div class="imgNameBox">
-			<c:forEach items="${photoResult}" var="pho">
-				<p id="imgName_${pho.id}">${pho.originFileName}<span onclick="deleteImg(${pho.id})" class="removeImg">O</span></p>
-				
-				
-			</c:forEach>
-		</div>
-		
-		
-		
-		
-		
+        <p>썸네일</p><input type="file" id="thumbFile" name="thumbFile" value="y" accept="image/*">
+        <p>디테일사진</p><input type="file" id="fileInput" name="customFile"  multiple>
+
 
         <!-- 등록 버튼 -->
         <input type="submit" value="등록">
     </form>
 </div>
 <script>
-function deleteImg(id) {
-	let removeImgNum = $("#removeImgs").val();
-	if (removeImgNum == "") {
-		removeImgNum += id; 
-	} else {
-		removeImgNum += "," + id;
-	}
-	
-	$("#removeImgs").val(removeImgNum);
-	$("#imgName_" + id).css("display","none");
-}
-
-
-    
-    function displaySelectedRegion() {
-        var regionSelect = document.getElementById("region");
-        var selectedText = regionSelect.options[regionSelect.selectedIndex].text;
-        var cityCodeIdElement = document.getElementById("cityCodeId");
-        cityCodeIdElement.textContent = selectedText;
-    }
-    
-    
-});
 
 $(document).ready(function() {
-    // 파일이 선택되면 실행되는 이벤트 핸들러
-    $('#customFile').change(function() {
-        // 선택된 파일 목록을 가져옴
-        var files = $(this)[0].files; 
+    $('#productForm').submit(function(event) {
+        var errorMessage = ""; // 에러 메시지를 저장할 변수
+
+        var titleInput = $('#title').val();
+        var contentInput = $('#content').val();
+        var priceInput = $('#price').val();
+        var thumbFile = $('#thumbFile').val();
+        var customFile = $('#fileInput').val();
+
+        // 제목이 비어있는 경우 에러 메시지에 추가
+        if (titleInput.trim() === "") {
+            errorMessage += "글 제목을 입력해주세요.\n";
+        }
         
-        // 선택된 파일 목록을 순회하며 파일 이름을 표시
-        for (var i = 0; i < files.length; i++) {
-            // 새로운 파일 이름을 추가하는 HTML 코드 생성
-            var fileName = files[i].name;
-            var newFileNameElement = fileName;
+        // 내용이 비어있는 경우 에러 메시지에 추가
+        if (contentInput.trim() === "") {
+        	errorMessage += "글 내용을 입력해주세요.\n";
+        }
+        
+        // 가격이 비어있거나 숫자가 아닌 경우 에러 메시지에 추가
+        var numericExpression = /^[0-9]+$/;
+        if (!numericExpression.test(priceInput)) {
+            errorMessage += "잘못된 가격입니다. 숫자만 입력해주세요.\n";
+        }
+
+        // 썸네일과 디테일사진을 모두 선택하지 않은 경우 에러 메시지에 추가
+        if (thumbFile === "" || customFile === "") {
+            errorMessage += "썸네일과 디테일사진을 모두 선택해주세요.\n";
+        }
+
+        // 에러 메시지가 비어있지 않은 경우에만 알림 창 표시 및 이벤트 중단
+        if (errorMessage !== "") {
+            alert(errorMessage); // 에러 메시지 표시
+            $('#title').focus();
+            $('#content').focus();          
+            $('#price').focus();
             
-            // 새로운 파일 이름을 imgNameBox에 추가
-            $('.imgNameBox').append(newFileNameElement);
+            event.preventDefault(); // 폼 제출 중지
+            return false; // 이벤트 처리 중단
+        } else {
+            // thumbFile의 값을 추가하여 서버로 전송
+            $(this).append('<input type="hidden" name="thumbFile" value="y">');
         }
     });
 });
-
-
-
-
 </script>    
 </body>
 </html>

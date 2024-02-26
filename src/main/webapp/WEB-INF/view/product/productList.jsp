@@ -30,13 +30,13 @@
 </style>	
 	
 <body>
+	
 	<!-- Search Start -->
 	<section class="sc-a37b6b4d-0 iVnkhP">
 		<form action="list" id="searchForm">
 			<div class="sc-a37b6b4d-1 bBhtyX">
 				<input id="searchText" maxlength="20" class="sc-a37b6b4d-2 cpWeqo" value="" placeholder="🔍 어느 도시로 떠나시나요?" name="searchText"/>
-<!-- 				<button id="searchButton">검색</button> -->
-					<span class="searchBtn btn">검색</span>
+					<span class="searchBtn btn" onclick="showCity()">검색</span>
 				<input type="hidden" id="cityCodeId" name="cityCodeId">
 			</div>
 		</form>
@@ -230,6 +230,7 @@
 </body>
 
 <script>
+
 function showCity(id) {
 	$("#cityCodeId").val(id);
 	$("#searchForm").submit();

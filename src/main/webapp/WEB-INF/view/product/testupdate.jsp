@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>상품 등록 페이지</title>
+<title>상품 수정 페이지</title>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="/css/productcss/saveUpdate.css" rel="stylesheet" />
@@ -50,8 +50,8 @@
        	
         
         <!-- 파일 선택 input 대신 label을 사용하여 버튼으로 보여줌 -->
-        <label for="fileInput" class="custom-file-input">사진 추가</label>
-        <input type="file" id="fileInput" name="customFile"  multiple>
+		<p>썸네일</p><input type="file" id="thumbFile" name="customFile" value="y" accept="image/*">
+        <p>디테일사진</p><input type="file" id="fileInput" name="customFile"  multiple>
 		
 		<input type="hidden" value="" id="removeImgs" name="removeImgs">
 		
@@ -72,7 +72,7 @@
 		</style>
 		<div class="imgNameBox">
 			<c:forEach items="${photoResult}" var="pho">
-				<p id="imgName_${pho.id}">${pho.originFileName}<span onclick="deleteImg(${pho.id})" class="removeImg">X</span></p>
+				<p id="imgName_${pho.id}">${pho.originFileName}<span onclick="confirmDelete(${pho.id})" class="removeImg">X</span></p>
 				
 				
 			</c:forEach>
@@ -84,6 +84,13 @@
     </form>
 </div>
 <script>
+
+function confirmDelete(id) {
+    if (confirm("삭제 하시겠습니까?")) {
+        deleteImg(id);
+    }
+}
+
 
 function deleteImg(id) {
 	let removeImgNum = $("#removeImgs").val();
@@ -97,7 +104,52 @@ function deleteImg(id) {
 	$("#imgName_" + id).css("display","none");
 }
 
+$(document).ready(function() {
+    $('#productForm').submit(function(event) {
+        var errorMessage = ""; // 에러 메시지를 저장할 변수
 
+        var titleInput = $('#title').val();
+        var contentInput = $('#content').val();
+        var priceInput = $('#price').val();
+        var thumbFile = $('#thumbFile').val();
+        var customFile = $('#fileInput').val();
+
+        // 제목이 비어있는 경우 에러 메시지에 추가
+        if (titleInput.trim() === "") {
+            errorMessage += "글 제목을 입력해주세요.\n";
+        } 
+        
+        // 내용이 비어있는 경우 에러 메시지에 추가
+        if (contentInput.trim() === "") {
+        	errorMessage += "글 내용을 입력해주세요.\n";
+        }
+        
+     // 가격이 비어있는 경우 에러 메시지에 추가
+        if (priceInput.trim() === "") {
+            errorMessage += "가격을 입력해주세요.\n";
+        } else {
+            // 가격이 숫자가 아닌 경우 에러 메시지에 추가
+            var numericExpression = /^[0-9]+$/;
+            if (!numericExpression.test(priceInput)) {
+                errorMessage += "잘못된 가격입니다. 숫자만 입력해주세요.\n";
+            }
+        }
+
+        // 에러 메시지가 비어있지 않은 경우에만 알림 창 표시 및 이벤트 중단
+        if (errorMessage !== "") {
+            alert(errorMessage); // 에러 메시지 표시
+            $('#title').focus();
+            $('#content').focus();
+            $('#price').focus();
+            
+            event.preventDefault(); // 폼 제출 중지
+            return false; // 이벤트 처리 중단
+        } else {
+            // thumbFile의 값을 추가하여 서버로 전송
+            $(this).append('<input type="hidden" name="thumbFile" value="y">');
+        }
+    });
+});
 
 </script>    
 </body>

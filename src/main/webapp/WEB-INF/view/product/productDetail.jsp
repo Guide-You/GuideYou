@@ -41,9 +41,9 @@
       <div id="carouselExample" class="carousel slide">
 	        <div class="carousel-inner">
 	          <div class="carousel-item active">
-	            <img src="/images/upload/${product.uploadFileName}" class="d-block w-100"/>
-	            <img src="/images/upload/${product.uploadFileName}" class="d-block w-100"/>
-	            <img src="/images/upload/${product.uploadFileName}" class="d-block w-100"/>
+	            <img src="/images/upload/${detailList.uploadFileName}" class="d-block w-100"/>
+	            <img src="/images/upload/${detailList.uploadFileName}" class="d-block w-100"/>
+	            <img src="/images/upload/${detailList.uploadFileName}" class="d-block w-100"/>
 	          </div>          
 	        </div>
         <button
@@ -165,10 +165,10 @@
 	      </div>       
 	    </div>
     <div class="d-flex">
-			<form action="/delete/${product.id}" method="post">
+			<form action="/delete/${detailList.id}" method="post">
 				<button class="btn btn-danger">삭제</button>
 			</form>
-			<form action="/update/${product.id}" method="get">
+			<form action="/update/${detailList.id}" method="get">
 				<button class="btn btn-warning updateBtn">수정</button>
 				<input type="hidden" name="productId" value="${product.id}">
 			</form>
