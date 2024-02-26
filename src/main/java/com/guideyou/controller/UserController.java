@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,6 +24,7 @@ import com.guideyou.service.UserService;
 import com.guideyou.service.wishListService.WishListService;
 import com.guideyou.utils.Define;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 /**
@@ -53,7 +53,22 @@ public class UserController {
 	@Autowired
 	private HttpSession httpSession;
 	
-	/* ------------------------------------------------------------------------------------*/	
+	/* -----------------------------------마이페이지 시작---------------------------------------------*/	
+	
+	/**
+	  * @Method Name : logOut
+	  * @작성일 : 2024. 2. 26.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 로그아웃 기능 - 메인화면으로 돌아감
+	  */
+	@GetMapping("/member/logout")
+	public String logOut(HttpServletRequest request) {
+		httpSession = request.getSession();
+		httpSession.removeAttribute(Define.PRINCIPAL);
+//		httpSession.invalidate();
+		return "redirect:/main";
+	}
 	
 	/**
 	  * @Method Name : uploadListPage
@@ -151,6 +166,8 @@ public class UserController {
 		User user = userService.readUserByNickname(nickname);
 		return (user == null) ? "Y" : "N";
 	}
+
+	/* ---------------------------------마이페이지 종료-----------------------------------------------*/	
 	
 	/**
 	  * @Method Name : signUpProc
@@ -183,8 +200,7 @@ public class UserController {
 	public String userSignUpPage() {
 		return "user/userSignUp";
 	}
-	
-/* ------------------------------------------------------------------------------------*/	
+		
 
 	/**
 	 * @Method Name : loginPage
