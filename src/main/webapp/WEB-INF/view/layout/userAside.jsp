@@ -49,7 +49,7 @@
 				</ul>
 				<ul class="nav nav-pills flex-column mb-auto aside--mypage">
 					나의 여행 일정
-					<li><a href="#" class="nav-link link-dark"> <svg
+					<li><a href="/member/uploadList" class="nav-link link-dark"> <svg
 								class="bi me-2" width="16" height="16">
 								<use xlink:href="#table"></use></svg><i class="bi bi-map"></i> 나의 여행 이야기
 					</a></li>

@@ -26,24 +26,6 @@
 		resultType="com.guideyou.repository.entity.User">
 		select * from user where nickname = #{nickname}
 	</select>
-	
-	<!-- *************** 해당 쿼리 내일 product.xml에 옮겨야함 ************************** -->
-	<select id="getUploadProductsInfoByUserId" resultType="com.guideyou.dto.product.UploadProductsInfoDTO">
-SELECT 
-		b.city_name, 
-		c.product_photo_path, 
-		a.title,
-		substring(a.content, 1, 10) AS short_content, 
-		a.price AS product_price, 
-		a.created_at AS upload_time 
-		FROM product a 
-		LEFT JOIN
-		city_code b ON a.city_code_id = b.id 
-		LEFT JOIN 
-		product_photos c ON a.id = c.product_id and c.thumbnail is not null
-		WHERE a.user_id = #{userId};
-	</select>
-	<!-- ************************************************************************************** -->
 
 	<update id="updateById">
 		update user set name = #{name}, nickname =

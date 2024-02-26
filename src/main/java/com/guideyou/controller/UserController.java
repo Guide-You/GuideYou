@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.guideyou.dto.payment.PurchasedProductInfoDTO;
+import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.dto.user.SignUpDTO;
 import com.guideyou.dto.user.UserDTO;
 import com.guideyou.dto.wishList.WishListProductUserDTO;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.User;
 import com.guideyou.service.PaymentService;
+import com.guideyou.service.ProductService;
 import com.guideyou.service.UserService;
 import com.guideyou.service.wishListService.WishListService;
 import com.guideyou.utils.Define;
@@ -36,12 +38,15 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController {
 
+	// service
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private WishListService wishListService;
 	@Autowired
 	private PaymentService paymentService;
+	@Autowired
+	private ProductService productService;
 	
 	
 
@@ -58,9 +63,11 @@ public class UserController {
 	  * @Method 설명 : 사용자 작성한 상품 목록 페이지
 	  * @return
 	  */
-	@GetMapping("/uploadList")
-	public String uploadListPage() {
-		
+	@GetMapping("/member/uploadList")
+	public String uploadListPage(Model model) {
+		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
+		List<UploadProductsInfoDTO> uploadProductsInfoList = productService.getUploadProductsInfoByUserId(loginUser.getId());
+		model.addAttribute("uploadProductsInfoList", uploadProductsInfoList);
 		return "user/userUploadList";
 	}
 	

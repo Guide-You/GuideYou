@@ -24,9 +24,6 @@ public interface UserRepository {
 	public User findByNickname(String nickname);
 	public User findByNameAndPhone(Map<String, Object> params);
 	public User findByNameAndEmail(Map<String, Object> params);
-	
-	// TODO: 해당 메소드 product repository로 옮겨야 함
-	public List<UploadProductsInfoDTO> getUploadProductsInfoByUserId(String userId);
-	
+
 	public int updateById(User user);
 }

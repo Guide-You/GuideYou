@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
 import com.guideyou.dto.ProductDto;
+import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.ProductPhotos;
 import com.guideyou.repository.interfaces.ProductPhotosRepository;
@@ -291,7 +292,17 @@ public class ProductService {
 	}
 	
 	
-	
+	/**
+	  * @Method Name : getUploadProductsInfoByUserId
+	  * @작성일 : 2024. 2. 26.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 마이페이지에서 사용자가 작성한 상품 목록
+	  */
+	public List<UploadProductsInfoDTO> getUploadProductsInfoByUserId(Integer userId) {
+		List<UploadProductsInfoDTO> getUploadProductsInfoList = productRepository.getUploadProductsInfoByUserId(userId);
+		return getUploadProductsInfoList;
+	}
 	
 	
 	

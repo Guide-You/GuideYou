@@ -99,6 +99,26 @@
 	    ORDER BY p.sold_count DESC
 	</select>
 		
+	
+	<!-- 마이페이지 사용자가 작성한 상품 목록 조회 -->
+		<!-- *************** 최장호 추가 02/26 ************************** -->
+	<select id="getUploadProductsInfoByUserId" resultType="com.guideyou.dto.product.UploadProductsInfoDTO">
+		SELECT 
+		a.id AS product_id,
+		b.city_name, 
+		c.product_photo_path, 
+		a.title,
+		substring(a.content, 1, 10) AS short_content, 
+		a.price AS product_price, 
+		a.created_at AS upload_time 
+		FROM product a 
+		LEFT JOIN
+		city_code b ON a.city_code_id = b.id 
+		LEFT JOIN 
+		product_photos c ON a.id = c.product_id and c.thumbnail is not null
+		WHERE a.user_id = #{userId};
+	</select>
+	<!-- ************************************************************************************** -->
 		
 	
 </mapper>

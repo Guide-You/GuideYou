@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
 import com.guideyou.dto.ProductDto;
+import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.repository.entity.Product;
 
 
@@ -59,5 +60,10 @@ public interface ProductRepository {
     
     // 인기 플랜 조회
     List<Product> popularProduct();
+    
+	
+	// 마이페이지 사용자가 작성한 상품 목록 조회 - 최장호 추가 02/26
+	public List<UploadProductsInfoDTO> getUploadProductsInfoByUserId(Integer userId);
+	
     	
 }

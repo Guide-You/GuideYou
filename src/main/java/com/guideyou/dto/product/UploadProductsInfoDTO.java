@@ -21,10 +21,11 @@ import lombok.Data;
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UploadProductsInfoDTO {
+	private Integer productId;
 	private String cityName;
 	private Long productPhotoPath;
 	private String title;
-	private String content;
+	private String shortContent;
 	private Long productPrice;
 	private Timestamp uploadTime;
 }
