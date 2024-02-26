@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.dto.user.SignUpDTO;
 import com.guideyou.dto.user.UserDTO;
 import com.guideyou.dto.wishList.WishListProductUserDTO;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.User;
+import com.guideyou.service.PaymentService;
 import com.guideyou.service.UserService;
 import com.guideyou.service.wishListService.WishListService;
 import com.guideyou.utils.Define;
@@ -38,6 +40,8 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private WishListService wishListService;
+	@Autowired
+	private PaymentService paymentService;
 	
 	
 
@@ -67,8 +71,12 @@ public class UserController {
 	  * @Method 설명 : 사용자 구매한 목록 페이지
 	  * @return
 	  */
-	@GetMapping("/perchasedList")
-	public String purchasedListPage() {
+	@GetMapping("/purchasedList")
+	public String purchasedListPage(Model model) {
+		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
+		List<PurchasedProductInfoDTO> purchasedProductInfoList = paymentService.getPurchasedProductInfoList(loginUser.getId());
+		model.addAttribute("purchasedProductInfoList", purchasedProductInfoList);
+		System.out.println(model.getAttribute("purchasedProductInfoList").toString());
 		return "user/userPurchasedList";
 	}
 	

@@ -29,7 +29,7 @@
 	
 	<!-- *************** 해당 쿼리 내일 product.xml에 옮겨야함 ************************** -->
 	<select id="getUploadProductsInfoByUserId" resultType="com.guideyou.dto.product.UploadProductsInfoDTO">
-		SELECT 
+SELECT 
 		b.city_name, 
 		c.product_photo_path, 
 		a.title,
@@ -40,9 +40,8 @@
 		LEFT JOIN
 		city_code b ON a.city_code_id = b.id 
 		LEFT JOIN 
-		product_photos c ON a.id = c.product_id 
-		WHERE a.user_id = #{userId}
-		and c.thumbnail is  not null
+		product_photos c ON a.id = c.product_id and c.thumbnail is not null
+		WHERE a.user_id = #{userId};
 	</select>
 	<!-- ************************************************************************************** -->
 

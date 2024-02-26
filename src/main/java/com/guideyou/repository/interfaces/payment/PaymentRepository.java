@@ -1,7 +1,10 @@
 package com.guideyou.repository.interfaces.payment;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
+import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.repository.entity.Payment;
 
 /**
@@ -15,4 +18,5 @@ import com.guideyou.repository.entity.Payment;
 @Mapper
 public interface PaymentRepository {
 	public int insert(Payment payment);
+	public List<PurchasedProductInfoDTO> getPurchasedProductInfoList(Integer userId);
 }

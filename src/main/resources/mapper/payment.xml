@@ -4,13 +4,36 @@
 
 	<insert id="insert">
 		INSERT INTO payment (
-			merchant_uid, user_id, product_id, product_title, product_price, payment_status,
-			payment_date, cancel_date, refund_price, refund_cause, refund_date, refund_yn, created_at)
+		merchant_uid, user_id, product_id, product_title, product_price,
+		payment_status,
+		payment_date, cancel_date, refund_price, refund_cause, refund_date,
+		refund_yn, created_at)
 		VALUES (
-			#{merchantUid}, #{userId}, #{productId}, #{productTitle}, #{productPrice}, #{paymentStatus},
-			#{paymentDate}, #{cancelDate}, #{refundPrice}, #{refundCause}, #{refundDate}, #{refundYn}, now())
+		#{merchantUid}, #{userId}, #{productId}, #{productTitle},
+		#{productPrice}, #{paymentStatus},
+		#{paymentDate}, #{cancelDate}, #{refundPrice}, #{refundCause},
+		#{refundDate}, #{refundYn}, now())
 	</insert>
 
+	<select id="getPurchasedProductInfoList" resultType="com.guideyou.dto.payment.PurchasedProductInfoDTO">
+		SELECT
+		d.city_name, 							-- 사용자가 구매한 상품의 지역명
+		c.title AS product_title,				-- 사용자가 구매한 상품의 제목
+		a.payment_date,							-- 사용자가 결제한 날짜
+		e.upload_file_name AS product_image		-- 사용자가 구매한 상품의 썸네일 사진
+		FROM
+		payment a
+		JOIN
+		payment_detail b ON a.merchant_uid = b.merchant_uid
+		JOIN
+		product c ON b.product_id = c.id
+		LEFT JOIN
+		city_code d ON c.city_code_id = d.id
+		LEFT JOIN
+		product_photos e ON c.id = e.product_id AND e.thumbnail IS NOT NULL
+		WHERE
+		a.user_id = #{userId}
+		and a.payment_status = 'paid';
+	</select>
 
-	
 </mapper>
