@@ -14,9 +14,14 @@
 		#{paymentDate}, #{cancelDate}, #{refundPrice}, #{refundCause},
 		#{refundDate}, #{refundYn}, now())
 	</insert>
+	
+	<select id="findByUserId" resultType="com.guideyou.repository.entity.Payment">
+		SELECT payment.user_id FROM payment WHERE user_id = #{userId}
+	</select>
 
 	<select id="getPurchasedProductInfoList" resultType="com.guideyou.dto.payment.PurchasedProductInfoDTO">
 		SELECT
+		b.product_id,
 		d.city_name, 							-- 사용자가 구매한 상품의 지역명
 		c.title AS product_title,				-- 사용자가 구매한 상품의 제목
 		a.payment_date,							-- 사용자가 결제한 날짜

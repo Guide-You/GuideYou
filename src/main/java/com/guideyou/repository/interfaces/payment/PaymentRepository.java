@@ -18,5 +18,6 @@ import com.guideyou.repository.entity.Payment;
 @Mapper
 public interface PaymentRepository {
 	public int insert(Payment payment);
+	public int findByUserId(Integer userId);
 	public List<PurchasedProductInfoDTO> getPurchasedProductInfoList(Integer userId);
 }

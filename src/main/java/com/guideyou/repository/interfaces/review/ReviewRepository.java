@@ -15,4 +15,5 @@ import com.guideyou.repository.entity.Review;
 @Mapper
 public interface ReviewRepository {
 	public int insert(Review review);
+	public int findByUserIdAndProductId(Integer userId, Integer productId);
 }

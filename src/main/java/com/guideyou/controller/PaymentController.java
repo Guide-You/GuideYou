@@ -83,6 +83,7 @@ public class PaymentController {
 	  * @변경이력 : 
 	  * @Method 설명 : kakaopay 결제 성공 시 넘어 올 jsonData를 받아 db에 insert
 	  */
+	// TODO : DB에 INSERT되지 않았을시 FRONT KAKAO API 중단 시켜야함
 	@PostMapping("/paySuccess")
 	private String createPayment(PaymentDto paymentDto) {
 		

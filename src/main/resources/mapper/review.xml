@@ -5,5 +5,8 @@
 		INSERT INTO review(w_user_id, r_product_id, content, score, created_at)
 		VALUES (wUserId, rProductId, content, score, createdAt)
 	</insert>
+	<select id="findByUserIdAndProductId">
+		SELECT  FROM review as r WHERE w_user_id = #{userId} AND r_product_id = #{productId}
+	</select>
 
 </mapper>
