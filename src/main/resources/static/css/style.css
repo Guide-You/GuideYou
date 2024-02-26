@@ -619,7 +619,29 @@ h1 {
 	font-size: 30px;
 	text-align: center; /* 텍스트를 가운데 정렬 */
 }
+.header--line{
+	margin-top : 2%;
+}
+ .logo--image--container {
+    position: relative;
+    display: inline-block;
+    margin-top : 1%;
+  }
 
+  .hover--logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .logo--image--container:hover .hover--logo {
+    opacity: 1;
+  }
+  .logo--image--container:hover .original--logo{
+  	opacity:0;
+  }
 /*인기 여행지*/
 .top-city {
 	width: 295px;

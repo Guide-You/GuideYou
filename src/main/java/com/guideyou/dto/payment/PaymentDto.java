@@ -15,8 +15,8 @@ import lombok.ToString;
 @ToString
 public class PaymentDto {
 	private String merchantUid;
-	private int userId;
-	private int productId;
+	private Integer userId;
+	private Integer productId;
 	private String productTitle;
 	private Long productPrice;
 	private String paymentStatus;
