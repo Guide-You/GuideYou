@@ -51,7 +51,7 @@
 										</div>
 									</td>
 									<td class="py-5">${wishListItem.productTitle}</td>
-									<td class="py-5">${wishListItem.writerName}</td>
+									<td class="py-5">${wishListItem.writerNickname}</td>
 									<td class="py-5" id="productPrice">${wishListItem.formatPrice()}</td>
 								</tr>
 							</c:forEach>
