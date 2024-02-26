@@ -60,6 +60,7 @@ public class UserController {
 	  */
 	@GetMapping("/uploadList")
 	public String uploadListPage() {
+		
 		return "user/userUploadList";
 	}
 	

@@ -53,7 +53,7 @@
 								class="bi me-2" width="16" height="16">
 								<use xlink:href="#table"></use></svg><i class="bi bi-map"></i> 나의 여행 이야기
 					</a></li>
-					<li><a href="#" class="nav-link link-dark"> <svg
+					<li><a href="/member/purchasedList" class="nav-link link-dark"> <svg
 								class="bi me-2" width="16" height="16">
 								<use xlink:href="#grid"></use></svg><i class="bi bi-geo-alt"></i> 구매한
 							일정 내역
