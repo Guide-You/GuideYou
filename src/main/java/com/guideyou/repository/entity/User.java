@@ -31,4 +31,6 @@ public class User {
     private String comment;
 
     private Timestamp createdAt;
+    private String deleteYn;
+    private Timestamp deleteAt;
 }
