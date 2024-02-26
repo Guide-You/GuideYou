@@ -26,7 +26,7 @@
 
 
 	<delete id="deletById">
-		delete from product where id = #{id}
+		delete from product where id = #{id }
 	</delete>
 	
 	<select id="findAllByUserId" resultType="com.guideyou.repository.entity.Product">
