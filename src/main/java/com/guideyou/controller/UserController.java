@@ -71,12 +71,11 @@ public class UserController {
 	  * @Method 설명 : 사용자 구매한 목록 페이지
 	  * @return
 	  */
-	@GetMapping("/purchasedList")
+	@GetMapping("/member/purchasedList")
 	public String purchasedListPage(Model model) {
 		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
 		List<PurchasedProductInfoDTO> purchasedProductInfoList = paymentService.getPurchasedProductInfoList(loginUser.getId());
 		model.addAttribute("purchasedProductInfoList", purchasedProductInfoList);
-		System.out.println(model.getAttribute("purchasedProductInfoList").toString());
 		return "user/userPurchasedList";
 	}
 	
