@@ -39,11 +39,82 @@
                                 <fmt:formatDate value="${purchaseProductInfo.paymentDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                               </small></p>
                               <!-- Button trigger modal -->
+                              <input type="text" value="${purchaseProductInfo.productId }">
                                 <button type="button" class="btn btn-primary purchased--review--btn"
                                 data-bs-toggle="modal"
                                 data-bs-target="#review--modal">
                                   리뷰쓰기
                                 </button>
+                                
+                                <!-- review modal start -->
+<div
+  class="modal fade"
+  id="review--modal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content rounded-0">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Review 등록</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="d-flex main-content">
+        <div class="content-text p-4">
+        
+          <form action="#" id="send--review--form">
+		  <input type="text" value="${purchaseProductInfo.productId }" />
+          <span>구매 플랜 : <a href="">${purchaseProductInfo.productTitle}</a></span>
+          <p>
+            구매하신 플랜에 대해 리뷰 작성을 해주세요!
+            <br />
+            해당 리뷰는 다른 플랜 구매자에게 큰 도움이 될 수 있습니다
+          </p>
+            <div class="form-group review--group">
+              <label for="review--register--title">리뷰 제목</label>
+              <input
+                type="text"
+                class="form-control review--register--title"
+                placeholder="Review Title"
+                id="review--title"
+              />
+            </div>
+            <div class="form-group review--group">
+              <label for="review--register--content">리뷰 내용</label>
+              <input
+                type="text"
+                class="form-control review--content--input" 
+                placeholder="Enter content"
+                id="review--content"
+              />
+            </div>
+         	<div class="form-group review--group">
+         		<lable for="review--score">별점</lable>
+         		<input type="text" class="form-control review--score--input" placeholder="Enter Score" id="review--score"></input>
+         	</div>
+              
+              <div class="form-group">
+                <input
+                  type="submit"
+                  value="리뷰 등록"
+                  class="btn btn-primary btn-block review--btn"
+                  id="review--button"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- review modal end -->
 
                             </div>
                           </div>
@@ -60,8 +131,18 @@
       </div>
     </div>
       <!--  Page End -->
-      
-<%@ include file="/WEB-INF/view/layout/reviewModal.jsp"%>
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
+
+<script>
+//modal
+$(function () {
+  $("#review--modal").appendTo("#modal-container");
+  $("#review--modal").modal({
+    backdrop: "static",
+    show: false,
+  });
+});
+
+</script>
                 

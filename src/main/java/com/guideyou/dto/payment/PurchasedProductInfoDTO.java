@@ -18,6 +18,7 @@ import lombok.Data;
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PurchasedProductInfoDTO {
+	private Integer productId;
 	private String cityName;			// 구매한 상품의 지역명
     private String productTitle;		// 구매한 상품의 제목
     private Timestamp paymentDate;		// 결제한 날짜

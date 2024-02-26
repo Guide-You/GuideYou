@@ -10,6 +10,7 @@ import com.guideyou.service.ReviewService;
 import com.guideyou.utils.Define;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -37,12 +38,13 @@ public class ReviewController {
 	  * @변경이력 : 
 	  * @Method 설명 : plan 구매 고객 review 작성(insert)
 	  */
-	@GetMapping("/review/save")
-	private String saveReview(ReviewDto reviewDto) {
+	@GetMapping("/review/save/{productId}")
+	private String saveReview(@PathParam("productId")Integer productId,ReviewDto reviewDto) {
 		
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		
-		//reviewService.createReview(user, reviewDto);
+		Integer userId = user.getId();
+		reviewService.createReview(userId, productId, reviewDto);
 		
 		// TODO: service 호출 실패시 처리(2024.02.26 경진)
 		

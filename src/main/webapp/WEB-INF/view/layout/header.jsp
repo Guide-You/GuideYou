@@ -98,10 +98,14 @@ pageEncoding="UTF-8"%>
           </div>
         </div>
         <div class="container px-0">
-          <nav class="navbar navbar-light bg-white navbar-expand-xl">
+          <nav class="navbar navbar-light bg-white navbar-expand-xl header--line">
+          <div class="logo--image--container">
             <a href="/main" class="navbar-brand">
-              <h1 class="text-primary display-6">GUIDE YOU</h1>
+              <!-- <h1 class="text-primary display-6">GUIDE YOU</h1> -->
+              <img alt="원본 로고" src="/img/guideyou_logo_origin.png" class="original--logo" style="width:200px; height: 200px;">
+              <img alt="호버 로고" src="/img/guideyou_logo_hover.png" class="hover--logo" style="width:200px; height: 200px;">
             </a>
+         </div>
             <button
               class="navbar-toggler py-2 px-3"
               type="button"
