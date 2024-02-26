@@ -962,3 +962,46 @@ h1 {
 	vertical-align: middle; /* 이미지를 텍스트와 수직 정렬하기 위해 */
 }
 /* 여기까지 작성했어요 - 최장호*/
+
+/* member - purchased list */
+.purchased--list{
+	margin-left: 8%;
+	width: 80%;
+}
+.purchased--list--img--section{
+	width: 200px;
+	height: 200px;
+	margin-top: 1%;
+}
+.purchased--list--img--section > {
+	text-align: center;
+}
+.purchased--review--btn {
+	float: right;
+	color: white;
+}
+.purchased--review--btn:hover {
+	background-color: #ffc691;
+	color: white;
+}
+.review--content--input{
+	height: 250px;	
+	resize: vertical
+}
+.review--btn{
+	margin-top: 8%;
+	float: right;
+	color: white;
+}
+.review--btn:hover{
+	
+	background-color: #ffc691;
+	color: white;
+}
+
+.review--group{
+	margin-top: 3%;
+}
+.review--file{
+	
+}

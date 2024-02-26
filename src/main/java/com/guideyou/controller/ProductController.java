@@ -104,6 +104,8 @@ public class ProductController {
 	@GetMapping("/detail/{productId}")
 	public String productDetail(@PathVariable("productId") Integer productId, Model model) {
 
+		// TODO: 상세페이지 FRONT -작성자 : USER NICK NAME 들고와주세용 (2024.02.24 경진) : 확인자 명근 
+		
 		ProductDto product = productService.findByProductId(productId);
 		model.addAttribute("product", product);
 
