@@ -25,6 +25,8 @@ public interface BoardRepository {
 	
 	public List<Board> findAll();
 	public Board findByNumber(String id);
+	// 02.23 글 디테일 불러오기
+	
 	/**
 	  * @Method Name : getBoard
 	  * @작성일 : 2024. 2. 22.

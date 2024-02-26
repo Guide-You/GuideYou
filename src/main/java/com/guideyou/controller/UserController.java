@@ -1,8 +1,11 @@
 package com.guideyou.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.guideyou.dto.user.SignUpDTO;
 import com.guideyou.dto.user.UserDTO;
+import com.guideyou.dto.wishList.WishListProductUserDTO;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.User;
 import com.guideyou.service.UserService;
+import com.guideyou.service.wishListService.WishListService;
 import com.guideyou.utils.Define;
 
 import jakarta.servlet.http.HttpSession;
@@ -31,11 +36,57 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private WishListService wishListService;
+	
+	
 
 	@Autowired
 	private HttpSession httpSession;
 	
 	/* ------------------------------------------------------------------------------------*/	
+	
+	/**
+	  * @Method Name : uploadListPage
+	  * @작성일 : 2024. 2. 24.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 작성한 상품 목록 페이지
+	  * @return
+	  */
+	@GetMapping("/uploadList")
+	public String uploadListPage() {
+		return "user/userUploadList";
+	}
+	
+	/**
+	  * @Method Name : purchasedListPage
+	  * @작성일 : 2024. 2. 24.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 구매한 목록 페이지
+	  * @return
+	  */
+	@GetMapping("/perchasedList")
+	public String purchasedListPage() {
+		return "user/userPurchasedList";
+	}
+	
+	/**
+	  * @Method Name : cartListPage
+	  * @작성일 : 2024. 2. 24.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 찜 목록 페이지
+	  * @return
+	  */
+	@GetMapping("/member/cartList")
+	public String cartListPage(Model model) {
+		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
+		List<WishListProductUserDTO> wishListProductUserDTOList = wishListService.findwishListProductUserByUserId(loginUser.getId());
+		model.addAttribute("wishListProductUserDTOList", wishListProductUserDTOList);
+		return "user/userCartList";
+	}
 	
 	/**
 	  * @Method Name : profilePage

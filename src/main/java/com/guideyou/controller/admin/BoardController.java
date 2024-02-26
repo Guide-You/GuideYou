@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +32,7 @@ public class BoardController {
 	private BoardService boardService;
 
 	// 1. 화면 띄우기
-	@GetMapping("/")
+	@GetMapping("/testInsert")
 	public String boardPage() {
 		System.out.println("이건 get방식의 test가 호출되면 이 글자가 보여요");
 		return "/company/testInsert";
@@ -50,11 +51,9 @@ public class BoardController {
 		return "redirect:/company/testList";
 	}
 	
-	@GetMapping("/testInsert")
-	@ResponseBody
-	public String insert(BoardDto board){
-		return "redirect:/company/testList";
-	}
+	/*
+	 * public String insert(BoardDto board){ return "redirect:/company/testList"; }
+	 */
 	// 글 목록 BoardPageRq | BoardPageS 
 	@GetMapping("/testList")
 	public String boardList(BoardPageRq pgReq,Model model) {
@@ -79,7 +78,6 @@ public class BoardController {
 		System.out.println("BoardDto" + "여기까지오나");
 		return "/company/testList"; 
 	}
-	
 	/** TODO : 글 수정 기능 구현 예정입니다.
 	  * @FileName : BoardController.java
 	  * @Project : GuideYou
@@ -88,15 +86,19 @@ public class BoardController {
 	  * @변경이력 : 
 	  * @프로그램 설명 : 관리자 글 delete test 중입니다.
 	  */
-	
 	// 글 삭제
-	
-	public String deleteById(Integer board) {
-	  boardService.deleteById(board);
-		return "/company/testInsert";
-				
+	@GetMapping("/delete/{id}")
+	public String deleteById(@PathVariable("id") Integer boardId) {
+			boardService.deleteById(boardId); 
+			 return "redirect:/company/testList";
 	}
+	// 글 디테일 뷰 불러오기 우선 페이지 뜨는지 
+	@GetMapping("/testDetail")
+	public Board findByNumber() {
+		return null;
+	};
 	// 글 수정
+	
 
 }
 	

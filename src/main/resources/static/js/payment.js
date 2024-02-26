@@ -7,6 +7,10 @@
   	const orderTitle = document.getElementById("order--title").value;
   	const orderSeller = document.getElementById("order--seller").value;
   	const orderPrice = document.getElementById("order--price").value;
+  	const orderUserId = document.getElementById("order--user--id").value;
+  	
+  	let merchantUid ;
+  	
     // 객체 초기화
     IMP.init("imp50236035"); // 가맹점 식별코드
 
@@ -21,7 +25,7 @@
           name: orderTitle,
           amount: orderPrice, // 가격
           buyer_email: "gildong@gmail.com", // 회원 email정보
-          buyer_name: orderSeller,	// 회원 이름
+          buyer_name: orderUserId,
           buyer_tel: "010-4242-4242",	// 회원 전화번호
           buyer_addr: "서울",	// location 
         },
@@ -36,11 +40,12 @@
 				url: '/paySuccess',
 				data:{
 					"merchantUid" : data.merchant_uid,
-					"userId" : data.buyer_name,
+					"userId" : data.buyer_name,	// 해당 userId는 구매자 
 					"productId" : productId,
 					"productTitle" : data.name,
 					"productPrice" : data.paid_amount,
 					"paymentStatus" : data.status,
+					"orderUserId" : userId
 				}
 			})
             

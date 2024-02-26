@@ -34,7 +34,8 @@
 				<hr>
 				<ul class="nav nav-pills flex-column mb-auto aside--mypage">
 					마이 페이지
-					<li class="nav-item"><a href="#" class="nav-link active"
+					<!-- nav bar 활성화 일때 => class="nav-link active", 비활성화 일떄 => class="nav-link link-dark" -->
+					<li class="nav-item"><a href="/member/profile" class="nav-link link-dark"
 						aria-current="page"> <svg class="bi me-2" width="16"
 								height="16">
 								<use xlink:href="#home"></use></svg><i class="bi bi-person-circle"></i>
@@ -57,7 +58,7 @@
 								<use xlink:href="#grid"></use></svg><i class="bi bi-geo-alt"></i> 구매한
 							일정 내역
 					</a></li>
-					<li><a href="#" class="nav-link link-dark"> <svg
+					<li><a href="/member/cartList" class="nav-link link-dark"> <svg
 								class="bi me-2" width="16" height="16">
 								<use xlink:href="#people-circle"></use></svg><i class="bi bi-heart"></i>
 							찜목록

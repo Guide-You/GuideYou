@@ -58,7 +58,10 @@
     <script src="/js/payment.js"></script> 
     <script src="/js/order.js"></script> 
     <script src="/js/user.js"></script> 
-	
+    
+	<!--datepicker-->
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
+    
 	  </footer>
 	  <!-- Template Javascript -->
 	  <script src="/js/main.js"></script>

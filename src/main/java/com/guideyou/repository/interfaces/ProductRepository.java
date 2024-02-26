@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
-import com.guideyou.dto.ProductSaveFormDto;
+import com.guideyou.dto.ProductDto;
 import com.guideyou.repository.entity.Product;
 
 
@@ -15,38 +15,47 @@ import com.guideyou.repository.entity.Product;
 @Mapper
 public interface ProductRepository {
 	
+	// 상품 정보 저장
 	public int insert(Product product);
+	
+	// 상품 정보 수정
 	public int updateById(Product product);
+	
+	// 상품 판매 횟수 수정
 	public int updateBySoldCount(Integer productId);
+	
+	// 상품 찜 횟수 수정
 	public int updateByWishCount(Product product);
+	
+	// 상품 조회 횟수 수정
 	public int updateByViewCount(Product product);
+	
+	// 상품 정보 삭제
 	public int deletById(Integer id);
 	
+	// 상품 아이디 찾기
+	public List<Product> findByProductId();
+	
+	// 사용자가 작성한 상품 전체 조회
 	public List<Product> findAllByUserId(Integer userId);
-	public ProductSaveFormDto findByProductId(Integer id);
+	
+	// 목록에 보여줄 내용들 조회
+	public ProductDto findByProductId(Integer id);
+	
+	// db에 저장 된 상품 전체 조회
 	public List<Product> findAll();
 	
-	public List<Product> findByTitleContaining(String keyword);	
-	
-	// 상품 대표 이미지 찾기
+	// 상품 대표 이미지 찾기, 페이징 처리
 	public List<Product> findProductsWithImages(@Param ("offset") int offset, @Param ("limit") int limit, 
 			@Param("searchText") String searchText);
 	
-	// citycode로 페이지 출력
-	public List<ProductSaveFormDto> findProductsByCityCode(String cityCode);	
 	
 	// 페이징 처리
 	public List<Product> findAllwithPasing(@Param ("offset") int offset, @Param ("limit") int limit,
 											@Param("searchText") String searchText, @Param("cityCodeId") String cityCodeId);
-	
+	// 상품 총 개수 찾기
 	public int getTotalCount(@Param("searchText") String searchText, @Param("cityCodeId") String cityCodeId);
-	
-	
-	// 비동기적 페이징 처리
-	PageRes<Product> getProductsWithPaging(PageReq pageReq);
-
-    int getTotalProductCount();
-    
+		   
     
     // 인기 플랜 조회
     List<Product> popularProduct();
