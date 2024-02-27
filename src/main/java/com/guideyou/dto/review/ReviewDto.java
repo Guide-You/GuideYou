@@ -18,10 +18,9 @@ import lombok.NoArgsConstructor;
 public class ReviewDto {
 	private Integer reviewId;
 	private Integer wUserId;
-	private Integer rProductId;
-	private String title;	// TODO: 테이블 컬럼추가 (2024.02.25 경진) 
-	private String content;
-	private double score;
+	private Integer reviewProductId;
+	private String reviewTitle;
+	private String reviewContent;
+	private double reviewScore;
 	
-	// TODO : 여행 기간 넣을지 의견나눠보기 (2024.02.25 경진)
 }

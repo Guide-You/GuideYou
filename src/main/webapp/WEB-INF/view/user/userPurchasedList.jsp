@@ -42,7 +42,9 @@
                               <input type="text" value="${purchaseProductInfo.productId }">
                                 <button type="button" class="btn btn-primary purchased--review--btn"
                                 data-bs-toggle="modal"
-                                data-bs-target="#review--modal">
+                                data-bs-target="#review--modal"
+                                id="review--modal--btn"
+                                >
                                   리뷰쓰기
                                 </button>
                                 
@@ -69,7 +71,7 @@
         <div class="content-text p-4">
         
           <form action="#" id="send--review--form">
-		  <input type="text" value="${purchaseProductInfo.productId }" />
+		  <input type="text" id="review--product--id" name="reviewProductId" value="${purchaseProductInfo.productId }" />
           <span>구매 플랜 : <a href="">${purchaseProductInfo.productTitle}</a></span>
           <p>
             구매하신 플랜에 대해 리뷰 작성을 해주세요!
@@ -82,7 +84,9 @@
                 type="text"
                 class="form-control review--register--title"
                 placeholder="Review Title"
+                name="reviewTitle"
                 id="review--title"
+                value="review title"
               />
             </div>
             <div class="form-group review--group">
@@ -91,12 +95,21 @@
                 type="text"
                 class="form-control review--content--input" 
                 placeholder="Enter content"
+                name="reviewContent"
                 id="review--content"
+                value="review content"
               />
             </div>
          	<div class="form-group review--group">
          		<lable for="review--score">별점</lable>
-         		<input type="text" class="form-control review--score--input" placeholder="Enter Score" id="review--score"></input>
+         		<input 
+         			type="text" 
+         			class="form-control review--score--input" 
+         			placeholder="Enter Score" 
+         			name="reviewScore"
+         			id="review--score"
+         			value="5"
+         		/>
          	</div>
               
               <div class="form-group">
@@ -134,15 +147,4 @@
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
 
-<script>
-//modal
-$(function () {
-  $("#review--modal").appendTo("#modal-container");
-  $("#review--modal").modal({
-    backdrop: "static",
-    show: false,
-  });
-});
-
-</script>
                 
