@@ -1,34 +1,49 @@
-document.addEventListener("DOMContentLoaded", function(){
-
-
+	
+	
+	let reviewModalButton = document.getElementById('review--modal--btn');
 	let reviewButton = document.getElementById('review--button');
 	
-	 function submitReview(){
-		let reviewTitle = document.getElementById('review--title').value;
-		let reviewContent = document.getElementById('review--content').value;
-		let reviewScore = document.getElementById('review--score').value;
-		
-		console.log('title : ' + reviewTitle);
-		console.log('content : ' + reviewContent);
-		console.log('score : ' + reviewScore); 
-
-
-	    $.ajax({
-	        type: "POST",
-	        url: "/saveReview",
-	        data: JSON.stringify({ title: title, content: content, score: score }),
-	        contentType: "application/json",
-	        success: function(response) {
-	            $("#responseMessage").text("리뷰가 성공적으로 등록되었습니다.");
-	        },
-	        error: function(xhr, status, error) {
-	            $("#responseMessage").text("리뷰 등록에 실패했습니다. 다시 시도해주세요.");
-	        }
-	    });
-		
-	};
+	let reviewProductId = document.getElementById('review--product--id').value;
 	
+	
+	reviewModalButton.addEventListener('click', function(e){
+		console.log("들어욤")
+		console.log("reviewProductId" + reviewProductId)
+		
+		$.ajax({
+			type: 'POST',
+			url: "/checkReview",
+			data: JSON.stringify({ reviewProductId: reviewProductId }),
+			headers : { // Http header
+      			"Content-Type" : "application/json"
+    		},
+			error: function(data){
+				alert('이미 작성한 리뷰입니다.')
+				window.location.reload();
+				e.preventDefault;
+			},
+			success: function(data) {
+				// review 데이터가 0(작성 내역이 없을시) modal 실행 
+				  $("#review--modal").appendTo("#modal-container");
+				  $("#review--modal").modal({
+				    backdrop: "static",
+				    show: false,
+				  });
+			}
+		})
+	});
+	
+	reviewButton.addEventListener('click', function(e){
+
+		let sendReview = document.getElementById('send--review--form');
+		
+		sendReview.action = '/saveReview';
+		sendReview.method = 'post';
+		
+		sendReview.submit();
+		
 
 
-}
-});
+	});
+
+	

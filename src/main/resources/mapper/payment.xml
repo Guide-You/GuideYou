@@ -16,7 +16,7 @@
 	</insert>
 	
 	<select id="findByUserId" resultType="com.guideyou.repository.entity.Payment">
-		SELECT payment.user_id FROM payment WHERE user_id = #{userId}
+		SELECT user_id FROM payment WHERE user_id = #{userId}
 	</select>
 
 	<select id="getPurchasedProductInfoList" resultType="com.guideyou.dto.payment.PurchasedProductInfoDTO">

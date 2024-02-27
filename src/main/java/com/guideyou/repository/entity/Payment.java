@@ -4,7 +4,9 @@ import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
   * @FileName : Payment.java
@@ -17,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Payment {
 	
 		private Integer paymentId;

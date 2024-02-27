@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
@@ -17,11 +18,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 public class Review {
 
-	private Integer reviewIdInteger;
+	private Integer reviewId;
 	private Integer wUserId;
 	private Integer rProductId;
+	private String title;
 	private String content;
 	private double score;
 	private Timestamp createdAt;

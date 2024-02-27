@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.guideyou.repository.interfaces.review.ReviewRepository">
 	<insert id="insert">
-		INSERT INTO review(w_user_id, r_product_id, content, score, created_at)
-		VALUES (wUserId, rProductId, content, score, createdAt)
+		INSERT INTO review(w_user_id, r_product_id, title, content, score)
+		VALUES (#{wUserId}, #{rProductId},#{title}, #{content}, #{score})
 	</insert>
-	<select id="findByUserIdAndProductId">
-		SELECT  FROM review as r WHERE w_user_id = #{userId} AND r_product_id = #{productId}
+	<select id="findByUserIdAndProductId" parameterType="map" resultType="java.lang.Integer">
+		SELECT * FROM review WHERE w_user_id = #{userId} AND r_product_id = #{productId}
 	</select>
 
 </mapper>

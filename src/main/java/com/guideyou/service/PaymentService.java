@@ -1,6 +1,8 @@
 package com.guideyou.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.guideyou.dto.payment.PaymentDto;
 import com.guideyou.dto.payment.PurchasedProductInfoDTO;
+import com.guideyou.dto.review.ReviewDto;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Payment;
 import com.guideyou.repository.interfaces.ProductRepository;
@@ -50,7 +53,7 @@ public class PaymentService {
 				.productId(paymentDto.getProductId())
 				.userId(paymentDto.getUserId())
 				.productTitle(paymentDto.getProductTitle())
-				.productPrice(paymentDto.getProductPrice())
+				//.productPrice(paymentDto.getProductPrice()) payment 확인
 				.paymentStatus(paymentDto.getPaymentStatus())
 				.build();
 		
@@ -83,5 +86,6 @@ public class PaymentService {
 		return purchasedProductInfoList;
 	}
 	
+
 	
 }
