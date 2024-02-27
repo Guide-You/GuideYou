@@ -55,6 +55,7 @@
     <script src="/js/waypoints/waypoints.min.js"></script>
     <script src="/js/lightbox/js/lightbox.min.js"></script>
     <script src="/js/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/js/review.js"></script> 
     <script src="/js/payment.js"></script> 
     <script src="/js/order.js"></script> 
     <script src="/js/user.js"></script> 

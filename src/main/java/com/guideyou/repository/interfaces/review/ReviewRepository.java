@@ -1,5 +1,7 @@
 package com.guideyou.repository.interfaces.review;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.guideyou.repository.entity.Review;
@@ -15,5 +17,6 @@ import com.guideyou.repository.entity.Review;
 @Mapper
 public interface ReviewRepository {
 	public int insert(Review review);
-	public int findByUserIdAndProductId(Integer userId, Integer productId);
+	public Review findByUserIdAndProductId(Map<String, Object> params );
+	
 }
