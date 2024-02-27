@@ -16,7 +16,7 @@
 
 <body>
 <div class="container">        
-    <form id="productForm" action="/update/${product.id}" method="post" enctype="multipart/form-data">
+    <form id="productForm" action="/update/${photoResult.productId}" method="post" enctype="multipart/form-data">
         
         
         <!-- 지역 선택 콤보박스 -->
@@ -39,13 +39,16 @@
         
         <!-- 글 정보 입력 -->
         <label for="title">글 제목:</label><br>
-        <input type="text" id="title" name="title" maxlength="50" value="${product.title}"><br><br>
+        <input type="text" id="title" name="title" maxlength="50" value="${photoResult.title}"><br><br>
         
         <label for="price">가격:</label><br>
-        <input type="text" id="price" name="price" maxlength="10" value="${product.price}"><br><br>
+        <input type="text" id="price" name="price" maxlength="10" value="${photoResult.price}"><br><br>
+        
+        <label for="introContent">판매 소개글 내용:</label><br>
+        <textarea id="introContent" name="introContent" style="height:150px; resize: none;">${photoResult.introContent}</textarea><br><br>
         
         <label for="content">글 내용:</label><br>
-        <textarea id="content" name="content" style="height:150px; resize: none;">${product.content}</textarea><br><br>
+        <textarea id="content" name="content" style="height:150px; resize: none;">${photoResult.content}</textarea><br><br>
         
        	
         

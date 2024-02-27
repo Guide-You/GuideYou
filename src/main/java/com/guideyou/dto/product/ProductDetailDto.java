@@ -1,8 +1,6 @@
-package com.guideyou.dto;
+package com.guideyou.dto.product;
 
 import java.sql.Timestamp;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -15,11 +13,11 @@ public class ProductDetailDto {
 	private Integer productId;
 	private Integer userId;
 	private String productTitle;
+	private String introProductContent;
 	private String productContent;
-	private long price;
+	private Long price;
 	private Integer soldCount;
-	private MultipartFile[] uploadFileName;
-	private MultipartFile thumbFile;
+	private String uploadFileName;
 	private String nickName;
 	private String email;
 	private Integer wUserId;

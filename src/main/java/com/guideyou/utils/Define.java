@@ -6,7 +6,7 @@ public class Define {
 	public static final String PRINCIPAL = "principal";
 	
 
-	public static final String UPLOAD_FILE_DERECTORY = "C:\\wok_spring\\upload";
+	public static final String UPLOAD_FILE_DERECTORY = "c:\\wor_spring2\\upload";
 	public static final int MAX_FILE_SIZE = 1024 * 1024 * 20;
 	
 	

@@ -15,8 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
-import com.guideyou.dto.ProductDetailDto;
-import com.guideyou.dto.ProductDto;
+import com.guideyou.dto.product.ProductDetailDto;
+import com.guideyou.dto.product.ProductDto;
+import com.guideyou.dto.product.ProductPhotoDto;
+import com.guideyou.dto.product.ProductReviewDto;
 import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.ProductPhotos;
@@ -37,83 +39,84 @@ public class ProductService {
 	private ProductPhotosRepository photosRepository;
 
 	// 상품 등록
-		@Transactional
-		public boolean createProduct(ProductDto dto) {
-		    // Product 저장
-		    Product product = Product.builder()
-		            .userId(dto.getUserId())
-		            .cityCodeId(dto.getCityCodeId())
-		            .title(dto.getTitle())
-		            .price(dto.getPrice())
-		            .content(dto.getContent())
-		            .build();
+	@Transactional
+	public boolean createProduct(ProductDto dto) {
+	    // Product 저장
+	    Product product = Product.builder()
+	            .userId(dto.getUserId())
+	            .cityCodeId(dto.getCityCodeId())
+	            .title(dto.getTitle())
+	            .price(dto.getPrice())
+	            .introContent(dto.getIntroContent())
+	            .content(dto.getContent())
+	            .build();
 
-		    productRepository.insert(product);
-		    int productId = product.getId();
+	    productRepository.insert(product);
+	    int productId = product.getId();
 
-		    String saveDirectory = Define.UPLOAD_FILE_DERECTORY;
-		    // 폴더가 없다면 오류 발생(파일 생성시)
-		    String savePath = saveDirectory.split("\\\\")[0] + "\\\\" + saveDirectory.split("\\\\")[1];
+	    String saveDirectory = Define.UPLOAD_FILE_DERECTORY;
+	    // 폴더가 없다면 오류 발생(파일 생성시)
+	    String savePath = saveDirectory.split("\\\\")[0] + "\\\\" + saveDirectory.split("\\\\")[1];
 
-		    File dir = new File(savePath);
-		    if (!dir.exists()) {
-		        dir.mkdir(); // 폴더가 없으면 폴더 생성
-		    }
+	    File dir = new File(savePath);
+	    if (!dir.exists()) {
+	        dir.mkdir(); // 폴더가 없으면 폴더 생성
+	    }
 
-		    File dir2 = new File(saveDirectory);
-		    if (!dir2.exists()) {
-		        dir2.mkdir(); // 폴더가 없으면 폴더 생성
-		    }
+	    File dir2 = new File(saveDirectory);
+	    if (!dir2.exists()) {
+	        dir2.mkdir(); // 폴더가 없으면 폴더 생성
+	    }
 
-		    MultipartFile[] files = dto.getCustomFile();
-		    for (int i = 0; i < files.length; i++) {
-		        String filename = files[i].getOriginalFilename();
-		        String path = Define.UPLOAD_FILE_DERECTORY;
-		        String ext = StringUtils.getFilenameExtension(filename);
+	    MultipartFile[] files = dto.getCustomFile();
+	    for (int i = 0; i < files.length; i++) {
+	        String filename = files[i].getOriginalFilename();
+	        String path = Define.UPLOAD_FILE_DERECTORY;
+	        String ext = StringUtils.getFilenameExtension(filename);
 
-		        LocalDateTime now = LocalDateTime.now();
-		        String uploadFileName = "P" + now.getYear() + now.getMonthValue() + now.getDayOfMonth() + now.getHour()
-		                + now.getMinute() + now.getSecond() + (int) (Math.random() * 100) + "." + ext;
+	        LocalDateTime now = LocalDateTime.now();
+	        String uploadFileName = "P" + now.getYear() + now.getMonthValue() + now.getDayOfMonth() + now.getHour()
+	                + now.getMinute() + now.getSecond() + (int) (Math.random() * 100) + "." + ext;
 
-		        try {
-		            BufferedOutputStream bos = new BufferedOutputStream(
-		                    new FileOutputStream(new File(path + "/" + uploadFileName)));
-		            bos.write(files[i].getBytes());
-		            bos.close();
+	        try {
+	            BufferedOutputStream bos = new BufferedOutputStream(
+	                    new FileOutputStream(new File(path + "/" + uploadFileName)));
+	            bos.write(files[i].getBytes());
+	            bos.close();
 
-		            ProductPhotos photos = new ProductPhotos();
-		            photos.setProductId(productId);
-		            photos.setProductPhotoPath(path);
-		            photos.setOriginFileName(filename);
-		            photos.setUploadFileName(uploadFileName);
+	            ProductPhotos photos = new ProductPhotos();
+	            photos.setProductId(productId);
+	            photos.setProductPhotoPath(path);
+	            photos.setOriginFileName(filename);
+	            photos.setUploadFileName(uploadFileName);
 
-		            // 첫 번째 파일이면서 썸네일 파일이 있는 경우에만 썸네일을 설정
-		            if (i == 0 && dto.getThumbFile() != null) {
-		                MultipartFile thumbFile = dto.getThumbFile();
-		                String thumbFilename = thumbFile.getOriginalFilename();
-		                // 썸네일 파일 저장 로직 추가
-		                String thumbUploadFileName = "thumbnail_" + thumbFilename; // 썸네일 파일명 설정
-		                BufferedOutputStream thumbBos = new BufferedOutputStream(
-		                        new FileOutputStream(new File(savePath + "/" + thumbUploadFileName)));
-		                thumbBos.write(thumbFile.getBytes());
-		                thumbBos.close();
+	            // 첫 번째 파일이면서 썸네일 파일이 있는 경우에만 썸네일을 설정
+	            if (i == 0 && dto.getThumbFile() != null) {
+	                MultipartFile thumbFile = dto.getThumbFile();
+	                String thumbFilename = thumbFile.getOriginalFilename();
+	                // 썸네일 파일 저장 로직 추가
+	                String thumbUploadFileName = "thumbnail_" + thumbFilename; // 썸네일 파일명 설정
+	                BufferedOutputStream thumbBos = new BufferedOutputStream(
+	                        new FileOutputStream(new File(savePath + "/" + thumbUploadFileName)));
+	                thumbBos.write(thumbFile.getBytes());
+	                thumbBos.close();
 
-		                // DB에 썸네일 정보 저장
-		                photos.setThumbnail("y");
-		            }
+	                // DB에 썸네일 정보 저장
+	                photos.setThumbnail("y");
+	            }
 
-		            int result = photosRepository.insert(photos);
+	            int result = photosRepository.insert(photos);
 
-		            if (result == 0) {
-		                throw new Exception();
-		            }
+	            if (result == 0) {
+	                throw new Exception();
+	            }
 
-		        } catch (Exception e) {
-		            System.out.println(e.getMessage());
-		        }
-		    }
-		    return true;
-		}
+	        } catch (Exception e) {
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    return true;
+	}
 
 		@Transactional
 		public boolean insertPhoto(ProductDto dto, Integer productId) {
@@ -187,13 +190,19 @@ public class ProductService {
 	}
 	
 	
+	// 24.02.27 수정에 필요한 정보 찾기
+	public List<ProductDto> selectProductInf(Integer productId) {
+		
+		return productRepository.selectProductInf(productId); 
+	}
 	
 	
-	public ProductDto findByProductId(Integer id) {
-		return productRepository.findByProductId(id);
+	
+	public ProductDetailDto findByProductId(Integer productId) {
+		return productRepository.findByProductId(productId);
 
 	}
-
+	
 	// 해당 상품 이미지 전부 찾기
 	public List<ProductDto> findAllByProductId(Integer productId) {
 		return photosRepository.findAllByProductId(productId);
@@ -325,10 +334,27 @@ public class ProductService {
 		return productRepository.findAllProductDetail(productId);
 	}
 	
-	// detail 상품 정보
-	public List<Product> findProductAndUser(Integer productId) {
-		return productRepository.findProductAndUser(productId);
+	// 24.02.27 detail 상품 정보
+	public ProductDetailDto findProductAndUser(Integer productId) {
+		
+		ProductDetailDto list = productRepository.findProductAndUser(productId);
+		
+		return list;
 	}
+	
+	// 24.02.27 detail 상품 이미지 정보
+	public List<ProductPhotoDto> findByProductImg(Integer productId) {
+		
+		return productRepository.findByProductImg(productId);
+	}
+	
+	
+	// 24.02.27 review 상품 리뷰 정보
+	public List<ProductReviewDto> findReviewByProduct(Integer productId) {
+		return productRepository.findReviewByProduct(productId);
+	}
+	
+	
 	
 	// 인기 상품 조회
 	public List<Product> popularProduct() {
@@ -347,6 +373,30 @@ public class ProductService {
 		List<UploadProductsInfoDTO> getUploadProductsInfoList = productRepository.getUploadProductsInfoByUserId(userId);
 		return getUploadProductsInfoList;
 	}
+	
+	
+	
+	// 이미지 업로드 이름 찾기
+	public List<ProductPhotoDto> photos(Integer productId) {
+		return productRepository.photos(productId);
+	}
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

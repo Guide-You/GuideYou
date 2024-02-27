@@ -14,6 +14,7 @@ public class Product {
 	private Integer userId;
 	private Integer cityCodeId;
 	private String title;
+	private String introContent;
 	private String content;
 	private Long price;
 	private Integer soldCount;

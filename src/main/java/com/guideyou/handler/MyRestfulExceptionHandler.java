@@ -25,7 +25,7 @@ public class MyRestfulExceptionHandler {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
 		sb.append("alert('" + e.getMessage() + "');");
-		sb.append("window.history.back();");
+		sb.append("location.href='/signIn';");
 		sb.append("</script>");
 		return sb.toString();
 	}

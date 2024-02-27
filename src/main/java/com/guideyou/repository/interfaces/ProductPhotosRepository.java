@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.guideyou.dto.ProductDto;
+import com.guideyou.dto.product.ProductDto;
 import com.guideyou.repository.entity.ProductPhotos;
 
 @Mapper

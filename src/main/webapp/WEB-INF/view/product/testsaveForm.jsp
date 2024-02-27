@@ -15,7 +15,7 @@
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
 <body>
-<div class="container">        
+<div class="container" style="margin-top: 20%">        
     <form id="productForm" action="/save" method="post" enctype="multipart/form-data">
         
         <!-- 지역 선택 콤보박스 -->
@@ -38,13 +38,17 @@
         
         <!-- 글 정보 입력 -->
         <label for="title">글 제목:</label><br>
-        <input type="text" id="title" name="title" maxlength="50" value="sss"><br><br>
+        <input type="text" id="title" name="title" maxlength="50" value="즐거운 여행"><br><br>
         
         <label for="price">가격:</label><br>
-        <input type="text" id="price" name="price" maxlength="10" value="1000"><br><br>
+        <input type="text" id="price" name="price" maxlength="10" value="10000"><br><br>
         
+        <label for="introContent">판매 소개글 내용:</label><br>
+        <textarea id="introContent" name="introContent" style="height:150px; resize: none;">맛집 여행 일지</textarea><br><br>
+          
         <label for="content">글 내용:</label><br>
-        <textarea id="content" name="content" style="height:150px; resize: none;">aaa</textarea><br><br>
+        <textarea id="content" name="content" style="height:150px; resize: none;">구매 후 확인하세요</textarea><br><br>
+        
         
         
         
@@ -64,6 +68,7 @@ $(document).ready(function() {
         var errorMessage = ""; // 에러 메시지를 저장할 변수
 
         var titleInput = $('#title').val();
+        var introContentInput = $('#intoContent').val();
         var contentInput = $('#content').val();
         var priceInput = $('#price').val();
         var thumbFile = $('#thumbFile').val();
@@ -72,6 +77,11 @@ $(document).ready(function() {
         // 제목이 비어있는 경우 에러 메시지에 추가
         if (titleInput.trim() === "") {
             errorMessage += "글 제목을 입력해주세요.\n";
+        }
+        
+        // 소개 내용이 비어있는 경우 에러 메시지에 추가
+        if (introContentInput.trim() === "") {
+        	errorMessage += "소개글 내용을 입력해주세요.\n";
         }
         
         // 내용이 비어있는 경우 에러 메시지에 추가
@@ -94,6 +104,7 @@ $(document).ready(function() {
         if (errorMessage !== "") {
             alert(errorMessage); // 에러 메시지 표시
             $('#title').focus();
+            $('#intoContent').focus();          
             $('#content').focus();          
             $('#price').focus();
             

@@ -7,8 +7,10 @@ import org.apache.ibatis.annotations.Param;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
-import com.guideyou.dto.ProductDetailDto;
-import com.guideyou.dto.ProductDto;
+import com.guideyou.dto.product.ProductDetailDto;
+import com.guideyou.dto.product.ProductDto;
+import com.guideyou.dto.product.ProductPhotoDto;
+import com.guideyou.dto.product.ProductReviewDto;
 import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.repository.entity.Product;
 
@@ -41,8 +43,11 @@ public interface ProductRepository {
 	// 사용자가 작성한 상품 전체 조회
 	public List<Product> findAllByUserId(Integer userId);
 	
-	// 목록에 보여줄 내용들 조회
-	public ProductDto findByProductId(Integer id);
+	// 24.02.27 수정에 필요한 정보 조회
+	public List<ProductDto> selectProductInf(Integer productId);
+	
+	// 24.02.27 목록에 보여줄 내용들 조회
+	public ProductDetailDto findByProductId(Integer productId);
 	
 	// db에 저장 된 상품 전체 조회
 	public List<Product> findAll();
@@ -61,21 +66,32 @@ public interface ProductRepository {
     // 인기 플랜 조회
     List<Product> popularProduct();
     
- // 상품 상세 보기에 필요한 모든 내용 조회
+    // 상품 상세 보기에 필요한 모든 내용 조회
  	public List<ProductDetailDto> findAllProductDetail(Integer productId); 
     
-    // detail 상품 정보
- 	public List<Product> findProductAndUser(Integer productId);
+    // 24.02.27 detail 상품 정보
+ 	public ProductDetailDto findProductAndUser(Integer productId);
  	
- 	// 상품 사진 리스트
- 	public List<ProductDetailDto> findByProductImg(Integer productId);
+ 	// 24.02.27 상품 사진 리스트
+ 	public List<ProductPhotoDto> findByProductImg(Integer productId);
 
  	// 상품 리뷰리스트
- 	public List<ProductDetailDto> findReviewByProduct(Integer productId);
+ 	public List<ProductReviewDto> findReviewByProduct(Integer productId);
     
 	
 	// 마이페이지 사용자가 작성한 상품 목록 조회 - 최장호 추가 02/26
 	public List<UploadProductsInfoDTO> getUploadProductsInfoByUserId(Integer userId);
+	
+	// 이미지 업로드파일이름 찾기 2024.02.27
+	public List<ProductPhotoDto> photos(Integer productId);
+	
+
+	
+	
+	
+	
+	
+	
 	
     	
 }

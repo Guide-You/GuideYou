@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.CustomAutowireConfigurer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
-import com.guideyou.dto.ProductDto;
+import com.guideyou.dto.product.ProductDetailDto;
+import com.guideyou.dto.product.ProductDto;
+import com.guideyou.dto.product.ProductPhotoDto;
+import com.guideyou.dto.product.ProductReviewDto;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.User;
@@ -37,8 +41,9 @@ public class ProductController {
 	public String savePage(Model model, Integer productId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
-		List<ProductDto> photoResult = productService.findAllByProductId(productId);
-		model.addAttribute("photoResult", photoResult);
+		if (principal == null) {
+			throw new CustomRestfulException("로그인을 해주세요", HttpStatus.BAD_REQUEST);
+		}
 		
 		return "product/testsaveForm";
 	}
@@ -103,14 +108,26 @@ public class ProductController {
 	// 상품 상세 페이지
 	@GetMapping("/detail/{productId}")
 	public String productDetail(@PathVariable("productId") Integer productId, Model model) {
-
-		// TODO: 상세페이지 FRONT -작성자 : USER NICK NAME 들고와주세용 (2024.02.24 경진) : 확인자 명근 
 		
-		ProductDto product = productService.findByProductId(productId);
-		model.addAttribute("product", product);
-
+		// TODO: 상품 이미지 불러 오기 및 리뷰 추가하기, 구매 전 페이지 - 구매 후 페이지 구현 하기
+		System.out.println("dddddddddd");
+		ProductDetailDto product = productService.findProductAndUser(productId);
+		System.out.println("+++++++++++++++++++++++++++++++++");
+	    model.addAttribute("product", product);
+		
+	    List<ProductPhotoDto> imgList = productService.findByProductImg(productId);
+	    model.addAttribute("imgList", imgList);
+	    System.out.println(model.getAttribute("imgList").toString());
+	    
+	    List<ProductReviewDto> reviewList = productService.findReviewByProduct(productId);
+	    model.addAttribute("reviewList", reviewList);
+	   
+	    ProductDetailDto productBtn = productService.findByProductId(productId);
+	    model.addAttribute("productBtn", productBtn);
+	    System.out.println(productBtn);
 		return "product/productDetail";
 	}
+		
 		
 	
 	// 상품 수정 페이지
@@ -123,12 +140,9 @@ public class ProductController {
 	    	throw new CustomRestfulException("로그인을 해주세요", HttpStatus.UNAUTHORIZED);
    		}
 		
-		List<ProductDto> photoResult = productService.findAllByProductId(productId);
-		model.addAttribute("photoResult", photoResult);
-
-
-		ProductDto product = productService.findByProductId(productId);
-		model.addAttribute("product", product);
+	    ProductDetailDto id = productService.findByProductId(productId);
+	    model.addAttribute("id", id);
+		
 
 		return "product/testupdate";
 	}
@@ -136,7 +150,7 @@ public class ProductController {
 	// TODO: [front]수정 버튼 현재 detail 페이지에 있음 추후 member upload list 페이지로 옮길 예정
 	// (2024.02.21)
 	// 상품 수정 기능
-	@PostMapping("/update/{productId}")
+	@PostMapping("/edit/{productId}")
 	public String updateProduct(@PathVariable("productId") Integer productId, ProductDto dto,
 			@RequestParam("region") Integer cityCodeId, @RequestParam("removeImgs") String removeImgs) {
 		

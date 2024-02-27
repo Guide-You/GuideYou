@@ -1,4 +1,4 @@
-package com.guideyou.dto;
+package com.guideyou.dto.product;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,10 +11,11 @@ import lombok.Data;
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductDto {
-	private Integer id;
+	private Integer id; // product index
 	private Integer userId;
 	private Integer cityCodeId;
 	private String title;
+	private String introContent;
 	private String content;
 	private Long price;
 	private Integer productId;
@@ -28,6 +29,9 @@ public class ProductDto {
 	private Integer wishCount;
 	private Integer viewCount;
 	private String cityName;
+	private String nickName;
+	private String email;
+	private Double score;
 }
 
 

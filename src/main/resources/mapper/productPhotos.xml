@@ -15,7 +15,7 @@
 		 delete from product_photos where id = #{id}	     
 	</delete>	
 	
-	<select id="findAllByProductId" resultType="com.guideyou.dto.ProductDto">
+	<select id="findAllByProductId" resultType="com.guideyou.dto.product.ProductDto">
 		select * from product_photos where product_id = #{productId}
 	</select>
 	
@@ -35,7 +35,7 @@
 		DESC LIMIT 1 
 	</select>
 	
-	<select id="selectPhoto" resultType="com.guideyou.dto.ProductDto">
+	<select id="selectPhoto" resultType="com.guideyou.dto.product.ProductDto">
 		SELECT p.*
        , (
           SELECT ph.upload_file_name FROM product_photos ph WHERE product_id = p.id

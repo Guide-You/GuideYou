@@ -3,8 +3,8 @@
 <mapper namespace="com.guideyou.repository.interfaces.ProductRepository">
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-		insert into product(user_id, city_code_id, title, price, content)
-		values (#{userId}, #{cityCodeId}, #{title}, #{price}, #{content})
+		insert into product(user_id, city_code_id, title, price, intro_content, content)
+		values (#{userId}, #{cityCodeId}, #{title}, #{price}, #{introContent}, #{content})
 	</insert>
 	
 	<update id="updateById">
@@ -24,21 +24,25 @@
 		update product set view_count = view_count + 1 #{viewCount} where id = #{id}
 	</update>
 
-
 	<delete id="deletById">
-		delete from product where id = #{id }
+		delete from product where id = #{id}
 	</delete>
+	
+	<select id="selectProductInf" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT p.city_code_id, p.title, p.intro_content, p.content, p.price,
+		ph.product_id, ph.upload_file_name, ph.thumbnail
+		FROM product AS p
+		LEFT JOIN product_photos AS ph ON p.id = ph.product_id
+	</select>
 	
 	<select id="findAllByUserId" resultType="com.guideyou.repository.entity.Product">
 		select * from product where user_id = #{userId}
 	</select>
 	
-	<select id="findByProductId" resultType="com.guideyou.dto.ProductDto">
-		select * from product a 
-		left join product_photos b on a.id = b.product_id 
-		where a.id = #{id} and b.thumbnail is not null
+	<select id="findByProductId" resultType="com.guideyou.dto.product.ProductDetailDto">
+		select * from product where id = #{productId}
 	</select>
-		
+						
 	<select id="findAll" resultType="com.guideyou.repository.entity.Product">
 		select * from product ORDER BY created_at DESC
 	</select>
@@ -57,8 +61,8 @@
 		
 	
 	<!-- 페이지 처리 -->
-	<select id="findAllwithPasing" resultType="com.guideyou.dto.ProductDto">
-		SELECT DISTINCT p.id, p.title, p.content, p.price, ph.upload_file_name, ph.thumbnail, c.*
+	<select id="findAllwithPasing" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT DISTINCT p.id, p.title, substring(p.intro_content, 1, 15) As content, p.price, ph.upload_file_name, ph.thumbnail, c.*
 		FROM product p
 		LEFT JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
 		LEFT JOIN city_code c ON p.city_code_id = c.id
@@ -87,7 +91,7 @@
 	</select>
 		
 	<!-- 인기 상품 목록 조회 - 판매 순 -->
-	<select id="popularProduct" resultType="com.guideyou.dto.ProductDto">
+	<select id="popularProduct" resultType="com.guideyou.dto.product.ProductDto">
 		SELECT p.*, pi.upload_file_name AS uploadFileName
 	    FROM product p
 	    LEFT JOIN product_photos pi ON p.id = pi.product_id
@@ -96,7 +100,7 @@
 	</select>
 		
 	<!-- 상품 상세보기 페이지에서 필요한 모든 정보 찾기 -->
-	<select id="findAllProductDetail" resultType="com.guideyou.dto.ProductDetailDto">
+	<select id="findAllProductDetail" resultType="com.guideyou.dto.product.ProductDetailDto">
 		select p.id AS productId, p.user_id, p.title, p.content AS productContent, p.price, p.sold_count,
 		ph.upload_file_name AS uploadFileName, ph.thumbnail,
 		u.nickname, u.email,
@@ -110,29 +114,47 @@
 	</select>
 	
 	<!-- detail 상품 정보 -->
-	<select id="findProductAndUser" resultType="com.guideyou.dto.ProductDto">
-		select a.title, a.content, a.price, a.sold_count, 
-		b.nickname, b.email 
+	<select id="findProductAndUser" resultType="com.guideyou.dto.product.ProductDetailDto">
+		select a.title as productTitle, a.intro_content as introProductContent, a.content as productContent, a.price, a.sold_count, 
+		b.nickname, b.email
 		from product a 
-		join user b on a.user_id = b.id where a.id = #{productId}
+		join user b on a.user_id = b.id
+		where a.id = #{productId}
 	</select>
 	
 	<!-- 상품 사진 리스트 -->
-<!-- 	<select id="findByProductImg" resultType="com.guideyou.dto.ProductDetailDto"> -->
-<!-- 		select a.upload_file_name, a.thumbnail  -->
-<!-- 		from product_photos a where product_id = #{productId}	 -->
-<!-- 	</select> -->
+	<select id="findByProductImg" resultType="com.guideyou.dto.product.ProductPhotoDto">
+		select p.*, ph.upload_file_name as uploadFileName
+		from product p 
+        left join product_photos ph on p.id = ph.product_id 
+		where product_id = #{productId}	
+	</select>
 	
 	<!-- 상품 리뷰리스트 -->
 <!-- 	<select id="findReviewByProduct" resultType="com.guideyou.dto.ProductDetailDto"> -->
-<!-- 		select a.*, b.upload_file_name  -->
-<!-- 		from review a  -->
-<!-- 		join user_profile_photos b on a.w_user_id = b.user_id  -->
-<!-- 		where r_product_id = #{productId} -->
+<!-- 		select p.*, r.* -->
+<!-- 		from product p -->
+<!-- 		left join review r on p.id = r.r_product_id -->
+<!-- 		where p.id = #{productId} -->
 <!-- 	</select> -->
 	
 	
+	<!-- 2024.02.27 -->
+	<select id="photos" resultType="com.guideyou.dto.product.ProductPhotoDto">
+		select b.upload_file_name from product a
+		join product_photos b on a.id = b.product_id
+		where a.id = #{productId}	
+	</select>
 	
+	<!-- 2024.02.27 리뷰 조회 -->
+	<select id="findReviewByProduct" resultType="com.guideyou.dto.product.ProductReviewDto">
+		select a.content, a.created_at, b.name, a.score, d.upload_file_name  
+		from review a 
+		join user b on a.w_user_id = b. id
+		join product c on a.r_product_id = c.id
+		left join user_profile_photos d on b.id = d.user_id
+		where a.r_product_id = #{rProductId}
+	</select>
 	
 	
 	
