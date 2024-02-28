@@ -35,4 +35,24 @@ public class testMap {
 	public String mapPage5() {
 		return "/test_map5";
 	}
+	@GetMapping("/map6")
+	public String mapPage6() {
+		return "/test_map6";
+	}
+	@GetMapping("/map7")
+	public String mapPage7() {
+		return "/test_map7";
+	}
+	@GetMapping("/map8")
+	public String mapPage8() {
+		return "/test_map8";
+	}
+	@GetMapping("/map9")
+	public String mapPage9() {
+		return "/test_map9";
+	}
+	@GetMapping("/map10")
+	public String mapPage10() {
+		return "/test_map10";
+	}
 }
