@@ -507,6 +507,29 @@
 		        // checkMarkers 배열의 값들을 콘솔에 출력
 		        console.log(checkMarkers);
 		        // 여기에 저장 로직 추가 가능
+		        if(checkMarkers.length != 0) {
+		        saveMarkersToServer(checkMarkers);
+		        alert("저장되었습니다");
+		        } else {
+		        	alert("마커를 추가 해주세요");
+		        }
+		    }
+		    
+		    // 서버에 데이터를 전송하는 함수
+		    function saveMarkersToServer(markers) {
+		        // Ajax 요청
+		        $.ajax({
+		            type: 'POST',
+		            url: '/map/save',
+		            contentType: 'application/json;charset=UTF-8',
+		            data: JSON.stringify({ markers: markers }),
+		            success: function (response) {
+		                console.log(response);
+		            },
+		            error: function (error) {
+		                console.error('Error saving markers:', error);
+		            }
+		        });
 		    }
 		</script>
 	</body>
