@@ -60,7 +60,7 @@
 	</select>
 		
 	
-	<!-- 페이지 처리 -->
+	<!-- 페이지 처리와 검색 -->
 	<select id="findAllwithPasing" resultType="com.guideyou.dto.product.ProductDto">
 		SELECT DISTINCT p.id, p.title, substring(p.intro_content, 1, 15) As content, p.price, ph.upload_file_name, ph.thumbnail, c.*
 		FROM product p
@@ -115,7 +115,7 @@
 	
 	<!-- detail 상품 정보 -->
 	<select id="findProductAndUser" resultType="com.guideyou.dto.product.ProductDetailDto">
-		select a.title as productTitle, a.intro_content as introProductContent, a.content as productContent, a.price, a.sold_count, 
+		select a.id as productId, a.title as productTitle, a.intro_content as introProductContent, a.content as productContent, a.price, a.sold_count, 
 		b.nickname, b.email
 		from product a 
 		join user b on a.user_id = b.id
@@ -156,6 +156,17 @@
 		where a.r_product_id = #{rProductId}
 	</select>
 	
+	<!-- 24.02.28 상품 평점 조회 -->
+	<select id="productAvg" resultType="com.guideyou.dto.product.ProductReviewDto">
+		SELECT round(avg(score), 1) as avgScore
+		FROM review
+		WHERE r_product_id = #{rProductId}
+	</select>
+	
+	<!-- 24.02.28 아이디에 해당하는 상품 정보 조회 -->
+	<select id="selectProductInfo" resultType="com.guideyou.repository.entity.Product">
+		select * from product where id = #{id}
+	</select>
 	
 	
 	<!-- 마이페이지 사용자가 작성한 상품 목록 조회 -->
@@ -178,5 +189,22 @@
 	</select>
 	<!-- ************************************************************************************** -->
 		
+	<!-- 24.02.28 thumbnail 의 originalName 찾기 -->	
+	<select id="findOriginNameByThumbnail" resultType="com.guideyou.dto.product.ProductThumbnailDto">
+		SELECT p.id AS productId, ph.origin_file_name, ph.upload_file_name 
+        FROM product AS p 
+        LEFT JOIN product_photos AS ph ON p.id = ph.product_id 
+        WHERE ph.thumbnail = 'y'
+	</select>	
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		  
 	
 </mapper>

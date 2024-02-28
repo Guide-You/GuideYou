@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -381,14 +380,22 @@ public class ProductService {
 		return productRepository.photos(productId);
 	}
 	
-	
+	// 24.02.28 상품 평점 조회
+	public ProductReviewDto productAvg(Integer productId) {
+		return productRepository.productAvg(productId);
+	}
 	
 
+	// 24.02.28 아이디에 해당하는 상품 정보 조회
+	public Product selectProductInfo(Integer productId) {
+		return productRepository.selectProductInfo(productId);
+	}
 	
 	
-	
-	
-	
+	// 24.02.28 thumbnail 의 originalName 찾기
+//	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId) {
+//		return productRepository.findOriginNameByThumbnail(productId);
+//	}
 	
 	
 	

@@ -198,6 +198,8 @@ body {
 		rgba(255, 181, 36, 0.7));
 }
 
+
+
 .carousel-control-next, .carousel-control-prev {
 	width: 48px;
 	height: 48px;
@@ -692,7 +694,7 @@ h1 {
 	display: inline-block;
 	width: 100px;
 	height: 30px;
-	background-image: url("/img/ico_rating_star.png");
+/* 	background-image: url("/img/ico_rating_star.png"); */
 	background-size: 100px;
 	background-position: 0px 0px;
 }
