@@ -5,8 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.guideyou.dto.PageReq;
-import com.guideyou.dto.PageRes;
 import com.guideyou.dto.product.ProductDetailDto;
 import com.guideyou.dto.product.ProductDto;
 import com.guideyou.dto.product.ProductPhotoDto;
@@ -85,12 +83,15 @@ public interface ProductRepository {
 	// 이미지 업로드파일이름 찾기 2024.02.27
 	public List<ProductPhotoDto> photos(Integer productId);
 	
-
+	// 24.02.28 상품 평점 조회
+	public ProductReviewDto productAvg(Integer productId);
+	
+	// 24.02.28 아이디에 해당하는 상품 정보 조회
+	public Product selectProductInfo(Integer productId);
 	
 	
-	
-	
-	
+	// 24.02.28 thumbnail 의 originalName 찾기
+//	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId);
 	
 	
     	

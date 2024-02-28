@@ -24,5 +24,5 @@ public class ProductDetailDto {
 	private Integer rProductId;
 	private Double score;
 	private String reviewContent;
-	private Timestamp reviewreatedAt; 
+	private Timestamp reviewreatedAt;
 }

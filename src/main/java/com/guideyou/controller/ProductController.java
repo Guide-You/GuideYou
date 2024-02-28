@@ -19,6 +19,7 @@ import com.guideyou.dto.product.ProductDetailDto;
 import com.guideyou.dto.product.ProductDto;
 import com.guideyou.dto.product.ProductPhotoDto;
 import com.guideyou.dto.product.ProductReviewDto;
+import com.guideyou.dto.product.ProductThumbnailDto;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.User;
@@ -110,21 +111,23 @@ public class ProductController {
 	public String productDetail(@PathVariable("productId") Integer productId, Model model) {
 		
 		// TODO: 상품 이미지 불러 오기 및 리뷰 추가하기, 구매 전 페이지 - 구매 후 페이지 구현 하기
-		System.out.println("dddddddddd");
+
 		ProductDetailDto product = productService.findProductAndUser(productId);
-		System.out.println("+++++++++++++++++++++++++++++++++");
 	    model.addAttribute("product", product);
 		
 	    List<ProductPhotoDto> imgList = productService.findByProductImg(productId);
-	    model.addAttribute("imgList", imgList);
-	    System.out.println(model.getAttribute("imgList").toString());
+	    model.addAttribute("imgList", imgList);	   
 	    
 	    List<ProductReviewDto> reviewList = productService.findReviewByProduct(productId);
 	    model.addAttribute("reviewList", reviewList);
 	   
 	    ProductDetailDto productBtn = productService.findByProductId(productId);
 	    model.addAttribute("productBtn", productBtn);
-	    System.out.println(productBtn);
+	    
+	    ProductReviewDto productAvg = productService.productAvg(productId);
+    	model.addAttribute("productAvg", productAvg);
+			
+	    
 		return "product/productDetail";
 	}
 		
@@ -140,10 +143,16 @@ public class ProductController {
 	    	throw new CustomRestfulException("로그인을 해주세요", HttpStatus.UNAUTHORIZED);
    		}
 		
-	    ProductDetailDto id = productService.findByProductId(productId);
-	    model.addAttribute("id", id);
+	    List<ProductDto> photoResult = productService.findAllByProductId(productId);
+	    model.addAttribute("photoResult", photoResult);
 		
-
+	    Product ProductInfo = productService.selectProductInfo(productId);
+	    model.addAttribute("ProductInfo", ProductInfo);
+	    
+//	    ProductThumbnailDto name = productService.findOriginNameByThumbnail(productId);
+//	    model.addAttribute("name", name);
+	    
+	    
 		return "product/testupdate";
 	}
 

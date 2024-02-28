@@ -10074,3 +10074,8 @@ fieldset:disabled .btn {
     display: none !important;
   }
 }
+
+#revName, #revContent, #revCreatedAt {
+	text-align: center;
+	
+}
