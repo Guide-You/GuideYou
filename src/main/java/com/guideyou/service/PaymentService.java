@@ -15,9 +15,9 @@ import com.guideyou.dto.review.ReviewDto;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Payment;
 import com.guideyou.repository.entity.PaymentDetail;
-import com.guideyou.repository.interfaces.ProductRepository;
 import com.guideyou.repository.interfaces.payment.PaymentDetailRepository;
 import com.guideyou.repository.interfaces.payment.PaymentRepository;
+import com.guideyou.repository.interfaces.product.ProductRepository;
 import com.guideyou.utils.Define;
 
 import lombok.extern.slf4j.Slf4j;

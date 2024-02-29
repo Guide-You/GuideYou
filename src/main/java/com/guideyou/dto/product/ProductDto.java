@@ -1,5 +1,7 @@
 package com.guideyou.dto.product;
 
+import java.sql.Timestamp;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -7,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import lombok.Data;
 
-// TODO: DTO명 수정 (2024.02.21 경진) - 확인자 : 명근 
+
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductDto {
@@ -32,6 +34,8 @@ public class ProductDto {
 	private String nickName;
 	private String email;
 	private Double score;
+	private Timestamp createdAt;
+	
 }
 
 

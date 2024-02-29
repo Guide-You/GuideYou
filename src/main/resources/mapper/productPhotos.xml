@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guideyou.repository.interfaces.ProductPhotosRepository">
+<mapper namespace="com.guideyou.repository.interfaces.product.ProductPhotosRepository">
 
 	<insert id="insert">
 		insert into product_photos(product_id, product_photo_path, origin_file_name, upload_file_name, thumbnail)

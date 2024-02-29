@@ -1,4 +1,4 @@
-package com.guideyou.repository.interfaces;
+package com.guideyou.repository.interfaces.product;
 
 import java.util.List;
 

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.CustomAutowireConfigurer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,6 @@ import com.guideyou.dto.product.ProductDetailDto;
 import com.guideyou.dto.product.ProductDto;
 import com.guideyou.dto.product.ProductPhotoDto;
 import com.guideyou.dto.product.ProductReviewDto;
-import com.guideyou.dto.product.ProductThumbnailDto;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.User;
@@ -43,7 +41,7 @@ public class ProductController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
 		if (principal == null) {
-			throw new CustomRestfulException("로그인을 해주세요", HttpStatus.BAD_REQUEST);
+			throw new CustomRestfulException(Define.ENTER_YOUR_LOGIN, HttpStatus.BAD_REQUEST);
 		}
 		
 		return "product/testsaveForm";
@@ -68,7 +66,7 @@ public class ProductController {
 		
 
 		if (result == false) {
-			throw new CustomRestfulException("상품 등록에 실패하였습니다.", HttpStatus.BAD_REQUEST);
+			throw new CustomRestfulException(Define.FAIL_TO_CREATE_PRODUCT, HttpStatus.BAD_REQUEST);
 
 		}
 		return "redirect:/list";
@@ -140,7 +138,7 @@ public class ProductController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		   
 	    if (principal == null) {
-	    	throw new CustomRestfulException("로그인을 해주세요", HttpStatus.UNAUTHORIZED);
+	    	throw new CustomRestfulException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
    		}
 		
 	    List<ProductDto> photoResult = productService.findAllByProductId(productId);
@@ -166,7 +164,7 @@ public class ProductController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);   
 		
 	    if (principal == null) {
-			throw new CustomRestfulException("로그인을 해주세요", HttpStatus.UNAUTHORIZED);
+			throw new CustomRestfulException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
 		}
 	    
 	  	dto.setCityCodeId(cityCodeId);

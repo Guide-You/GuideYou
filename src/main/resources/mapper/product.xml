@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guideyou.repository.interfaces.ProductRepository">
+<mapper namespace="com.guideyou.repository.interfaces.product.ProductRepository">
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		insert into product(user_id, city_code_id, title, price, intro_content, content)
@@ -116,7 +116,7 @@
 	<!-- detail 상품 정보 -->
 	<select id="findProductAndUser" resultType="com.guideyou.dto.product.ProductDetailDto">
 		select a.id as productId, a.title as productTitle, a.intro_content as introProductContent, a.content as productContent, a.price, a.sold_count, 
-		b.nickname, b.email, b.id as userId
+		b.nickname, b.email
 		from product a 
 		join user b on a.user_id = b.id
 		where a.id = #{productId}

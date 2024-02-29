@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 24.02.29 관리자 페이지 xml -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guideyou.repository.interfaces.admin.AdminRepository">
+
+	<select id="findLatestPosts" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT u.nickname as nickName, p.id, p.user_id as userId, p.title, p.price, p.created_at as createdAt
+        FROM product p
+        JOIN user u ON p.user_id = u.id
+        ORDER BY p.created_at DESC
+	</select>
+
+
+
+
+</mapper>

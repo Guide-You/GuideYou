@@ -21,8 +21,8 @@ import com.guideyou.dto.product.ProductReviewDto;
 import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.ProductPhotos;
-import com.guideyou.repository.interfaces.ProductPhotosRepository;
-import com.guideyou.repository.interfaces.ProductRepository;
+import com.guideyou.repository.interfaces.product.ProductPhotosRepository;
+import com.guideyou.repository.interfaces.product.ProductRepository;
 import com.guideyou.utils.Define;
 
 import lombok.extern.slf4j.Slf4j;
