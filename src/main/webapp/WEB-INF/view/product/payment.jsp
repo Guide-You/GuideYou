@@ -133,7 +133,5 @@ pageEncoding="UTF-8"%>
 
 <!--  payment End -->
 
-<script type="text/javascript"></script>
-
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

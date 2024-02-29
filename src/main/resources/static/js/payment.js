@@ -9,10 +9,16 @@
   	const orderPrice = document.getElementById("order--price").value;
   	const orderUserId = document.getElementById("order--user--id").value;
   	
+  	// 포트원 info
+  	let imp_uid = 'imp50236035';
+    let reason = '테스트용 환불 사유';
+  	
   	let merchantUid ;
   	
+  	
+  	
     // 객체 초기화
-    IMP.init("imp50236035"); // 가맹점 식별코드
+    IMP.init(imp_uid); // 가맹점 식별코드
 
     const kakaopayBtn = document.getElementById("kakaopay--btn");
 
@@ -28,36 +34,57 @@
           buyer_name: orderUserId,
           buyer_tel: "010-4242-4242",	// 회원 전화번호
           buyer_addr: "서울",	// location 
-        },
-        function (data) {
+        }, async function (rsp) {
           // callback
-          if (data.success) {		
-            
-            $.ajax({
-				type: "post",
-				url: '/paySuccess',
-				data:{
-					"merchantUid" : data.merchant_uid,
-					"userId" : data.buyer_name,	// 해당 userId는 구매자 
-					"productId" : productId,
-					"productTitle" : data.name,
-					"totalPrice" : data.paid_amount,
-					"paymentStatus" : data.status,
-					"orderUserId" : orderSellerId
-				}
-			})
-			
+          if (rsp.success) {
 			console.log("success", data);
             alert("결제가 완료되었습니다.");
-              window.location.href = "/complete";
+            
+			await savePayment();
             
           } else {
 			  
             console.log("fail", data);
-			alert("결제에 실패했습니다. 다시 결제 부탁드립니다")
-            return;
+			alert(`결제에 실패하였습니다. ${rsp.error_msg}`);
+            //return;
           }
-        }
-      );
+        })
     };
+    
+    // 결제 정보 저장
+   async function savePayment(data) {
+	    try {
+	        // 필요한 데이터 구성
+	        let postData = {
+	            merchantUid: data.merchant_uid,
+	            userId: data.buyer_name,
+	            productId: productId,
+	            productTitle: data.name,
+	            totalPrice: data.paid_amount,
+	            paymentStatus: data.status,
+	            orderUserId: orderSellerId
+	        };
+	
+	        // fetch를 이용한 비동기 POST 요청
+	        let response = await fetch('/paySuccess', {
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/json'
+	            },
+	            body: JSON.stringify(postData)
+	        });
+	
+	        if (response.ok) {
+	            console.log("결제 정보 저장 완료");
+	            // 저장 완료시 로직
+	        } else {
+	            console.error("실패", response.statusText);
+	        }
+	    } catch (e) {
+	        console.error("실패", e.message);
+	    }
+	}
+
+    
+    
   });
