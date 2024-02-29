@@ -31,8 +31,9 @@ public class AdminController {
 		List<ProductDto> findInfo = adminService.findLatestPosts();
 		model.addAttribute("findInfo", findInfo);
 		
-		
-		
+		// // 24.02.29 상품 정보 조회
+		List<ProductDto> findProductInfo = adminService.findProductInfo();
+		model.addAttribute("findProductInfo", findProductInfo);
 		
 		
 		return "admin/adminIndex";

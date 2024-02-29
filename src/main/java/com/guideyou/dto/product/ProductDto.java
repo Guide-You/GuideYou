@@ -16,6 +16,7 @@ public class ProductDto {
 	private Integer id; // product index
 	private Integer userId;
 	private Integer cityCodeId;
+	private Integer revenue;
 	private String title;
 	private String introContent;
 	private String content;

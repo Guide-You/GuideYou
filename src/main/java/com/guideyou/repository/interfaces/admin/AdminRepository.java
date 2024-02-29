@@ -12,4 +12,7 @@ public interface AdminRepository {
 	
 	// 24.02.29 최신 게시물 조회
 	public List<ProductDto> findLatestPosts();
+	
+	// 24.02.29 상품 정보 조회
+	public List<ProductDto> findProductInfo();
 }

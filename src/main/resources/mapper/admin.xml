@@ -10,7 +10,19 @@
         ORDER BY p.created_at DESC
 	</select>
 
-
+	<select id="findProductInfo" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT p.id AS productId,
+	       p.intro_content,
+	       p.content,
+	       p.price,
+	       p.sold_count,
+	       p.created_at,
+	       ph.upload_file_name AS uploadFileName,
+	       (p.price * p.sold_count) AS revenue
+		FROM product p
+		JOIN product_photos ph ON p.id = ph.product_id
+		ORDER BY p.id
+	</select>
 
 
 </mapper>
