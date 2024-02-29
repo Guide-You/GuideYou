@@ -78,7 +78,7 @@
 
 <!-- Detail Content Start -->
 <c:choose>
-    <c:when test="${principal != null}">
+    <c:when test="${principal == null}">
         <div class="container">
             <div class="card content--card">
                 <div class="card-body">
