@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guideyou.repository.interfaces.admin.MainRepository">
+	
+	<!-- 24.02.29 메인 페이지 인기 상품(가장 많이 팔린 상품) 목록 조회 -->
+	<select id="findPopularProducts" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT DISTINCT p.id, p.title, substring(p.intro_content, 1, 15) As content, p.price, p.sold_count, ph.upload_file_name, ph.thumbnail, c.*
+		FROM product p
+		LEFT JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
+		LEFT JOIN city_code c ON p.city_code_id = c.id
+		ORDER BY p.id and p.sold_count desc
+		LIMIT 8
+	</select>
+	
+	
+	<!-- 24.02.29 메인 페이지 지역 별 인기 상품 조회 -->
+	<select id="findPopularLocalProduct" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT 
+	    sub.id, sub.sold_count, sub.created_at, sub.upload_file_name, sub.thumbnail, sub.city_name
+		FROM (
+		    SELECT 
+		        p.id, p.sold_count, p.created_at, ph.upload_file_name, ph.thumbnail, c.city_name,
+		        ROW_NUMBER() OVER(PARTITION BY c.city_name ORDER BY p.sold_count DESC) AS row_num
+		    FROM 
+		        product p
+		        LEFT JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
+		        LEFT JOIN city_code c ON p.city_code_id = c.id
+		) AS sub
+		WHERE 
+		    sub.row_num = 1
+		ORDER BY 
+	    sub.city_name
+	</select>
+	
+	
+	<!-- 24.02.29 메인 페이지 실적 조회 -->
+	<select id="findPerformance" resultType="com.guideyou.dto.main.CountDto">
+		SELECT 
+		    (SELECT COUNT(*) FROM product) AS productCount,
+		    (SELECT COUNT(*) FROM user) AS userCount,
+		    (SELECT COUNT(*) FROM review) AS reviewCount
+	</select>
+	
+	
+	
+	
+	
+	
+	
+</mapper>
