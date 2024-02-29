@@ -14,6 +14,7 @@ import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.dto.review.ReviewDto;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Payment;
+
 import com.guideyou.repository.interfaces.payment.PaymentRepository;
 import com.guideyou.repository.interfaces.product.ProductRepository;
 import com.guideyou.utils.Define;
@@ -35,14 +36,16 @@ public class PaymentService {
 	private PaymentRepository paymentRepository;
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private PaymentDetailRepository paymentDetailRepository;
 
 	
 	/**
 	  * @Method Name : createPayment
 	  * @작성일 : 2024. 2. 22.
 	  * @작성자 : 박경진
-	  * @변경이력 : 
-	  * @Method 설명 : payment에 insert 한 후 result 값이 1이면 product 테이블의 sold 컬럼 +1
+	  * @변경이력 : 2024.02.29 payment 테이블 paymentDetail 테이블 추가로 인한 로직 변경
+	  * @Method 설명 : 단일 결제, insert 후 product soldCount +1
 	  */
 	@Transactional
 	public void createPayment(PaymentDto paymentDto) {
@@ -50,20 +53,26 @@ public class PaymentService {
 		log.info("servicePaymentDto : "+paymentDto.toString());
 		Payment payment = Payment.builder()
 				.merchantUid(paymentDto.getMerchantUid())
-				.productId(paymentDto.getProductId())
 				.userId(paymentDto.getUserId())
-				.productTitle(paymentDto.getProductTitle())
-				//.productPrice(paymentDto.getProductPrice()) payment 확인
+				.totalPrice(paymentDto.getTotalPrice())
 				.paymentStatus(paymentDto.getPaymentStatus())
 				.build();
 		
 		log.info("servicepayment Entity : "+payment.toString());
 		
-		int result = paymentRepository.insert(payment);
+		int paymentResult = paymentRepository.insertPayment(payment);
 		
-		log.info("serviceResult : "+result);
+		PaymentDetail paymentDetail = PaymentDetail.builder()
+				.merchantUid(paymentDto.getMerchantUid())
+				.productId(paymentDto.getProductId())
+				.productPrice(paymentDto.getTotalPrice())	// 단일 결제, payment의 totalPrice와 동일
+				.paymentStatus(paymentDto.getPaymentStatus())
+				.build();
+		int paymentDetailResult = paymentDetailRepository.insertPaymentDetail(paymentDetail);
+		log.info("payment result : "+ paymentResult);
+		log.info("payment detail result : "+ paymentDetailResult);
 		
-		if(result == 1) {
+		if(paymentResult == 1 && paymentDetailResult == 1) {
 			log.info("serviceResult == 1 실행");
 			productRepository.updateBySoldCount(paymentDto.getProductId());
 		}else {

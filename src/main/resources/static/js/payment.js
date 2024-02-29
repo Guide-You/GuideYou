@@ -5,7 +5,7 @@
     // payment.jsp -> paymentAPI
   	const productId = document.getElementById("order--id").value;
   	const orderTitle = document.getElementById("order--title").value;
-  	const orderSeller = document.getElementById("order--seller").value;
+  	const orderSellerId = document.getElementById("order--seller--id").value;
   	const orderPrice = document.getElementById("order--price").value;
   	const orderUserId = document.getElementById("order--user--id").value;
   	
@@ -32,8 +32,6 @@
         function (data) {
           // callback
           if (data.success) {		
-            alert("결제 완료");
-            console.log(data);
             
             $.ajax({
 				type: "post",
@@ -43,13 +41,16 @@
 					"userId" : data.buyer_name,	// 해당 userId는 구매자 
 					"productId" : productId,
 					"productTitle" : data.name,
-					"productPrice" : data.paid_amount,
+					"totalPrice" : data.paid_amount,
 					"paymentStatus" : data.status,
-					"orderUserId" : userId
+					"orderUserId" : orderSellerId
 				}
 			})
+			
+			console.log("success", data);
+            alert("결제가 완료되었습니다.");
+              window.location.href = "/complete";
             
-            console.log("success", data);
           } else {
 			  
             console.log("fail", data);

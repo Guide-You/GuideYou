@@ -60,8 +60,8 @@
 <!-- Request Info to Server -->
 <form id="send--detail--form">
     <input type="hidden" name="productId" id="product--id" value="${product.productId}">
+    <input type="hidden" name="productSellerId" id="product--seller" value="${product.userId}">	<!-- 판매자id -->
     <input type="hidden" name="productTitle" id="product--title" value="${product.productTitle}">
-    <input type="hidden" name="productSeller" id="product--seller" value="${product.userId}">
     <input type="hidden" name="productPrice" id="product--price" value="${product.price}">
     <input type="hidden" name="productAvg" id="title--rate" value="${productAvg.avgScore}">
 </form>

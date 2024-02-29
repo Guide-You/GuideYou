@@ -18,7 +18,7 @@ public class OrderDto {
 	
 	private Integer productId;
 	private String productTitle;
-	private Integer productSeller;
+	private Integer productSellerId;	// 판매자 ID
 	private Long productPrice;
-	private Integer orderUserId;
+	private Integer orderUserId;		// 구매자 ID
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guideyou.repository.interfaces.payment.PaymentDetailRepository">
+
+	<insert id="insertPaymentDetail">
+		INSERT INTO payment_detail(merchant_uid, product_id, product_price, payment_status)
+		VALUES (#{merchantUid}, #{productId}, #{productPrice}, #{paymentStatus});	
+	</insert>
+	
+</mapper>
