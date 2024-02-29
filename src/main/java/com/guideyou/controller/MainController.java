@@ -22,7 +22,7 @@ import com.guideyou.service.MainService;
   */
 @Controller
 public class MainController {
-
+  
 	@Autowired
 	private MainService mainService;
 	
