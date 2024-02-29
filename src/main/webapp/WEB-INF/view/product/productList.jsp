@@ -13,7 +13,8 @@
 }
 
 .title-text {
-	background-color: rgba(255,255,255,0.8);
+	background-color: #91caff;
+	color: white;
 	border-radius: 2px;
 	
 }
@@ -180,14 +181,14 @@
 														<a href="/detail/${prod.id}"><h4>${prod.title}</h4></a>
 														<!-- Assuming "id" is the unique identifier for each product -->
 														<!-- Adjusted prod.content -->
-														<p
-															style="font-size: 14px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-															${prod.content}</p>
+														<a href="/detail/${prod.id}">
+														<p style="font-size: 14px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+															${prod.content}</p></a>
 														<div class="d-flex justify-content-between flex-lg-wrap">
 															<p class="text-dark fs-5 fw-bold mb-0">${prod.price}</p>
 															<a href="#"
 																class="btn border border-secondary rounded-pill px-3 text-primary">
-																<i class="fa fa-shopping-bag me-2 text-primary"></i>주문하기
+																<i class="fa fa-shopping-bag me-2 text-primary"></i>구경가기
 															</a>
 														</div>
 													</div>
