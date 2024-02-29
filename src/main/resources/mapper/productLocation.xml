@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.guideyou.repository.interfaces.product.ProductLocationRepository">
+
+	<insert id="insert">
+		insert into product_location(product_id, lat,
+		lng,
+		place_name, road_address_name, address_name, phone)
+		values
+		(#{productId},#{lat},#{lng},#{placeName},
+		#{roadAddressName},
+		#{addressName}, #{phone})
+	</insert>
+
+	<select id="findLocationByProductId"
+		resultType="com.guideyou.repository.entity.product.ProductLocation">
+		select * from product_location where product_id =
+		#{productId};
+	</select>
+</mapper>

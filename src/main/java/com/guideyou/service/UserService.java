@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -65,6 +66,7 @@ public class UserService {
 	 * @param signUpDTO
 	 * @return
 	 */
+	@Transactional
 	public void signUpProc(SignUpDTO signUpDTO) {
 		User user = User.builder().id(null).name(signUpDTO.getName()).nickname(signUpDTO.getNickname())
 				.gender(signUpDTO.getGender()).email(signUpDTO.getEmail()).phone(signUpDTO.getPhone())
