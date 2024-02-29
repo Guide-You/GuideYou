@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.guideyou.dto.payment.PaymentDto;
 import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.repository.entity.Payment;
+import com.guideyou.repository.entity.PaymentDetail;
 
 /**
   * @FileName : PaymentRepository.java
@@ -18,7 +19,7 @@ import com.guideyou.repository.entity.Payment;
   */
 @Mapper
 public interface PaymentRepository {
-	public int insert(Payment payment);
+	public int insertPayment(Payment payment);
 	public Payment findByUserId(Integer userId);
 	public List<PurchasedProductInfoDTO> getPurchasedProductInfoList(Integer userId);
 }

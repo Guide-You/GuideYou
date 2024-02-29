@@ -36,7 +36,7 @@ pageEncoding="UTF-8"%>
                         </div>
                       </th>
                       <td class="py-5">${order.productTitle}</td>
-                      <td class="py-5">${order.productSeller }</td>
+                      <td class="py-5">${order.productSellerId }</td>
                       <td class="py-5">${order.productPrice }</td>
                     </tr>
                   </tbody>
@@ -104,8 +104,8 @@ pageEncoding="UTF-8"%>
                   <input
                     type="text"
                     name="orderSeller"
-                    id="order--seller"
-                    value="${order.productSeller }"
+                    id="order--seller--id"
+                    value="${order.productSellerId }"
                   />
                   <p>productPrice :</p>
                   <input

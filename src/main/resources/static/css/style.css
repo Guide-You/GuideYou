@@ -1029,3 +1029,73 @@ h1 {
 .review--file{
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* payment - complete */
+.complete--title{
+  color: #ffc691;
+}
+
+.complete--table{
+  margin-top: 6%;
+  background-color: white ;
+  padding: 5%;
+}
+
+.complete--info > p {
+  font-size: 25px;
+}
+.complete--info > p > span {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.complete--info--div{
+  text-align: center;
+  margin-bottom: 3%;
+}
+#complete--total--price{
+  font-size: 40px;
+  font-weight: bold;
+}
