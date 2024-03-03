@@ -145,10 +145,6 @@ public class UserController {
 		profileUpdateUser.setPhone(userDTO.getPhone());
 		// 유저 업데이트 서비스 생성
 		int result = userService.updateUserProfile(profileUpdateUser, userDTO);
-		
-		if(result != 1) {
-			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 		return "redirect:/member/profile";
 	}
 	
@@ -182,10 +178,6 @@ public class UserController {
 		User signUpUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
 		// 유저 업데이트 서비스 생성
 		int result = userService.updateUserProfile(signUpUser, userDTO);
-		
-		if(result != 1) {
-			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 		return "redirect:/main";
 	}
 	

@@ -7,16 +7,14 @@
 
 <body>
 	<div id="map" style="width: 100%; height: 350px;"></div>
-	<input type="hidden" id="locationInfoList" value="${locationInfoList}" />
 	<p>
 		<button onclick="hideMarkers()">마커 감추기</button>
 		<button onclick="showMarkers()">마커 보이기</button>
 	</p>
 	<em>클릭한 위치에 마커가 표시됩니다!</em>
 
-	<ul id="placesList">
-	</ul>
-	<div id="pagination"></div>
+	<div id="locationList"></div>
+
 
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ef018e0a6a5030e54ff1e2da58cdceb"></script>
@@ -37,15 +35,27 @@
 		$.ajax({
 			url : '/map/readMap', // 서버의 엔드포인트 URL
 			type : 'GET',
+			data : {
+				productId : 1
+			// TODO : 상품 합치면 실제 productId 입력해야함
+			},
+			// 데이터를 성공적으로 받아왔을 때 처리하는 로직
 			success : function(data) {
-				// 데이터를 성공적으로 받아왔을 때 처리하는 로직
+				var bounds = new kakao.maps.LatLngBounds();
 				console.log(data); // 받아온 데이터를 콘솔에 출력
+				var locationList = document.getElementById('locationList'); // locationList 세팅
 				// 이제 받아온 데이터(data)를 이용하여 필요한 처리를 진행
-				// 여기서는 예시로 마커를 추가하는 함수 호출
+				// 마커를 추가하는 함수 호출
 				for (var i = 0; i < data.length; i++) {
-					addMarker(new kakao.maps.LatLng(data[i].lat, data[i].lng));
-					getListItem(i, data[i]);
+					addMarker(new kakao.maps.LatLng(data[i].lat, data[i].lng),
+							i, data[i]);
+					bounds.extend(new kakao.maps.LatLng(data[i].lat,
+							data[i].lng));
+
+					// <div id = locationList> 목록 추가 로직
+					setCheckLocationList(data, i);
 				}
+				map.setBounds(bounds);
 			},
 			error : function(xhr, status, error) {
 				// 요청이 실패했을 때 처리하는 로직
@@ -55,11 +65,20 @@
 
 		// 마커 하나를 지도위에 표시합니다 
 		// 마커를 생성하고 지도위에 표시하는 함수입니다
-		function addMarker(position) {
-
+		function addMarker(position, idx, placeInfo) {
+			var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+			imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
+			imgOptions = {
+				spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+				spriteOrigin : new kakao.maps.Point(0, (idx * 46) + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+				offset : new kakao.maps.Point(13, 37)
+			// 마커 좌표에 일치시킬 이미지 내에서의 좌표
+			}, markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize,
+					imgOptions),
 			// 마커를 생성합니다
-			var marker = new kakao.maps.Marker({
-				position : position
+			marker = new kakao.maps.Marker({
+				position : position, // 마커의 위치
+				image : markerImage
 			});
 
 			// 마커가 지도 위에 표시되도록 설정합니다
@@ -76,40 +95,33 @@
 			}
 		}
 
-		// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+		// "마커 보이기" 버튼 클릭시 마커를 지도에 표시하는 함수
 		function showMarkers() {
-			setMarkers(map)
+			setMarkers(map);
 		}
 
-		// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+		// "마커 감추기" 버튼을 클릭시 마커를 지도에사 삭제하는 함수
 		function hideMarkers() {
 			setMarkers(null);
 		}
 
-		// 검색결과 항목을 Element로 반환하는 함수입니다
-		function getListItem(index, places) {
-			
-			var el = document.createElement('li'), itemStr = '<span class="markerbg marker_'
-					+ (index + 1)
-					+ '"></span>'
-					+ '<div class="info">'
-					+ '   <h5>' + places.placeName + '</h5>';
-
-			if (places.roadAddressName) {
-				itemStr += '    <span>' + places.roadAddressName + '</span>'
-						+ '   <span class="jibun gray">' + places.addressName
-						+ '</span>';
-			} else {
-				itemStr += '    <span>' + places.addressName + '</span>';
-			}
-
-			itemStr += '  <span class="tel">' + places.phone + '</span>'
-					+ '</div>';
-
-			el.innerHTML = itemStr;
-			el.className = 'item';
-
-			return el;
+		// 가게 정보 리스트 세팅하는 함수
+		function setCheckLocationList(data, index) {
+			var listItem = document.createElement('div');
+			listItem.innerHTML = 
+			'가게명: ' + data[index].placeName
+			+ "<br>"
+			+ '전화번호: ' +  data[index].phone
+			+ "<br>"
+			+ '도로명주소: ' +  data[index].roadAddressName
+			+ "<br>"
+			+ '지번주소: ' +  data[index].addressName
+			+ "<br>"
+			+ 'lat: ' +  + data[index].lat
+			+ "<br>"
+			+ 'lng: ' +  + data[index].lng
+			+ "<hr>";
+			locationList.appendChild(listItem);
 		}
 	</script>
 </body>

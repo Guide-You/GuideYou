@@ -1,6 +1,7 @@
 package com.guideyou.repository.interfaces.product;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,7 +17,18 @@ import com.guideyou.repository.entity.product.ProductLocation;
   */
 @Mapper
 public interface ProductLocationRepository {
+	
 	public int insert(ProductLocation productLocation);
 
+	public int updateCreatedAtById(Integer id);
+	
+	public ProductLocation findById(Integer id);
+	
 	public List<ProductLocation> findLocationByProductId(Integer productId);
+	
+	public ProductLocation findLocationByProductIdAndLatLng(Map<String, Object> params); 
+	
+	public int deleteLocationByIdList(Map<String, Object> params);
+
+	public int updateCreatedAtByIdList(List<Integer> idList);
 }

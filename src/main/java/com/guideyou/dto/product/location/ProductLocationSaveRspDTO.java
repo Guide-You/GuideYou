@@ -1,5 +1,7 @@
 package com.guideyou.dto.product.location;
 
+import java.sql.Timestamp;
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -16,10 +18,11 @@ import lombok.Data;
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductLocationSaveRspDTO {
+	private Integer id;
 	private double lat;
 	private double lng;
 	private String placeName;
 	private String roadAddressName;
-	private String addressName; // JSON 데이터의 "adreesName"이 여기서 "addressName"으로 수정되었습니다.
+	private String addressName;
 	private String phone;
 }

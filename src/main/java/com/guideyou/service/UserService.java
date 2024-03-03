@@ -349,13 +349,14 @@ public class UserService {
 	  * @Method 설명 : 사용자 정보 수정 메소드
 	  */
 	public int updateUserProfile(User user, UserDTO userDTO) {
-		System.out.println("aaaaaaaaaaaa" + userDTO.toString());
-		System.out.println("bbbbbbbbbbbbbb" + user.toString());
 	    user.setNickname(userDTO.getNickname());
         user.setPhone(userDTO.getPhone());
         // TODO : 사용자 프로필 사진 변경시 추가 해야함 - 최장호 240222
         // updateUser 메서드는 user 엔티티를 업데이트하는 로직을 수행
 		int result = updateById(user);
+		if(result != 1) {
+			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		return result;
 	}
 	

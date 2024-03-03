@@ -204,7 +204,7 @@
 			<div class="option">
 				<div>
 					<form onsubmit="searchPlaces(); return false;">
-						키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15">
+						키워드 : <input type="text" value="" id="keyword" size="15">
 						<button type="submit">검색하기</button>
 					</form>
 				</div>
@@ -215,6 +215,7 @@
 		</div>
 	</div>
 	<button id="saveButton" onclick="saveMarkers()">저장</button>
+	<div id="locationList"></div>
 
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ef018e0a6a5030e54ff1e2da58cdceb&libraries=services"></script>
@@ -233,6 +234,43 @@
 		// 지도를 생성합니다    
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 
+		$.ajax({
+			url : '/map/readMap', // 서버의 엔드포인트 URL
+			type : 'GET',
+			data : {
+				productId : 1
+			// TODO : 상품 합치면 실제 productId 입력해야함
+			},
+			success : function(data) {
+				var bounds = new kakao.maps.LatLngBounds();
+				// 데이터를 성공적으로 받아왔을 때 처리하는 로직
+				console.log(data); // 받아온 데이터를 콘솔에 출력
+				// 이제 받아온 데이터(data)를 이용하여 필요한 처리를 진행
+				// 여기서는 예시로 마커를 추가하는 함수 호출
+				for (var i = 0; i < data.length; i++) {
+					addCheckMarker(new kakao.maps.LatLng(data[i].lat,
+							data[i].lng), 0, data[i]);
+					getListItem(i, data[i]);
+					bounds.extend(new kakao.maps.LatLng(data[i].lat,
+							data[i].lng));
+					let places = {
+						place_name : data[i].placeName,
+						phone : data[i].phone,
+						road_address_name : data[i].roadAddressName,
+						address_name : data[i].addressName,
+						y : data[i].lat,
+						x : data[i].lng,
+					};
+					setCheckLocationList(places);
+				}
+				map.setBounds(bounds);
+			},
+			error : function(xhr, status, error) {
+				// 요청이 실패했을 때 처리하는 로직
+				console.error(error);
+			}
+		});
+
 		// 장소 검색 객체를 생성합니다
 		var ps = new kakao.maps.services.Places();
 
@@ -240,10 +278,7 @@
 		var infowindow = new kakao.maps.InfoWindow({
 			zIndex : 1
 		});
-
-		// 키워드로 장소를 검색합니다
-		searchPlaces();
-
+		
 		// 키워드 검색을 요청하는 함수입니다
 		function searchPlaces() {
 
@@ -407,18 +442,17 @@
 				offset : new kakao.maps.Point(13, 37)
 			// 마커 좌표에 일치시킬 이미지 내에서의 좌표
 			}, markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize,
-					imgOptions),
-				marker = new kakao.maps.Marker({
+					imgOptions), marker = new kakao.maps.Marker({
 				position : position, // 마커의 위치
 				image : markerImage
 			});
 
 			marker.setMap(map); // 지도 위에 마커를 표출합니다
-	//		checkMarkers.push(marker); // 배열에 생성된 마커를 추가합니다
-		    checkMarkers.push({ // marker와 place_name을 객체로 묶어 배열에 추가
-		        marker: marker,
-		        placeInfo : placeInfo
-		    });
+			//		checkMarkers.push(marker); // 배열에 생성된 마커를 추가합니다
+			checkMarkers.push({ // marker와 place_name을 객체로 묶어 배열에 추가
+				marker : marker,
+				placeInfo : placeInfo
+			});
 
 			return checkMarkers;
 		}
@@ -486,14 +520,31 @@
 				addressName : places.address_name,
 				phone : places.phone
 			}
+			
+			let duplicate = false;
+			
+		    // 중복 체크를 위해 이미 추가된 마커의 위치 정보와 비교
+		    for (var i = 0; i < checkMarkers.length; i++) {
+		        var existingMarker = checkMarkers[i].marker;
+		        var existingPosition = existingMarker.getPosition();
 
+		        // 좌표 값을 반올림하지 않고 정확한 비교
+		        if (isSamePosition(existingPosition, placePosition)) {
+		        	console.log("중복 추가 입니다.");
+		        	duplicate = true;
+		        }
+		    }
+			
+		    if(duplicate == false) {
+			setCheckLocationList(places)	// [마커 추가] 하면 아래에 생기는 장소 리스트
 			var marker = addCheckMarker(placePosition, 0, placeInfo); // 필요에 따라 인덱스를 수정할 수 있습니다
+		    }
 		}
 
 		function removeMarkerOnListItemClick(places) { //*************************************** 마커 제거 메소드
 			// 해당 위치의 마커를 찾아서 제거
 			for (var i = 0; i < checkMarkers.length; i++) {
-				var marker = checkMarkers[i];
+				var marker = checkMarkers[i].marker;
 				var markerPosition = marker.getPosition();
 				var targetPosition = new kakao.maps.LatLng(places.y, places.x);
 
@@ -501,6 +552,7 @@
 				if (isSamePosition(markerPosition, targetPosition)) {
 					marker.setMap(null); // 지도에서 제거
 					checkMarkers.splice(i, 1); // 배열에서 제거
+					locationList.removeChild(locationList.children[i]); // [마커 제거] 하면 아래에 장소 리스트 삭제
 					break;
 				}
 			}
@@ -533,11 +585,12 @@
 			for (var i = 0; i < markers.length; i++) {
 				var position = markers[i].marker.getPosition();
 				markerPositions.push({
+					id :  markers[i].placeInfo.id,
 					lat : position.getLat(),
 					lng : position.getLng(),
 					placeName : markers[i].placeInfo.placeName,
 					roadAddressName : markers[i].placeInfo.roadAddressName,
-					addressName :markers[i].placeInfo.addressName,
+					addressName : markers[i].placeInfo.addressName,
 					phone : markers[i].placeInfo.phone
 				//	placeInfo : markers[i].placeInfo // 마커와 관련된 장소 이름 가져오기
 				});
@@ -546,10 +599,12 @@
 			// 추출한 위치 정보 배열을 JSON 형식으로 변환합니다
 			var jsonData = JSON.stringify(markerPositions);
 
+			var productId = 1; // TODO : 합칠때 실제 productId로 세팅해야한다.
+			
 			// Ajax 요청
 			$.ajax({
 				type : 'POST',
-				url : '/map/save',
+				url : '/map/update?productId=' + productId,
 				contentType : 'application/json;charset=UTF-8',
 				data : jsonData,
 				success : function(response) {
@@ -560,6 +615,72 @@
 				}
 			});
 		}
+		
+		// 인포윈도우를 생성하고 지도에 표시합니다
+		var infowindow = new kakao.maps.InfoWindow({
+		    removable : true
+		});
+		
+		function setCheckLocationList(places) {
+			var listItem = document.createElement('div');
+			
+			listItem.innerHTML = 
+			'가게명: ' + places.place_name
+			+ "<br>"
+			+ '전화번호: ' +  places.phone
+			+ "<br>"
+			+ '도로명주소: ' +  places.road_address_name
+			+ "<br>"
+			+ '지번주소: ' +  places.address_name
+			+ "<br>"
+			+ 'lat: ' +  + places.y
+			+ "<br>"
+			+ 'lng: ' +  + places.x
+			+ "<button class='locationRemoveBtn' onclick='removeListItem(this.parentNode, "
+		    + JSON.stringify(places) + ")'>삭제</button>"  // places 객체를 문자열로 전달
+		    + "<hr>";
+		    
+		    // mouseover 이벤트 추가
+		    listItem.addEventListener('click', function(event) {
+		    	 var target = event.target;
+
+		         // 삭제 버튼이 아닌 경우에만 infowindow 열기
+		         if (!target.classList.contains('locationRemoveBtn')) {
+		        	 
+		        	 console.log("삭제 버튼 클릭은 안됨");
+		    	
+				     var moveLatLng = new kakao.maps.LatLng(places.y, places.x);   
+				     map.panTo(moveLatLng);
+						
+					 var iwContent = '<div style="padding:5px;">' + places.place_name + '</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+					   iwPosition = new kakao.maps.LatLng(places.y, places.x), //인포윈도우 표시 위치입니다
+					   iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+		
+					 infowindow.setContent(iwContent);
+					 infowindow.setPosition(iwPosition);
+					 infowindow.open(map);
+		         }
+		    });
+			locationList.appendChild(listItem);
+		}
+		
+ 		// 항목 제거하는 함수
+		function removeListItem(item, places) {
+			for (var i = 0; i < checkMarkers.length; i++) {
+				var marker = checkMarkers[i].marker;
+				var markerPosition = marker.getPosition();
+				var targetPosition = new kakao.maps.LatLng(places.y, places.x);
+
+				// 좌표 값을 반올림하지 않고 정확한 비교
+				if (isSamePosition(markerPosition, targetPosition)) {
+					marker.setMap(null); // 지도에서 제거
+					checkMarkers.splice(i, 1); // 배열에서 제거
+					locationList.removeChild(locationList.children[i]); // [마커 제거] 하면 아래에 장소 리스트 삭제
+					break;
+				}
+			}
+			infowindow.close();
+		} 
 	</script>
 </body>
 

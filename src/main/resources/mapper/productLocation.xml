@@ -13,9 +13,48 @@
 		#{addressName}, #{phone})
 	</insert>
 
+	<update id="updateCreatedAtById">
+		update product_location set created_at = now() where
+		id = #{id}
+	</update>
+
+	<select id="findById"
+		resultType="com.guideyou.repository.entity.product.ProductLocation">
+		select * from product_location where id = #{id}
+	</select>
+
+
 	<select id="findLocationByProductId"
 		resultType="com.guideyou.repository.entity.product.ProductLocation">
 		select * from product_location where product_id =
-		#{productId};
+		#{productId}
 	</select>
+
+	<select id="findLocationByProductIdAndLatLng"
+		parameterType="map"
+		resultType="com.guideyou.repository.entity.product.ProductLocation">
+		select * from product_location where product_id =
+		#{productId}
+		and lat = #{lat} and lng = #{lng}
+	</select>
+
+	<delete id="deleteLocationByIdList" parameterType="map">
+		delete from product_location 
+		where product_id = #{productId}
+		and id in
+		<foreach collection="idList" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</delete>
+
+	<update id="updateCreatedAtByIdList" parameterType="List">
+		update product_location set created_at = now() where id in
+		<foreach collection="list" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</update>
+
+
 </mapper>
