@@ -22,5 +22,5 @@ public class PurchasedProductInfoDTO {
 	private String cityName;			// 구매한 상품의 지역명
     private String productTitle;		// 구매한 상품의 제목
     private Timestamp paymentDate;		// 결제한 날짜
-    private Long productImage;		// 구매한 상품의 썸네일 사진
+    private String productImage;		// 구매한 상품의 썸네일 사진
 }
