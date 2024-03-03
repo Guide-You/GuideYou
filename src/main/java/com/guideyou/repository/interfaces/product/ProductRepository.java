@@ -90,8 +90,7 @@ public interface ProductRepository {
 	public Product selectProductInfo(Integer productId);
 	
 	
-	// 24.02.28 thumbnail 의 originalName 찾기
-//	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId);
+	
 	
 	
     	

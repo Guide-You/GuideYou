@@ -16,7 +16,7 @@
 	</delete>	
 	
 	<select id="findAllByProductId" resultType="com.guideyou.dto.product.ProductDto">
-		select * from product_photos where product_id = #{productId}
+		select * from product_photos where product_id = #{productId} and thumbnail is null
 	</select>
 	
 	<select id="findByProductId" resultType="com.guideyou.repository.entity.ProductPhotos">
@@ -45,4 +45,11 @@
        ORDER BY p.id DESC
 	</select>
 	
+	<!-- 24.02.28 thumbnail 의 originalName 찾기 -->	
+	<select id="findOriginNameByThumbnail" resultType="com.guideyou.dto.product.ProductThumbnailDto">
+		SELECT ph.id, ph.product_id, ph.origin_file_name, ph.upload_file_name 
+        FROM product AS p 
+        LEFT JOIN product_photos AS ph ON p.id = ph.product_id 
+        WHERE ph.thumbnail = 'y' and p.id = #{productId}
+	</select>
 </mapper>

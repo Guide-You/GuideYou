@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>가유 Guide You 관리자 main</title>
+<title>가유 Guide You 관리자 페이지</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -37,44 +37,27 @@
 </head>
 
 <body>
-
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
 
 		<div class="d-flex align-items-center justify-content-between">
-			<a href="index.html" class="logo d-flex align-items-center"> <img
+			<a href="/admin" class="logo d-flex align-items-center"> <img
 				src="assets/img/logo.png" alt=""> <span
 				class="d-none d-lg-block">Guide You</span>
 			</a> <i class="bi bi-list toggle-sidebar-btn"></i>
 		</div>
 		<!-- End Logo -->
 
-		<div class="search-bar">
-			<form class="search-form d-flex align-items-center" method="POST"
-				action="#">
-				<input type="text" name="query" placeholder="Search"
-					title="Enter search keyword">
-				<button type="submit" title="Search">
-					<i class="bi bi-search"></i>
-				</button>
-			</form>
-		</div>
-		<!-- End Search Bar -->
 
 		<nav class="header-nav ms-auto">
 			<ul class="d-flex align-items-center">
 
-				<li class="nav-item d-block d-lg-none"><a
-					class="nav-link nav-icon search-bar-toggle " href="#"> <i
-						class="bi bi-search"></i>
-				</a></li>
-				<!-- End Search Icon-->
+
 
 				<li class="nav-item dropdown"><a class="nav-link nav-icon"
 					href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i>
 						<span class="badge bg-primary badge-number">4</span>
-				</a>
-				<!-- End Notification Icon -->
+				</a> <!-- End Notification Icon -->
 
 					<ul
 						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -136,16 +119,14 @@
 						<li class="dropdown-footer"><a href="#">Show all
 								notifications</a></li>
 
-					</ul>
-					<!-- End Notification Dropdown Items --></li>
+					</ul> <!-- End Notification Dropdown Items --></li>
 				<!-- End Notification Nav -->
 
 				<li class="nav-item dropdown"><a class="nav-link nav-icon"
 					href="#" data-bs-toggle="dropdown"> <i
 						class="bi bi-chat-left-text"></i> <span
 						class="badge bg-success badge-number">3</span>
-				</a>
-				<!-- End Messages Icon -->
+				</a> <!-- End Messages Icon -->
 
 					<ul
 						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
@@ -199,18 +180,14 @@
 						<li class="dropdown-footer"><a href="#">Show all messages</a>
 						</li>
 
-					</ul>
-					<!-- End Messages Dropdown Items --></li>
+					</ul> <!-- End Messages Dropdown Items --></li>
 				<!-- End Messages Nav -->
 
 				<li class="nav-item dropdown pe-3"><a
 					class="nav-link nav-profile d-flex align-items-center pe-0"
-					href="#" data-bs-toggle="dropdown"> <img
-						src="assets/img/profile-img.jpg" alt="Profile"
-						class="rounded-circle"> <span
+					href="#" data-bs-toggle="dropdown"> <span
 						class="d-none d-md-block dropdown-toggle ps-2">관리자계정입니다</span>
-				</a>
-				<!-- End Profile Iamge Icon -->
+				</a> <!-- End Profile Iamge Icon -->
 
 					<ul
 						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -250,8 +227,7 @@
 									Out</span>
 						</a></li>
 
-					</ul>
-					<!-- End Profile Dropdown Items --></li>
+					</ul> <!-- End Profile Dropdown Items --></li>
 				<!-- End Profile Nav -->
 
 			</ul>
@@ -345,6 +321,9 @@
 
 	<main id="main" class="main">
 
+		<!-- hidden_input -->
+		<input type="hidden" id="dateType" name="dateType" value="1">
+
 		<div class="pagetitle">
 			<h1>가유 관리자 main</h1>
 			<nav>
@@ -383,7 +362,7 @@
 
 								<div class="card-body">
 									<h5 class="card-title">
-										Sales <span>| 오늘</span>
+										판매 <span>| 오늘</span>
 									</h5>
 
 									<div class="d-flex align-items-center">
@@ -392,9 +371,8 @@
 											<i class="bi bi-cart"></i>
 										</div>
 										<div class="ps-3">
-											<h6>145</h6>
-											<span class="text-success small pt-1 fw-bold">12%</span> <span
-												class="text-muted small pt-2 ps-1">increase</span>
+											<h6>${selectPayment.paymentCount}개</h6>
+
 
 										</div>
 									</div>
@@ -433,9 +411,8 @@
 											<i class="bi bi-currency-dollar"></i>
 										</div>
 										<div class="ps-3">
-											<h6>$3,264</h6>
-											<span class="text-success small pt-1 fw-bold">8%</span> <span
-												class="text-muted small pt-2 ps-1">increase</span>
+											<h6>${selectTotalPrice.totalPrice}원</h6>
+
 
 										</div>
 									</div>
@@ -466,7 +443,7 @@
 
 								<div class="card-body">
 									<h5 class="card-title">
-										방문자 <span>| 올해</span>
+										가입자 <span>| 올해</span>
 									</h5>
 
 									<div class="d-flex align-items-center">
@@ -475,9 +452,8 @@
 											<i class="bi bi-people"></i>
 										</div>
 										<div class="ps-3">
-											<h6>1244</h6>
-											<span class="text-danger small pt-1 fw-bold">12%</span> <span
-												class="text-muted small pt-2 ps-1">decrease</span>
+											<h6>${selectTotalUser.userCount}명</h6>
+
 
 										</div>
 									</div>
@@ -518,13 +494,13 @@
                     document.addEventListener("DOMContentLoaded", () => {
                       new ApexCharts(document.querySelector("#reportsChart"), {
                         series: [{
-                          name: 'Sales',
+                          name: '판매',
                           data: [31, 40, 28, 51, 42, 82, 56],
                         }, {
-                          name: 'Revenue',
+                          name: '수익',
                           data: [11, 32, 45, 32, 34, 52, 41]
                         }, {
-                          name: 'Customers',
+                          name: '가입자',
                           data: [15, 11, 32, 18, 9, 24, 11]
                         }],
                         chart: {
@@ -581,17 +557,17 @@
 
 								<div class="card-body">
 									<h5 class="card-title">최근 게시물</h5>
-										<table class="table table-borderless datatable">
-											<thead>
-												<tr>
-													<th scope="col">판매자</th>
-													<th scope="col">상품명</th>
-													<th scope="col">가격</th>
-													<th scope="col">상품 등록일</th>
-												</tr>
-											</thead>
-									
-											<tbody>
+									<table class="table table-borderless datatable">
+										<thead>
+											<tr>
+												<th scope="col">판매자</th>
+												<th scope="col">상품명</th>
+												<th scope="col">가격</th>
+												<th scope="col">상품 등록일</th>
+											</tr>
+										</thead>
+
+										<tbody>
 											<c:forEach items="${findInfo}" var="info">
 												<tr>
 													<td>${info.nickName}</td>
@@ -599,10 +575,10 @@
 													<td>${info.price}</td>
 													<td><span class="badge bg-success">${info.createdAt}</span></td>
 												</tr>
-												</c:forEach>
-											</tbody>
-									
-										</table>
+											</c:forEach>
+										</tbody>
+
+									</table>
 								</div>
 							</div>
 						</div>
@@ -619,10 +595,12 @@
 										<li class="dropdown-header text-start">
 											<h6>Filter</h6>
 										</li>
-
-										<li><a class="dropdown-item" href="#">오늘</a></li>
-										<li><a class="dropdown-item" href="#">이번 달</a></li>
-										<li><a class="dropdown-item" href="#">올해</a></li>
+										<li class="filterText" onclick="updateTitle('1')"><a
+											class="dropdown-item" href="#">오늘</a></li>
+										<li class="filterText" onclick="updateTitle('2')"><a
+											class="dropdown-item" href="#">이번 달</a></li>
+										<li class="filterText" onclick="updateTitle('3')"><a
+											class="dropdown-item" href="#">올해</a></li>
 									</ul>
 								</div>
 
@@ -631,12 +609,12 @@
 										인기상품 <span>| 오늘</span>
 									</h5>
 									<style>
-										.datatable-input{
-											display: none;
-										}
-									
+									.datatable-input {
+										display: none;
+									}
 									</style>
-									<table class="table table-borderless datatable">
+									<table class="table table-borderless datatable"
+										id="productTable tbody">
 										<thead>
 											<tr>
 												<th scope="col">Preview</th>
@@ -647,16 +625,20 @@
 											</tr>
 										</thead>
 										<tbody>
-										<c:forEach items="${findProductInfo}" var="productInfo">
-											<tr>
-												<th scope="row"><a href="#"><img
-														src="/images/upload/${productInfo.uploadFileName}" alt=""></a></th>
-												<td><a href="#" class="text-primary fw-bold">${productInfo.introContent}</a></td>
-												<td>${productInfo.price}원</td>
-												<td class="fw-bold">${productInfo.soldCount}</td>
-												<td>${productInfo.revenue}원</td>
-											</tr>
-										</c:forEach>											
+
+											<c:forEach items="${selectDateType}" var="productInfo">
+												<tr>
+													<th scope="row">
+													<a href="#"><img src="/images/upload/${productInfo.uploadFileName}" alt=""></a>
+													</th>
+													<td><a href="#" class="text-primary fw-bold">${productInfo.introContent}</a>
+													</td>
+													<td>${productInfo.price}원</td>
+													<td class="fw-bold">${productInfo.soldCount}</td>
+													<td>${productInfo.revenue}원</td>
+												</tr>
+											</c:forEach>
+
 										</tbody>
 									</table>
 
@@ -673,170 +655,7 @@
 				<!-- Right side columns -->
 				<div class="col-lg-4">
 
-					<!-- Recent Activity -->
-					<div class="card">
-						<div class="filter">
-							<a class="icon" href="#" data-bs-toggle="dropdown"><i
-								class="bi bi-three-dots"></i></a>
-							<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-								<li class="dropdown-header text-start">
-									<h6>Filter</h6>
-								</li>
 
-								<li><a class="dropdown-item" href="#">오늘</a></li>
-								<li><a class="dropdown-item" href="#">이번 달</a></li>
-								<li><a class="dropdown-item" href="#">올해</a></li>
-							</ul>
-						</div>
-
-						<div class="card-body">
-							<h5 class="card-title">
-								Recent Activity <span>| 오늘</span>
-							</h5>
-
-							<div class="activity">
-
-								<div class="activity-item d-flex">
-									<div class="activite-label">32 min</div>
-									<i
-										class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-									<div class="activity-content">
-										Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo
-											officiis</a> beatae
-									</div>
-								</div>
-								<!-- End activity item-->
-
-								<div class="activity-item d-flex">
-									<div class="activite-label">56 min</div>
-									<i
-										class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-									<div class="activity-content">Voluptatem blanditiis
-										blanditiis eveniet</div>
-								</div>
-								<!-- End activity item-->
-
-								<div class="activity-item d-flex">
-									<div class="activite-label">2 hrs</div>
-									<i
-										class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-									<div class="activity-content">Voluptates corrupti
-										molestias voluptatem</div>
-								</div>
-								<!-- End activity item-->
-
-								<div class="activity-item d-flex">
-									<div class="activite-label">1 day</div>
-									<i
-										class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-									<div class="activity-content">
-										Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati
-											voluptatem</a> tempore
-									</div>
-								</div>
-								<!-- End activity item-->
-
-								<div class="activity-item d-flex">
-									<div class="activite-label">2 days</div>
-									<i
-										class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-									<div class="activity-content">Est sit eum reiciendis
-										exercitationem</div>
-								</div>
-								<!-- End activity item-->
-
-								<div class="activity-item d-flex">
-									<div class="activite-label">4 weeks</div>
-									<i
-										class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-									<div class="activity-content">Dicta dolorem harum nulla
-										eius. Ut quidem quidem sit quas</div>
-								</div>
-								<!-- End activity item-->
-
-							</div>
-
-						</div>
-					</div>
-					<!-- End Recent Activity -->
-
-					<!-- Budget Report -->
-					<div class="card">
-						<div class="filter">
-							<a class="icon" href="#" data-bs-toggle="dropdown"><i
-								class="bi bi-three-dots"></i></a>
-							<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-								<li class="dropdown-header text-start">
-									<h6>Filter</h6>
-								</li>
-
-								<li><a class="dropdown-item" href="#">오늘</a></li>
-								<li><a class="dropdown-item" href="#">이번 달</a></li>
-								<li><a class="dropdown-item" href="#">올해</a></li>
-							</ul>
-						</div>
-
-						<div class="card-body pb-0">
-							<h5 class="card-title">
-								Budget Report <span>| This Month</span>
-							</h5>
-
-							<div id="budgetChart" style="min-height: 400px;" class="echart"></div>
-
-							<script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
-                    legend: {
-                      data: ['Allocated Budget', 'Actual Spending']
-                    },
-                    radar: {
-                      // shape: 'circle',
-                      indicator: [{
-                        name: 'Sales',
-                        max: 6500
-                      },
-                      {
-                        name: 'Administration',
-                        max: 16000
-                      },
-                      {
-                        name: 'Information Technology',
-                        max: 30000
-                      },
-                      {
-                        name: 'Customer Support',
-                        max: 38000
-                      },
-                      {
-                        name: 'Development',
-                        max: 52000
-                      },
-                      {
-                        name: 'Marketing',
-                        max: 25000
-                      }
-                      ]
-                    },
-                    series: [{
-                      name: 'Budget vs spending',
-                      type: 'radar',
-                      data: [{
-                        value: [4200, 3000, 20000, 35000, 50000, 18000],
-                        name: 'Allocated Budget'
-                      },
-                      {
-                        value: [5000, 14000, 28000, 26000, 42000, 21000],
-                        name: 'Actual Spending'
-                      }
-                      ]
-                    }]
-                  });
-                });
-              </script>
-
-						</div>
-					</div>
-					<!-- End Budget Report -->
 
 					<!-- Website Traffic -->
 					<div class="card">
@@ -929,67 +748,36 @@
 								<li class="dropdown-header text-start">
 									<h6>Filter</h6>
 								</li>
-
 								<li><a class="dropdown-item" href="#">오늘</a></li>
 								<li><a class="dropdown-item" href="#">이번 달</a></li>
 								<li><a class="dropdown-item" href="#">올해</a></li>
 							</ul>
 						</div>
-
 						<div class="card-body pb-0">
 							<h5 class="card-title">
-								News &amp; Updates <span>| 오늘</span>
+								News <span>| 오늘</span>
 							</h5>
-
-							<div class="news">
-								<div class="post-item clearfix">
-									<img src="assets/img/news-1.jpg" alt="">
-									<h4>
-										<a href="#">Nihil blanditiis at in nihil autem</a>
-									</h4>
-									<p>Sit recusandae non aspernatur laboriosam. Quia enim
-										eligendi sed ut harum...</p>
-								</div>
-
-								<div class="post-item clearfix">
-									<img src="assets/img/news-2.jpg" alt="">
-									<h4>
-										<a href="#">Quidem autem et impedit</a>
-									</h4>
-									<p>Illo nemo neque maiores vitae officiis cum eum turos
-										elan dries werona nande...</p>
-								</div>
-
-								<div class="post-item clearfix">
-									<img src="assets/img/news-3.jpg" alt="">
-									<h4>
-										<a href="#">Id quia et et ut maxime similique occaecati ut</a>
-									</h4>
-									<p>Fugiat voluptas vero eaque accusantium eos. Consequuntur
-										sed ipsam et totam...</p>
-								</div>
-
-								<div class="post-item clearfix">
-									<img src="assets/img/news-4.jpg" alt="">
-									<h4>
-										<a href="#">Laborum corporis quo dara net para</a>
-									</h4>
-									<p>Qui enim quia optio. Eligendi aut asperiores enim
-										repellendusvel rerum cuder...</p>
-								</div>
-
-								<div class="post-item clearfix">
-									<img src="assets/img/news-5.jpg" alt="">
-									<h4>
-										<a href="#">Et dolores corrupti quae illo quod dolor</a>
-									</h4>
-									<p>Odit ut eveniet modi reiciendis. Atque cupiditate libero
-										beatae dignissimos eius...</p>
-								</div>
-
+							<div class="table-responsive">
+								<table class="table table-borderless datatable">
+									<thead>
+										<tr>
+											<th scope="col">Type</th>
+											<th scope="col">Title</th>
+											<th scope="col">Content</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${selectBoardList}" var="board">
+											<tr>
+												<td>${board.type}</td>
+												<td>${board.title}</td>
+												<td>${board.content}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
 							</div>
-							<!-- End sidebar recent posts-->
-
+							<!-- End table responsive -->
 						</div>
 					</div>
 					<!-- End News & Updates -->
@@ -1024,6 +812,7 @@
 		class="bi bi-arrow-up-short"></i></a>
 
 	<!-- Vendor JS Files -->
+	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="admin/vendor/apexcharts/apexcharts.min.js"></script>
 	<script src="admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="admin/vendor/chart.js/chart.umd.js"></script>
@@ -1035,10 +824,47 @@
 
 	<!-- Template Main JS File -->
 	<script src="admin/js/main.js"></script>
-<script>
+	
+	<script>
 
-const searchBox = document.querySelector(".datatable-search");
-searchBox.style.display="none";
+
+	
+
+	const updateTitle = (dateType) => {
+		$('#dateType').val(dateType);
+		
+		$.ajax({
+			type:"GET",
+			url:"/admin",
+			data: { dateType: dateType }, // 이 부분을 확인해야 합니다.
+			success: function(data) {
+				updateTable(data);
+			},
+			error: function() {
+				alert("실패");
+			}
+		});
+	}
+	
+
+function updateTable(data) {
+    // 테이블의 tbody 선택
+    var tbody = $('#productTable tbody');
+    
+    // tbody 초기화
+    tbody.empty();
+    
+    // 받은 데이터를 이용하여 테이블에 새로운 행 추가
+    $.each(data, function(index, findProductInfo) {
+        var row = $('<tr>');
+        row.append('<th scope="row"><a href="#"><img src="/images/upload/' + findProductInfo.uploadFileName + '" alt=""></a></th>');
+        row.append('<td><a href="#" class="text-primary fw-bold">' + findProductInfo.intro_content + '</a></td>');
+        row.append('<td>' + findProductInfo.price + '원</td>');
+        row.append('<td class="fw-bold">' + findProductInfo.soldCount + '</td>');
+        row.append('<td>' + findProductInfo.revenue + '원</td>');
+        tbody.append(row);
+    });
+}
 
 </script>
 </body>

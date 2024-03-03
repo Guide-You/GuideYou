@@ -53,7 +53,7 @@
         
         
         <!-- 파일 선택 input 대신 label을 사용하여 버튼으로 보여줌 -->
-        <p>썸네일</p><input type="file" id="thumbFile" name="thumbFile" value="y" accept="image/*">
+        <p>썸네일</p><input type="file" id="thumbFile" name="thumbFile" accept="image/*">
         <p>디테일사진</p><input type="file" id="fileInput" name="customFile"  multiple>
 
 

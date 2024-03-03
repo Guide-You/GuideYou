@@ -189,13 +189,7 @@
 	</select>
 	<!-- ************************************************************************************** -->
 		
-	<!-- 24.02.28 thumbnail 의 originalName 찾기 -->	
-	<select id="findOriginNameByThumbnail" resultType="com.guideyou.dto.product.ProductThumbnailDto">
-		SELECT p.id AS productId, ph.origin_file_name, ph.upload_file_name 
-        FROM product AS p 
-        LEFT JOIN product_photos AS ph ON p.id = ph.product_id 
-        WHERE ph.thumbnail = 'y'
-	</select>	
+		
 		
 		
 	

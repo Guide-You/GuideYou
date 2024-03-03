@@ -18,6 +18,7 @@ import com.guideyou.dto.product.ProductDetailDto;
 import com.guideyou.dto.product.ProductDto;
 import com.guideyou.dto.product.ProductPhotoDto;
 import com.guideyou.dto.product.ProductReviewDto;
+import com.guideyou.dto.product.ProductThumbnailDto;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.User;
@@ -147,9 +148,9 @@ public class ProductController {
 	    Product ProductInfo = productService.selectProductInfo(productId);
 	    model.addAttribute("ProductInfo", ProductInfo);
 	    
-//	    ProductThumbnailDto name = productService.findOriginNameByThumbnail(productId);
-//	    model.addAttribute("name", name);
-	    
+	    ProductThumbnailDto thumb = productService.findOriginNameByThumbnail(productId);
+	    model.addAttribute("thumb", thumb);
+	    	    
 	    
 		return "product/testupdate";
 	}
@@ -160,7 +161,7 @@ public class ProductController {
 	@PostMapping("/edit/{productId}")
 	public String updateProduct(@PathVariable("productId") Integer productId, ProductDto dto,
 			@RequestParam("region") Integer cityCodeId, @RequestParam("removeImgs") String removeImgs) {
-		
+
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);   
 		
 	    if (principal == null) {
@@ -168,16 +169,14 @@ public class ProductController {
 		}
 	    
 	  	dto.setCityCodeId(cityCodeId);
-	  	System.out.println("++++++++++++++++++++++++++ updete");
 	  	
 	   	productService.updateProduct(productId, dto);
 	   	
-	   	System.out.println("++++++++++++++++++++++++++ deleteMutiPhoto");
 	   	if (removeImgs != null && !removeImgs.isEmpty() && !removeImgs.equals("")) {
 	   		productService.deleteMutiPhoto(removeImgs);
 			
 		}
-	   	System.out.println("++++++++++++++++++++++++++ insert");
+
 	   	productService.insertPhoto(dto, productId);
 
 		return "redirect:/list";
