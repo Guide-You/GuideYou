@@ -34,5 +34,29 @@
 		a.user_id = #{userId}
 		and a.payment_status = 'paid';
 	</select>
+	<select id="findByMerchantUid" resultType="com.guideyou.repository.entity.Payment">
+		SELECT user_id FROM payment WHERE merchant_uid = #{merchantUid}
+	</select>
+
+	<select id="findByMerchantUidAndUserId" resultType="com.guideyou.repository.entity.Payment">
+		SELECT * FROM payment WHERE merchant_uid = #{merchantUid} AND user_id = #{userId}
+	</select>
+	
+	<update id="updatePaymentOnRefund">
+		UPDATE payment AS p
+		LEFT JOIN payment_detail AS pd 
+		ON p.merchant_uid = pd.merchant_uid
+		SET
+			p.payment_status = 'refund',
+			p.refund_price = #{refundPrice},
+			p.refund_cause = #{cancelReason},
+			p.refund_date = NOW(),
+			p.refund_yn = 'Y',
+		 	pd.payment_status = 'refund',
+		 	pd.refund_date = NOW(),
+		 	pd.refund_yn = 'Y'
+		WHERE p.merchant_uid = #{merchantUid}
+		AND pd.merchant_uid = #{merchantUid}
+	</update>
 
 </mapper>

@@ -88,6 +88,10 @@ public interface ProductRepository {
 	
 	// 24.02.28 아이디에 해당하는 상품 정보 조회
 	public Product selectProductInfo(Integer productId);
+
+
+	// 24.03.03 결제 취소시 soldCount -1 경진 추가
+	public int updateByCancelSoldCount(String merchantUid);
 	
 	
 	// 24.02.28 thumbnail 의 originalName 찾기

@@ -61,7 +61,7 @@
 <form id="send--detail--form">
     <input type="hidden" name="productId" id="product--id" value="${product.productId}">
     <input type="hidden" name="productTitle" id="product--title" value="${product.productTitle}">
-    <input type="hidden" name="productSeller" id="product--seller" value="${product.userId}">
+    <input type="hidden" name="productSellerId" id="product--seller--id" value="${product.userId}">
     <input type="hidden" name="productPrice" id="product--price" value="${product.price}">
     <input type="hidden" name="productAvg" id="title--rate" value="${productAvg.avgScore}">
 </form>
@@ -171,7 +171,7 @@
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(9).webp" class="rounded-circle shadow-1-strong" width="150" height="150" />
                         </div>
                         <h5 class="mb-3" id="revName">${rev.name}</h5>
-                        <h6 class="text-primary mb-3" id="revCreatedAt">${rev.createdAt}</h6>
+                        <h6 class="text-primary mb-3 formattedDate" id="revCreatedAt">${rev.createdAt}</h6>
                         <p class="px-xl-3 text-center">
                             <!-- Modified: Center align the content -->
                             <i class="fas fa-quote-left pe-2" id="revContent"></i>${rev.content}
@@ -215,9 +215,12 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
+        
     </section>
 </div>
 <!-- review Section End -->
+
+
 
 <script>
     $(document).ready(function() {
@@ -254,6 +257,7 @@
         let starsHtml = displayStars(productAvgScore);
         $('.title--rate').html(starsHtml);
     });
+    
     
 </script>
 
