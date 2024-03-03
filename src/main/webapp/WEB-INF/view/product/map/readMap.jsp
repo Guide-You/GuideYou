@@ -104,6 +104,10 @@
 		function hideMarkers() {
 			setMarkers(null);
 		}
+		
+		var infowindow = new kakao.maps.InfoWindow({
+		    removable : true
+		});
 
 		// 가게 정보 리스트 세팅하는 함수
 		function setCheckLocationList(data, index) {
@@ -121,6 +125,24 @@
 			+ "<br>"
 			+ 'lng: ' +  + data[index].lng
 			+ "<hr>";
+			
+			 // mouseover 이벤트 추가
+		    listItem.addEventListener('click', function() {
+		        	 
+		        	 console.log("삭제 버튼 클릭은 안됨");
+		    	
+				     var moveLatLng = new kakao.maps.LatLng(data[index].lat, data[index].lng);   
+				     map.panTo(moveLatLng);
+						
+					 var iwContent = '<div style="padding:5px;">' + data[index].placeName + '</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+					   iwPosition = new kakao.maps.LatLng(data[index].lat, data[index].lng), //인포윈도우 표시 위치입니다
+					   iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+		
+					 infowindow.setContent(iwContent);
+					 infowindow.setPosition(iwPosition);
+					 infowindow.open(map);
+		    });
+			
 			locationList.appendChild(listItem);
 		}
 	</script>
