@@ -19,6 +19,7 @@
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ef018e0a6a5030e54ff1e2da58cdceb"></script>
 	<script>
+		var purchased = true;
 		let locationInfoList = "";
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 		mapOption = {
@@ -53,7 +54,11 @@
 							data[i].lng));
 
 					// <div id = locationList> 목록 추가 로직
+					if(purchased == true) {
 					setCheckLocationList(data, i);
+					} else {
+						hideMarkers();
+					}
 				}
 				map.setBounds(bounds);
 			},
@@ -127,8 +132,7 @@
 			+ "<hr>";
 			
 			 // mouseover 이벤트 추가
-		    listItem.addEventListener('click', function() {
-		        	 
+		    listItem.addEventListener('click', function(event) {
 		        	 console.log("삭제 버튼 클릭은 안됨");
 		    	
 				     var moveLatLng = new kakao.maps.LatLng(data[index].lat, data[index].lng);   
