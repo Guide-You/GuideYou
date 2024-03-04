@@ -15,8 +15,9 @@ import lombok.Data;
 @Data
 public class BoardDto {
 
+	private Integer boardId; //2.26추가
 	private String type;
-	private String writer;
+	private Integer writerId;
 	private String title;
 	private String content;
 	private Integer viewCount;

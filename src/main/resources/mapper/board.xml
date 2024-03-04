@@ -2,19 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.guideyou.repository.interfaces.admin.BoardRepository">
 
-	<insert id="insert" parameterType="com.guideyou.dto.admin.BoardDto">
-		insert into board_contents (type, writer, title,
-		content) values (#{type}, #{writer},
-		#{title}, #{content})
+	<insert id="insert">
+		insert into board_contents (type, title, writer_id,
+		content) values (#{type}, #{title},#{writerId}, #{content})
 	</insert>
 	<!-- list 출력 -->
 	<select id="findAll" resultType="com.guideyou.repository.entity.Board">
 		select * from board_contents order by id desc
 	</select>
 	<!-- 페이징 처리 쿼리 -->
-	<select id="findAllPgs" resultType="com.guideyou.repository.entity.Board">
+	<select id="findAllwithPasing" resultType="com.guideyou.repository.entity.Board">
 		select * from board_contents 
-		limit = #{limit}, offset = #{offset}
+		limit #{limit} offset #{offset}   
 	</select>
 	<!-- 전체 데이터 개수 쿼리 -->
 	<select id="getAllPgCount" resultType="int">
@@ -24,6 +23,14 @@
 	<delete id="deleteById">
 		delete from board_contents where id = #{id}	
 	</delete>
-	<!-- update 쿼리 -->
-	<!-- 수정 쿼리 -->
+	 <!-- 글수정 -->
+	<update id = "updateById">
+	 	update board_contents set  writer_id = #{writerId}, title =#{title}, 
+	 	content = #{content}  where  id =#{id}
+	</update>
+	<!-- 글 상세조회 -->
+	<select id="findById" resultType="com.guideyou.repository.entity.Board" parameterType="int">
+  		select * from board_contents where id=#{id}
+	</select>
+	
 </mapper>

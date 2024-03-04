@@ -1,16 +1,14 @@
 package com.guideyou.repository.entity;
 
-import java.sql.Timestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-  * @FileName : Board.java
+  * @FileName : Comment.java
   * @Project : GuideYou
-  * @Date : 2024. 2. 20. 
+  * @Date : 2024. 2. 28. 
   * @작성자 : 김수현
   * @변경이력 :
   * @프로그램 설명 :
@@ -19,15 +17,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Board {
-	
-	private Integer id;
-	private String type;
-	private Integer writerId;
-	private String title;
-	private String content;
-	private Integer viewCount;
-	private Timestamp createdAt;
+public class Comment {
 
-	
+	private Integer id; // 댓글user id
+	private Integer bContentsId;
+	private Integer writerId;
+	private String content;
+	private Integer createdAt;
 }
