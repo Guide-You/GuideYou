@@ -22,19 +22,21 @@
 	       ph.upload_file_name AS uploadFileName,
 	       (p.price * p.sold_count) AS revenue
 		FROM product p
-		JOIN product_photos ph ON p.id = ph.product_id
+		JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
+<!-- 		and p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and p.created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59') -->
 		ORDER BY p.id
 	</select>
 	
 	<!-- 날짜 필터 -->
 	<select id="selectProductList" resultType="com.guideyou.dto.product.ProductDto">
-		SELECT p.id AS productId, p.intro_content, p.content, p.price,
+		SELECT p.id AS productId, p.intro_content AS introContent, p.content, p.price,
 	       p.sold_count, p.created_at,
 	       ph.upload_file_name AS uploadFileName,
 	       (p.price * p.sold_count) AS revenue
 		FROM product p
 		JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
 		WHERE 1=1
+		and #{selectedValue} = #{selectedValue}
 		<if test='selectedValue != null and selectedValue.equals("1")'>
 		  and p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and p.created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
 		</if>
@@ -50,11 +52,13 @@
 	<!-- 판매 된 상품 개수 조회 -->
 	<select id="selectPaymentInfo" resultType="com.guideyou.dto.admin.AdminDto">
 		select count(*) as paymentCount from payment
+		where created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
 	</select>
 	
 	<!-- 총 판매 금액 조회 -->
 	<select id="selectTotalPriceInfo" resultType="com.guideyou.dto.admin.AdminDto">
 		select sum(total_price) as totalPrice from payment
+		where created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
 	</select>
 	
 	<!-- 가입자 수 조회 -->

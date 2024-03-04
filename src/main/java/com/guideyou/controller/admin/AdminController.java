@@ -39,8 +39,8 @@ public class AdminController {
 		model.addAttribute("findProductInfo", findProductInfo);
 		
 		// 24.03.03 날짜 검색 기능
-		List<ProductDto> selectDateType = adminService.selectProductList();
-		model.addAttribute("selectDateType", selectDateType);
+//		List<ProductDto> selectDateType = adminService.selectProductList(selectedValue);
+//		model.addAttribute("selectDateType", selectDateType);
 		
 		// 24.03.03 판매 된 상품 개수 조회
 		AdminDto selectPayment = adminService.selectPaymentInfo();

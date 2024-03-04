@@ -3,6 +3,7 @@ package com.guideyou.repository.interfaces.admin;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.guideyou.dto.admin.AdminDto;
 import com.guideyou.dto.admin.BoardDto;
@@ -28,7 +29,7 @@ public interface AdminRepository {
 	public List<ProductDto> findProductInfo();
 	
 	// 24.03.03 날짜 검색 기능
-	public List<ProductDto> selectProductList();
+	public List<ProductDto> selectProductList(@Param ("selectedValue") String selectedValue);
 	
 	// 24.03.03 상품 판매 개수 조회
 	public AdminDto selectPaymentInfo();

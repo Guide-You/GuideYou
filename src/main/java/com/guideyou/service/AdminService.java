@@ -57,9 +57,9 @@ public class AdminService {
 	  * @변경이력 : 
 	  * @Method 설명 : 날짜 검색 기능
 	  */
-	public List<ProductDto> selectProductList() {
+	public List<ProductDto> selectProductList(String selectedValue) {
 		
-		 return adminRepository.selectProductList();
+		 return adminRepository.selectProductList(selectedValue);
 	}
 	
 	/**

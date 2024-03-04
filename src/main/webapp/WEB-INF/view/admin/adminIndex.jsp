@@ -192,7 +192,7 @@
 											<h6>Filter</h6>
 										</li>
 
-										<li><a class="dropdown-item" href="#">오늘</a></li>
+										<li><a class="dropdown-item" href="/admin">오늘</a></li>
 										<li><a class="dropdown-item" href="#">이번달</a></li>
 										<li><a class="dropdown-item" href="#">올해</a></li>
 									</ul>
@@ -483,15 +483,15 @@ document.addEventListener("DOMContentLoaded", () => {
 						            <table class="table table-borderless datatable" id="productTable">
 						                <thead>
 						                    <tr>
-						                        <th scope="col">Preview</th>
-						                        <th scope="col">Product</th>
-						                        <th scope="col">Price</th>
-						                        <th scope="col">Sold</th>
-						                        <th scope="col">Revenue</th>
+						                        <th scope="col">이미지</th>
+						                        <th scope="col">상품</th>
+						                        <th scope="col">가격</th>
+						                        <th scope="col">판매 수</th>
+						                        <th scope="col">수익</th>
 						                    </tr>
 						                </thead>
 						                <tbody>
-						                    <c:forEach items="${selectDateType}" var="productInfo">
+						                    <c:forEach items="${findProductInfo}" var="productInfo">
 						                        <tr>
 						                            <th scope="row">
 						                                <a href="#"><img src="/images/upload/${productInfo.uploadFileName}" alt=""></a>
@@ -710,15 +710,15 @@ $("#form-select").change(function(){
             // 각 제품 정보로 tbody 내용 변경
             $.each(findProductInfo, function(index, productInfo) {
                 var row = $('<tr>');
-                row.append('<th scope="row"><a href="#"><img src="/images/upload/' + productInfo.uploadFileName + '" alt=""></a></th>');
+                row.append('<th scope="row"><a href="#"><img src="/images/upload/' + productInfo.upload_file_name + '" alt=""></a></th>');
                 row.append('<td><a href="#" class="text-primary fw-bold">' + productInfo.intro_content + '</a></td>');
                 row.append('<td>' + productInfo.price + '원</td>');
-                row.append('<td class="fw-bold">' + productInfo.soldCount + '</td>');
+                row.append('<td class="fw-bold">' + productInfo.sold_count + '</td>');
                 row.append('<td>' + productInfo.revenue + '원</td>');
                 tbody.append(row);
+	            console.log(productInfo);
             });
             
-            console.log(productInfo.price);
         },
         error: function(xhr, status, error) {
             // 에러 발생 시 처리
