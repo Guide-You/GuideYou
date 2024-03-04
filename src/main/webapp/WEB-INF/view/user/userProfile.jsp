@@ -12,6 +12,7 @@
 	<div class="col-md-12 col-lg-6 col-xl-9">
 		<div class="container profile--main">
 			<div class="registration-form profile--form">
+				<input type="hidden" name="userId" id="user--id" value="${principal.id}">
 				<form action="/member/profile" method="post" name="signUpForm">
 					<div class="form-icon">
 						<span><i class="icon icon-user"></i> </span>
