@@ -1,4 +1,97 @@
-		// 마커를 담을 배열입니다
+
+$(document).ready(function() {
+	
+	// product update
+	let thumbIsRemove = false;
+	function confirmDelete(id) {
+	    if (confirm("삭제 하시겠습니까?")) {
+	        deleteImg(id);
+	    }
+	}
+
+	function confirmDeleteThumb(id) {
+	    if (confirm("삭제 하시겠습니까?")) {
+	    	thumbIsRemove = true;
+	        deleteImg(id);
+	    }
+	}
+
+	function deleteImg(id) {
+		let removeImgNum = $("#removeImgs").val();
+		if (removeImgNum == "") {
+			removeImgNum += id; 
+		} else {
+			removeImgNum += "," + id;
+		}
+	
+	$("#removeImgs").val(removeImgNum);
+	$("#imgName_" + id).css("display","none");
+}
+
+    $('#productForm').submit(function(event) {
+        var errorMessage = ""; // 에러 메시지를 저장할 변수
+
+        var titleInput = $('#title').val();
+        var introContentInput = $('#introContent').val();
+        var contentInput = $('#content').val();
+        var priceInput = $('#price').val();
+        var thumbFile = $('#thumbFile').val();
+        var customFile = $('#fileInput').val();
+
+        // 제목이 비어있는 경우 에러 메시지에 추가
+        if (titleInput.trim() === "") {
+            errorMessage += "글 제목을 입력해주세요.\n";
+        } 
+        
+     	// 내용이 비어있는 경우 에러 메시지에 추가
+        if (introContentInput.trim() === "") {
+        	errorMessage += "상품 소개 글 내용을 입력해주세요.\n";
+        }
+        
+        
+        // 내용이 비어있는 경우 에러 메시지에 추가
+        if (contentInput.trim() === "") {
+        	errorMessage += "상품 상세 내용을 입력해주세요.\n";
+        }
+        
+     	// 가격이 비어있는 경우 에러 메시지에 추가
+        if (priceInput.trim() === "") {
+            errorMessage += "가격을 입력해주세요.\n";
+        } else {
+            // 가격이 숫자가 아닌 경우 에러 메시지에 추가
+            var numericExpression = /^[0-9]+$/;
+            if (!numericExpression.test(priceInput)) {
+                errorMessage += "잘못된 가격입니다. 숫자만 입력해주세요.\n";
+            }
+        }
+
+
+     	if(thumbIsRemove && thumbFile == ""){
+            errorMessage += "썸네일을 넣어주세요. \n";
+     	}
+     	
+        // 에러 메시지가 비어있지 않은 경우에만 알림 창 표시 및 이벤트 중단
+        if (errorMessage !== "") {
+            alert(errorMessage); // 에러 메시지 표시
+            
+            
+            
+            if(titleInput.trim() === ""){
+                $('#title').focus();
+            } else if(priceInput.trim() === "") {
+            	$('#price').focus();
+            } else if(introContentInput.trim() === ""){
+            	$('#introContent').focus();
+            } else if(contentInput.trim() === "") {
+            	$('#content').focus();
+            }
+            event.preventDefault(); // 폼 제출 중지
+            return false; // 이벤트 처리 중단
+        }
+    
+    
+    /////////////////// map update
+    		// 마커를 담을 배열입니다
 		var markers = [];
 		var checkMarkers = [];
 
@@ -460,4 +553,7 @@
 				}
 			}
 			infowindow.close();
-		} 
+		}
+		
+    }); //  $('#productForm').submit(function(event) end
+});

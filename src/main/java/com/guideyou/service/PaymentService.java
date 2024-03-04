@@ -50,8 +50,8 @@ public class PaymentService {
 	  * @Method 설명 : 단일 결제, insert 후 product soldCount +1
 	  */
 	@Transactional
-	public void createPayment(PaymentDto paymentDto) {
-	//public Payment createPayment(PaymentDto paymentDto) {	// entity반환해보기
+	//public void createPayment(PaymentDto paymentDto) {
+	public Payment createPayment(PaymentDto paymentDto) {	// entity반환해보기
 		
 		log.info("servicePaymentDto : "+paymentDto.toString());
 		Payment payment = Payment.builder()
@@ -90,6 +90,7 @@ public class PaymentService {
 			throw new CustomRestfulException(Define.FAIL_TO_CREATE_PAYMENT, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
+		return payment;
 	}
 	
 	
