@@ -517,6 +517,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		    removable : true
 		});
 		
+		/*
 		function setCheckLocationList(places) {
 			var listItem = document.createElement('div');
 			
@@ -561,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				    removeListItem(listItem, places);
 				});
 		   */
-		  
+		  /*
 		    // mouseover 이벤트 추가
 		    listItem.addEventListener('click', function(event) {
 		    	 var target = event.target;
@@ -585,7 +586,46 @@ document.addEventListener('DOMContentLoaded', function() {
 		    });
 			locationList.appendChild(listItem);
 		}
-		
+		*/
+		function setCheckLocationList(places) {
+    var listItem = document.createElement('div');
+
+    listItem.innerHTML = 
+    '가게명: ' + places.place_name +
+    "<br>" +
+    '전화번호: ' +  places.phone +
+    "<br>" +
+    '도로명주소: ' +  places.road_address_name +
+    "<br>" +
+    '지번주소: ' +  places.address_name +
+    "<br>" +
+    'lat: ' +  + places.y +
+    "<br>" +
+    'lng: ' +  + places.x +
+    "<button class='locationRemoveBtn'>삭제</button>"  // onclick 속성 제거
+    + "<hr>";
+
+    listItem.querySelector('.locationRemoveBtn').addEventListener('click', function() {
+        removeListItem(listItem, places);
+    });
+
+    listItem.addEventListener('click', function(event) {
+        var target = event.target;
+
+        if (!target.classList.contains('locationRemoveBtn')) {
+            var moveLatLng = new kakao.maps.LatLng(places.y, places.x);   
+            map.panTo(moveLatLng);
+
+            var iwContent = '<div style="padding:5px;">' + places.place_name + '</div>',
+                iwPosition = new kakao.maps.LatLng(places.y, places.x);
+
+            infowindow.setContent(iwContent);
+            infowindow.setPosition(iwPosition);
+            infowindow.open(map);
+        }
+    });
+    locationList.appendChild(listItem);
+}
  		// 항목 제거하는 함수
 		function removeListItem(item, places) {
 			for (var i = 0; i < checkMarkers.length; i++) {
@@ -603,9 +643,4 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 			infowindow.close();
 		}
-		
-
-    
-    
-    
 });
