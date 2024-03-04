@@ -23,9 +23,9 @@ import lombok.Data;
 public class UploadProductsInfoDTO {
 	private Integer productId;
 	private String cityName;
-	private Long productPhotoPath;
+	private String productPhotoPath;
 	private String title;
-	private String shortContent;
+	private String shortIntroContent;
 	private Long productPrice;
 	private Timestamp uploadTime;
 }

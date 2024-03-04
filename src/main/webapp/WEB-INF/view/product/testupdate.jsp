@@ -53,9 +53,11 @@
        	
         
         <!-- 파일 선택 input 대신 label을 사용하여 버튼으로 보여줌 -->
-		<p>썸네일</p><input type="file" id="thumbFile" name="customFile" value="y" accept="image/*">
-		<div class="imgthumbBox">
-<%-- 			<p id="imgName_${ProductInfo.id}">${ProductInfo.originFileName}<span onclick="confirmDelete(${photoResult.id})" class="removeImg">X</span></p> --%>
+		<p>썸네일</p><input type="file" id="thumbFile" name="thumbFile" accept="image/*">
+		<div class="imgthumbBox" id="thumbNailBox">
+			<c:if test="${!empty thumb.id}">
+				<p id="imgName_${thumb.id}">${thumb.originFileName}<span onclick="confirmDeleteThumb(${thumb.id})" class="removeImg">X</span></p>		
+			</c:if>
 		</div>
         <p>디테일사진</p><input type="file" id="fileInput" name="customFile"  multiple>
 		
@@ -96,13 +98,19 @@
     </form>
 </div>
 <script>
-
+let thumbIsRemove = false;
 function confirmDelete(id) {
     if (confirm("삭제 하시겠습니까?")) {
         deleteImg(id);
     }
 }
 
+function confirmDeleteThumb(id) {
+    if (confirm("삭제 하시겠습니까?")) {
+    	thumbIsRemove = true;
+        deleteImg(id);
+    }
+}
 
 function deleteImg(id) {
 	let removeImgNum = $("#removeImgs").val();
@@ -154,19 +162,28 @@ $(document).ready(function() {
             }
         }
 
+
+     	if(thumbIsRemove && thumbFile == ""){
+            errorMessage += "썸네일을 넣어주세요. \n";
+     	}
+     	
         // 에러 메시지가 비어있지 않은 경우에만 알림 창 표시 및 이벤트 중단
         if (errorMessage !== "") {
             alert(errorMessage); // 에러 메시지 표시
-            $('#price').focus();
-            $('#introContent').focus();
-            $('#title').focus();
-            $('#content').focus();
             
+            
+            
+            if(titleInput.trim() === ""){
+                $('#title').focus();
+            } else if(priceInput.trim() === "") {
+            	$('#price').focus();
+            } else if(introContentInput.trim() === ""){
+            	$('#introContent').focus();
+            } else if(contentInput.trim() === "") {
+            	$('#content').focus();
+            }
             event.preventDefault(); // 폼 제출 중지
             return false; // 이벤트 처리 중단
-        } else {
-            // thumbFile의 값을 추가하여 서버로 전송
-            $(this).append('<input type="hidden" name="thumbFile" value="y">');
         }
     });
 });

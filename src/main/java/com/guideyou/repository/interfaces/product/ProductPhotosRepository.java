@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.guideyou.dto.product.ProductDto;
+import com.guideyou.dto.product.ProductThumbnailDto;
 import com.guideyou.repository.entity.ProductPhotos;
 
 @Mapper
@@ -36,4 +37,7 @@ public interface ProductPhotosRepository {
 	
 	
 	List<ProductDto> selectPhoto();
+	
+	// 24.02.28 thumbnail 의 originalName 찾기
+	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId);
 }

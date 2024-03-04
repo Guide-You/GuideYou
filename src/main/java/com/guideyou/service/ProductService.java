@@ -18,6 +18,7 @@ import com.guideyou.dto.product.ProductDetailDto;
 import com.guideyou.dto.product.ProductDto;
 import com.guideyou.dto.product.ProductPhotoDto;
 import com.guideyou.dto.product.ProductReviewDto;
+import com.guideyou.dto.product.ProductThumbnailDto;
 import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.ProductPhotos;
@@ -119,6 +120,56 @@ public class ProductService {
 
 		@Transactional
 		public boolean insertPhoto(ProductDto dto, Integer productId) {
+			MultipartFile thumb = dto.getThumbFile();
+			if(thumb != null) {
+				String filename = thumb.getOriginalFilename();
+		        String path = Define.UPLOAD_FILE_DERECTORY;
+		        String ext = StringUtils.getFilenameExtension(filename);
+		        long filesize = thumb.getSize();
+		        System.out.println("파일 사이즈 : " + filesize);
+		        if (filesize > 0) {
+		        	LocalDateTime now = LocalDateTime.now();
+			        String uploadFileName = "P" + now.getYear() + now.getMonthValue() + now.getDayOfMonth() + now.getHour()
+			                + now.getMinute() + now.getSecond() + (int) (Math.random() * 100) + "." + ext;
+
+			        try {
+			            BufferedOutputStream bos = new BufferedOutputStream(
+			                    new FileOutputStream(new File(path + "/" + uploadFileName)));
+			            bos.write(thumb.getBytes());
+			            bos.close();
+
+			            ProductPhotos photos = new ProductPhotos();
+			            photos.setProductId(productId);
+			            photos.setProductPhotoPath(path);
+			            photos.setOriginFileName(filename);
+			            photos.setUploadFileName(uploadFileName);
+		                photos.setThumbnail("y");
+			            
+//			            if (i == 0 && dto.getThumbFile() != null) {
+//			                MultipartFile thumbFile = dto.getThumbFile();
+//			                String thumbFilename = thumbFile.getOriginalFilename();
+//			                String thumbUploadFileName = "thumbnail_" + thumbFilename;
+//			                BufferedOutputStream thumbBos = new BufferedOutputStream(
+//			                        new FileOutputStream(new File(path + "/" + thumbUploadFileName)));
+//			                thumbBos.write(thumbFile.getBytes());
+//			                thumbBos.close();
+//			                photos.setThumbnail("y");
+//			            }
+
+			            int result = photosRepository.insert(photos);
+			            
+			            if (result == 0) {
+			                throw new Exception();
+			            }
+			            
+			        } catch (Exception e) {
+			            System.out.println(e.getMessage());
+			        }
+		        }
+		        
+		        
+			}
+			
 		    MultipartFile[] files = dto.getCustomFile();
 		    System.out.println("파일 크기 : " + files.length);
 		    for (int i = 0; i < files.length; i++) {
@@ -155,7 +206,6 @@ public class ProductService {
 		                        new FileOutputStream(new File(path + "/" + thumbUploadFileName)));
 		                thumbBos.write(thumbFile.getBytes());
 		                thumbBos.close();
-
 		                photos.setThumbnail("y");
 		            }
 
@@ -268,42 +318,42 @@ public class ProductService {
 		productRepository.updateById(product);
 	}
 
-	@Transactional
-	public Boolean updatePhoto(Integer id, ProductDto dto) {
-
-		MultipartFile[] files = dto.getCustomFile();
-		for (int i = 0; i < files.length; i++) {
-			String filename = files[i].getOriginalFilename();
-			String path = Define.UPLOAD_FILE_DERECTORY;
-			String ext = StringUtils.getFilenameExtension(filename);
-
-			LocalDateTime now = LocalDateTime.now();
-			String uploadFileName = "P" + now.getYear() + now.getMonthValue() + now.getDayOfMonth() + now.getHour()
-					+ now.getMinute() + now.getSecond() + (int) (Math.random() * 100) + "." + ext;
-
-			try {
-				BufferedOutputStream bos = new BufferedOutputStream(
-						new FileOutputStream(new File(path + "/" + uploadFileName)));
-				bos.write(files[i].getBytes());
-				bos.close();
-
-				ProductPhotos photos = ProductPhotos.builder().productPhotoPath(dto.getProductPhotoPath())
-						.originFileName(dto.getOriginFileName()).uploadFileName(dto.getUploadFileName()).build();
-
-				int result = photosRepository.insert(photos);
-
-				if (result == 0) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-
-		}
-		return true;
-
-	}
+//	@Transactional
+//	public Boolean updatePhoto(Integer id, ProductDto dto) {
+//
+//		MultipartFile[] files = dto.getCustomFile();
+//		for (int i = 0; i < files.length; i++) {
+//			String filename = files[i].getOriginalFilename();
+//			String path = Define.UPLOAD_FILE_DERECTORY;
+//			String ext = StringUtils.getFilenameExtension(filename);
+//
+//			LocalDateTime now = LocalDateTime.now();
+//			String uploadFileName = "P" + now.getYear() + now.getMonthValue() + now.getDayOfMonth() + now.getHour()
+//					+ now.getMinute() + now.getSecond() + (int) (Math.random() * 100) + "." + ext;
+//
+//			try {
+//				BufferedOutputStream bos = new BufferedOutputStream(
+//						new FileOutputStream(new File(path + "/" + uploadFileName)));
+//				bos.write(files[i].getBytes());
+//				bos.close();
+//
+//				ProductPhotos photos = ProductPhotos.builder().productPhotoPath(dto.getProductPhotoPath())
+//						.originFileName(dto.getOriginFileName()).uploadFileName(dto.getUploadFileName()).build();
+//					
+//				int result = photosRepository.insert(photos);
+//
+//				if (result == 0) {
+//					throw new Exception();
+//				}
+//
+//			} catch (Exception e) {
+//				System.out.println(e.getMessage());
+//			}
+//
+//		}
+//		return true;
+//
+//	}
 
 	// 페이징 처리 - 총 제품 수 조회
 	public int getTotalProductCount(String searchText, String cityCodeId) {
@@ -392,9 +442,9 @@ public class ProductService {
 	}	
 	
 	// 24.02.28 thumbnail 의 originalName 찾기
-//	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId) {
-//		return productRepository.findOriginNameByThumbnail(productId);
-//	}
+	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId) {
+		return photosRepository.findOriginNameByThumbnail(productId);
+	}
 	
 	
 	

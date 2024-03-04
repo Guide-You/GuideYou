@@ -36,6 +36,9 @@ public class ProductDto {
 	private String email;
 	private Double score;
 	private Timestamp createdAt;
+	private String dateType;
+	private String data1;
+	private String data2;
 	
 }
 

@@ -36,13 +36,14 @@
                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                           <h4>${uploadProductsInfo.title}</h4>
                           <p>
-                            ${uploadProductsInfo.shortContent}
+                            ${uploadProductsInfo.shortIntroContent}
                           </p>
                           <div class="d-flex justify-content-between flex-lg-wrap">
                             <p class="text-dark fs-5 fw-bold mb-0">
                               ${uploadProductsInfo.productPrice}
                             </p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">수정하기</a>
+                            <a href="/update/${uploadProductsInfo.productId}" class="btn border border-secondary rounded-pill px-3 text-primary">수정하기</a>
+                            <a href="/delete/${uploadProductsInfo.productId}" class="btn border border-secondary rounded-pill px-3 text-primary">삭제하기</a>
                           </div>
                         </div>
                       </div>
