@@ -27,23 +27,6 @@ import com.guideyou.service.product.productLocation.ProductLocationService;
   * @변경이력 :
   * @프로그램 설명 : 상품의 지도 controller
   */
-
-/**
-  * @FileName : ProductMapController.java
-  * @Project : GuideYou
-  * @Date : 2024. 3. 4. 
-  * @작성자 : 장명근
-  * @변경이력 :
-  * @프로그램 설명 :
-  */
-/**
-  * @FileName : ProductMapController.java
-  * @Project : GuideYou
-  * @Date : 2024. 3. 4. 
-  * @작성자 : 장명근
-  * @변경이력 :
-  * @프로그램 설명 :
-  */
 @Controller
 public class ProductMapController {
 	

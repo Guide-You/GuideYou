@@ -33,16 +33,16 @@
 	       ph.upload_file_name AS uploadFileName,
 	       (p.price * p.sold_count) AS revenue
 		FROM product p
-		JOIN product_photos ph ON p.id = ph.product_id
+		JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
 		WHERE 1=1
-		<if test='dataType != null and dataType.equals("1")'>
-		  and created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
+		<if test='selectedValue != null and selectedValue.equals("1")'>
+		  and p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and p.created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
 		</if>
-		<if test='dataType != null and dataType.equals("2")'>
-		  and created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and created_at <![CDATA[<]]> date_format(addDate(now(),INTERVAL 1 month),'%Y-%m-01 00:00:00')
+		<if test='selectedValue != null and selectedValue.equals("2")'>
+		  and p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and p.created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 MONTH),'%Y-%m-01 00:00:00')
 		</if>
-		<if test='dataType != null and dataType.equals("3")'>
-		  and created_at <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and created_at <![CDATA[<]]> date_format(addDate(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
+		<if test='selectedValue != null and selectedValue.equals("3")'>
+		  and p.created_at <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and p.created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
 		</if>
 		ORDER BY p.id
 	</select>
