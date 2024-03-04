@@ -389,8 +389,7 @@ public class ProductService {
 	// 24.02.28 아이디에 해당하는 상품 정보 조회
 	public Product selectProductInfo(Integer productId) {
 		return productRepository.selectProductInfo(productId);
-	}
-	
+	}	
 	
 	// 24.02.28 thumbnail 의 originalName 찾기
 //	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId) {

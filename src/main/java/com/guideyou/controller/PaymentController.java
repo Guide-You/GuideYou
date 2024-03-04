@@ -2,24 +2,42 @@ package com.guideyou.controller;
 
 import java.io.Console;
 
+import org.apache.jasper.tagplugins.jstl.core.If;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.guideyou.dto.payment.OrderDto;
 import com.guideyou.dto.payment.PaymentDto;
+import com.guideyou.dto.payment.RefundDto;
+import com.guideyou.dto.payment.portone.PaymentReqDto;
+import com.guideyou.dto.payment.portone.PaymentTokenDto;
+import com.guideyou.dto.payment.portone.PaymentVerificationDto;
 import com.guideyou.dto.product.ProductDto;
 import com.guideyou.handler.exception.CustomRestfulException;
+import com.guideyou.repository.entity.Payment;
 import com.guideyou.repository.entity.User;
 import com.guideyou.service.PaymentService;
+import com.guideyou.service.ProductService;
 import com.guideyou.utils.Define;
+import com.guideyou.utils.NullUtils;
+import com.mysql.cj.log.Log;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +60,8 @@ public class PaymentController {
 
 	  @Autowired
 	  private PaymentService paymentService;
+	  @Autowired
+	  private ProductService productService;
 	  
 	   /**
 	  * @Method Name : paymentPage
@@ -68,16 +88,17 @@ public class PaymentController {
 	@PostMapping("/processOrder")
 	public String processOrder(Model model, OrderDto orderDto) {
 		
-		System.out.println(orderDto);
 		
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
-		if (principal == null) {
+		if (NullUtils.isNull(principal.getId())) {
 			throw new CustomRestfulException(Define.ENTER_YOUR_LOGIN, HttpStatus.BAD_REQUEST);
 		}
 		
 		orderDto.setOrderUserId(principal.getId()); // 구매자 id
 		model.addAttribute("order", orderDto);	
+
+		System.out.println(orderDto);
 		
 		return "product/payment";
 
@@ -85,23 +106,246 @@ public class PaymentController {
 
 	
 	/**
-	  * @Method Name : paySuccess
-	  * @작성일 : 2024. 2. 22.
+	  * @Method Name : getData
+	  * @작성일 : 2024. 3. 2.
 	  * @작성자 : 박경진
-	  * @변경이력 : 2024.02.29 결제 성공 후 complete 페이지로 이동
-	  * @Method 설명 : kakaopay 결제 성공 시 넘어 올 jsonData를 받아 db에 insert
+	  * @변경이력 : 
+	  * @Method 설명 : 포트원 결제 정보조회 및 토큰 가져오기
 	  */
-	// TODO : DB에 INSERT되지 않았을시 FRONT KAKAO API 중단 시켜야함
-	@PostMapping("/paySuccess")
-	public String createPayment(PaymentDto paymentDto) {
+	// TODO: 주석 지우기 및 리턴을 어떻게 할 지 얘기해보기!
+	@PostMapping("/paySuccess") //ResponseEntity<?>  리턴타입 변경
+	public ResponseEntity<?> getData(@RequestBody PaymentDto paymentDto){
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+
+		log.info("paySuccess in!!");
+		log.info("payment DTO : "+paymentDto);
+		RestTemplate restTemplate = new RestTemplate();
+		
+		// 토큰 가져오기
+		// Request Header 설정
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		
+		// Request Body 설정
+		JSONObject requestBody = new JSONObject();
+		requestBody.put("imp_key", "5645231441086456");
+		requestBody.put("imp_secret","PpZEmOMr140GVB8iiay0k744qjFKI37ffkpOMxlhNxtcKOf4R8xGXvpgma0nxOhReiTFHiUfq9yh3jCu");
+	
+		// Header + Body
+		HttpEntity entity = new HttpEntity(requestBody.toString(),headers);
+		
+		// API 호출
+		ResponseEntity<PaymentTokenDto> reqToken = restTemplate
+				.exchange("https://api.iamport.kr/users/getToken", 
+							HttpMethod.POST, 
+							entity, 
+							PaymentTokenDto.class
+						);
+	
+		String token = reqToken.getBody().getResponse().accessToken;
+		
+		log.info("토큰 정보 : "+ token);
+		
+		// 포트원에 결제 정보 조회 
+		// Request Header 설정
+		HttpHeaders headers2 = new HttpHeaders();
+		headers2.add("Authorization", token);
+		HttpEntity entity2 = new HttpEntity(headers2);
+		
+		// API 호출
+		ResponseEntity<PaymentReqDto> reqData = restTemplate
+				.exchange("https://api.iamport.kr/payments/find/" + paymentDto.getMerchantUid(),
+			                HttpMethod.GET, 
+			                entity2, 
+			                PaymentReqDto.class
+			              );
+		log.info("reqData : "+ reqData.getBody().getResponse());
+		PaymentVerificationDto verificationDto = new PaymentVerificationDto(); 
+		// 결제 사후 검증 
+		String verificationMerchantUid= reqData.getBody().getResponse().merchantUid;
+		log.info("verificationMerchantUid"+verificationMerchantUid);
+				
+		if (verificationMerchantUid.equals(paymentDto.getMerchantUid())) {
+			log.info("여기는 검증까지 완료되어서 payment Dto로 insert 할 정보입니다" , paymentDto);
+			paymentService.createPayment(paymentDto);
+			
+			log.info("payment service 성공하고 왔다!");
+			
+			// Payment Entity 값 프론트로 넘겨서 complete창 만들거양!
+			 //return ResponseEntity.ok().body(paymentInfo); HttpMediaTypeNotAcceptableException 때문에 주석처리함
+			return ResponseEntity.ok("success");
+		} else {
+		
+		// 검증이 잘못 됐을시 환불 처리
+		// Request Header
+		HttpHeaders headers3 = new HttpHeaders();
+		headers3.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		headers3.add("Authorization", token);
+		
+		// Requst Body
+		MultiValueMap<String, String> param = new LinkedMultiValueMap();
+		param.add("merchant_uid", paymentDto.getMerchantUid());
+		
+		// 헤더 + Body 결합
+		HttpEntity<MultiValueMap<String, String>> entity3 = new HttpEntity<>(param, headers3);
+		
+		// API 호출
+		ResponseEntity<String> refund = restTemplate
+				.exchange(
+					"https://api.iamport.kr/payments/cancel", 
+					HttpMethod.POST,
+					entity3,
+					String.class
+				);
+		log.info("refund" ,refund);}
+		
+		return ResponseEntity.badRequest().body("failure"); 
+		//HttpMediaTypeNotAcceptableException 확인
+		
+			
+	}	
+
+	/**
+	  * @Method Name : refund
+	  * @작성일 : 2024. 3. 3.
+	  * @작성자 : 박경진
+	  * @변경이력 : 
+	  * @Method 설명 : 환불
+	  */
+	@PostMapping("/refund")
+	public void refund(@RequestBody RefundDto refundDto) {
 		
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
-		paymentService.createPayment(paymentDto);
-		log.info("PaymentController payment dto : "+paymentDto.toString());	
+		log.info("refund controller in!");
+		log.info("refundDto : "+ refundDto);
 		
-		return "redirect:/product/complete";
+		// 세션 로그인 정보와 payment에 등록된 userId가 같아야 로직 시작
+		// Integer userId = principal.getId();
+		Integer userId = 13;
+		log.info(userId+"");
+		//Payment paymentChk = paymentService.findByMerchantUidAndUserId(refundDto.getMerchantUid(), userId);
+		
+		//log.info("paymentChk:" + paymentChk);
+		//if (paymentChk != null) {
+			
+			// 1. 포트원 결제 정보 조회
+			RestTemplate restTemplate = new RestTemplate();
+			
+			// 토큰 가져오기
+			// Request Header 설정
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			
+			
+			// Request Body 설정
+			JSONObject requestBody = new JSONObject();
+			requestBody.put("imp_key", "5645231441086456");
+			requestBody.put("imp_secret","PpZEmOMr140GVB8iiay0k744qjFKI37ffkpOMxlhNxtcKOf4R8xGXvpgma0nxOhReiTFHiUfq9yh3jCu");
+		
+			// Header + Body
+			HttpEntity entity = new HttpEntity(requestBody.toString(),headers);
+			
+			// API 호출
+			ResponseEntity<PaymentTokenDto> reqToken = restTemplate
+					.exchange("https://api.iamport.kr/users/getToken", 
+								HttpMethod.POST, 
+								entity, 
+								PaymentTokenDto.class
+							);
+		
+			String token = reqToken.getBody().getResponse().accessToken;
+			
+			log.info("refund 토큰 정보 : "+ token);
+			
+			// 결제 정보 조회 
+			// Request Header 설정
+			HttpHeaders headers2 = new HttpHeaders();
+			headers2.add("Authorization", token);
+			HttpEntity entity2 = new HttpEntity(headers2);
+			
+			// API 호출
+			ResponseEntity<PaymentReqDto> reqData = restTemplate
+					.exchange("https://api.iamport.kr/payments/find/" + refundDto.getMerchantUid(),
+				                HttpMethod.GET, 
+				                entity2, 
+				                PaymentReqDto.class
+				              );
+			log.info("refund 포트원 결제 정보 reqData : "+ reqData.getBody().getResponse());
+			
+			// 결제 내역 검증
+			PaymentVerificationDto verificationDto = new PaymentVerificationDto(); 
+			String verificationMerchantUid= reqData.getBody().getResponse().merchantUid;
+			log.info(verificationMerchantUid);
+			
+			// 만약 클라이언트에 merchantUid와 refundDto로 들어온 merchantUid가 같다면
+			// 클라이언트 서버에 취소 요청
+			if(verificationMerchantUid.equals(refundDto.getMerchantUid())) {
+				
+				// 2. 아임포트 서버에 취소 요청
+				// Request Header
+				HttpHeaders headers3 = new HttpHeaders();
+				headers3.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+				headers3.add("Authorization", token);
+				
+				// Request Body
+				MultiValueMap<String, String> param = new LinkedMultiValueMap();
+				param.add("merchant_uid", refundDto.getMerchantUid());
+				
+				// 헤더 + Body 결합
+				HttpEntity<MultiValueMap<String, String>> entity3 = new HttpEntity<>(param, headers3);
+				
+				// API 호출
+				ResponseEntity<String> refund = restTemplate
+						.exchange(
+							"https://api.iamport.kr/payments/cancel", 
+							HttpMethod.POST,
+							entity3,
+							String.class
+						);
+				log.info("refund" ,refund);
+				
+				// 3. db에 환불 결과 저장
+				paymentService.updatePaymentOnRefund(refundDto);
+				
+			}
+			
+			// TODO : 환불 클라이언트, DB 모두 완료 -> 이후에 어떻게 처리할건지 고민해보기!
+			
+
+			// if end
+		//} else {
+			//throw new CustomRestfulException("존재하지 않는 결제 내역입니다.", HttpStatus.NOT_FOUND);
+		//}
+		
+		
+		
+		
+
+
+
 	}
+	
+	/**
+	  * @Method Name : paymentHistoryListPage
+	  * @작성일 : 2024. 3. 3.
+	  * @작성자 : 박경진
+	  * @변경이력 : 
+	  * @Method 설명 : myPage PaymentHistoryListPage 출력
+	  */
+	// TODO : 20240303 USER 컨트롤러로 옮길지 ? 
+	@GetMapping("/paymentHistoryList")
+	public String paymentHistoryListPage(){
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		return "/user/userPaymentHistoryList";
+	}
+	
+	
+	
+	
+	
+	
 	
 	/**
 	  * @Method Name : completePage
@@ -115,5 +359,28 @@ public class PaymentController {
 		return "product/complete";
 
 	}
+	
+	
+	/**
+	  * @Method Name : paymentChk
+	  * @작성일 : 2024. 3. 3.
+	  * @작성자 : 박경진
+	  * @변경이력 : 
+	  * @Method 설명 : product 구매 시 구매내역 체크 및 본인 product 구매 X , productDetail의 구매 버튼, review 글쓰기 버튼에서 사용
+	  */
+	@GetMapping()
+	public void paymentChk() {
+		// TODO : ProductDetailPage 에서 구매하기 버튼 클릭시 
+		// 		productId 조회해서 구매내역있는지 확인 후 구매 이력 알려주기(20240303)
+		// 코드 재사용 할거양!
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+
+		// 세션 로그인 정보와 payment에 등록된 userId가 같아야 로직 시작
+		//Integer userId = principal.getId();
+		//Payment paymentChk = paymentService.findByMerchantUidAndUserId(refundDto.getMerchantUid(),userId);
+		
+		
+	}
 
 }
+;
