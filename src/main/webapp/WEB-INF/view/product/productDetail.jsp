@@ -136,16 +136,7 @@
 </div>
 <!-- Map Section End -->
 
-<!-- Detail Image Start -->
-<div class="d-flex">
-    <form action="/delete/${product.productId}" method="post">
-        <button class="btn btn-danger">삭제</button>
-    </form>
-    <a href="/update/${product.productId}">
-        <button class="btn btn-warning updateBtn">수정</button>
-    </a>
-</div>
-<!-- Detail Image End -->
+
 
 <div class="container" style="margin-top: 4%">
     <hr />
