@@ -701,6 +701,7 @@ $("#form-select").change(function(){
         success: function(findProductInfo) {
             console.log("서버로부터 데이터를 성공적으로 받아왔습니다.");
             console.log(findProductInfo);
+            console.log("선택값", selectedValue);
             
             // tbody 초기화
             var tbody = $('#productTable tbody');  

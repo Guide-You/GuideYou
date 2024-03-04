@@ -135,6 +135,7 @@ public class ProductController {
 	public String productDetail(@PathVariable("productId") Integer productId, Model model) {
 		
 		// TODO: 상품 이미지 불러 오기 및 리뷰 추가하기, 구매 전 페이지 - 구매 후 페이지 구현 하기
+		
 
 		ProductDetailDto product = productService.findProductAndUser(productId);
 	    model.addAttribute("product", product);
@@ -166,7 +167,7 @@ public class ProductController {
 	  */
 	@GetMapping("/update/{productId}")
 	public String productUpdatePage(@PathVariable("productId") Integer productId, Model model) {
-		
+		// TODO: 유효성 검사
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		   
 	    if (principal == null) {
@@ -197,12 +198,16 @@ public class ProductController {
 	@PostMapping("/edit/{productId}")
 	public String updateProduct(@PathVariable("productId") Integer productId, ProductDto dto,
 			@RequestParam("region") Integer cityCodeId, @RequestParam("removeImgs") String removeImgs) {
-
+		
+		
+		
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);   
 		
 	    if (principal == null) {
 			throw new CustomRestfulException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
 		}
+	    
+	    
 	    
 	  	dto.setCityCodeId(cityCodeId);
 	  	
