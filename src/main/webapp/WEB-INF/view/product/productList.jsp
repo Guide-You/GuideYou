@@ -4,31 +4,11 @@
 
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
+<link href="/css/productList.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
-<style>
-.fruite .fruite-item .fruite-img img {
-    height: 170px;
-}
 
-.title-text {
-	background-color: #91caff;
-	color: white;
-	border-radius: 2px;
-	
-}
-
-.searchBtn {
-	background-color: #91caff;
-	border-radius: 5px;
-	padding: 15px 25px;
-	margin-left: 25px;
-	font-size: 20px;
-
-}
-
-</style>	
 	
 <body>
 	
@@ -230,16 +210,6 @@
 	</div>
 </body>
 
-<script>
-
-function showCity(id) {
-	$("#cityCodeId").val(id);
-	$("#searchForm").submit();
-	
-
-}
-</script>
-
-
 <!-- footer -->
+<script src="/js/productList.js"></script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

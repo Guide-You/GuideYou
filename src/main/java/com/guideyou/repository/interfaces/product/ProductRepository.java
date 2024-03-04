@@ -13,7 +13,7 @@ import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.repository.entity.Product;
 
 
-// TODO: 패키지 변경 (2024.02.22-경진) - 확인자 : 명근 
+
 @Mapper
 public interface ProductRepository {
 	
