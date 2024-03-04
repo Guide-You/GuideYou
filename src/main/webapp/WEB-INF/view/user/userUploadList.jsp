@@ -36,7 +36,7 @@
                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                           <h4>${uploadProductsInfo.title}</h4>
                           <p>
-                            ${uploadProductsInfo.shortContent}
+                            ${uploadProductsInfo.shortIntroContent}
                           </p>
                           <div class="d-flex justify-content-between flex-lg-wrap">
                             <p class="text-dark fs-5 fw-bold mb-0">
