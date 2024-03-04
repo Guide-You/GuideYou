@@ -19,8 +19,7 @@
 	<div class="container">
 		<input type="hidden" name="productId" id="product--id"
 			value="${ProductInfo.id}">
-		<form id="productForm" action="/edit/${ProductInfo.id}" method="post"
-			enctype="multipart/form-data">
+		<form id="productForm" enctype="multipart/form-data">
 
 
 			<!-- 지역 선택 콤보박스 -->
@@ -86,26 +85,27 @@
 
 
 			<style>
-.imgthumbBox {
-	background-color: #ccc;
-	width: 100%;
-	height: 50px;
-	margin-top: 10px;
-}
-
-.imgNameBox {
-	background-color: #ccc;
-	width: 100%;
-	height: 300px;
-	overflow: scroll;
-	margin-top: 10px;
-}
-
-.removeImg {
-	color: red;
-	margin-left: 20px;
-}
-</style>
+			.imgthumbBox {
+				background-color: #ccc;
+				width: 100%;
+				height: 50px;
+				margin-top: 10px;
+			}
+			
+			.imgNameBox {
+				background-color: #ccc;
+				width: 100%;
+				height: 300px;
+				overflow: scroll;
+				margin-top: 10px;
+			}
+			
+			.removeImg {
+				color: red;
+				margin-left: 20px;
+			}
+			</style>
+			
 			<div class="imgNameBox">
 				<c:forEach items="${photoResult}" var="pho">
 					<p id="imgName_${pho.id}">${pho.originFileName}<span
@@ -114,8 +114,7 @@
 				</c:forEach>
 			</div>
 
-			<!-- 등록 버튼 -->
-			<input type="submit" value="수정">
+
 		</form>
 		<!-- Map Section Start -->
 			<div class="">
@@ -128,9 +127,18 @@
 							<div id="menu_wrap" class="bg_white">
 								<div class="option">
 									<div>
+									<!-- 
 										<form onsubmit="searchPlaces(); return false;">
 											키워드 : <input type="text" value="" id="keyword" size="15">
 											<button type="submit">검색하기</button>
+										</form>
+										 -->
+										<form id="keyword--form">
+											키워드 : <input type="text" value="" id="keyword" size="15">
+											
+											<div class="container plan--selling--button">
+												<button type="button" id="keyword--button">검색하기</button>
+											</div>
 										</form>
 									</div>
 								</div>
@@ -139,103 +147,19 @@
 								<div id="pagination"></div>
 							</div>
 						</div>
-						<button id="saveButton" onclick="saveMarkers()">저장</button>
+						
 						<div id="locationList"></div>
 					</div>
 				</div>
 			</div>
 			<!-- Map Section End -->
+			
+						<!-- 등록 버튼 <input type="submit" id="modify--button" value="수정"> -->
+			<div class="container plan--selling--button">
+				<button type="button" id="modify--button">수정</button>
+			</div>
 	</div>
 	<script>
-let thumbIsRemove = false;
-function confirmDelete(id) {
-    if (confirm("삭제 하시겠습니까?")) {
-        deleteImg(id);
-    }
-}
-
-function confirmDeleteThumb(id) {
-    if (confirm("삭제 하시겠습니까?")) {
-    	thumbIsRemove = true;
-        deleteImg(id);
-    }
-}
-
-function deleteImg(id) {
-	let removeImgNum = $("#removeImgs").val();
-	if (removeImgNum == "") {
-		removeImgNum += id; 
-	} else {
-		removeImgNum += "," + id;
-	}
-	
-	$("#removeImgs").val(removeImgNum);
-	$("#imgName_" + id).css("display","none");
-}
-
-$(document).ready(function() {
-    $('#productForm').submit(function(event) {
-        var errorMessage = ""; // 에러 메시지를 저장할 변수
-
-        var titleInput = $('#title').val();
-        var introContentInput = $('#introContent').val();
-        var contentInput = $('#content').val();
-        var priceInput = $('#price').val();
-        var thumbFile = $('#thumbFile').val();
-        var customFile = $('#fileInput').val();
-
-        // 제목이 비어있는 경우 에러 메시지에 추가
-        if (titleInput.trim() === "") {
-            errorMessage += "글 제목을 입력해주세요.\n";
-        } 
-        
-     	// 내용이 비어있는 경우 에러 메시지에 추가
-        if (introContentInput.trim() === "") {
-        	errorMessage += "상품 소개 글 내용을 입력해주세요.\n";
-        }
-        
-        
-        // 내용이 비어있는 경우 에러 메시지에 추가
-        if (contentInput.trim() === "") {
-        	errorMessage += "상품 상세 내용을 입력해주세요.\n";
-        }
-        
-     	// 가격이 비어있는 경우 에러 메시지에 추가
-        if (priceInput.trim() === "") {
-            errorMessage += "가격을 입력해주세요.\n";
-        } else {
-            // 가격이 숫자가 아닌 경우 에러 메시지에 추가
-            var numericExpression = /^[0-9]+$/;
-            if (!numericExpression.test(priceInput)) {
-                errorMessage += "잘못된 가격입니다. 숫자만 입력해주세요.\n";
-            }
-        }
-
-
-     	if(thumbIsRemove && thumbFile == ""){
-            errorMessage += "썸네일을 넣어주세요. \n";
-     	}
-     	
-        // 에러 메시지가 비어있지 않은 경우에만 알림 창 표시 및 이벤트 중단
-        if (errorMessage !== "") {
-            alert(errorMessage); // 에러 메시지 표시
-            
-            
-            
-            if(titleInput.trim() === ""){
-                $('#title').focus();
-            } else if(priceInput.trim() === "") {
-            	$('#price').focus();
-            } else if(introContentInput.trim() === ""){
-            	$('#introContent').focus();
-            } else if(contentInput.trim() === "") {
-            	$('#content').focus();
-            }
-            event.preventDefault(); // 폼 제출 중지
-            return false; // 이벤트 처리 중단
-        }
-    });
-});
 
 </script>
 </body>
@@ -244,5 +168,5 @@ $(document).ready(function() {
 <!-- 카카오 map -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ef018e0a6a5030e54ff1e2da58cdceb&libraries=services"></script>
-<script src="/js/product/map/updateMap.js"></script>
+<script src="/js/testUpdateProduct.js"></script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
