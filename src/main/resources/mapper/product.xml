@@ -175,7 +175,7 @@
 		SELECT 
 		a.id AS product_id,
 		b.city_name, 
-		c.product_photo_path, 
+		c.upload_file_name, 
 		a.title,
 		substring(a.content, 1, 10) AS short_content, 
 		a.price AS product_price, 

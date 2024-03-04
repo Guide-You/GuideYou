@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.guideyou.repository.interfaces.user.UserPhotosRepository">
+	<insert id="insert">
+		insert into user_profile_photos (user_id,
+		profile_photo,
+		origin_file_name, upload_file_name)
+		values(#{userId}, #{profilePhoto},
+		#{originFileName}, #{uploadFileName});
+	</insert>
+
+	<update id="updateById">
+		update user_profile_photos set profile_photo = #{profilePhoto},
+		origin_file_name = #{originFileName}, upload_file_name = #{uploadFileName} where id = #{id};
+	</update>
+
+	<select id="findByUserId"
+		resultType="com.guideyou.repository.entity.user.UserPhotos">
+		SELECT * FROM user_profile_photos where user_id = #{userId};
+	</select>
+
+</mapper>

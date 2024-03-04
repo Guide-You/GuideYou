@@ -4,6 +4,7 @@ public class Define {
 	
 
 	public static final String PRINCIPAL = "principal";
+	public static final String PRINCIPAL_PHOTO = "principalPhoto";
 	
 
 	public static final String UPLOAD_FILE_DERECTORY = "c:\\wor_spring2\\upload";

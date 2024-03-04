@@ -23,7 +23,7 @@ import lombok.Data;
 public class UploadProductsInfoDTO {
 	private Integer productId;
 	private String cityName;
-	private String productPhotoPath;
+	private String uploadFileName;
 	private String title;
 	private String shortIntroContent;
 	private Long productPrice;

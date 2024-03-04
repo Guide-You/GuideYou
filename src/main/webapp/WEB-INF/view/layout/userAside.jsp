@@ -20,10 +20,11 @@
 					<a href="#"
 						class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle profile--myinfo"
 						id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-						<img
-						src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-						alt="" width="32" height="32" class="rounded-circle me-2"> <strong>${principal.nickname}
-							님</strong>
+						<c:if test="${not empty principalPhoto}">
+							<img src="/images/upload/${principalPhoto.uploadFileName}" alt=""
+								width="32" height="32" class="rounded-circle me-2">
+						</c:if> 
+						<strong>${principal.nickname}님</strong>
 					</a>
 					<ul class="dropdown-menu text-small shadow"
 						aria-labelledby="dropdownUser2">

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
@@ -21,9 +22,11 @@ import com.guideyou.dto.wishList.WishListProductUserDTO;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.User;
+import com.guideyou.repository.entity.user.UserPhotos;
 import com.guideyou.service.PaymentService;
 import com.guideyou.service.ProductService;
 import com.guideyou.service.UserService;
+import com.guideyou.service.user.UserPhotosService;
 import com.guideyou.service.wishListService.WishListService;
 import com.guideyou.utils.Define;
 
@@ -50,7 +53,8 @@ public class UserController {
 	private PaymentService paymentService;
 	@Autowired
 	private ProductService productService;
-	
+	@Autowired
+	private UserPhotosService userPhotosService; 
 	
 
 	@Autowired
@@ -69,6 +73,7 @@ public class UserController {
 	public String logOut(HttpServletRequest request) {
 		httpSession = request.getSession();
 		httpSession.removeAttribute(Define.PRINCIPAL);
+		httpSession.removeAttribute(Define.PRINCIPAL_PHOTO);
 //		httpSession.invalidate();
 		return "redirect:/main";
 	}
@@ -183,10 +188,13 @@ public class UserController {
 	  * @return
 	  */
 	@PostMapping("/member/profile")
-	public String profileUpdateProc(UserDTO userDTO) {
+	public String profileUpdateProc(UserDTO userDTO, MultipartFile file) {
 		User profileUpdateUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
 		profileUpdateUser.setNickname(userDTO.getNickname());
 		profileUpdateUser.setPhone(userDTO.getPhone());
+		
+		int photoResult = userPhotosService.saveUserPhotos(profileUpdateUser, file);
+		
 		// 유저 업데이트 서비스 생성
 		int result = userService.updateUserProfile(profileUpdateUser, userDTO);
 		return "redirect:/member/profile";
@@ -227,10 +235,12 @@ public class UserController {
 	  * @return
 	  */
 	@PostMapping("/member/signUp")
-	public String signUpProc(UserDTO userDTO) {
+	public String signUpProc(UserDTO userDTO, MultipartFile file) {
 		User signUpUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
 		// 유저 업데이트 서비스 생성
+		int photoResult = userPhotosService.saveUserPhotos(signUpUser, file);
 		int result = userService.updateUserProfile(signUpUser, userDTO);
+		
 		return "redirect:/main";
 	}
 	
@@ -296,6 +306,9 @@ public class UserController {
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
 			return "redirect:/member/signUp";
 		}
+		
+		UserPhotos userPhotos = userPhotosService.readByUserId(user.getId());
+		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 
 		return "redirect:/main";
@@ -334,7 +347,8 @@ public class UserController {
 			return "redirect:/member/signUp";
 		}
 		
-		
+		UserPhotos userPhotos = userPhotosService.readByUserId(user.getId());
+		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 		return "redirect:/main";
 	}
@@ -376,7 +390,8 @@ public class UserController {
 				return "redirect:/member/signUp";
 			}
 		}
-		
+		UserPhotos userPhotos = userPhotosService.readByUserId(user.getId());
+		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 		return "redirect:/main";
 	}

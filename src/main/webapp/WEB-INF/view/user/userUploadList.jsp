@@ -26,7 +26,7 @@
 					<div class="col-sm-6">
 						<div class="rounded position-relative fruite-item">
 							<div class="fruite-img">
-								<img src="img/main-seoul.jpg"
+								<img src="/images/upload/${uploadProductsInfo.uploadFileName}"
 									class="img-fluid w-100 rounded-top" alt="">
 							</div>
 							<div

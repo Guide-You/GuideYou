@@ -11,7 +11,7 @@
 		b.price AS product_price, -- 장바구니에 담은 상품 가격
 		c.nickname AS writer_nickname,
 		c.id AS author_id,
-		d.product_photo_path AS product_image
+		d.upload_file_name AS product_image
 		FROM
 		wish_list a
 		JOIN

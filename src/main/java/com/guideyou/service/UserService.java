@@ -351,7 +351,7 @@ public class UserService {
 	public int updateUserProfile(User user, UserDTO userDTO) {
 	    user.setNickname(userDTO.getNickname());
         user.setPhone(userDTO.getPhone());
-        // TODO : 사용자 프로필 사진 변경시 추가 해야함 - 최장호 240222
+        
         // updateUser 메서드는 user 엔티티를 업데이트하는 로직을 수행
 		int result = updateById(user);
 		if(result != 1) {

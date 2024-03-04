@@ -28,7 +28,7 @@
 						<div class="card mb-3 purchsed--list--section">
 							<div class="row g-0">
 								<div class="col-md-4 purchased--list--img--section">
-									<img src="http://via.placeholder.com/500"
+									<img src="/images/upload/${purchaseProductInfo.productImage}"
 										class="img-fluid rounded-start" alt="...">
 								</div>
 								<div class="col-md-8">
