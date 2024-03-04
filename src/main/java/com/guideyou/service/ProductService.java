@@ -528,7 +528,6 @@ public class ProductService {
 		return productRepository.selectProductInfo(productId);
 	}
 
-
 	/**
 	  * @Method Name : findOriginNameByThumbnail
 	  * @작성일 : 2024. 2. 28.
