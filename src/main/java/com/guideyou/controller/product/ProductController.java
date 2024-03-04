@@ -117,8 +117,6 @@ public class ProductController {
 		model.addAttribute("startPage", pageRes.getStartPage());
 		model.addAttribute("endPage", pageRes.getEndPage());
 
-		List<ProductDto> dto = productService.selectPhotoList();
-		model.addAttribute("dto", dto);
 		
 
 		return "product/productList";

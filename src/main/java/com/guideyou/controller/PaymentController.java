@@ -114,7 +114,7 @@ public class PaymentController {
 	  */
 	// TODO: 주석 지우기 및 리턴을 어떻게 할 지 얘기해보기!
 	@PostMapping("/paySuccess") //ResponseEntity<?>  리턴타입 변경
-	public ResponseEntity<?> getData(@RequestBody PaymentDto paymentDto){
+	public Payment getData(@RequestBody PaymentDto paymentDto){
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 
 		log.info("paySuccess in!!");
@@ -168,13 +168,13 @@ public class PaymentController {
 				
 		if (verificationMerchantUid.equals(paymentDto.getMerchantUid())) {
 			log.info("여기는 검증까지 완료되어서 payment Dto로 insert 할 정보입니다" , paymentDto);
-			paymentService.createPayment(paymentDto);
+			Payment paymentReturn= paymentService.createPayment(paymentDto);
 			
 			log.info("payment service 성공하고 왔다!");
 			
 			// Payment Entity 값 프론트로 넘겨서 complete창 만들거양!
 			 //return ResponseEntity.ok().body(paymentInfo); HttpMediaTypeNotAcceptableException 때문에 주석처리함
-			return ResponseEntity.ok("success");
+			return paymentReturn;
 		} else {
 		
 		// 검증이 잘못 됐을시 환불 처리
@@ -200,7 +200,7 @@ public class PaymentController {
 				);
 		log.info("refund" ,refund);}
 		
-		return ResponseEntity.badRequest().body("failure"); 
+		return null; 
 		//HttpMediaTypeNotAcceptableException 확인
 		
 			
@@ -368,7 +368,7 @@ public class PaymentController {
 	  * @변경이력 : 
 	  * @Method 설명 : product 구매 시 구매내역 체크 및 본인 product 구매 X , productDetail의 구매 버튼, review 글쓰기 버튼에서 사용
 	  */
-	@GetMapping()
+	@GetMapping("/paymentChk")
 	public void paymentChk() {
 		// TODO : ProductDetailPage 에서 구매하기 버튼 클릭시 
 		// 		productId 조회해서 구매내역있는지 확인 후 구매 이력 알려주기(20240303)

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.guideyou.dto.admin.AdminDto;
 import com.guideyou.dto.admin.BoardDto;
@@ -58,6 +57,8 @@ public class AdminController {
 		// 24.03.03 게시글 조회
 		List<BoardDto> selectBoardList = adminService.selectBoardList();
 		model.addAttribute("selectBoardList", selectBoardList);
+		
+
 		
 		return "/admin/adminIndex";
 	}

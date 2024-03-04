@@ -4,33 +4,7 @@
 
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
-<style>
-.fruite .fruite-item .fruite-img img {
-    height: 170px;
-}
-
-.title-text {
-	background-color: rgba(255,255,255,0.8);
-	border-radius: 2px;
-	
-}
-
-.searchBtn {
-	background-color: #91caff;
-	border-radius: 5px;
-	padding: 15px 25px;
-	margin-left: 25px;
-	font-size: 20px;
-
-}
-
-#localName, #popCityName {
-	background-color: #91caff;
-	top: 10px; 
-	right: 10px;
-}
-
-</style>
+<link href="/css/main.css" rel="stylesheet">
 
 
 <!-- Hero Start -->
@@ -327,15 +301,6 @@
 	</div>
 </div>
 
-<script>
-
-function showCity(id) {
-	$("#cityCodeId").val(id);
-	$("#searchForm").submit();
-	
-
-}
-</script>
 
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

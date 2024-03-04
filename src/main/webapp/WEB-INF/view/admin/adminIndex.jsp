@@ -53,8 +53,7 @@
 			<ul class="d-flex align-items-center">
 				<li class="nav-item dropdown pe-3"><a
 					class="nav-link nav-profile d-flex align-items-center pe-0"
-					href="#" data-bs-toggle="dropdown"> <span
-						class="d-none d-md-block dropdown-toggle ps-2">관리자계정</span>
+					href="#" data-bs-toggle="dropdown">
 				</a> <!-- End Profile Iamge Icon -->
 
 					<ul
@@ -329,58 +328,97 @@
 									<!-- Line Chart -->
 									<div id="reportsChart"></div>
 
-									<script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: '판매',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: '수익',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: '가입자',
-                          data: [15, 11, 32, 18, 9, 24, 11]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    // 초기 차트 생성
+    let chart = new ApexCharts(document.querySelector("#reportsChart"), {
+      series: [],
+      chart: {
+        height: 350,
+        type: 'area',
+        toolbar: {
+          show: false
+        },
+      },
+      markers: {
+        size: 4
+      },
+      colors: ['#4154f1', '#2eca6a', '#ff771d'],
+      fill: {
+        type: "gradient",
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.3,
+          opacityTo: 0.4,
+          stops: [0, 90, 100]
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth',
+        width: 2
+      },
+      xaxis: {
+        type: 'datetime',
+        categories: ["2024-02-13T00:00:00.000Z", "2024-02-21T00:00:00.000Z", "2024-02-21T00:00:00.000Z"]
+      },
+      tooltip: {
+        x: {
+          format: 'dd/MM/yy HH:mm'
+        },
+      }
+    });
+    
+    chart.render();
+    
+ 	// 데이터 업데이트 함수
+    function updateChart(paymentCount, totalPrice, userCount) {
+      // 새로운 데이터 생성
+      let newData = [{
+        name: '판매',
+        data: [paymentCount],
+      }, {
+        name: '수익',
+        data: [totalPrice]
+      }, {
+        name: '가입자',
+        data: [userCount]
+      }];
+
+      // 새로운 데이터로 차트 업데이트
+      chart.updateSeries(newData);
+    }
+	
+ 	
+ 	
+ 	// 데이터를 가져와서 차트 업데이트
+    function fetchDataAndRefreshChart() {
+      // AJAX 또는 다른 방법을 사용하여 데이터 가져오기
+      // 예를 들어 jQuery를 사용한다면:
+      // $.get("URL", function(data) {
+      //   updateChart(data.paymentCount, data.totalPrice, data.userCount);
+      // });
+
+      // 여기에 데이터를 가져오고 updateChart 함수를 호출하여 차트 업데이트
+      // 아래는 임시 데이터를 사용하는 예시
+      let paymentCount = 100;
+      let totalPrice = 5000;
+      let userCount = 50;
+
+      // 차트 업데이트
+      updateChart(paymentCount, totalPrice, userCount);
+    }
+
+    // 페이지 로드 시 데이터 가져오기
+    fetchDataAndRefreshChart();
+
+    // 이후 필요한 경우 일정한 간격으로 데이터를 업데이트할 수 있음
+    // setInterval(fetchDataAndRefreshChart, 5000); // 5초마다 업데이트
+  });
+</script>
 									<!-- End Line Chart -->
 
 								</div>
@@ -425,65 +463,49 @@
 
 						<!-- Top Selling -->
 						<div class="col-12">
-							<div class="card top-selling overflow-auto">
-
-								<div class="filter">
-									<a class="icon" href="#" data-bs-toggle="dropdown"><i
-										class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-										<li class="dropdown-header text-start">
-											<h6>Filter</h6>
-										</li>
-										<li class="filterText" onclick="updateTitle('1')"><a
-											class="dropdown-item" href="#">오늘</a></li>
-										<li class="filterText" onclick="updateTitle('2')"><a
-											class="dropdown-item" href="#">이번 달</a></li>
-										<li class="filterText" onclick="updateTitle('3')"><a
-											class="dropdown-item" href="#">올해</a></li>
-									</ul>
-								</div>
-
-								<div class="card-body pb-0">
-									<h5 class="card-title">
-										인기상품 <span>| 오늘</span>
-									</h5>
-									<style>
-									.datatable-input {
-										display: none;
-									}
-									</style>
-									<table class="table table-borderless datatable"
-										id="productTable tbody">
-										<thead>
-											<tr>
-												<th scope="col">Preview</th>
-												<th scope="col">Product</th>
-												<th scope="col">Price</th>
-												<th scope="col">Sold</th>
-												<th scope="col">Revenue</th>
-											</tr>
-										</thead>
-										<tbody>
-
-											<c:forEach items="${selectDateType}" var="productInfo">
-												<tr>
-													<th scope="row">
-													<a href="#"><img src="/images/upload/${productInfo.uploadFileName}" alt=""></a>
-													</th>
-													<td><a href="#" class="text-primary fw-bold">${productInfo.introContent}</a>
-													</td>
-													<td>${productInfo.price}원</td>
-													<td class="fw-bold">${productInfo.soldCount}</td>
-													<td>${productInfo.revenue}원</td>
-												</tr>
-											</c:forEach>
-
-										</tbody>
-									</table>
-
-								</div>
-
-							</div>
+						    <div class="card top-selling overflow-auto">
+						        <div class="filter">
+						            <select id="form-select">
+						                <option value="1">오늘</option>
+						                <option value="2">이번 달</option>
+						                <option value="3">올해</option>
+						            </select>
+						        </div>
+						        <div class="card-body pb-0">
+						            <h5 class="card-title">
+						                인기상품 <span>| 오늘</span>
+						            </h5>
+						            <style>
+						                .datatable-input {
+						                    display: none;
+						                }
+						            </style>
+						            <table class="table table-borderless datatable" id="productTable">
+						                <thead>
+						                    <tr>
+						                        <th scope="col">Preview</th>
+						                        <th scope="col">Product</th>
+						                        <th scope="col">Price</th>
+						                        <th scope="col">Sold</th>
+						                        <th scope="col">Revenue</th>
+						                    </tr>
+						                </thead>
+						                <tbody>
+						                    <c:forEach items="${selectDateType}" var="productInfo">
+						                        <tr>
+						                            <th scope="row">
+						                                <a href="#"><img src="/images/upload/${productInfo.uploadFileName}" alt=""></a>
+						                            </th>
+						                            <td><a href="#" class="text-primary fw-bold">${productInfo.introContent}</a></td>
+						                            <td>${productInfo.price}원</td>
+						                            <td class="fw-bold">${productInfo.soldCount}</td>
+						                            <td>${productInfo.revenue}원</td>
+						                        </tr>
+						                    </c:forEach>
+						                </tbody>
+						            </table>
+						        </div>
+						    </div>
 						</div>
 						<!-- End Top Selling -->
 
@@ -664,46 +686,89 @@
 	<!-- Template Main JS File -->
 	<script src="admin/js/main.js"></script>
 	
-	<script>
+<script>
 
-
-	
-
-	const updateTitle = (dateType) => {
-		$('#dateType').val(dateType);
-		
-		$.ajax({
-			type:"GET",
-			url:"/admin",
-			data: { dateType: dateType }, // 이 부분을 확인해야 합니다.
-			success: function(data) {
-				updateTable(data);
-			},
-			error: function() {
-				alert("실패");
-			}
-		});
-	}
-	
-
-function updateTable(data) {
-    // 테이블의 tbody 선택
-    var tbody = $('#productTable tbody');
+$("#form-select").change(function(){
+    console.log("ccccc");
     
-    // tbody 초기화
-    tbody.empty();
+    // 선택한 값을 가져옴
+    var selectedValue = $(this).val();
     
-    // 받은 데이터를 이용하여 테이블에 새로운 행 추가
-    $.each(data, function(index, findProductInfo) {
-        var row = $('<tr>');
-        row.append('<th scope="row"><a href="#"><img src="/images/upload/' + findProductInfo.uploadFileName + '" alt=""></a></th>');
-        row.append('<td><a href="#" class="text-primary fw-bold">' + findProductInfo.intro_content + '</a></td>');
-        row.append('<td>' + findProductInfo.price + '원</td>');
-        row.append('<td class="fw-bold">' + findProductInfo.soldCount + '</td>');
-        row.append('<td>' + findProductInfo.revenue + '원</td>');
-        tbody.append(row);
+    // AJAX 요청
+    $.ajax({
+        url: "/admin1/" + selectedValue,
+        type: "GET",
+        success: function(findProductInfo) {
+            console.log("서버로부터 데이터를 성공적으로 받아왔습니다.");
+            console.log(findProductInfo);
+            
+            // tbody 초기화
+            var tbody = $('#productTable tbody');  
+            tbody.empty();
+            
+            // 각 제품 정보로 tbody 내용 변경
+            $.each(findProductInfo, function(index, productInfo) {
+                var row = $('<tr>');
+                row.append('<th scope="row"><a href="#"><img src="/images/upload/' + productInfo.uploadFileName + '" alt=""></a></th>');
+                row.append('<td><a href="#" class="text-primary fw-bold">' + productInfo.intro_content + '</a></td>');
+                row.append('<td>' + productInfo.price + '원</td>');
+                row.append('<td class="fw-bold">' + productInfo.soldCount + '</td>');
+                row.append('<td>' + productInfo.revenue + '원</td>');
+                tbody.append(row);
+            });
+            
+            console.log(productInfo.price);
+        },
+        error: function(xhr, status, error) {
+            // 에러 발생 시 처리
+            console.error("서버로부터 데이터를 받아오는 중 오류가 발생했습니다.");
+            console.error(status);
+            console.error(error);
+        }
     });
-}
+});
+
+
+// function updateProductList(selectedValue) {
+// 	$.ajax({
+//     	url: "/admin1/" + selectedValue,
+//     	type: "GET",
+//     	success: function(findProductInfo) {
+//     		console.log("서버로부터 데이터를 성공적으로 받아왔습니다.");
+//             console.log(findProductInfo);
+//     	},
+//     	error: function(xhr, status, error) {
+//             // 에러 발생 시 처리할 내용
+//             console.error("서버로부터 데이터를 받아오는 중 오류가 발생했습니다.");
+//             console.error(status);
+//             console.error(error);
+//         }
+//     });
+// }
+
+
+
+
+// $("#form-select").change(function(){
+// 	console.log("ccccc");
+	
+// 	// tbody 초기화
+//     var tbody = $('#productTable tbody');	
+// 	tbody.empty();
+	
+// 	$.each(findProductInfo, function(index, findProductInfo) {
+//         var row = $('<tr>');
+//         row.append('<th scope="row" name="popth1"><a href="#"><img src="/images/upload/' + findProductInfo.uploadFileName + '" alt=""></a></th>');
+//         row.append('<td name="poptd1"><a href="#" class="text-primary fw-bold">' + findProductInfo.intro_content + '</a></td>');
+//         row.append('<td name="poptd2">' + findProductInfo.price + '원</td>');
+//         row.append('<td class="fw-bold" name="poptd3">' + findProductInfo.soldCount + '</td>');
+//         row.append('<td name="poptd4">' + findProductInfo.revenue + '원</td>');
+//         tbody.append(row);
+//     });
+	
+// });
+
+
 
 </script>
 </body>

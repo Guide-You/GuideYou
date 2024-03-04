@@ -1,0 +1,24 @@
+.fruite .fruite-item .fruite-img img {
+    height: 170px;
+}
+
+.title-text {
+	background-color: rgba(255,255,255,0.8);
+	border-radius: 2px;
+	
+}
+
+.searchBtn {
+	background-color: #91caff;
+	border-radius: 5px;
+	padding: 15px 25px;
+	margin-left: 25px;
+	font-size: 20px;
+
+}
+
+#localName, #popCityName {
+	background-color: #91caff;
+	top: 10px; 
+	right: 10px;
+}
