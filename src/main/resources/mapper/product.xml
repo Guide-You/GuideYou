@@ -116,7 +116,7 @@
 	<!-- detail 상품 정보 -->
 	<select id="findProductAndUser" resultType="com.guideyou.dto.product.ProductDetailDto">
 		select a.id as productId, a.title as productTitle, a.intro_content as introProductContent, a.content as productContent, a.price, a.sold_count, 
-		b.nickname, b.email
+		b.nickname, b.email, a.user_id
 		from product a 
 		join user b on a.user_id = b.id
 		where a.id = #{productId}
@@ -192,7 +192,13 @@
 		
 		
 		
-	
+	<!-- 24.03.03 결제 취소시 soldCount -1 -->
+	<update id="updateByCancelSoldCount">
+		update product AS a
+		LEFT JOIN payment_detail AS b
+		ON a.id = b.product_id
+		SET a.sold_count = a.sold_count - 1  WHERE b.merchant_uid = #{merchantUid}
+	</update>
 		
 		
 		
