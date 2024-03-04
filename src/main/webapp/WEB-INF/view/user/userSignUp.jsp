@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
@@ -9,10 +8,18 @@
 	<div class="col-md-12 col-lg-6 col-xl-9">
 		<div class="container profile--main">
 			<div class="registration-form profile--form">
-				<form action="/member/signUp" method="post" name="signUpForm">
+				<form action="/member/signUp" method="post" name="signUpForm" enctype="multipart/form-data">
+					<label for="fileInput" style="display:block;">
 					<div class="form-icon">
-						<span><i class="icon icon-user"></i></span>
+							<span class="icon-container">
+						    	<i class="icon icon-user"></i>
+						        <c:if test="${not empty principalPhoto}">
+							    	<img src="/images/upload/${principalPhoto.uploadFileName}" class="form-icon" />
+							    </c:if>
+							</span>
+						    <input type="file" id="fileInput" name="file" style="display:none;" />
 					</div>
+						</label>
 					<div class="form-group">
 						<div class="form-control item" name="name" id="name">
 							${principal.name}

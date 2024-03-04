@@ -26,7 +26,7 @@ public class WishListProductUserDTO {
     private String productTitle;		// 상품 제목
     private Long productPrice;			// 상품 가격
     private String writerNickname;			// 상품 작성자 이름
-    private Long productImage;		// 상품 이미지
+    private String productImage;		// 상품 이미지
     
 	public String formatPrice() {
 		DecimalFormat df = new DecimalFormat("#,###");
