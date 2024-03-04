@@ -15,11 +15,12 @@ import lombok.ToString;
 @ToString
 public class PaymentDto {
 	// payment table
+	private String impUid;
 	private String merchantUid;
 	private Integer userId;
-	private Long totalPrice;	// TODO: 단일결제에선 totalPrice = product Price, 다중 결제시 dto 다시 확인
-	private String paymentStatus;	// payment 테이블, 디테일테이블 둘 다 존재 아마 payment 테이블은 환불상태엿는듯
-	// payment detail table
 	private Integer productId;
 	private String productTitle;
+	private Long totalPrice;	// TODO: 단일결제에선 totalPrice = product Price, 다중 결제시 dto 다시 확인
+	private String paymentStatus;	// payment 테이블, 디테일테이블 둘 다 존재 아마 payment 테이블은 환불상태엿는듯
+	private Integer orderUserId;
 }

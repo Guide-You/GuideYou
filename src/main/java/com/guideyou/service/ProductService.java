@@ -526,6 +526,7 @@ public class ProductService {
 	  */
 	public Product selectProductInfo(Integer productId) {
 		return productRepository.selectProductInfo(productId);
+<<<<<<< HEAD
 	}
 
 
@@ -536,6 +537,11 @@ public class ProductService {
 	  * @변경이력 : 
 	  * @Method 설명 : thumbnail 의 originalName 찾기
 	  */
+=======
+	}	
+	
+	// 24.02.28 thumbnail 의 originalName 찾기
+>>>>>>> 705299791d121033230bc785a7e5521e579b5653
 	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId) {
 		return photosRepository.findOriginNameByThumbnail(productId);
 	}
