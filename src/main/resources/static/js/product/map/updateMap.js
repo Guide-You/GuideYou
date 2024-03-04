@@ -12,11 +12,15 @@
 		// 지도를 생성합니다    
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 
+		var productId = document.getElementById("product--id").value;
+		
+		console.log("최장호 : " + productId);
+
 		$.ajax({
 			url : '/map/readMap', // 서버의 엔드포인트 URL
 			type : 'GET',
 			data : {
-				productId : 1
+				productId : productId
 			// TODO : 상품 합치면 실제 productId 입력해야함
 			},
 			success : function(data) {
@@ -377,8 +381,6 @@
 			// 추출한 위치 정보 배열을 JSON 형식으로 변환합니다
 			var jsonData = JSON.stringify(markerPositions);
 
-			var productId = 1; // TODO : 합칠때 실제 productId로 세팅해야한다.
-			
 			// Ajax 요청
 			$.ajax({
 				type : 'POST',
