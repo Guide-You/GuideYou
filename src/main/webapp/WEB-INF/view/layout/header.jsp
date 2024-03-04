@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -79,9 +79,15 @@ pageEncoding="UTF-8"%>
               >
             </div>
             <div class="top-link pe-2">
-              <a href="/signIn" class="text-white"
-                ><small class="text-white mx-2">로그인</small>/</a
-              >
+              <c:choose>
+              	<c:when test="${principal == null}">
+              		
+		            <a href="/signIn" class="text-white"><small class="text-white mx-2">로그인</small>/</a>              	
+              	</c:when>
+              	<c:otherwise>
+             		<a href="/member/logout" class="text-white"><small class="text-white mx-2">로그아웃</small>/</a> 
+             	</c:otherwise>
+              </c:choose>
               <a href="/save" class="text-white"
                 ><small class="text-white mx-2">글쓰기</small>/</a
               >
