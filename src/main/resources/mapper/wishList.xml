@@ -3,7 +3,7 @@
 <mapper
 	namespace="com.guideyou.repository.interfaces.wishList.WishListRepository">
 
-	<select id="findwishListProductUserByUserId"
+	<select id="findwishListProductUserByUserId" parameterType="map"
 		resultType="com.guideyou.dto.wishList.WishListProductUserDTO">
 		SELECT
 		a.user_id AS user_id, -- 로그인한 사용자ID
@@ -12,6 +12,25 @@
 		c.nickname AS writer_nickname,
 		c.id AS author_id,
 		d.product_photo_path AS product_image
+		FROM
+		wish_list a
+		JOIN
+		product b ON a.product_id = b.id
+		JOIN
+		user c ON b.user_id = c.id
+		LEFT JOIN
+		product_photos d ON b.id = d.product_id AND d.thumbnail IS NOT NULL  -- 상품 사진은 thumbnail 있는 데이터만 가져온다. 없으면 join 안함.
+		WHERE
+		a.user_id = #{userId}
+		order by a.created_at desc
+		limit #{size} offset #{offset}
+		;
+	</select>
+
+	<select id="getWishListListTotalCount"
+		resultType="long">
+		SELECT
+		count(*)
 		FROM
 		wish_list a
 		JOIN

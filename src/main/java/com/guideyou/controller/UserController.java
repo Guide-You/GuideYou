@@ -142,10 +142,23 @@ public class UserController {
 	  * @return
 	  */
 	@GetMapping("/member/cartList")
-	public String cartListPage(Model model) {
+	public String cartListPage(PageReq pageReq, Model model) {
 		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
-		List<WishListProductUserDTO> wishListProductUserDTOList = wishListService.findwishListProductUserByUserId(loginUser.getId());
-		model.addAttribute("wishListProductUserDTOList", wishListProductUserDTOList);
+		if (pageReq.getPage() <= 0) {
+			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
+		}
+
+		if (pageReq.getSize() <= 0) {
+			pageReq.setSize(4); // 페이지 당 보여줄 개수
+		}
+		
+		PageRes<WishListProductUserDTO> pageRes = wishListService.findwishListProductUserByUserId(pageReq, loginUser.getId());
+		model.addAttribute("wishListProductUserDTOList", pageRes.getContent());
+		model.addAttribute("page", pageReq.getPage());
+		model.addAttribute("size", pageRes.getSize());
+		model.addAttribute("totalPages", pageRes.getTotalPages());
+		model.addAttribute("startPage", pageRes.getStartPage());
+		model.addAttribute("endPage", pageRes.getEndPage());
 		return "user/userCartList";
 	}
 	
