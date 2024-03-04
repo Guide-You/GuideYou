@@ -214,6 +214,9 @@
 							</c:forEach>
 						</ul>
 					</div>
+					
+					<input type="hidden" value="${rev.score }" id="review--score">
+					
 					<c:if test="${loop.index % 3 == 2 or loop.last}">
 			</div>
 			<!-- Close the row -->
@@ -241,12 +244,12 @@
 
 
 <!-- footer -->
-<script src="/js/productDetail.js"></script>
 
 <!-- 카카오 map -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ef018e0a6a5030e54ff1e2da58cdceb"></script>
 <script src="/js/product/map/readMap.js"></script>
 
+<script src="/js/productDetail.js"></script>
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

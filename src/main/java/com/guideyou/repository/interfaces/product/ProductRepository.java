@@ -13,7 +13,7 @@ import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.repository.entity.Product;
 
 
-// TODO: 패키지 변경 (2024.02.22-경진) - 확인자 : 명근 
+
 @Mapper
 public interface ProductRepository {
 	
@@ -88,6 +88,10 @@ public interface ProductRepository {
 	
 	// 24.02.28 아이디에 해당하는 상품 정보 조회
 	public Product selectProductInfo(Integer productId);
+
+
+	// 24.03.03 결제 취소시 soldCount -1 경진 추가
+	public int updateByCancelSoldCount(String merchantUid);
 	
 	
 	

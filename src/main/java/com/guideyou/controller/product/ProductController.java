@@ -1,4 +1,4 @@
-package com.guideyou.controller;
+package com.guideyou.controller.product;
 
 import java.util.List;
 
@@ -27,6 +27,14 @@ import com.guideyou.utils.Define;
 
 import jakarta.servlet.http.HttpSession;
 
+/**
+  * @FileName : ProductController.java
+  * @Project : GuideYou
+  * @Date : 2024. 3. 4. 
+  * @작성자 : 장명근
+  * @변경이력 :
+  * @프로그램 설명 : 상품 관련 컨트롤러
+  */
 @Controller
 public class ProductController {
 
@@ -36,7 +44,14 @@ public class ProductController {
 	@Autowired
 	private HttpSession session;
 
-	// 상품 등록 페이지
+	
+	/**
+	  * @Method Name : savePage
+	  * @작성일 : 2024. 3. 4.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 상품 등록 페이지 요청
+	  */
 	@GetMapping("/save")
 	public String savePage(Model model, Integer productId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -56,7 +71,6 @@ public class ProductController {
 	 * @변경이력 :
 	 * @Method 설명 : 상품 등록 로직
 	 */
-	// TODO : 24.02.20 이미지 불러오기
 	@PostMapping("/save")
 	public String saveProduct(ProductDto dto, @RequestParam("region") Integer cityCodeId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -73,7 +87,14 @@ public class ProductController {
 		return "redirect:/list";
 	}
 
-	// 상품 목록 페이지
+	
+	/**
+	  * @Method Name : productList
+	  * @작성일 : 2024. 3. 4.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 상품 목록 페이지 요청
+	  */
 	@GetMapping("/list")
 	public String productList(PageReq pageReq, Model model, @Param("searchText") String searchText, @Param("cityCodeId") String cityCodeId) {
 		System.out.println(searchText);
@@ -105,7 +126,13 @@ public class ProductController {
 	
 	
 
-	// 상품 상세 페이지
+	/**
+	  * @Method Name : productDetail
+	  * @작성일 : 2024. 3. 4.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 상품 상세 페이지 요청
+	  */
 	@GetMapping("/detail/{productId}")
 	public String productDetail(@PathVariable("productId") Integer productId, Model model) {
 		
@@ -132,7 +159,13 @@ public class ProductController {
 		
 		
 	
-	// 상품 수정 페이지
+	/**
+	  * @Method Name : productUpdatePage
+	  * @작성일 : 2024. 3. 4.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 상품 수정 페이지 요청
+	  */
 	@GetMapping("/update/{productId}")
 	public String productUpdatePage(@PathVariable("productId") Integer productId, Model model) {
 		
@@ -155,9 +188,14 @@ public class ProductController {
 		return "product/testupdate";
 	}
 
-	// TODO: [front]수정 버튼 현재 detail 페이지에 있음 추후 member upload list 페이지로 옮길 예정
-	// (2024.02.21)
-	// 상품 수정 기능
+
+	/**
+	  * @Method Name : updateProduct
+	  * @작성일 : 2024. 3. 4.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 상품 수정 로직
+	  */
 	@PostMapping("/edit/{productId}")
 	public String updateProduct(@PathVariable("productId") Integer productId, ProductDto dto,
 			@RequestParam("region") Integer cityCodeId, @RequestParam("removeImgs") String removeImgs) {
@@ -182,9 +220,15 @@ public class ProductController {
 		return "redirect:/list";
 	}
 
-	// TODO: [front]삭제 버튼 현재 detail 페이지에 있음 추후 member upload list 페이지로 옮길 예정
-	// (2024.02.21)
-	// 상품 삭제 기능
+
+
+	/**
+	  * @Method Name : deleteProduct
+	  * @작성일 : 2024. 3. 4.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 상품 삭제 로직
+	  */
 	@PostMapping("/delete/{productId}")
 	public String deleteProduct(@PathVariable("productId") Integer productId) {
 		
