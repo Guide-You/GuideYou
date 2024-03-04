@@ -1,6 +1,7 @@
 package com.guideyou.repository.interfaces.product;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -77,8 +78,13 @@ public interface ProductRepository {
  	public List<ProductReviewDto> findReviewByProduct(Integer productId);
     
 	
-	// 마이페이지 사용자가 작성한 상품 목록 조회 - 최장호 추가 02/26
-	public List<UploadProductsInfoDTO> getUploadProductsInfoByUserId(Integer userId);
+	// 마이페이지 사용자가 작성한 상품 목록 조회 페이징 처리 - 최장호 추가 02/26
+	public List<UploadProductsInfoDTO> getUploadProductsInfoByUserId(Map<String, Object> params);
+	
+	
+	// 마이페이지 사용자가 작성한 상품 목록 총 개수 - 최장호 추가 02/26
+	public Long getUploadProductsInfoTotalCount(Integer userId);
+	
 	
 	// 이미지 업로드파일이름 찾기 2024.02.27
 	public List<ProductPhotoDto> photos(Integer productId);

@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.guideyou.dto.PageReq;
+import com.guideyou.dto.PageRes;
 import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.dto.user.SignUpDTO;
 import com.guideyou.dto.user.UserDTO;
 import com.guideyou.dto.wishList.WishListProductUserDTO;
 import com.guideyou.handler.exception.CustomRestfulException;
+import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.User;
 import com.guideyou.service.PaymentService;
 import com.guideyou.service.ProductService;
@@ -79,10 +82,23 @@ public class UserController {
 	  * @return
 	  */
 	@GetMapping("/member/uploadList")
-	public String uploadListPage(Model model) {
+	public String uploadListPage(PageReq pageReq, Model model) {
 		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
-		List<UploadProductsInfoDTO> uploadProductsInfoList = productService.getUploadProductsInfoByUserId(loginUser.getId());
-		model.addAttribute("uploadProductsInfoList", uploadProductsInfoList);
+		if (pageReq.getPage() <= 0) {
+			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
+		}
+
+		if (pageReq.getSize() <= 0) {
+			pageReq.setSize(4); // 페이지 당 보여줄 개수
+		}
+		PageRes<UploadProductsInfoDTO> pageRes = productService.getUploadProductsInfoByUserId(pageReq, loginUser.getId());
+
+		model.addAttribute("uploadProductsInfoList", pageRes.getContent());
+		model.addAttribute("page", pageReq.getPage());
+		model.addAttribute("size", pageRes.getSize());
+		model.addAttribute("totalPages", pageRes.getTotalPages());
+		model.addAttribute("startPage", pageRes.getStartPage());
+		model.addAttribute("endPage", pageRes.getEndPage());
 		return "user/userUploadList";
 	}
 	
@@ -95,10 +111,25 @@ public class UserController {
 	  * @return
 	  */
 	@GetMapping("/member/purchasedList")
-	public String purchasedListPage(Model model) {
+	public String purchasedListPage(PageReq pageReq, Model model) {
 		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
-		List<PurchasedProductInfoDTO> purchasedProductInfoList = paymentService.getPurchasedProductInfoList(loginUser.getId());
-		model.addAttribute("purchasedProductInfoList", purchasedProductInfoList);
+		
+		if (pageReq.getPage() <= 0) {
+			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
+		}
+
+		if (pageReq.getSize() <= 0) {
+			pageReq.setSize(4); // 페이지 당 보여줄 개수
+		}
+		
+		PageRes<PurchasedProductInfoDTO> pageRes = paymentService.getPurchasedProductInfoList(pageReq, loginUser.getId());
+
+		model.addAttribute("purchasedProductInfoList", pageRes.getContent());
+		model.addAttribute("page", pageReq.getPage());
+		model.addAttribute("size", pageRes.getSize());
+		model.addAttribute("totalPages", pageRes.getTotalPages());
+		model.addAttribute("startPage", pageRes.getStartPage());
+		model.addAttribute("endPage", pageRes.getEndPage());
 		return "user/userPurchasedList";
 	}
 	

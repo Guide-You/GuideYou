@@ -9,9 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guideyou.dto.PageReq;
+import com.guideyou.dto.PageRes;
 import com.guideyou.dto.payment.PaymentDto;
 import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.dto.payment.RefundDto;
+import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.dto.review.ReviewDto;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Payment;
@@ -101,9 +104,24 @@ public class PaymentService {
 	  * @변경이력 : 
 	  * @Method 설명 : 구매한 상품 정보 리스트
 	  */
-	public List<PurchasedProductInfoDTO> getPurchasedProductInfoList(Integer userId) {
-		List<PurchasedProductInfoDTO> purchasedProductInfoList = paymentRepository.getPurchasedProductInfoList(userId);
-		return purchasedProductInfoList;
+	public PageRes<PurchasedProductInfoDTO> getPurchasedProductInfoList(PageReq pageReq, Integer userId) {
+		int page = pageReq.getPage();
+		int size = pageReq.getSize();
+		int offset = (page - 1) * size; // 오프셋 계산
+
+		// 총 데이터 개수 조회
+		long totalElements = paymentRepository.getPurchasedProductInfoListTotalCount(userId);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("offset", offset);
+		map.put("size", size);
+		
+		List<PurchasedProductInfoDTO> purchasedProductInfoList = paymentRepository.getPurchasedProductInfoList(map);
+
+		PageRes<PurchasedProductInfoDTO> pageRes = new PageRes<>(purchasedProductInfoList, page, totalElements, size);
+
+		return pageRes;
 	}
 
 	/**

@@ -4,7 +4,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -489,9 +491,27 @@ public class ProductService {
 	 * @변경이력 :
 	 * @Method 설명 : 마이페이지에서 사용자가 작성한 상품 목록
 	 */
-	public List<UploadProductsInfoDTO> getUploadProductsInfoByUserId(Integer userId) {
-		List<UploadProductsInfoDTO> getUploadProductsInfoList = productRepository.getUploadProductsInfoByUserId(userId);
-		return getUploadProductsInfoList;
+	public PageRes<UploadProductsInfoDTO> getUploadProductsInfoByUserId(PageReq pageReq, Integer userId) {
+		int page = pageReq.getPage();
+		int size = pageReq.getSize();
+		int offset = (page - 1) * size; // 오프셋 계산
+
+		
+		// 총 데이터 개수 조회
+		long totalElements = productRepository.getUploadProductsInfoTotalCount(userId);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("offset", offset);
+		map.put("size", size);
+		
+		// 페이징 처리된 유저 목록 조회
+		List<UploadProductsInfoDTO> getUploadProductsInfoList = productRepository.getUploadProductsInfoByUserId(map);
+		
+		// 페이징 결과 객체 생성
+		PageRes<UploadProductsInfoDTO> pageRes = new PageRes<>(getUploadProductsInfoList, page, totalElements, size);
+		
+		return pageRes;
 	}
 
 	/**

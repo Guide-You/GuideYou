@@ -1,6 +1,7 @@
 package com.guideyou.repository.interfaces.payment;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -22,7 +23,8 @@ import com.guideyou.repository.entity.PaymentDetail;
 public interface PaymentRepository {
 	public int insertPayment(Payment payment);
 	public Payment findByUserId(Integer userId);
-	public List<PurchasedProductInfoDTO> getPurchasedProductInfoList(Integer userId);
+	public List<PurchasedProductInfoDTO> getPurchasedProductInfoList(Map<String, Object> params);
+	public Long getPurchasedProductInfoListTotalCount(Integer userId);
 	public Payment findByMerchantUid(String merchantUid);
 	public Payment findByMerchantUidAndUserId(String merchantUid, Integer userId);
 	public int updatePaymentOnRefund(RefundDto refundDto);
