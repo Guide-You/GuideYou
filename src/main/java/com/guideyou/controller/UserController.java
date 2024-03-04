@@ -158,9 +158,18 @@ public class UserController {
 	  * @return
 	  */
 	@PostMapping("/member/checkNickname")
-	public @ResponseBody String checkDuplicateNickname(@RequestParam String nickname) {
+	public @ResponseBody String checkDuplicateNickname(@RequestParam String nickname, @RequestParam Integer userId) {
 		User user = userService.readUserByNickname(nickname);
-		return (user == null) ? "Y" : "N";
+		String result;
+		if(user == null) {
+			result = "Y";
+		}
+		else if(user.getId() == userId) {
+			result = "Y";
+		} else {
+			result = "N";
+		}
+		return result;
 	}
 
 	/* ---------------------------------마이페이지 종료-----------------------------------------------*/	

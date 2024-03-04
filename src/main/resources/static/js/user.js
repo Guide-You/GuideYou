@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+	var userId = document.getElementById("user--id") ? document.getElementById("user--id").value : '0';
 	var signUpBtn = document.getElementById('signUpBtn');
 	var nicknameInput = document.getElementById('nickname');
 	var phoneInput = document.getElementById('phone');
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			signUpForm.nickname.value = nicknameInput.value.trim();
 			signUpForm.phone.value = phoneInput.value.trim();
 
-			alert("회원가입 되었습니다");
+			alert("완료되었습니다");
 			signUpForm.submit();
 		} else {
 			// 입력값을 확인해주세요.
@@ -66,7 +67,8 @@ document.addEventListener("DOMContentLoaded", function() {
 			$.ajax({
 				type: 'POST',
 				url: "/member/checkNickname",
-				data: { nickname: nickname },
+				data: { nickname: nickname,
+						userId :  userId},
 				error: function(err) {
 					alert("실행중오류가발생하였습니다.");
 				},
