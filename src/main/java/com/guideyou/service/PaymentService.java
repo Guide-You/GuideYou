@@ -152,15 +152,24 @@ public class PaymentService {
 	  * @Method 설명 : 환불을 위해 MerchantUid와 UserId로 DB 검색 
 	  */
 	@Transactional
-	public Payment findByMerchantUidAndUserId(String merchantUid, Integer userId) {
+	public int findByMerchantUidAndUserId(String merchantUid, Integer userId) {
 		log.info("payment 테이블 조회 merchantId"+merchantUid);
 		log.info("User Id : " + userId);
 		
-		Payment payment = paymentRepository.findByMerchantUidAndUserId(merchantUid, userId);
+		//Payment payment = paymentRepository.findByMerchantUidAndUserId(merchantUid, userId);
 		
-		log.info("service payment : "+payment);
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("merchantUid", merchantUid);
+		map.put("userId", userId);
+		int result = paymentRepository.findByMerchantUidAndUserId(map);
 		
-		return payment;
+		log.info("service result : "+result);
+
+		return result;
+		
+		
+		//return payment;
 	}
 
 
@@ -203,24 +212,34 @@ public class PaymentService {
 	  * @Method 설명 :
 	  */
 	public PageRes<PaymentHistoryListDto> getPaymentHistoryList(PageReq pageReq, Integer userId) {
-	
+
+		log.info("paymentService 실행!");
 		int page = pageReq.getPage();
+		log.info("paymentService page:"+page);
 		int size = pageReq.getSize();
+		log.info("paymentService size:"+size);
 		int offset = (page - 1) * size; // 오프셋 계산
+
+		log.info("paymentService offset:"+offset);
 
 		// 총 데이터 개수 조회
 		long totalElements = paymentRepository.getPaymentHistoryListTotalCount(userId);
+
+		log.info("paymentService totalElements:"+totalElements);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("userId", userId);
 		map.put("offset", offset);
 		map.put("size", size);
 		
-		List<PaymentHistoryListDto> purchasedProductInfoList = paymentRepository.getPaymentHistoryList(map);
+		log.info(map+"");
+		
+		List<PaymentHistoryListDto> PaymentHistoryList = paymentRepository.getPaymentHistoryList(map);
 
-		PageRes<PaymentHistoryListDto> pageRes = new PageRes<>(purchasedProductInfoList, page, totalElements, size);
+		log.info(PaymentHistoryList+"");
+		PageRes<PaymentHistoryListDto> pageRes = new PageRes<>(PaymentHistoryList, page, totalElements, size);
 
-		return null;
+		return pageRes;
 	}
 	
 }

@@ -75,9 +75,9 @@
 		#{merchantUid}
 	</select>
 
-	<select id="findByMerchantUidAndUserId"
-		resultType="com.guideyou.repository.entity.Payment">
-		SELECT * FROM payment WHERE merchant_uid = #{merchantUid}
+	<select id="findByMerchantUidAndUserId" parameterType="map" resultType="Integer"> 
+		<!-- resultType="com.guideyou.repository.entity.Payment"> -->
+		SELECT count(*) FROM payment WHERE merchant_uid = #{merchantUid}
 		AND user_id = #{userId}
 	</select>
 
@@ -133,7 +133,8 @@
 	</select>
 	
 	<select id="getPaymentHistoryListTotalCount" resultType="long">
-		select count(*) 
+		select 
+		count(*) 
 		from payment a 
 		join payment_detail b 
 		on a.merchant_uid = b.merchant_uid
@@ -150,7 +151,7 @@
 			a.merchant_uid, 
 			d.title, 
 			u.nickname as seller, 
-			a.total_price, 
+			a.total_price as payment_price, 
 			a.payment_date  
 		from payment a 
 		join payment_detail b 
@@ -158,7 +159,7 @@
         join product d on b.product_id = d.id
         join user u on d.user_id = u.id
         where a.user_id = #{userId}
-		and a.payment_status = "paid";
+		and a.payment_status = "paid"
 		limit #{size} offset #{offset}
 		;
 	</select>

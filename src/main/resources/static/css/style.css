@@ -806,6 +806,12 @@ h1 {
 .cart--purchase {
 	width: 250px;
 	float: right;
+	background-color: #91caff;
+	color: white !important;
+}
+.cart--purchase:hover {
+	background-color: #ffc691 !important;
+	color: white;
 }
 
 .cart--table {
@@ -956,6 +962,17 @@ h1 {
 	margin-bottom: 5%;
 	margin-top: 2%;
 }
+
+#valid--btn {
+	background-color: #91caff;
+	color: white !important;
+}
+
+#valid--btn:hover {
+	background-color: #ffc691;
+	color: white !important;
+}
+
 /* 여기서 부터 작성했어요 - 최장호*/
 .loginAll {
 	display: flex;

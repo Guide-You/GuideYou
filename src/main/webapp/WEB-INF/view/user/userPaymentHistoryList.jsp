@@ -14,14 +14,6 @@
 <!-- Cart List Start -->
 <div class="col-md-12 col-lg-6 col-xl-9">
 	<div class="table-responsive">
-		<c:choose>
-			<c:when test="${empty PaymentHistoryList}">
-				<!-- 결제 내역 없을때 메시지 -->
-				<div class="text-center">
-					<p>결제 내역이 없습니다.</p>
-				</div>
-			</c:when>
-		<c:otherwise>
 					<table class="table cart--table">
 						<thead>
 							<tr>
@@ -37,16 +29,18 @@
 
 						<tbody>
 							<c:forEach var="history"
-								items="${PaymentHistoryList}">
+								items="${PaymentHistoryList}" varStatus="loop">
 								<tr>
-									<td class="py-5">1</td>
+									<td class="py-5">${loop.index + 1}</td>
 									<td class="py-5">${history.merchantUid }</td>
 									<td class="py-5">${history.title }</td>
-									<td class="py-5">박카스</td>
-									<td class="py-5">30000</td>
-									<td class="py-5">20240305</td>
+									<td class="py-5">${history.seller }</td>
+									<td class="py-5">${history.paymentPrice }</td>
+									<td class="py-5">${history.paymentDate }</td>
 									<td class="py-5">
-										<button type="button" id="refund--button">환불하기</button>
+            <!-- 각 버튼에 고유한 ID를 할당하고 onClick 이벤트에 함수를 호출하는 방식으로 변경 -->
+            <button type="button" class="refund-button" data-merchant-uid="${history.merchantUid}" data-refund-price="${history.paymentPrice}">환불하기</button>
+        
 									</td>
 								</tr>
 							</c:forEach>
@@ -89,6 +83,34 @@
       
       <script>
 // 환불 js!
+document.querySelectorAll('.refund-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const merchantUid = this.getAttribute('data-merchant-uid'); // 버튼에 설정된 데이터 가져오기
+            const refundPrice = this.getAttribute('data-refund-price');
+
+            console.log("환불하기 버튼이 눌렸습니다.");
+            console.log("Merchant UID:", merchantUid);
+            console.log("환불 금액:", refundPrice);
+
+			confirm("정말로 환불 하시겠습니까?");
+            
+    	    $.ajax({
+    	      // 예: http://www.myservice.com/payments/cancel
+    	      "url": "/refund", 
+    	      "type": "POST",
+    	      "contentType": "application/json",
+    	      "data": JSON.stringify({
+    	        "merchantUid": merchantUid, // 이건 구매내역에서 받아 올 예정 현재는 하드코딩!!
+    	        "refundPrice": refundPrice, // 이거도 db에서 받아 올 예정!
+    	        "cancelReason": "테스트 결제 환불" // 환불사유-> input테그 value로 받아 오면 될듯 or 드롭다운으로 li태그 주면 될 듯
+    	      }),
+    	      "dataType": "json"
+    	    });
+            // 여기에 AJAX 요청 등을 추가하여 서버에 환불을 요청하는 코드 작성
+        });
+    });
+
+/*
 	"userPaymentHistoryList 실행 시작!"
 
     const refundButton = document.getElementById("refund--button");
@@ -109,7 +131,7 @@
 	      }),
 	      "dataType": "json"
 	    });
-  	}
+  	}*/
 </script>
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

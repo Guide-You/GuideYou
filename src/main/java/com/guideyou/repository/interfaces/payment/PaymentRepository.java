@@ -28,7 +28,8 @@ public interface PaymentRepository {
 	public List<PurchasedProductInfoDTO> getPurchasedProductInfoList(Map<String, Object> params);
 	public Long getPurchasedProductInfoListTotalCount(Integer userId);
 	public Payment findByMerchantUid(String merchantUid);
-	public Payment findByMerchantUidAndUserId(String merchantUid, Integer userId);
+	//public Payment findByMerchantUidAndUserId(String merchantUid, Integer userId);
+	public int findByMerchantUidAndUserId(Map<String, Object> params);
 	public int updatePaymentOnRefund(RefundDto refundDto);
 	public PaymentCompleteDto findPaymentAndPaymentDetailMerchantUid(String merchantUid);
 	public int getPaidProductIdByUserIdAndProductId(Map<String, Object> params);

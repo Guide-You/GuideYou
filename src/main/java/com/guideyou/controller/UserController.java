@@ -30,6 +30,7 @@ import com.guideyou.utils.Define;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @FileName : UserController.java
@@ -40,6 +41,7 @@ import jakarta.servlet.http.HttpSession;
  * @프로그램 설명 : 로그인 및 사용자 컨트롤러 입니다.
  */
 @Controller
+@Slf4j
 public class UserController {
 
 	// service
@@ -463,24 +465,28 @@ public class UserController {
 	@GetMapping("/member/paymentHistoryList")
 	public String paymentHistoryListPage(PageReq pageReq, Model model) {
 		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
-		
+		log.info(""+loginUser);
 		if (pageReq.getPage() <= 0) {
 			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
 		}
+		log.info("controller if 1");
 
 		if (pageReq.getSize() <= 0) {
 			pageReq.setSize(4); // 페이지 당 보여줄 개수
 		}
+		log.info("controller if 2");
 		
 		PageRes<PaymentHistoryListDto> pageRes = paymentService.getPaymentHistoryList(pageReq, loginUser.getId());
 
+		log.info("controller if pageRes" + pageRes);
+		
 		model.addAttribute("PaymentHistoryList", pageRes.getContent());
 		model.addAttribute("page", pageReq.getPage());
 		model.addAttribute("size", pageRes.getSize());
 		model.addAttribute("totalPages", pageRes.getTotalPages());
 		model.addAttribute("startPage", pageRes.getStartPage());
 		model.addAttribute("endPage", pageRes.getEndPage());
-		return "user/userPaymentHistory";
+		return "user/userPaymentHistoryList";
 	}
 	
 	

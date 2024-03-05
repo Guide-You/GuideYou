@@ -32,19 +32,29 @@
 					</div>
 				</label>
 				<div class="form-group">
+					<h5>Name</h5>
 					<div class="form-control item" id="username">
 						${principal.name}</div>
-					<input type="text" class="form-control item" name="nickname"
-						id="nickname" placeholder="닉네임을 입력해주세요"
-						value="${not empty principal.nickname && principal.nickname ne 'DEFAULT_NICKNAME' ? principal.nickname : ''}">
+					<h5>Nick Name</h5>
+					<div class="row">
+					    <div class="col-8">
+					        <input type="text" class="form-control item" name="nickname" id="nickname" placeholder="닉네임을 입력해주세요" 
+					        value="${not empty principal.nickname && principal.nickname ne 'DEFAULT_NICKNAME' ? principal.nickname : ''}">
+					    </div>
+					    <div class="col-md-4">
+					        <button type="button" class="btn btn-primary" id="valid--btn">중복 확인</button>
+					    </div>
+					</div>
+					<h5>E-mail</h5>
 					<div class="form-control item" id="email">${principal.email}
 					</div>
+					<h5>Phone</h5>
 					<input type="text" class="form-control item" name="phone"
 						id="phone" placeholder="휴대폰 번호를 입력해주세요"
 						value="${not empty principal.phone && principal.phone ne 'DEFAULT_PHONENUMBER' ? principal.phone : ''}">
 				</div>
 				<hr>
-				<h4>소개</h4>
+				<h4>Introduce</h4>
 				<div class="form-group">
 					<input type="text" class="form-control item" id="profile--intro"
 						placeholder="소개글">
