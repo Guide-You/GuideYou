@@ -106,4 +106,19 @@ public class WishListService {
 		}
 		return result;
 	}
+	
+	/**
+	  * @Method Name : readWishListByUserIdAndProductId
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 상품 이름과 사용자 ID로 장바구니 조회
+	  */
+	public WishList readWishListByUserIdAndProductId (Integer userId, Integer productId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("productId", productId);
+		WishList findWish = wishListRepository.findwishByProductIdAndUserId(map);
+		return findWish;
+	}
 }

@@ -6,11 +6,10 @@
 	<select id="findwishListProductUserByUserId" parameterType="map"
 		resultType="com.guideyou.dto.wishList.WishListProductUserDTO">
 		SELECT
-		a.user_id AS user_id, -- 로그인한 사용자ID
+		a.user_id AS user_id, 
 		b.title AS
-		product_title, -- 장바구니에 담은 상품 제목
-		b.price AS product_price, -- 장바구니에 담은
-		상품 가격
+		product_title,
+		b.price AS product_price,
 		c.nickname AS writer_nickname,
 		c.id AS author_id,
 		d.upload_file_name AS product_image
@@ -22,8 +21,7 @@
 		JOIN
 		user c ON b.user_id = c.id
 		LEFT JOIN
-		product_photos d ON b.id = d.product_id AND d.thumbnail IS NOT NULL --
-		상품 사진은 thumbnail 있는 데이터만 가져온다. 없으면 join 안함.
+		product_photos d ON b.id = d.product_id AND d.thumbnail IS NOT NULL
 		WHERE
 		a.user_id = #{userId}
 		order by a.created_at desc
@@ -43,8 +41,7 @@
 		ON b.user_id = c.id
 		LEFT JOIN
 		product_photos d ON b.id = d.product_id
-		AND d.thumbnail IS NOT NULL -- 상품 사진은 thumbnail 있는 데이터만 가져온다. 없으면 join
-		안함.
+		AND d.thumbnail IS NOT NULL
 		WHERE
 		a.user_id = #{userId};
 	</select>

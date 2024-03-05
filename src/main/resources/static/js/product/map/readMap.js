@@ -19,7 +19,6 @@ $.ajax({
 	type: 'GET',
 	data: {
 		productId: productId
-		// TODO : 상품 합치면 실제 productId 입력해야함
 	},
 	// 데이터를 성공적으로 받아왔을 때 처리하는 로직
 	success: function(data) {

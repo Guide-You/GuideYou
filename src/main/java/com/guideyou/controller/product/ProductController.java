@@ -22,7 +22,9 @@ import com.guideyou.dto.product.ProductThumbnailDto;
 import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.User;
+import com.guideyou.repository.entity.wishList.WishList;
 import com.guideyou.service.ProductService;
+import com.guideyou.service.wishListService.WishListService;
 import com.guideyou.utils.Define;
 
 import jakarta.servlet.http.HttpSession;
@@ -40,6 +42,8 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private WishListService wishListService;
 
 	@Autowired
 	private HttpSession session;
@@ -152,7 +156,15 @@ public class ProductController {
 	    ProductReviewDto productAvg = productService.productAvg(productId);
     	model.addAttribute("productAvg", productAvg);
 			
-	    
+    	Boolean wishYn = false;
+    	User principal = (User) session.getAttribute(Define.PRINCIPAL);
+    	if(principal != null) {
+    		WishList result = wishListService.readWishListByUserIdAndProductId(principal.getId(), productId);
+    		if(result != null) {
+    			wishYn = true;
+    		}
+    	}
+    	model.addAttribute("wishYn", wishYn);
 		return "product/productDetail";
 	}
 		
