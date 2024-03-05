@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
-
         <div class="table container-fluid contact py-5">
             <table class="table table-hover">
                 <thead>
@@ -16,18 +15,18 @@
                   </tr>
                 </thead>
                 <tbody>
-				 <c:forEach var="board" items="${boardAllList}">
+				 <c:forEach var="board" items="${boardList}">
                   <tr>
                     <th>${board.id}</th>
                     <td>${board.type}</td>
-                    <td>${board.writer}</td>
-                    <td><a href="/company/testDetail/${board.id}">${board.title}</a></td>
-                    <td><a href="/company/testDetail/${board.id}">${board.content}</a></td>
+                    <td>${board.writerId}</td>
+                    <td><a href="/company/boardDetail/${board.id}">${board.title}</a></td>
+                    <td><a href="/company/boardDetail/${board.id}">${board.content}</a></td>
                     <td>${board.viewCount}</td>
                      <td>
                       <fmt:formatDate value="${board.createdAt}" pattern="yyyy-MM-dd hh:mm:ss"/>
                     <button type="button" class="btn btn-outline-info" onclick="location.href='/company/delete/${board.id}'">삭제</button>
-                    <button type="button" class="btn btn-primary" onclick="location.href='/company/boardUpdate/${board.id}'">수정</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='/company/boardModify/${board.id}'">수정</button>
                     </td>
                   </tr>
                 </c:forEach>

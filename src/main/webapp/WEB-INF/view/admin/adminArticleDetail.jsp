@@ -3,8 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 <!-- 관리자 faq,notice 글 상세 view -->
-<div class="container-fluid py-5 mt-5">
-    <div class="container py-5">
+<!-- <div class="container-fluid py-5 mt-5"> -->
+<!--     <div class="container py-5"> -->
         <div class="row g-4 mb-5">
             <div class="col-lg-8 col-xl-9">
                 <div class="row g-4">
@@ -12,10 +12,11 @@
 
               </div>
               <div class="col-lg-6">
-                  <h4 class="fw-bold mb-3">글제목</h4>
-                  <p class="mb-3">Category: qna,faq</p>
-                  <p class="fw-bold mb-3">관리자</p>
-                  <p class="mb-4">작성시간</p>
+                  <h4 class="fw-bold mb-3">${board.title}</h4>
+                  <p class="mb-3">${board.type}</p>  <!-- 관리자'만' 글을 써서 글쓴이는 필요없다 -->
+                  <p class="mb-4"> 
+                 	<fmt:formatDate value="${board.createdAt}" pattern="yyyy-MM-dd hh:mm:ss"/>
+                  </p>
               </div>
               
               <div class="col-lg-12">
@@ -32,42 +33,24 @@
                   </nav>
                   <div class="tab-content mb-5">
                       <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                          <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.
-                              Susp endisse detail view</p>
-                          <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic
-                              icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
+                          <p>${board.content}</p>
                       </div>
                       <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                           <div class="d-flex">
                               <div class="">
-                               <p class="mb-2" style="font-size: 14px;">댓글 등록 날짜</p>
+                               <p class="mb-2" style="font-size: 14px;">
+                               <fmt:formatDate value="${comment.createdAt}" pattern="yyyy-MM-dd hh:mm:ss"/>
+                               </p>
                                   <div class="d-flex justify-content-between">
-                                      <h5>writer_id</h5>
+                                      <h5>${comment.id}</h5>
                                   </div>
-                                  <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic
-                                      words etc. comment content</p>
+                                  <p>${comment.content}</p>
                               </div>
                           </div>
-                          <div class="d-flex">
-                              <div class="">
-                                  <p class="mb-2" style="font-size: 14px;">댓글등록날짜</p>
-                                    <div class="d-flex justify-content-between">
-                                        <h5>writer_id</h5>
-                                    </div>
-                                    <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic
-                                        words etc. comment content</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="nav-vision" role="tabpanel">
-                            <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                                amet diam et eos labore. 3</p>
-                            <p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore.
-                                Clita erat ipsum et lorem et sit</p>
                         </div>
                     </div>
                 </div>
-                <form action="/company/testDetail" method="post" id="insertComment">
+                <form action="/admin/adminArticleDetail" method="post" id="insertComment">
                      <h4 class="mb-5 fw-bold">댓글을 남겨주세요</h4>
                      <div class="row g-4">
                          <div class="col-lg-6">
