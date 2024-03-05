@@ -1,8 +1,6 @@
 package com.guideyou.controller.product;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,8 +163,8 @@ public class ProductController {
 	    ProductReviewDto productAvg = productService.productAvg(productId);
     	model.addAttribute("productAvg", productAvg);
 			
-    	Boolean paidYn = false;
-    	Boolean wishYn = false;
+    	boolean paidYn = false;
+    	boolean wishYn = false;
     	User principal = (User) session.getAttribute(Define.PRINCIPAL);
     	if(principal != null) {
     		
