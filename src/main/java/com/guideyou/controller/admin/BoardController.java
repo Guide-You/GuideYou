@@ -48,16 +48,16 @@ public class BoardController {
 	@Autowired
 	private HttpSession httpSession;
 	// 1. 화면 띄우기
-	@GetMapping("/testInsert")
+	@GetMapping("/boardInsert")
 	public String boardPage() {
 		User principal =  (User)httpSession.getAttribute(Define.PRINCIPAL);
 		
 		System.out.println("이건 get방식의 test가 호출되면 이 글자가 보여요" + principal);
-		return "/company/testInsert";
+		return "/company/boardInsert";
 	}
 
 	// 2. 화면에서 자바로 데이터값 받아오기
-	@PostMapping("/testInsert")
+	@PostMapping("/boardInsert")
 	public String inputData(BoardDto inputData) {
 		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
 		System.out.println("==================================="+loginUser);
@@ -70,7 +70,7 @@ public class BoardController {
 		System.out.println("정답입니다!" + inputData.toString());
 		boardService.insert(inputData);
 
-		return "redirect:/company/testList"; // 등록 후 해당 글 detailview로 수정하기
+		return "redirect:/company/boardDetail";  // detail로 안가짐 
 	}
 
 	// 글 목록 BoardPageRq | BoardPageS
@@ -101,7 +101,6 @@ public class BoardController {
 		System.out.println("BoardDto" + "여기까지오나");
 		return "/company/boardList";
 	}
-
 	/**
 	 * TODO : 글 수정 기능
 	 * 
@@ -113,10 +112,10 @@ public class BoardController {
 	 * @프로그램 설명 : 글 detail view 불러오기중입니다.
 	 */
 	// 글 삭제
-	@GetMapping("/delete/{id}")
+	@PostMapping("/delete/{id}")
 	public String deleteById(@PathVariable("id") Integer boardId) {
 		boardService.deleteById(boardId);
-		return "redirect:/company/testList";
+		return "redirect:/company/boardList";
 	}
 
 	// 글 디테일 뷰 페이지
@@ -126,11 +125,11 @@ public class BoardController {
 		Board board = boardService.findById(boardId);
 		model.addAttribute("board", board);
 
-		return "company/testDetail";
+		return "company/boardDetail";  
 	};
 
 	// 글 수정 페이지
-	@GetMapping("/testUpdate/{boardId}")
+	@GetMapping("/boardModify/{boardId}")
 	public String updateById(@PathVariable("boardId") Integer boardId, Model model) {
 		Board board = boardService.findById(boardId);
 		model.addAttribute("board", board);
@@ -139,13 +138,13 @@ public class BoardController {
 	}
 
 	// 글 수정 기능
-	@PostMapping("/testUpdate/{boardId}")
+	@PostMapping("/boardModify/{boardId}")
 	public String updateByIdProc(@PathVariable("boardId") Integer boardId, Board board, Model model) {
 		board.setId(boardId);
 		User loginUser	= (User)httpSession.getAttribute(Define.PRINCIPAL);
 		boardService.updateById(board);
 		System.out.println("여기로 수정되나요" + board.toString()); // 반드시 이해햐기!
-		return "redirect:/company/testDetail/" + boardId;
+		return "redirect:/company/boardDetail/" + boardId;
 	}
 	
 	// 환불정책 페이지 화면 띄우기

@@ -2,22 +2,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
-<!--  글 상세 view -->
-<!-- <div class="container-fluid py-5 mt-5"> -->
-<!--     <div class="container py-5"> -->
-<!--         <div class="row g-4 mb-5"> -->
+<!-- 관리자 faq,notice 글 상세 view -->
+<div class="container-fluid py-5 mt-5">
+    <div class="container py-5">
+        <div class="row g-4 mb-5">
             <div class="col-lg-8 col-xl-9">
                 <div class="row g-4">
                     <div class="col-lg-6">
+
               </div>
               <div class="col-lg-6">
-                  <h4 class="fw-bold mb-3">${board.title}</h4>
-                  <p class="mb-3">${board.type}</p>
-                  <p class="fw-bold mb-3">${board.writerId}</p>
-                  
-                  <p class="mb-4"> 
-                 <fmt:formatDate value="${board.createdAt}" pattern="yyyy-MM-dd hh:mm:ss"/>
-                  </p>
+                  <h4 class="fw-bold mb-3">글제목</h4>
+                  <p class="mb-3">Category: qna,faq</p>
+                  <p class="fw-bold mb-3">관리자</p>
+                  <p class="mb-4">작성시간</p>
               </div>
               
               <div class="col-lg-12">
@@ -34,24 +32,42 @@
                   </nav>
                   <div class="tab-content mb-5">
                       <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                          <p>${board.content}</p>
+                          <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.
+                              Susp endisse detail view</p>
+                          <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic
+                              icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
                       </div>
-                      
                       <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                           <div class="d-flex">
                               <div class="">
-                               <p class="mb-2" style="font-size: 14px;">
-                               <fmt:formatDate value="${board.createdAt}" pattern="yyyy-MM-dd hh:mm:ss"/>
-                               </p>
+                               <p class="mb-2" style="font-size: 14px;">댓글 등록 날짜</p>
                                   <div class="d-flex justify-content-between">
-                                      <h5>${comment.writerId}</h5>
+                                      <h5>writer_id</h5>
                                   </div>
-                                  <p>${comment.content}</p>
+                                  <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic
+                                      words etc. comment content</p>
                               </div>
                           </div>
+                          <div class="d-flex">
+                              <div class="">
+                                  <p class="mb-2" style="font-size: 14px;">댓글등록날짜</p>
+                                    <div class="d-flex justify-content-between">
+                                        <h5>writer_id</h5>
+                                    </div>
+                                    <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic
+                                        words etc. comment content</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="nav-vision" role="tabpanel">
+                            <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
+                                amet diam et eos labore. 3</p>
+                            <p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore.
+                                Clita erat ipsum et lorem et sit</p>
+                        </div>
                     </div>
                 </div>
-                <form action="/company/boardDetail" method="post" id="insertComment">
+                <form action="/company/testDetail" method="post" id="insertComment">
                      <h4 class="mb-5 fw-bold">댓글을 남겨주세요</h4>
                      <div class="row g-4">
                          <div class="col-lg-6">
@@ -77,7 +93,7 @@
                 </div>
               </div>
 <div class="d-flex justify-content-center my-4">
-    <a href="/company/boardList" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">게시글 목록</a>
+    <a href="/company/testList" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">게시글 목록</a>
 </div>
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

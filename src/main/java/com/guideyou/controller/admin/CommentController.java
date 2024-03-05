@@ -37,7 +37,7 @@ public class CommentController {
 	private HttpSession httpSession;
 	
 	// 댓글 입력
-	@PostMapping("/testDetail")
+	@PostMapping("/boardDetail")
 	public String comIn(CommentDto comIn) {
 		User loginUser =  (User)httpSession.getAttribute(Define.PRINCIPAL);
 		comIn.setWriterId(loginUser.getId());
@@ -68,7 +68,7 @@ public class CommentController {
 	 * commentService.deleteComment(comId); return "redirect:/company/testDetail"; }
 	 * // 댓글 수정
 	 * 
-	 * @PostMapping("/testUpdate/{comId}") public String
+	 * @PostMapping("/baordModify/{comId}") public String
 	 * updateComment(@PathVariable("comId") Integer comId, Comment comment, Model
 	 * model) {
 	 * 

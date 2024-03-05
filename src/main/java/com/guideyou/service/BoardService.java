@@ -33,6 +33,7 @@ public class BoardService {
 	  * @변경이력 : 
 	  * @Method 설명 :board crud.페이징
 	  */
+	@Transactional
 	public void insert(BoardDto boardDto) {
 		Board board = new Board();
 		board.setType(boardDto.getType());
