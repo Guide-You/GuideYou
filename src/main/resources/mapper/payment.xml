@@ -81,5 +81,27 @@
 		WHERE p.merchant_uid = #{merchantUid}
 		AND pd.merchant_uid = #{merchantUid}
 	</update>
+	
+	<select id="findPaymentAndPaymentDetailMerchantUid" resultType="com.guideyou.dto.payment.PaymentCompleteDto">
+		SELECT
+		    b.product_id,
+			a.merchant_uid,
+		    a.payment_date,
+		    b.product_price,
+		    d.upload_file_name AS product_photo,
+		    c.title AS product_title,
+		    a.total_price,
+		    e.nickname AS seller
+		FROM payment AS a
+		LEFT JOIN payment_detail AS b
+		ON a.merchant_uid = b.merchant_uid
+		LEFT JOIN product AS c
+		ON b.product_id = c.id
+		LEFT JOIN product_photos AS d
+		ON c.id = d.product_id
+		LEFT JOIN user AS e
+		ON c.user_id = e.id
+		WHERE a.merchant_uid = #{merchantUid} AND thumbnail IS NOT NULL
+	</select>
 
 </mapper>

@@ -17,6 +17,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.guideyou.dto.payment.OrderDto;
+import com.guideyou.dto.payment.PaymentCompleteDto;
 import com.guideyou.dto.payment.PaymentDto;
 import com.guideyou.dto.payment.RefundDto;
 import com.guideyou.dto.payment.portone.PaymentReqDto;
@@ -85,14 +87,12 @@ public class PaymentController {
 	  * @Method 설명 : detail 단일 product 정보 paymentPage로 redirect 할 method
 	  */
 	// 
-	@PostMapping("/processOrder")
+	@PostMapping("/order")
 	public String processOrder(Model model, OrderDto orderDto) {
-		
-		
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
-		if (NullUtils.isNull(principal.getId())) {
-			throw new CustomRestfulException(Define.ENTER_YOUR_LOGIN, HttpStatus.BAD_REQUEST);
+	    if (principal == null) {
+			throw new CustomRestfulException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
 		}
 		
 		orderDto.setOrderUserId(principal.getId()); // 구매자 id
@@ -100,7 +100,7 @@ public class PaymentController {
 
 		System.out.println(orderDto);
 		
-		return "product/payment";
+		return "product/order";
 
 	}
 
@@ -110,13 +110,18 @@ public class PaymentController {
 	  * @작성일 : 2024. 3. 2.
 	  * @작성자 : 박경진
 	  * @변경이력 : 
-	  * @Method 설명 : 포트원 결제 정보조회 및 토큰 가져오기
+	  * @Method 설명 : 포트원 결제 정보조회 및 토큰 가져오기, db insert
 	  */
 	// TODO: 주석 지우기 및 리턴을 어떻게 할 지 얘기해보기!
 	@PostMapping("/paySuccess") //ResponseEntity<?>  리턴타입 변경
-	public Payment getData(@RequestBody PaymentDto paymentDto){
+	//public Payment getData(@RequestBody PaymentDto paymentDto){
+	public ResponseEntity<?> getData(@RequestBody PaymentDto paymentDto){
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-
+		
+	    if (principal == null) {
+			throw new CustomRestfulException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
+		}
+	    
 		log.info("paySuccess in!!");
 		log.info("payment DTO : "+paymentDto);
 		RestTemplate restTemplate = new RestTemplate();
@@ -129,8 +134,8 @@ public class PaymentController {
 		
 		// Request Body 설정
 		JSONObject requestBody = new JSONObject();
-		requestBody.put("imp_key", "5645231441086456");
-		requestBody.put("imp_secret","PpZEmOMr140GVB8iiay0k744qjFKI37ffkpOMxlhNxtcKOf4R8xGXvpgma0nxOhReiTFHiUfq9yh3jCu");
+		requestBody.put("imp_key", Define.PAYMENT_IMP_KEY);
+		requestBody.put("imp_secret",Define.PAYMENT_IMP_SECRET);
 	
 		// Header + Body
 		HttpEntity entity = new HttpEntity(requestBody.toString(),headers);
@@ -168,13 +173,14 @@ public class PaymentController {
 				
 		if (verificationMerchantUid.equals(paymentDto.getMerchantUid())) {
 			log.info("여기는 검증까지 완료되어서 payment Dto로 insert 할 정보입니다" , paymentDto);
-			Payment paymentReturn= paymentService.createPayment(paymentDto);
+			//Payment paymentReturn= 
+			paymentService.createPayment(paymentDto);
 			
 			log.info("payment service 성공하고 왔다!");
 			
 			// Payment Entity 값 프론트로 넘겨서 complete창 만들거양!
-			 //return ResponseEntity.ok().body(paymentInfo); HttpMediaTypeNotAcceptableException 때문에 주석처리함
-			return paymentReturn;
+			 return ResponseEntity.ok("success"); //HttpMediaTypeNotAcceptableException 때문에 주석처리함
+			//return paymentReturn;
 		} else {
 		
 		// 검증이 잘못 됐을시 환불 처리
@@ -202,8 +208,6 @@ public class PaymentController {
 		
 		return null; 
 		//HttpMediaTypeNotAcceptableException 확인
-		
-			
 	}	
 
 	/**
@@ -218,6 +222,10 @@ public class PaymentController {
 		
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
+	    if (principal == null) {
+			throw new CustomRestfulException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
+		}
+	    
 		log.info("refund controller in!");
 		log.info("refundDto : "+ refundDto);
 		
@@ -241,8 +249,8 @@ public class PaymentController {
 			
 			// Request Body 설정
 			JSONObject requestBody = new JSONObject();
-			requestBody.put("imp_key", "5645231441086456");
-			requestBody.put("imp_secret","PpZEmOMr140GVB8iiay0k744qjFKI37ffkpOMxlhNxtcKOf4R8xGXvpgma0nxOhReiTFHiUfq9yh3jCu");
+			requestBody.put("imp_key", Define.PAYMENT_IMP_KEY);
+			requestBody.put("imp_secret",Define.PAYMENT_IMP_SECRET);
 		
 			// Header + Body
 			HttpEntity entity = new HttpEntity(requestBody.toString(),headers);
@@ -313,18 +321,6 @@ public class PaymentController {
 			
 			// TODO : 환불 클라이언트, DB 모두 완료 -> 이후에 어떻게 처리할건지 고민해보기!
 			
-
-			// if end
-		//} else {
-			//throw new CustomRestfulException("존재하지 않는 결제 내역입니다.", HttpStatus.NOT_FOUND);
-		//}
-		
-		
-		
-		
-
-
-
 	}
 	
 	/**
@@ -341,21 +337,25 @@ public class PaymentController {
 		return "/user/userPaymentHistoryList";
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	  * @Method Name : completePage
 	  * @작성일 : 2024. 2. 29.
 	  * @작성자 : 박경진
 	  * @변경이력 : 
-	  * @Method 설명 : 결제 완료 후 completePage
+	  * @Method 설명 : 결제 완료 후 completePage(단건)
 	  */
-	@GetMapping("/complete")
-	public String completePage() {
+	// TODO: 다중으로 변경하자!
+	@GetMapping("/complete/{merchantUid}")
+	public String completePage(@PathVariable("merchantUid") String merchantUid, Model model) {
+		
+		log.info("completePage start");
+		log.info("merchantUid : "+merchantUid);
+		
+		PaymentCompleteDto complete = paymentService.findAllPaymentInfoByMerchantUid(merchantUid);
+		model.addAttribute("complete",complete);
+		
+		log.info(complete.toString());
+		
 		return "product/complete";
 
 	}

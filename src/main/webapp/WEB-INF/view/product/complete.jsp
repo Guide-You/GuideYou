@@ -19,7 +19,7 @@ pageEncoding="UTF-8"%>
                         <h3 class="payment--title">결제 정보</h3>
                         <div class="complete--info"><p><span>상품 번호 : </span>${complete.productId }</p></div>
                         <div class="complete--info"><p><span>결제 번호 : </span>${complete.merchantUid }</p></div>
-                        <div class="complete--info"><p><span>결제 일자 : </span>abcd1234</p></div>
+                        <div class="complete--info"><p><span>결제 일자 : </span>${complete.paymentDate }</p></div>
                       </div>
 
 
@@ -37,29 +37,19 @@ pageEncoding="UTF-8"%>
                             <tr>
                               <th scope="row">
                                 <div class="d-flex align-items-center mt-2">
-                                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                  <img src="/images/upload/${complete.productPhoto}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
                                 </div>
                               </th>
-                              <td class="py-5">[부산] 현지인이 추천하는 맛도리 여행지</td>
-                              <td class="py-5">박경진</td>
-                              <td class="py-5">￦ 3,000</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">
-                                  <div class="d-flex align-items-center mt-2">
-                                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                  </div>
-                              </th>
-                              <td class="py-5">[부산] 현지인이 추천하는 맛도리 여행지</td>
-                              <td class="py-5">박경진</td>
-                              <td class="py-5">￦ 3,000</td>
+                              <td class="py-5">${complete.productTitle }</td>
+                              <td class="py-5">${complete.seller }</td>
+                              <td class="py-5">${complete.productPrice }</td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
                       <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4 total--price">Total</h5>
-                        <p class="mb-0 pe-4" id="complete--total--price">￦ 6,000</p>
+                        <p class="mb-0 pe-4" id="complete--total--price">${complete.totalPrice }</p>
                       </div>
 
                       <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 cart--purchase" type="button">

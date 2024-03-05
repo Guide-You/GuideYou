@@ -28,7 +28,7 @@ pageEncoding="UTF-8"%>
                       <th scope="row">
                         <div class="d-flex align-items-center mt-2">
                           <img
-                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
+                            src="/images/upload/${order.uploadFileName}"
                             class="img-fluid rounded-circle"
                             style="width: 90px; height: 90px"
                             alt=""

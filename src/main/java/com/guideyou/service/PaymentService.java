@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
+import com.guideyou.dto.payment.PaymentCompleteDto;
 import com.guideyou.dto.payment.PaymentDto;
 import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.dto.payment.RefundDto;
@@ -67,9 +68,6 @@ public class PaymentService {
 		log.info("servicepayment Entity : "+payment.toString());
 		
 		int paymentResult = paymentRepository.insertPayment(payment);
-		
-
-		
 		
 		PaymentDetail paymentDetail = PaymentDetail.builder()
 				.merchantUid(paymentDto.getMerchantUid())
@@ -163,9 +161,21 @@ public class PaymentService {
 		
 		return payment;
 	}
-	
 
-	
 
+	/**
+	  * @Method Name : findAllPaymentInfoByMerchantUid
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 박경진
+	  * @변경이력 : 
+	  * @Method 설명 : 주문 완료 후 merchantUid로 결과 조회
+	  */
+	public PaymentCompleteDto findAllPaymentInfoByMerchantUid(String merchantUid) {
+		
+		PaymentCompleteDto dto = paymentRepository.findPaymentAndPaymentDetailMerchantUid(merchantUid);
+		
+		return dto;
+		
+	}
 	
 }

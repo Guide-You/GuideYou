@@ -9,6 +9,8 @@ public class Define {
 	public static final String DEFAULT_PHOTO = "defaultPhoto.png";
 	public static final String DEFAULT_PHOTO_PATH = "/img/default/profile/";
 	
+	public static final String PAYMENT_IMP_KEY= "5645231441086456";
+	public static final String PAYMENT_IMP_SECRET= "PpZEmOMr140GVB8iiay0k744qjFKI37ffkpOMxlhNxtcKOf4R8xGXvpgma0nxOhReiTFHiUfq9yh3jCu";
 
 
 	public static final String UPLOAD_FILE_DERECTORY = "c:\\wor_spring2\\upload";

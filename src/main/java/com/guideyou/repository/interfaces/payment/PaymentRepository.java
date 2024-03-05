@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.guideyou.dto.payment.PaymentCompleteDto;
 import com.guideyou.dto.payment.PaymentDto;
 import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.dto.payment.RefundDto;
@@ -28,4 +29,5 @@ public interface PaymentRepository {
 	public Payment findByMerchantUid(String merchantUid);
 	public Payment findByMerchantUidAndUserId(String merchantUid, Integer userId);
 	public int updatePaymentOnRefund(RefundDto refundDto);
+	public PaymentCompleteDto findPaymentAndPaymentDetailMerchantUid(String merchantUid);
 }

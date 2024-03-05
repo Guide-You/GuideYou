@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 		let sendForm = document.getElementById('send--detail--form');
 		
-		sendForm.action = '/processOrder';
+		sendForm.action = '/order';
 		sendForm.method = 'post';
 		
 		sendForm.submit();

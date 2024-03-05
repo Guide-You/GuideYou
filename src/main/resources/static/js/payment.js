@@ -37,14 +37,14 @@
         }, async function (rsp) {
           // callback
           if (rsp.success) {
-			console.log("success", data);
+			console.log("success", rsp);
             alert("결제가 완료되었습니다.");
             
-			await savePayment();
+			await savePayment(rsp);
             
           } else {
 			  
-            console.log("fail", data);
+            console.log("fail", rsp);
 			alert(`결제에 실패하였습니다. ${rsp.error_msg}`);
             //return;
           }
@@ -52,19 +52,24 @@
     };
     
     // 결제 정보 저장
-   async function savePayment(data) {
+   async function savePayment(rsp) {
+	   console.log("savePayment in!!");
 	    try {
+			
+			console.log("try in!");
 	        // 필요한 데이터 구성
 	        let postData = {
-	            merchantUid: data.merchant_uid,
-	            userId: data.buyer_name,
+	            merchantUid: rsp.merchant_uid,
+	            userId: rsp.buyer_name,
 	            productId: productId,
-	            productTitle: data.name,
-	            totalPrice: data.paid_amount,
-	            paymentStatus: data.status,
+	            productTitle: rsp.name,
+	            totalPrice: rsp.paid_amount,
+	            paymentStatus: rsp.status,
 	            orderUserId: orderSellerId
 	        };
 	
+	
+			console.log("post Data가 들어올까요?" + JSON.stringify(postData));
 	        // fetch를 이용한 비동기 POST 요청
 	        let response = await fetch('/paySuccess', {
 	            method: 'POST',
@@ -75,17 +80,17 @@
 	        });
 	
 
-	        if (!response.ok) {
-				console.log("!response.ok")
-	            throw new Error('Network response was not ok');
+			console.log("if문 시작 직전!!");
+	        if (response.ok) {
+				console.log("결제 정보 저장 완료")
+	            
+	            // 어떤 로직을 넣어줄까요?
+	            window.location.href="/complete/"+postData.merchantUid;
+	        }else {
+	            console.error("실패");
 	        }
-	
-	        const data = await response.json();
-	        console.log(""+data);
-	
-
-	    } catch (error) {
-			console.log("try catch :  catch");
+	    } catch (e) {
+	        console.error("실패", e.message);
 	    }
 	}
     
