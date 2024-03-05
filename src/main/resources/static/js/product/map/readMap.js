@@ -1,4 +1,4 @@
-var purchased = document.getElementById('paidYn');  
+var purchased = document.getElementById('paidYn').value;  
 
 console.log("구매여부 : " + purchased);
 let locationInfoList = "";
@@ -34,9 +34,9 @@ $.ajax({
 				i, data[i]);
 			bounds.extend(new kakao.maps.LatLng(data[i].lat,
 				data[i].lng));
-
+				
 			// <div id = locationList> 목록 추가 로직
-			if (purchased == true) {
+			if (purchased == "true") {
 				setCheckLocationList(data, i);
 			} else {
 				hideMarkers();

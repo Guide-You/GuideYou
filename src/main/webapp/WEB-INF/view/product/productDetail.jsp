@@ -161,12 +161,6 @@
 		<div class="col-lg-12">
 			<div class="h-100 rounded">
 				<div id="map" style="width: 100%; height: 350px;"></div>
-				<p>
-					<button onclick="hideMarkers()">마커 감추기</button>
-					<button onclick="showMarkers()">마커 보이기</button>
-				</p>
-				<em>클릭한 위치에 마커가 표시됩니다!</em>
-
 				<div id="locationList"></div>
 			</div>
 		</div>
