@@ -52,7 +52,7 @@
 	<div class="col-lg-12 detail--title--info" style="margin-top: 20px">
 		<span id="title--writer">작성자 : ${product.nickName}</span> <span
 			id="title--siren"><img src="/img/Siren.png" alt="siren" /></span> <span
-			id="title--like"><img src="/img/like.png" alt="like" /> </span>
+			id="title--like"><img src="/img/unlike.png" alt="like" /> </span>
 	</div>
 	<div class="title--rate--price">
 		<span class="title--rate">${productAvg.avgScore}</span> <span
@@ -69,7 +69,7 @@
 	</h6>
 </div>
 <!-- Purchase detail End -->
-
+<input type="hidden" name="loginId" id="login--id" value="${principal.id}">
 <!-- Request Info to Server -->
 <form id="send--detail--form">
 	<input type="hidden" name="productId" id="product--id"

@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.guideyou.dto.wishList.WishListProductUserDTO;
+import com.guideyou.repository.entity.wishList.WishList;
 
 
 /**
@@ -25,7 +26,12 @@ public interface WishListRepository {
 	// userId로 장바구니, 상품정보, 사용자 이름 리스트 가져오는 쿼리
 	public List<WishListProductUserDTO> findwishListProductUserByUserId(Map<String, Object> params);
 	
+	public WishList findwishByProductIdAndUserId(Map<String, Object> params);
+
 	public Long getWishListListTotalCount (Integer userId);
 	
+	public int insert(WishList wishList);
+
+	public int delete(WishList wishList);
 
 }

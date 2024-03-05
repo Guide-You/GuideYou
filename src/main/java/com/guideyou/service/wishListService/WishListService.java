@@ -8,13 +8,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
 import com.guideyou.dto.payment.PurchasedProductInfoDTO;
+import com.guideyou.dto.wishList.WishListDTO;
 import com.guideyou.dto.wishList.WishListProductUserDTO;
+import com.guideyou.handler.exception.CustomRestfulException;
+import com.guideyou.repository.entity.wishList.WishList;
 import com.guideyou.repository.interfaces.wishList.WishListRepository;
+import com.guideyou.utils.Define;
 
 /**
   * @FileName : WishListService.java
@@ -56,5 +62,48 @@ public class WishListService {
 		PageRes<WishListProductUserDTO> pageRes = new PageRes<>(WishListProductUserDTOList, page, totalElements, size);
 
 		return pageRes;
+	}
+	
+	/**
+	  * @Method Name : insert
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : insert
+	  */
+	@Transactional
+	public int insert(WishListDTO input) {
+		WishList wishList = WishList.builder()
+				.userId(input.getUserId())
+				.productId(input.getProductId())
+				.build();
+		int result = wishListRepository.insert(wishList);
+		if(result == 0) {
+			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	/**
+	  * @Method Name : delete
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : productId 와 userId 받아서 삭제 delete
+	  */
+	@Transactional
+	public int delete(WishListDTO input) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", input.getUserId());
+		map.put("productId", input.getProductId());
+		WishList findWish = wishListRepository.findwishByProductIdAndUserId(map);
+		if(findWish == null) {
+			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		int result = wishListRepository.delete(findWish);
+		if(result == 0) {
+			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
 	}
 }
