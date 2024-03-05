@@ -1,6 +1,7 @@
 package com.guideyou.repository.interfaces.admin;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -105,13 +106,13 @@ public interface AdminRepository {
 
 	
 	
+	// 24.03.05 오늘 그래프 정보 조회
+	public List<Map<String, Object>> chartInformationListD();
 	
-	// 24.03.03 날짜 검색 기능
-	public List<ProductDto> selectProductList();
-
-
-	// 24.03.03 날짜 검색 기능
-	public List<ProductDto> selectProductList(@Param ("selectedValue") String selectedValue);
-		
+	// 24.03.05 이번 달 그래프 정보 조회
+	public List<Map<String, Object>> chartInformationListM();
+	
+	// 24.03.05 올해 그래프 정보 조회
+	public List<Map<String, Object>> chartInformationListY();
 	
 }

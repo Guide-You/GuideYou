@@ -156,13 +156,11 @@ public class ProductController {
 	    List<ProductReviewDto> reviewList = productService.findReviewByProduct(productId);
 	    model.addAttribute("reviewList", reviewList);
 	   
-	    // TODO : 2024 03 05 명근씨 이거 안쓰이고있는거같아요^^ 확인 해주세요 ^^
-	    ProductDetailDto productBtn = productService.findByProductId(productId);
-	    model.addAttribute("productBtn", productBtn);
 	    
 	    ProductReviewDto productAvg = productService.productAvg(productId);
     	model.addAttribute("productAvg", productAvg);
-			
+		
+    	// TODO: line 164, 165 -> Boolean 임포트 안되서 boolean으로 변경 확인 해주세요. 
     	boolean paidYn = false;
     	boolean wishYn = false;
     	User principal = (User) session.getAttribute(Define.PRINCIPAL);
