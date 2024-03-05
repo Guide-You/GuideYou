@@ -127,7 +127,7 @@
 	</select>
 
 	<select id="getPaidProductIdByUserIdAndProductId" parameterType="map" resultType="Integer">
-		select b.product_id from payment a join
+		select count(*) from payment a join
 		payment_detail b on a.merchant_uid = b.merchant_uid where a.user_id =
 		#{userId} and a.payment_status = "paid" and product_id = #{productId};
 	</select>
