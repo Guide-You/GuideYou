@@ -14,19 +14,33 @@
 
 <!-- Detail Title Start -->
 <!-- Title Image 확인 후 사이즈 변경 필요-->
-<p>${paidYn} </p>
+<input type="hidden" name="paidYn" id="paidYn" value="${paidYn}"> 
 <div class="container py-5 product--title text-center">
 	<div id="carouselExample" class="carousel slide"
 		data-bs-ride="carousel" data-bs-interval="5000">
 		<div class="carousel-inner">
 			<!-- Iterate over the image list to create carousel slides -->
 			<c:forEach items="${imgList}" var="img" varStatus="loop">
-				<div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
-					<img class="d-block w-100"
-						src="/images/upload/${img.uploadFileName}"
-						alt="Slide ${loop.index + 1}"
-						style="max-height: 400px; max-width: 100%; object-fit: contain;">
-				</div>
+				<c:choose>
+					<c:when test="${paidYn} eq false">
+						<c:if test="${not empty img.thumbnail}">
+							<div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+								<img class="d-block w-100"
+									src="/images/upload/${img.uploadFileName}"
+									alt="Slide ${loop.index + 1}"
+									style="max-height: 400px; max-width: 100%; object-fit: contain;">
+							</div>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+						<div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+							<img class="d-block w-100"
+								src="/images/upload/${img.uploadFileName}"
+								alt="Slide ${loop.index + 1}"
+								style="max-height: 400px; max-width: 100%; object-fit: contain;">
+						</div>
+					</c:otherwise>							
+				</c:choose>
 			</c:forEach>
 		</div>
 		<!-- Add previous and next buttons for carousel navigation -->
@@ -42,7 +56,6 @@
 		</button>
 	</div>
 </div>
-
 <!-- Rest of your code -->
 
 <div class="container title--title">
@@ -80,7 +93,7 @@
 	<input type="hidden" name="productTitle" id="product--title" value="${product.productTitle}"> 
 	<input type="hidden" name="productSellerId" id="product--seller--id" value="${product.userId}">
 	<input type="hidden" name="productPrice" id="product--price" value="${product.price}">
-	<input type="hidden" name="thumbnailFileName" id="product--photo" value="${thumbnailFileName }"> <!-- value값 넣어주기 -->
+	<input type="hidden" name="productPhoto" id="product--photo" value=""> <!-- value값 넣어주기 -->
 	<input type="hidden" name="productAvg" id="title--rate" value="${productAvg.avgScore}">
 </form>
 
@@ -96,7 +109,7 @@
 
 <!-- Detail Content Start -->
 <c:choose>
-	<c:when test="${principal == null}">
+	<c:when test="${principal == null || paidYn eq false}">
 		<div class="container">
 			<div class="card content--card">
 				<div class="card-body">

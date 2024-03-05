@@ -1,4 +1,6 @@
-var purchased = true;
+var purchased = document.getElementById('paidYn');  
+
+console.log("구매여부 : " + purchased);
 let locationInfoList = "";
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 	mapOption = {
