@@ -40,4 +40,6 @@ public interface ProductPhotosRepository {
 	
 	// 24.02.28 thumbnail 의 originalName 찾기
 	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId);
+	
+	public String findThumbnailFileNameByProductId(Integer productId);
 }
