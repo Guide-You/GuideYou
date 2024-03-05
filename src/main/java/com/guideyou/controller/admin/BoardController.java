@@ -30,6 +30,14 @@ import jakarta.servlet.http.HttpSession;
  * @변경이력 :
  * @프로그램 설명 : 관리자 글 insert test 중입니다.
  */
+/**
+  * @FileName : BoardController.java
+  * @Project : GuideYou
+  * @Date : 2024. 3. 5. 
+  * @작성자 : 김수현
+  * @변경이력 :
+  * @프로그램 설명 :
+  */
 @Controller
 @RequestMapping("/company")
 public class BoardController {
@@ -55,18 +63,18 @@ public class BoardController {
 		System.out.println("==================================="+loginUser);
 		inputData.setWriterId(loginUser.getId());
 		
-		inputData.setType("test");
+		inputData.setType("QnA"); // board는 user만 작성하므로 type은 QnA로 고정
 		inputData.getTitle();
 		inputData.getContent();
 
 		System.out.println("정답입니다!" + inputData.toString());
 		boardService.insert(inputData);
 
-		return "redirect:/company/testList";
+		return "redirect:/company/testList"; // 등록 후 해당 글 detailview로 수정하기
 	}
 
 	// 글 목록 BoardPageRq | BoardPageS
-	@GetMapping("/testList")
+	@GetMapping("/boardList")
 	public String boardList(PageReq pageReq, Model model) {
 		// 페이징
 		if (pageReq.getPage() <= 0) {
@@ -91,7 +99,7 @@ public class BoardController {
 		model.addAttribute("endPage", pageRes.getEndPage());
 
 		System.out.println("BoardDto" + "여기까지오나");
-		return "/company/testList";
+		return "/company/boardList";
 	}
 
 	/**
@@ -112,7 +120,7 @@ public class BoardController {
 	}
 
 	// 글 디테일 뷰 페이지
-	@GetMapping("/testDetail/{boardId}")
+	@GetMapping("/boardDetail/{boardId}")
 	public String selectDeatil(@PathVariable("boardId") Integer boardId, Model model) {
 		System.out.println("boardId= " + boardId);
 		Board board = boardService.findById(boardId);
@@ -139,7 +147,7 @@ public class BoardController {
 		System.out.println("여기로 수정되나요" + board.toString()); // 반드시 이해햐기!
 		return "redirect:/company/testDetail/" + boardId;
 	}
-
+	
 	// 환불정책 페이지 화면 띄우기
 	@GetMapping("/policy")
 	public void policyPage() {
