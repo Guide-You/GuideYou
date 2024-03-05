@@ -171,8 +171,7 @@ public class ProductController {
     	if(principal != null) {
     		
     		int paidProductId = paymentService.getPaidProductIdByUserIdAndProductId(principal.getId(), productId);
-    		if(paidProductId != 0) {
-    			System.out.println("이거 안타?");
+    		if(paidProductId != 0 || product.getUserId() == principal.getId()) {
     			paidYn = true;
     		}
     		WishList wishResult = wishListService.readWishListByUserIdAndProductId(principal.getId(), productId);
