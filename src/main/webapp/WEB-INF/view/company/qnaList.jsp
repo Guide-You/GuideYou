@@ -122,7 +122,8 @@
             </ol>
         </div>
         <!-- Header End -->
-        <!-- 게시물 리스트 -->
+        
+        <!-- board 게시물 리스트 -->
         
         <div class="table container-fluid contact py-5">
             <table class="table table-hover">
@@ -135,7 +136,6 @@
                     <th scope="col">내용</th>
                     <th scope="col">조회수</th>
                     <th scope="col">작성시간</th>
-                    
                   </tr>
                 </thead>
                 <tbody>

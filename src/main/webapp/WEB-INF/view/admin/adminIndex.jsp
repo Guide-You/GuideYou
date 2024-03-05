@@ -94,11 +94,28 @@
 				</ul></li>
 			<!-- End Forms Nav -->
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-journal-text"></i><span>수익</span><i
-					class="bi bi-chevron-down ms-auto"></i>
-			</a></li>
+			<li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>수익</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="icons-bootstrap.html">
+              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
+            </a>
+          </li>
+          <li>
+            <a href="icons-remix.html">
+              <i class="bi bi-circle"></i><span>Remix Icons</span>
+            </a>
+          </li>
+          <li>
+            <a href="icons-boxicons.html">
+              <i class="bi bi-circle"></i><span>Boxicons</span>
+            </a>
+          </li>
+        </ul>
+      </li>
 
 
 			<li class="nav-item"><a class="nav-link collapsed"
@@ -122,32 +139,27 @@
 
 			<li class="nav-item"><a class="nav-link collapsed"
 				data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-bar-chart"></i><span>관리자 QnA 관리</span><i
+					<i class="bi bi-bar-chart"></i><span>관리자 게시판 관리</span><i
 					class="bi bi-chevron-down ms-auto"></i>
 			</a>
 				<ul id="charts-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a href="charts-chartjs.html"> <i class="bi bi-circle"></i><span>QnA
-								관리자 댓글 등록</span>
+					<li><a href="/admin/adminComment"> <i class="bi bi-circle"></i><span>QnA
+								관리자 권한 댓글 등록 삭제</span>
 					</a></li>
-					<li><a href="charts-apexcharts.html"> <i
-							class="bi bi-circle"></i><span>관리자 권한 댓글 삭제</span>
+					<li><a href="/admin/adminList"> <i
+							class="bi bi-circle"></i><span>관리자 권한 FaQ 관리</span>
 					</a></li>
+					<li><a href="/admin/adminList"> <i
+							class="bi bi-circle"></i><span>관리자 권한 Notice 관리</span>
+					</a></li>
+					
 
 				</ul></li>
 			<!-- End Charts Nav -->
 
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="users-profile.html"> <i class="bi bi-person"></i> <span>관리자
-						Notice page</span>
-			</a></li>
-			<!-- End Profile Page Nav -->
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="pages-faq.html"> <i class="bi bi-question-circle"></i> <span>관리자
-						FAQ</span>
-			</a></li>
+			
 			<!-- End F.A.Q Page Nav -->
 		</ul>
 

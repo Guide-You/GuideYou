@@ -33,33 +33,29 @@
                   <div class="tab-content mb-5">
                       <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                           <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.
-                              Susp endisse ultricies nisi vel quam suscipit </p>
+                              Susp endisse detail view</p>
                           <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic
                               icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
                       </div>
                       <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                           <div class="d-flex">
-                              <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
                               <div class="">
-                                  <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                               <p class="mb-2" style="font-size: 14px;">댓글 등록 날짜</p>
                                   <div class="d-flex justify-content-between">
-                                      <h5>Jason Smith</h5>
-                                      
+                                      <h5>writer_id</h5>
                                   </div>
                                   <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic
-                                      words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                      words etc. comment content</p>
                               </div>
                           </div>
                           <div class="d-flex">
-                              <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
                               <div class="">
-                                  <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                  <p class="mb-2" style="font-size: 14px;">댓글등록날짜</p>
                                     <div class="d-flex justify-content-between">
-                                        <h5>Sam Peters</h5>
-                                        
+                                        <h5>writer_id</h5>
                                     </div>
                                     <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic
-                                        words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                        words etc. comment content</p>
                                 </div>
                             </div>
                         </div>
