@@ -1,4 +1,4 @@
-package com.guideyou.controller;
+package com.guideyou.controller.payment;
 
 import java.io.Console;
 
@@ -87,7 +87,7 @@ public class PaymentController {
 	  * @Method 설명 : detail 단일 product 정보 paymentPage로 redirect 할 method
 	  */
 	// 
-	@PostMapping("/order")
+	@GetMapping("/order")
 	public String processOrder(Model model, OrderDto orderDto) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
@@ -321,20 +321,6 @@ public class PaymentController {
 			
 			// TODO : 환불 클라이언트, DB 모두 완료 -> 이후에 어떻게 처리할건지 고민해보기!
 			
-	}
-	
-	/**
-	  * @Method Name : paymentHistoryListPage
-	  * @작성일 : 2024. 3. 3.
-	  * @작성자 : 박경진
-	  * @변경이력 : 
-	  * @Method 설명 : myPage PaymentHistoryListPage 출력
-	  */
-	// TODO : 20240303 USER 컨트롤러로 옮길지 ? 
-	@GetMapping("/paymentHistoryList")
-	public String paymentHistoryListPage(){
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		return "/user/userPaymentHistoryList";
 	}
 	
 	/**

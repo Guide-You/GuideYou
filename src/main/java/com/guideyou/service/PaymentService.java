@@ -13,6 +13,7 @@ import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
 import com.guideyou.dto.payment.PaymentCompleteDto;
 import com.guideyou.dto.payment.PaymentDto;
+import com.guideyou.dto.payment.PaymentHistoryListDto;
 import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.dto.payment.RefundDto;
 import com.guideyou.dto.product.UploadProductsInfoDTO;
@@ -192,6 +193,34 @@ public class PaymentService {
 		map.put("userId", userId);
 		int result = paymentRepository.getPaidProductIdByUserIdAndProductId(map);
 		return result;
+	}
+	
+	/**
+	  * @Method Name : getPaymentHistoryList
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 박경진
+	  * @변경이력 : 
+	  * @Method 설명 :
+	  */
+	public PageRes<PaymentHistoryListDto> getPaymentHistoryList(PageReq pageReq, Integer userId) {
+	
+		int page = pageReq.getPage();
+		int size = pageReq.getSize();
+		int offset = (page - 1) * size; // 오프셋 계산
+
+		// 총 데이터 개수 조회
+		long totalElements = paymentRepository.getPaymentHistoryListTotalCount(userId);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("offset", offset);
+		map.put("size", size);
+		
+		List<PaymentHistoryListDto> purchasedProductInfoList = paymentRepository.getPaymentHistoryList(map);
+
+		PageRes<PaymentHistoryListDto> pageRes = new PageRes<>(purchasedProductInfoList, page, totalElements, size);
+
+		return null;
 	}
 	
 }

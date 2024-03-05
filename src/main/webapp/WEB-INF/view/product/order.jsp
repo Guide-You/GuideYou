@@ -28,7 +28,7 @@ pageEncoding="UTF-8"%>
                       <th scope="row">
                         <div class="d-flex align-items-center mt-2">
                           <img
-                            src="/images/upload/${order.uploadFileName}"
+                            src="/images/upload/${order.thumbnailFileName}" 
                             class="img-fluid rounded-circle"
                             style="width: 90px; height: 90px"
                             alt=""

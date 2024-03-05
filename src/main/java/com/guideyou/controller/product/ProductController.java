@@ -152,9 +152,13 @@ public class ProductController {
 	    List<ProductPhotoDto> imgList = productService.findByProductImg(productId);
 	    model.addAttribute("imgList", imgList);	   
 	    
+	    String thumbnailFileName = productService.findThumbnailFileNameByProductId(productId);
+	    model.addAttribute("thumbnailFileName", thumbnailFileName);
+	    
 	    List<ProductReviewDto> reviewList = productService.findReviewByProduct(productId);
 	    model.addAttribute("reviewList", reviewList);
 	   
+	    // TODO : 2024 03 05 명근씨 이거 안쓰이고있는거같아요^^ 확인 해주세요 ^^
 	    ProductDetailDto productBtn = productService.findByProductId(productId);
 	    model.addAttribute("productBtn", productBtn);
 	    

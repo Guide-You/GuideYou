@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.guideyou.dto.payment.PaymentCompleteDto;
 import com.guideyou.dto.payment.PaymentDto;
+import com.guideyou.dto.payment.PaymentHistoryListDto;
 import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.dto.payment.RefundDto;
 import com.guideyou.repository.entity.Payment;
@@ -31,4 +32,6 @@ public interface PaymentRepository {
 	public int updatePaymentOnRefund(RefundDto refundDto);
 	public PaymentCompleteDto findPaymentAndPaymentDetailMerchantUid(String merchantUid);
 	public int getPaidProductIdByUserIdAndProductId(Map<String, Object> params);
+	public List<PaymentHistoryListDto> getPaymentHistoryList(Map<String, Object> params);
+	public Long getPaymentHistoryListTotalCount(Integer userId);
 }

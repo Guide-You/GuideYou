@@ -80,7 +80,7 @@
 	<input type="hidden" name="productTitle" id="product--title" value="${product.productTitle}"> 
 	<input type="hidden" name="productSellerId" id="product--seller--id" value="${product.userId}">
 	<input type="hidden" name="productPrice" id="product--price" value="${product.price}">
-	<input type="hidden" name="productPhoto" id="product--photo" value=""> <!-- value값 넣어주기 -->
+	<input type="hidden" name="thumbnailFileName" id="product--photo" value="${thumbnailFileName }"> <!-- value값 넣어주기 -->
 	<input type="hidden" name="productAvg" id="title--rate" value="${productAvg.avgScore}">
 </form>
 
