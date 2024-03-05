@@ -1,55 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guideyou.repository.interfaces.product.ProductPhotosRepository">
+<mapper
+	namespace="com.guideyou.repository.interfaces.product.ProductPhotosRepository">
 
 	<insert id="insert">
-		insert into product_photos(product_id, product_photo_path, origin_file_name, upload_file_name, thumbnail)
-		values(#{productId}, #{productPhotoPath}, #{originFileName}, #{uploadFileName}, #{thumbnail})
+		insert into product_photos(product_id,
+		product_photo_path, origin_file_name, upload_file_name, thumbnail)
+		values(#{productId}, #{productPhotoPath}, #{originFileName},
+		#{uploadFileName}, #{thumbnail})
 	</insert>
-	
+
 	<delete id="deleteByPhoto">
-		delete from product_photos where product_id = #{productId}
+		delete from product_photos where product_id =
+		#{productId}
 	</delete>
-	
+
 	<delete id="deleteMutiPhoto">
-		 delete from product_photos where id = #{id}	     
-	</delete>	
-	
-	<select id="findAllByProductId" resultType="com.guideyou.dto.product.ProductDto">
-		select * from product_photos where product_id = #{productId} and thumbnail is null
+		delete from product_photos where id = #{id}
+	</delete>
+
+	<select id="findAllByProductId"
+		resultType="com.guideyou.dto.product.ProductDto">
+		select * from product_photos where product_id =
+		#{productId} and thumbnail is null
 	</select>
-	
-	<select id="findByProductId" resultType="com.guideyou.repository.entity.ProductPhotos">
+
+	<select id="findByProductId"
+		resultType="com.guideyou.repository.entity.ProductPhotos">
 		select * from product_photos where product_id = #{id}
 	</select>
-	
-	<select id="findAll" resultType="com.guideyou.repository.entity.ProductPhotos">
+
+	<select id="findAll"
+		resultType="com.guideyou.repository.entity.ProductPhotos">
 		select * from product_photos
 	</select>
-	
-	<select id="findPhoto" resultType="com.guideyou.repository.entity.ProductPhotos">
-		SELECT upload_file_name 
-		FROM product_photos 
-		WHERE product_id = #{productId} 
-		ORDER BY created_at 
-		DESC LIMIT 1 
+
+	<select id="findPhoto"
+		resultType="com.guideyou.repository.entity.ProductPhotos">
+		SELECT upload_file_name
+		FROM product_photos
+		WHERE product_id = #{productId}
+		ORDER BY created_at
+		DESC LIMIT 1
 	</select>
-	
-	<select id="selectPhoto" resultType="com.guideyou.dto.product.ProductDto">
+
+	<select id="selectPhoto"
+		resultType="com.guideyou.dto.product.ProductDto">
 		SELECT p.*
-       , (
-          SELECT ph.upload_file_name FROM product_photos ph WHERE product_id = p.id
-          ORDER BY ph.id LIMIT 1
-        ) AS uploadFileName 
-              FROM product p                 
-       ORDER BY p.id DESC
+		, (
+		SELECT ph.upload_file_name FROM product_photos ph WHERE product_id = p.id
+		ORDER BY ph.id LIMIT 1
+		) AS uploadFileName
+		FROM product p
+		ORDER BY p.id DESC
 	</select>
-	
-	<!-- 24.02.28 thumbnail 의 originalName 찾기 -->	
-	<select id="findOriginNameByThumbnail" resultType="com.guideyou.dto.product.ProductThumbnailDto">
-		SELECT ph.id, ph.product_id, ph.origin_file_name, ph.upload_file_name 
-        FROM product AS p 
-        LEFT JOIN product_photos AS ph ON p.id = ph.product_id 
-        WHERE ph.thumbnail = 'y' and p.id = #{productId}
+
+	<!-- 24.02.28 thumbnail 의 originalName 찾기 -->
+	<select id="findOriginNameByThumbnail"
+		resultType="com.guideyou.dto.product.ProductThumbnailDto">
+		SELECT ph.id, ph.product_id, ph.origin_file_name,
+		ph.upload_file_name
+		FROM product AS p
+		LEFT JOIN product_photos AS ph ON p.id = ph.product_id
+		WHERE ph.thumbnail = 'y' and p.id = #{productId}
+	</select>
+
+	<select id="findThumbnailFileNameByProductId"
+		resultType="String">
+		select upload_file_name from product a left join
+		product_photos b on a.id = b.product_id where a.id = #{productId} and
+		b.thumbnail is not null
 	</select>
 </mapper>
