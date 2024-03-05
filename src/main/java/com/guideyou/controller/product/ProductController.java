@@ -179,7 +179,7 @@ public class ProductController {
     	
     	model.addAttribute("paidYn", paidYn);
     	model.addAttribute("wishYn", wishYn);
-    	
+    	 
 		return "product/productDetail";
 	}
 		
