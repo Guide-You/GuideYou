@@ -1,13 +1,11 @@
 package com.guideyou.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,9 +16,8 @@ import com.guideyou.dto.payment.PurchasedProductInfoDTO;
 import com.guideyou.dto.product.UploadProductsInfoDTO;
 import com.guideyou.dto.user.SignUpDTO;
 import com.guideyou.dto.user.UserDTO;
+import com.guideyou.dto.wishList.WishListDTO;
 import com.guideyou.dto.wishList.WishListProductUserDTO;
-import com.guideyou.handler.exception.CustomRestfulException;
-import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.User;
 import com.guideyou.repository.entity.user.UserPhotos;
 import com.guideyou.service.PaymentService;
@@ -417,4 +414,39 @@ public class UserController {
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 		return "redirect:/main";
 	}
+	
+	/**
+	  * @Method Name : insertWishList
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 상품에서 wishList(하트) 클릭 시 호출 됨
+	  */
+	@GetMapping("/saveWishList")
+	@ResponseBody
+	public int insertWishList(@RequestParam Integer userId, @RequestParam Integer productId) {
+		WishListDTO input = new WishListDTO();
+		input.setUserId(userId);
+		input.setProductId(productId);
+		int result = wishListService.insert(input);
+		return result;
+	}
+	
+	/**
+	  * @Method Name : deleteWishList
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 상품에서 wishList(하트) 클릭 시 호출 됨
+	  */
+	@GetMapping("/deleteWishList")
+	@ResponseBody
+	public int deleteWishList(@RequestParam Integer userId, @RequestParam Integer productId) {
+		WishListDTO input = new WishListDTO();
+		input.setUserId(userId);
+		input.setProductId(productId);
+		int result = wishListService.delete(input);
+		return result;
+	}
+	
 }
