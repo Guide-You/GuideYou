@@ -37,8 +37,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		
-		// TODO : 결제 session 세팅해야함. 결제 Exception 작성해야함. 결제 validation 추가 필요.
-		
 		if(principal == null) {
 //			 response.sendRedirect("/user/sign-in");
 

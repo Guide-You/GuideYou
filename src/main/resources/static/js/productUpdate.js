@@ -114,7 +114,6 @@ $(document).ready(function() {
 			type : 'GET',
 			data : {
 				productId : productId
-			// TODO : 상품 합치면 실제 productId 입력해야함
 			},
 			success : function(data) {
 				var bounds = new kakao.maps.LatLngBounds();

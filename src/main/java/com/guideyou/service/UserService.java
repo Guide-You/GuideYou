@@ -323,9 +323,6 @@ public class UserService {
 				.email(googleProfileRespDTO.getEmail())
 				.phone(Define.DEFAULT_PHONENUMBER)
 				.comment(null).build();
-
-		// TODO : 이미지 불러오기 해야함 - 최장호 - 240220
-		
 		return signUpDTO;
 	}
 	
