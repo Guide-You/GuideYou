@@ -5,7 +5,11 @@ public class Define {
 
 	public static final String PRINCIPAL = "principal";
 	public static final String PRINCIPAL_PHOTO = "principalPhoto";
+
+	public static final String DEFAULT_PHOTO = "defaultPhoto.png";
+	public static final String DEFAULT_PHOTO_PATH = "/img/default/profile/";
 	
+
 
 	public static final String UPLOAD_FILE_DERECTORY = "c:\\wor_spring2\\upload";
 	public static final int MAX_FILE_SIZE = 1024 * 1024 * 20;

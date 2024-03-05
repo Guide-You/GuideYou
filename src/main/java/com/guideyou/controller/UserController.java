@@ -194,6 +194,9 @@ public class UserController {
 		profileUpdateUser.setPhone(userDTO.getPhone());
 		
 		int photoResult = userPhotosService.saveUserPhotos(profileUpdateUser, file);
+		httpSession.removeAttribute(Define.PRINCIPAL_PHOTO);
+		UserPhotos userPhotos = userPhotosService.readByUserId(profileUpdateUser.getId());
+		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
 		
 		// 유저 업데이트 서비스 생성
 		int result = userService.updateUserProfile(profileUpdateUser, userDTO);
@@ -239,6 +242,9 @@ public class UserController {
 		User signUpUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
 		// 유저 업데이트 서비스 생성
 		int photoResult = userPhotosService.saveUserPhotos(signUpUser, file);
+		httpSession.removeAttribute(Define.PRINCIPAL_PHOTO);
+		UserPhotos userPhotos = userPhotosService.readByUserId(signUpUser.getId());
+		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
 		int result = userService.updateUserProfile(signUpUser, userDTO);
 		
 		return "redirect:/main";
@@ -308,7 +314,13 @@ public class UserController {
 		}
 		
 		UserPhotos userPhotos = userPhotosService.readByUserId(user.getId());
+		if(userPhotos == null) {
+			userPhotos = new UserPhotos();
+			userPhotos.setProfilePhoto(Define.DEFAULT_PHOTO_PATH);
+			userPhotos.setUploadFileName(Define.DEFAULT_PHOTO);
+		}
 		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
+		System.out.println("최장호 : " +httpSession.getAttribute(Define.PRINCIPAL_PHOTO).toString());
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 
 		return "redirect:/main";
@@ -348,6 +360,11 @@ public class UserController {
 		}
 		
 		UserPhotos userPhotos = userPhotosService.readByUserId(user.getId());
+		if(userPhotos == null) {
+			userPhotos = new UserPhotos();
+			userPhotos.setProfilePhoto(Define.DEFAULT_PHOTO_PATH);
+			userPhotos.setUploadFileName(Define.DEFAULT_PHOTO);
+		}
 		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 		return "redirect:/main";
@@ -391,6 +408,11 @@ public class UserController {
 			}
 		}
 		UserPhotos userPhotos = userPhotosService.readByUserId(user.getId());
+		if(userPhotos == null) {
+			userPhotos = new UserPhotos();
+			userPhotos.setProfilePhoto(Define.DEFAULT_PHOTO_PATH);
+			userPhotos.setUploadFileName(Define.DEFAULT_PHOTO);
+		}
 		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 		return "redirect:/main";

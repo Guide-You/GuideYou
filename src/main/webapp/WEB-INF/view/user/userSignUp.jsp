@@ -13,9 +13,16 @@
 					<div class="form-icon">
 							<span class="icon-container">
 						    	<i class="icon icon-user"></i>
-						        <c:if test="${not empty principalPhoto}">
-							    	<img src="/images/upload/${principalPhoto.uploadFileName}" class="form-icon" />
-							    </c:if>
+						        <c:choose>
+								<c:when test="${not empty principalPhoto.id}">
+									<img src="/images/upload/${principalPhoto.uploadFileName}"
+									class="form-icon" />
+								</c:when>
+								<c:otherwise>
+									<img src="${principalPhoto.profilePhoto}${principalPhoto.uploadFileName}"
+									class="form-icon" />
+								</c:otherwise>
+							</c:choose>
 							</span>
 						    <input type="file" id="fileInput" name="file" style="display:none;" />
 					</div>
@@ -54,7 +61,27 @@
 </div>
 </div>
 <!--  Page End -->
+<script>
+	document.getElementById('fileInput').addEventListener('change', function() {
+		showImage.call(this);
+	});
 
+	function showImage() {
+		// 파일이 선택되었는지 확인
+		if (this.files && this.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				// 선택된 파일의 URL을 이미지 태그의 src 속성에 설정
+				var imageElement = document.querySelector('.form-icon img');
+				imageElement.src = e.target.result;
+			};
+
+			// 파일을 읽어서 DataURL로 변환
+			reader.readAsDataURL(this.files[0]);
+		}
+	}
+</script>
 
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
