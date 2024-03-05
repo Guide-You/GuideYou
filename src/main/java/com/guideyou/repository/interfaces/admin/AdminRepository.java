@@ -25,22 +25,93 @@ public interface AdminRepository {
 	// 24.02.29 최신 게시물 조회
 	public List<ProductDto> findLatestPosts();
 	
+	// 03.05 오늘 최신 게시물 조회
+	public List<ProductDto> findLatestPostsD();
+	
+	// 03.05 이번 달 최신 게시물 조회
+	public List<ProductDto> findLatestPostsM();
+	
+	// 03.05 올 해 최신 게시물 조회
+	public List<ProductDto> findLatestPostsY();
+	
+	
 	// 24.02.29 인기 상품 정보 조회
 	public List<ProductDto> findProductInfo();
 	
-	// 24.03.03 날짜 검색 기능
-	public List<ProductDto> selectProductList(@Param ("selectedValue") String selectedValue);
+	// 03.05 오늘 인기 상품 조회
+	public List<ProductDto> findProductInfoD();
+	
+	// 03.05 이번 달 인기 상품 조회
+	public List<ProductDto> findProductInfoM();
+	
+	// 03.05 올 해 인기 상품 조회
+	public List<ProductDto> findProductInfoY();
+	
+	
 	
 	// 24.03.03 상품 판매 개수 조회
 	public AdminDto selectPaymentInfo();
 	
+	// 03.03 오늘 상품 판매 개수 조회
+	public AdminDto selectPaymentInfoD();
+	
+	// 03.03 이번 달 상품 판매 개수 조회
+	public AdminDto selectPaymentInfoM();
+	
+	// 03.03 올해 상품 판매 개수 조회
+	public AdminDto selectPaymentInfoY();
+
+	
+	
 	// 24.03.03 상품 판매 총 액수 조회
 	public AdminDto selectTotalPriceInfo();
+	
+	// 24.03.03 오늘 상품 판매 총 액수 조회
+	public AdminDto selectTotalPriceInfoD();
+
+	// 24.03.03 이번 달 상품 판매 총 액수 조회
+	public AdminDto selectTotalPriceInfoM();
+
+	// 24.03.03 올해 상품 판매 총 액수 조회
+	public AdminDto selectTotalPriceInfoY();
+	
+	
 	
 	// 24.03.03 가입자 수 조회
 	public AdminDto selectTotalUserInfo();
 	
+	// 24.03.03 오늘 가입자 수 조회
+	public AdminDto selectTotalUserInfoD();
+
+	// 24.03.03 이번 달 가입자 수 조회
+	public AdminDto selectTotalUserInfoM();
+
+	// 24.03.03 올해 가입자 수 조회
+	public AdminDto selectTotalUserInfoY();
+		
+		
+		
 	// 24.03.03 게시글 조회
 	public List<BoardDto> selectBoardList();
+	
+	// 24.03.03 오늘 게시글 조회
+	public List<BoardDto> selectBoardListD();
+	
+	// 24.03.03 이번 달 게시글 조회
+	public List<BoardDto> selectBoardListM();
+	
+	// 24.03.03 올해 게시글 조회
+	public List<BoardDto> selectBoardListY();
+
+	
+	
+	
+	// 24.03.03 날짜 검색 기능
+	public List<ProductDto> selectProductList();
+
+
+	// 24.03.03 날짜 검색 기능
+	public List<ProductDto> selectProductList(@Param ("selectedValue") String selectedValue);
+		
 	
 }

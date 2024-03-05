@@ -1064,6 +1064,14 @@ h6 {
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
+.datatable-input {
+	display: none;
+}
+
+#dateTypeSelect {
+	margin-bottom: 20px;
+}
+
 .contact .info-box {
   padding: 28px 30px;
 }

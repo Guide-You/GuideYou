@@ -53,19 +53,9 @@
 			<ul class="d-flex align-items-center">
 				<li class="nav-item dropdown pe-3"><a
 					class="nav-link nav-profile d-flex align-items-center pe-0"
-					href="#" data-bs-toggle="dropdown">
-				</a> <!-- End Profile Iamge Icon -->
+					href="#" data-bs-toggle="dropdown"> </a> <!-- End Profile Iamge Icon -->
 
-					<ul
-						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-						
-
-						<li><a class="dropdown-item d-flex align-items-center"
-							href="#"> <i class="bi bi-box-arrow-right"></i> <span>Sign
-									Out</span>
-						</a></li>
-
-					</ul> <!-- End Profile Dropdown Items --></li>
+					
 				<!-- End Profile Nav -->
 
 			</ul>
@@ -103,6 +93,13 @@
 					</a></li>
 				</ul></li>
 			<!-- End Forms Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-journal-text"></i><span>수익</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a></li>
+
 
 			<li class="nav-item"><a class="nav-link collapsed"
 				data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -171,6 +168,14 @@
 				</ol>
 			</nav>
 		</div>
+
+		<div class="filter">
+			<select id="dateTypeSelect" class="form-select">
+				<option value="1">오늘</option>
+				<option value="2">이번 달</option>
+				<option value="3">올해</option>
+			</select>
+		</div>
 		<!-- End Page Title -->
 
 		<section class="section dashboard">
@@ -184,35 +189,58 @@
 						<div class="col-xxl-4 col-md-6">
 							<div class="card info-card sales-card">
 
-								<div class="filter">
-									<a class="icon" href="#" data-bs-toggle="dropdown"><i
-										class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-										<li class="dropdown-header text-start">
-											<h6>Filter</h6>
-										</li>
 
-										<li><a class="dropdown-item" href="/admin">오늘</a></li>
-										<li><a class="dropdown-item" href="#">이번달</a></li>
-										<li><a class="dropdown-item" href="#">올해</a></li>
-									</ul>
-								</div>
 
 								<div class="card-body">
-									<h5 class="card-title">
-										판매 <span>| 오늘</span>
-									</h5>
-
+									<c:choose>
+										<c:when test="${param.dateType == 1}">
+											<h5 class="card-title">
+												판매 <span>| 오늘</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 2}">
+											<h5 class="card-title">
+												판매 <span>| 이번 달</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 3}">
+											<h5 class="card-title">
+												판매 <span>| 올해</span>
+											</h5>
+										</c:when>
+										<c:otherwise>
+											<h5 class="card-title">
+												판매 <span>| 오늘</span>
+											</h5>
+										</c:otherwise>
+									</c:choose>
 									<div class="d-flex align-items-center">
 										<div
 											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 											<i class="bi bi-cart"></i>
 										</div>
-										<div class="ps-3">
-											<h6>${selectPayment.paymentCount}개</h6>
-
-
-										</div>
+										<c:choose>
+											<c:when test="${param.dateType == 1}">
+												<div class="ps-3">
+													<h6>${productList3.paymentCount}개</h6>
+												</div>
+											</c:when>
+											<c:when test="${param.dateType == 2}">
+												<div class="ps-3">
+													<h6>${productList3.paymentCount}개</h6>
+												</div>
+											</c:when>
+											<c:when test="${param.dateType == 3}">
+												<div class="ps-3">
+													<h6>${productList3.paymentCount}개</h6>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<div class="ps-3">
+													<h6>${productList3.paymentCount}개</h6>
+												</div>
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 
@@ -224,38 +252,61 @@
 						<div class="col-xxl-4 col-md-6">
 							<div class="card info-card revenue-card">
 
-								<div class="filter">
-									<a class="icon" href="#" data-bs-toggle="dropdown"><i
-										class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-										<li class="dropdown-header text-start">
-											<h6>Filter</h6>
-										</li>
 
-										<li><a class="dropdown-item" href="#">오늘</a></li>
-										<li><a class="dropdown-item" href="#">이번 달</a></li>
-										<li><a class="dropdown-item" href="#">올해</a></li>
-									</ul>
-								</div>
 
 								<div class="card-body">
-									<h5 class="card-title">
-										수익 <span>| 이번 달</span>
-									</h5>
+									<c:choose>
+										<c:when test="${param.dateType == 1}">
+											<h5 class="card-title">
+												수익 <span>| 오늘</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 2}">
+											<h5 class="card-title">
+												수익 <span>| 이번 달</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 3}">
+											<h5 class="card-title">
+												수익 <span>| 올해</span>
+											</h5>
+										</c:when>
+										<c:otherwise>
+											<h5 class="card-title">
+												수익 <span>| 오늘</span>
+											</h5>
+										</c:otherwise>
+									</c:choose>
 
 									<div class="d-flex align-items-center">
 										<div
 											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 											<i class="bi bi-currency-dollar"></i>
 										</div>
-										<div class="ps-3">
-											<h6>${selectTotalPrice.totalPrice}원</h6>
-
-
-										</div>
+										<c:choose>
+											<c:when test="${param.dateType == 1}">
+												<div class="ps-3">
+													<h6>${productList4.totalPrice}원</h6>
+												</div>
+											</c:when>
+											<c:when test="${param.dateType == 2}">
+												<div class="ps-3">
+													<h6>${productList4.totalPrice}원</h6>
+												</div>
+											</c:when>
+											<c:when test="${param.dateType == 3}">
+												<div class="ps-3">
+													<h6>${productList4.totalPrice}원</h6>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<div class="ps-3">
+													<h6>${productList4.totalPrice}원</h6>
+												</div>
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
-
 							</div>
 						</div>
 						<!-- End Revenue Card -->
@@ -265,35 +316,58 @@
 
 							<div class="card info-card customers-card">
 
-								<div class="filter">
-									<a class="icon" href="#" data-bs-toggle="dropdown"><i
-										class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-										<li class="dropdown-header text-start">
-											<h6>Filter</h6>
-										</li>
 
-										<li><a class="dropdown-item" href="#">오늘</a></li>
-										<li><a class="dropdown-item" href="#">이번 달</a></li>
-										<li><a class="dropdown-item" href="#">올해</a></li>
-									</ul>
-								</div>
 
 								<div class="card-body">
-									<h5 class="card-title">
-										가입자 <span>| 올해</span>
-									</h5>
-
+									<c:choose>
+										<c:when test="${param.dateType == 1}">
+											<h5 class="card-title">
+												가입자 <span>| 오늘</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 2}">
+											<h5 class="card-title">
+												가입자 <span>| 이번 달</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 3}">
+											<h5 class="card-title">
+												가입자 <span>| 올해</span>
+											</h5>
+										</c:when>
+										<c:otherwise>
+											<h5 class="card-title">
+												가입자 <span>| 오늘</span>
+											</h5>
+										</c:otherwise>
+									</c:choose>
 									<div class="d-flex align-items-center">
 										<div
 											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 											<i class="bi bi-people"></i>
 										</div>
-										<div class="ps-3">
-											<h6>${selectTotalUser.userCount}명</h6>
-
-
-										</div>
+										<c:choose>
+											<c:when test="${param.dateType == 1}">
+												<div class="ps-3">
+													<h6>${productList5.userCount}명</h6>
+												</div>
+											</c:when>
+											<c:when test="${param.dateType == 2}">
+												<div class="ps-3">
+													<h6>${productList5.userCount}명</h6>
+												</div>
+											</c:when>
+											<c:when test="${param.dateType == 3}">
+												<div class="ps-3">
+													<h6>${productList5.userCount}명</h6>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<div class="ps-3">
+													<h6>${productList5.userCount}명</h6>
+												</div>
+											</c:otherwise>
+										</c:choose>
 									</div>
 
 								</div>
@@ -306,29 +380,35 @@
 						<div class="col-12">
 							<div class="card">
 
-								<div class="filter">
-									<a class="icon" href="#" data-bs-toggle="dropdown"><i
-										class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-										<li class="dropdown-header text-start">
-											<h6>Filter</h6>
-										</li>
 
-										<li><a class="dropdown-item" href="#">오늘</a></li>
-										<li><a class="dropdown-item" href="#">이번 달</a></li>
-										<li><a class="dropdown-item" href="#">올해</a></li>
-									</ul>
-								</div>
 
 								<div class="card-body">
-									<h5 class="card-title">
-										Reports <span>/오늘</span>
-									</h5>
-
+									<c:choose>
+										<c:when test="${param.dateType == 1}">
+											<h5 class="card-title">
+												Reports <span>| 오늘</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 2}">
+											<h5 class="card-title">
+												Reports <span>| 이번 달</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 3}">
+											<h5 class="card-title">
+												Reports <span>| 올해</span>
+											</h5>
+										</c:when>
+										<c:otherwise>
+											<h5 class="card-title">
+												Reports <span>| 오늘</span>
+											</h5>
+										</c:otherwise>
+									</c:choose>
 									<!-- Line Chart -->
 									<div id="reportsChart"></div>
 
-<script>
+									<script>
 
 document.addEventListener("DOMContentLoaded", () => {
     // 초기 차트 생성
@@ -433,7 +513,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 								<div class="card-body">
-									<h5 class="card-title">최근 게시물</h5>
+									<c:choose>
+										<c:when test="${param.dateType == 1}">
+											<h5 class="card-title">
+												최근 게시물 <span>| 오늘</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 2}">
+											<h5 class="card-title">
+												최근 게시물 <span>| 이번 달</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 3}">
+											<h5 class="card-title">
+												최근 게시물 <span>| 올해</span>
+											</h5>
+										</c:when>
+										<c:otherwise>
+											<h5 class="card-title">
+												최근 게시물 <span>| 오늘</span>
+											</h5>
+										</c:otherwise>
+									</c:choose>
 									<table class="table table-borderless datatable">
 										<thead>
 											<tr>
@@ -445,16 +546,49 @@ document.addEventListener("DOMContentLoaded", () => {
 										</thead>
 
 										<tbody>
-											<c:forEach items="${findInfo}" var="info">
-												<tr>
-													<td>${info.nickName}</td>
-													<td><a href="#" class="text-primary">${info.title}</a></td>
-													<td>${info.price}</td>
-													<td><span class="badge bg-success">${info.createdAt}</span></td>
-												</tr>
-											</c:forEach>
+											<c:choose>
+												<c:when test="${param.dateType == 1}">
+													<c:forEach items="${productList}" var="post">
+														<tr>
+															<td>${post.nickName}</td>
+															<td><a href="#" class="text-primary">${post.title}</a></td>
+															<td>${post.price}</td>
+															<td><span class="badge bg-success">${post.createdAt}</span></td>
+														</tr>
+													</c:forEach>
+												</c:when>
+												<c:when test="${param.dateType == 2}">
+													<c:forEach items="${productList}" var="post">
+														<tr>
+															<td>${post.nickName}</td>
+															<td><a href="#" class="text-primary">${post.title}</a></td>
+															<td>${post.price}</td>
+															<td><span class="badge bg-success">${post.createdAt}</span></td>
+														</tr>
+													</c:forEach>
+												</c:when>
+												<c:when test="${param.dateType == 3}">
+													<c:forEach items="${productList}" var="info">
+														<tr>
+															<td>${info.nickName}</td>
+															<td><a href="#" class="text-primary">${info.title}</a></td>
+															<td>${info.price}</td>
+															<td><span class="badge bg-success">${info.createdAt}</span></td>
+														</tr>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<c:forEach items="${productList}" var="info">
+														<tr>
+															<td>${info.nickName}</td>
+															<td><a href="#" class="text-primary">${info.title}</a></td>
+															<td>${info.price}</td>
+															<td><span class="badge bg-success">${info.createdAt}</span></td>
+														</tr>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
 										</tbody>
-
 									</table>
 								</div>
 							</div>
@@ -463,49 +597,102 @@ document.addEventListener("DOMContentLoaded", () => {
 
 						<!-- Top Selling -->
 						<div class="col-12">
-						    <div class="card top-selling overflow-auto">
-						        <div class="filter">
-						            <select id="form-select">
-						                <option value="1">오늘</option>
-						                <option value="2">이번 달</option>
-						                <option value="3">올해</option>
-						            </select>
-						        </div>
-						        <div class="card-body pb-0">
-						            <h5 class="card-title">
-						                인기상품 <span>| 오늘</span>
-						            </h5>
-						            <style>
-						                .datatable-input {
-						                    display: none;
-						                }
-						            </style>
-						            <table class="table table-borderless datatable" id="productTable">
-						                <thead>
-						                    <tr>
-						                        <th scope="col">이미지</th>
-						                        <th scope="col">상품</th>
-						                        <th scope="col">가격</th>
-						                        <th scope="col">판매 수</th>
-						                        <th scope="col">수익</th>
-						                    </tr>
-						                </thead>
-						                <tbody>
-						                    <c:forEach items="${findProductInfo}" var="productInfo">
-						                        <tr>
-						                            <th scope="row">
-						                                <a href="#"><img src="/images/upload/${productInfo.uploadFileName}" alt=""></a>
-						                            </th>
-						                            <td><a href="#" class="text-primary fw-bold">${productInfo.introContent}</a></td>
-						                            <td>${productInfo.price}원</td>
-						                            <td class="fw-bold">${productInfo.soldCount}</td>
-						                            <td>${productInfo.revenue}원</td>
-						                        </tr>
-						                    </c:forEach>
-						                </tbody>
-						            </table>
-						        </div>
-						    </div>
+							<div class="card top-selling overflow-auto">
+
+								<div class="card-body pb-0">
+									<c:choose>
+										<c:when test="${param.dateType == 1}">
+											<h5 class="card-title">
+												인기상품 <span>| 오늘</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 2}">
+											<h5 class="card-title">
+												인기상품 <span>| 이번 달</span>
+											</h5>
+										</c:when>
+										<c:when test="${param.dateType == 3}">
+											<h5 class="card-title">
+												인기상품 <span>| 올해</span>
+											</h5>
+										</c:when>
+										<c:otherwise>
+											<h5 class="card-title">
+												인기상품 <span>| 오늘</span>
+											</h5>
+										</c:otherwise>
+									</c:choose>
+
+									<table class="table table-borderless datatable"
+										id="productTable">
+										<thead>
+											<tr>
+												<th scope="col">이미지</th>
+												<th scope="col">상품</th>
+												<th scope="col">가격</th>
+												<th scope="col">판매 수</th>
+												<th scope="col">수익</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:choose>
+												<c:when test="${param.dateType == 1}">
+													<c:forEach items="${productList2}" var="post">
+														<tr>
+															<th scope="row"><a href="#"><img
+																	src="/images/upload/${post.uploadFileName}" alt=""></a>
+															</th>
+															<td><a href="#" class="text-primary fw-bold">${post.introContent}</a></td>
+															<td>${post.price}원</td>
+															<td class="fw-bold">${post.soldCount}</td>
+															<td>${post.revenue}원</td>
+														</tr>
+													</c:forEach>
+												</c:when>
+												<c:when test="${param.dateType == 2}">
+													<c:forEach items="${productList2}" var="post">
+														<tr>
+															<th scope="row"><a href="#"><img
+																	src="/images/upload/${post.uploadFileName}" alt=""></a>
+															</th>
+															<td><a href="#" class="text-primary fw-bold">${post.introContent}</a></td>
+															<td>${post.price}원</td>
+															<td class="fw-bold">${post.soldCount}</td>
+															<td>${post.revenue}원</td>
+														</tr>
+													</c:forEach>
+												</c:when>
+												<c:when test="${param.dateType == 3}">
+													<c:forEach items="${productList2}" var="info">
+														<tr>
+															<th scope="row"><a href="#"><img
+																	src="/images/upload/${info.uploadFileName}" alt=""></a>
+															</th>
+															<td><a href="detail/{productId}" class="text-primary fw-bold">${info.introContent}</a></td>
+															<td>${info.price}원</td>
+															<td class="fw-bold">${info.soldCount}</td>
+															<td>${info.revenue}원</td>
+														</tr>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<c:forEach items="${productList2}" var="info">
+														<tr>
+															<th scope="row"><a href="#"><img
+																	src="/images/upload/${info.uploadFileName}" alt=""></a>
+															</th>
+															<td><a href="#" class="text-primary fw-bold">${info.introContent}</a></td>
+															<td>${info.price}원</td>
+															<td class="fw-bold">${info.soldCount}</td>
+															<td>${info.revenue}원</td>
+														</tr>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 						<!-- End Top Selling -->
 
@@ -520,23 +707,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 					<!-- Website Traffic -->
 					<div class="card">
-						<div class="filter">
-							<a class="icon" href="#" data-bs-toggle="dropdown"><i
-								class="bi bi-three-dots"></i></a>
-							<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-								<li class="dropdown-header text-start">
-									<h6>Filter</h6>
-								</li>
 
-								<li><a class="dropdown-item" href="#">오늘</a></li>
-								<li><a class="dropdown-item" href="#">이번 달</a></li>
-								<li><a class="dropdown-item" href="#">올해</a></li>
-							</ul>
-						</div>
 
 						<div class="card-body pb-0">
 							<h5 class="card-title">
-								Website Traffic <span>| 오늘</span>
+								Website Traffic <span>| 올해</span>
 							</h5>
 
 							<div id="trafficChart" style="min-height: 400px;" class="echart"></div>
@@ -602,22 +777,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 					<!-- News & Updates Traffic -->
 					<div class="card">
-						<div class="filter">
-							<a class="icon" href="#" data-bs-toggle="dropdown"><i
-								class="bi bi-three-dots"></i></a>
-							<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-								<li class="dropdown-header text-start">
-									<h6>Filter</h6>
-								</li>
-								<li><a class="dropdown-item" href="#">오늘</a></li>
-								<li><a class="dropdown-item" href="#">이번 달</a></li>
-								<li><a class="dropdown-item" href="#">올해</a></li>
-							</ul>
-						</div>
+
 						<div class="card-body pb-0">
-							<h5 class="card-title">
-								News <span>| 오늘</span>
-							</h5>
+
+							<c:choose>
+								<c:when test="${param.dateType == 1}">
+									<h5 class="card-title">
+										News <span>| 오늘</span>
+									</h5>
+								</c:when>
+								<c:when test="${param.dateType == 2}">
+									<h5 class="card-title">
+										News <span>| 이번 달</span>
+									</h5>
+								</c:when>
+								<c:when test="${param.dateType == 3}">
+									<h5 class="card-title">
+										News <span>| 올해</span>
+									</h5>
+								</c:when>
+								<c:otherwise>
+									<h5 class="card-title">
+										News <span>| 오늘</span>
+									</h5>
+								</c:otherwise>
+							</c:choose>
 							<div class="table-responsive">
 								<table class="table table-borderless datatable">
 									<thead>
@@ -628,14 +812,46 @@ document.addEventListener("DOMContentLoaded", () => {
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${selectBoardList}" var="board">
-											<tr>
-												<td>${board.type}</td>
-												<td>${board.title}</td>
-												<td>${board.content}</td>
-											</tr>
-										</c:forEach>
+										<c:choose>
+											<c:when test="${param.dateType == 1}">
+												<c:forEach items="${productList6}" var="board">
+													<tr>
+														<td>${board.type}</td>
+														<td>${board.title}</td>
+														<td>${board.content}</td>
+													</tr>
+												</c:forEach>
+											</c:when>
+											<c:when test="${param.dateType == 2}">
+												<c:forEach items="${productList6}" var="board">
+													<tr>
+														<td>${board.type}</td>
+														<td>${board.title}</td>
+														<td>${board.content}</td>
+													</tr>
+												</c:forEach>
+											</c:when>
+											<c:when test="${param.dateType == 3}">
+												<c:forEach items="${productList6}" var="board">
+													<tr>
+														<td>${board.type}</td>
+														<td>${board.title}</td>
+														<td>${board.content}</td>
+													</tr>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<c:forEach items="${productList6}" var="board">
+													<tr>
+														<td>${board.type}</td>
+														<td>${board.title}</td>
+														<td>${board.content}</td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
 									</tbody>
+
 								</table>
 							</div>
 							<!-- End table responsive -->
@@ -673,7 +889,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		class="bi bi-arrow-up-short"></i></a>
 
 	<!-- Vendor JS Files -->
-	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="admin/vendor/apexcharts/apexcharts.min.js"></script>
 	<script src="admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="admin/vendor/chart.js/chart.umd.js"></script>
@@ -685,92 +901,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	<!-- Template Main JS File -->
 	<script src="admin/js/main.js"></script>
-	
-<script>
 
-$("#form-select").change(function(){
-    console.log("ccccc");
-    
-    // 선택한 값을 가져옴
-    var selectedValue = $(this).val();
-    
-    // AJAX 요청
-    $.ajax({
-        url: "/admin1/" + selectedValue,
-        type: "GET",
-        success: function(findProductInfo) {
-            console.log("서버로부터 데이터를 성공적으로 받아왔습니다.");
-            console.log(findProductInfo);
-            console.log("선택값", selectedValue);
-            
-            // tbody 초기화
-            var tbody = $('#productTable tbody');  
-            tbody.empty();
-            
-            // 각 제품 정보로 tbody 내용 변경
-            $.each(findProductInfo, function(index, productInfo) {
-                var row = $('<tr>');
-                row.append('<th scope="row"><a href="#"><img src="/images/upload/' + productInfo.upload_file_name + '" alt=""></a></th>');
-                row.append('<td><a href="#" class="text-primary fw-bold">' + productInfo.intro_content + '</a></td>');
-                row.append('<td>' + productInfo.price + '원</td>');
-                row.append('<td class="fw-bold">' + productInfo.sold_count + '</td>');
-                row.append('<td>' + productInfo.revenue + '원</td>');
-                tbody.append(row);
-	            console.log(productInfo);
-            });
-            
-        },
-        error: function(xhr, status, error) {
-            // 에러 발생 시 처리
-            console.error("서버로부터 데이터를 받아오는 중 오류가 발생했습니다.");
-            console.error(status);
-            console.error(error);
-        }
-    });
+<script>
+document.getElementById('dateTypeSelect').addEventListener('change', function() {
+    var selectedDateType = this.value;
+    // URL을 변경하여 페이지를 새로고침
+    window.location.href = "/admin?dateType=" + selectedDateType;
 });
 
-
-// function updateProductList(selectedValue) {
-// 	$.ajax({
-//     	url: "/admin1/" + selectedValue,
-//     	type: "GET",
-//     	success: function(findProductInfo) {
-//     		console.log("서버로부터 데이터를 성공적으로 받아왔습니다.");
-//             console.log(findProductInfo);
-//     	},
-//     	error: function(xhr, status, error) {
-//             // 에러 발생 시 처리할 내용
-//             console.error("서버로부터 데이터를 받아오는 중 오류가 발생했습니다.");
-//             console.error(status);
-//             console.error(error);
-//         }
-//     });
-// }
-
-
-
-
-// $("#form-select").change(function(){
-// 	console.log("ccccc");
-	
-// 	// tbody 초기화
-//     var tbody = $('#productTable tbody');	
-// 	tbody.empty();
-	
-// 	$.each(findProductInfo, function(index, findProductInfo) {
-//         var row = $('<tr>');
-//         row.append('<th scope="row" name="popth1"><a href="#"><img src="/images/upload/' + findProductInfo.uploadFileName + '" alt=""></a></th>');
-//         row.append('<td name="poptd1"><a href="#" class="text-primary fw-bold">' + findProductInfo.intro_content + '</a></td>');
-//         row.append('<td name="poptd2">' + findProductInfo.price + '원</td>');
-//         row.append('<td class="fw-bold" name="poptd3">' + findProductInfo.soldCount + '</td>');
-//         row.append('<td name="poptd4">' + findProductInfo.revenue + '원</td>');
-//         tbody.append(row);
-//     });
-	
-// });
-
-
-
+// 페이지가 로드될 때 옵션을 설정
+document.addEventListener("DOMContentLoaded", function() {
+    var dateTypeInput = document.getElementById('dateType');
+    var selectedDateType = dateTypeInput.value;
+    var dateTypeSelect = document.getElementById('dateTypeSelect');
+    // 선택된 값을 기반으로 select 박스의 옵션을 설정
+    for (var i = 0; i < dateTypeSelect.options.length; i++) {
+        if (dateTypeSelect.options[i].value === selectedDateType) {
+            dateTypeSelect.options[i].selected = true;
+        }
+    }
+});
 </script>
 </body>
 

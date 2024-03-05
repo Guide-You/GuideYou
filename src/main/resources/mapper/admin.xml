@@ -11,6 +11,37 @@
         ORDER BY p.created_at DESC
 	</select>
 	
+	<!-- 오늘 최근 상품 정보 -->
+	<select id="findLatestPostsD" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT u.nickname as nickName, p.id, p.user_id as userId, p.title, p.price, p.created_at as createdAt
+        FROM product p
+        JOIN user u ON p.user_id = u.id
+        where p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and p.created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
+        ORDER BY p.created_at DESC
+	</select>
+	
+	
+	<!-- 이번 달 최근 상품 정보 -->
+	<select id="findLatestPostsM" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT u.nickname as nickName, p.id, p.user_id as userId, p.title, p.price, p.created_at as createdAt
+        FROM product p
+        JOIN user u ON p.user_id = u.id
+        where p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and p.created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 MONTH),'%Y-%m-01 00:00:00')
+        ORDER BY p.created_at DESC
+	</select>
+	
+	
+	<!-- 올 해 최근 상품 정보 -->
+	<select id="findLatestPostsY" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT u.nickname as nickName, p.id, p.user_id as userId, p.title, p.price, p.created_at as createdAt
+        FROM product p
+        JOIN user u ON p.user_id = u.id
+        where p.created_at <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and p.created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
+        ORDER BY p.created_at DESC
+	</select>
+	
+	
+	
 	<!-- 인기 상품 조회 -->
 	<select id="findProductInfo" resultType="com.guideyou.dto.product.ProductDto">
 		SELECT p.id AS productId,
@@ -23,9 +54,165 @@
 	       (p.price * p.sold_count) AS revenue
 		FROM product p
 		JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
-<!-- 		and p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and p.created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59') -->
 		ORDER BY p.id
 	</select>
+	
+	
+	<!-- 오늘 인기 상품 정보 -->
+	<select id="findProductInfoD" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT p.id AS productId,
+	       p.intro_content,
+	       p.content,
+	       p.price,
+	       p.sold_count,
+	       p.created_at,
+	       ph.upload_file_name AS uploadFileName,
+	       (p.price * p.sold_count) AS revenue
+		FROM product p
+		JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
+		where p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and p.created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
+		ORDER BY p.id
+	</select>
+	
+	
+	<!-- 이번달 인기 상품 정보 -->
+	<select id="findProductInfoM" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT p.id AS productId,
+	       p.intro_content,
+	       p.content,
+	       p.price,
+	       p.sold_count,
+	       p.created_at,
+	       ph.upload_file_name AS uploadFileName,
+	       (p.price * p.sold_count) AS revenue
+		FROM product p
+		JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
+		where p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and p.created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 MONTH),'%Y-%m-01 00:00:00')
+		ORDER BY p.id
+	</select>
+	
+	
+	<!-- 올해 인기 상품 정보 -->
+	<select id="findProductInfoY" resultType="com.guideyou.dto.product.ProductDto">
+		SELECT p.id AS productId,
+	       p.intro_content,
+	       p.content,
+	       p.price,
+	       p.sold_count,
+	       p.created_at,
+	       ph.upload_file_name AS uploadFileName,
+	       (p.price * p.sold_count) AS revenue
+		FROM product p
+		JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
+		where p.created_at <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and p.created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
+		ORDER BY p.id
+	</select>
+	
+
+	
+	<!-- 판매 된 상품 개수 조회 -->
+	<select id="selectPaymentInfo" resultType="com.guideyou.dto.admin.AdminDto">
+		select count(*) as paymentCount from payment
+	</select>
+	
+	<!-- 오늘 판매 된 상품 개수 조회 -->
+	<select id="selectPaymentInfoD" resultType="com.guideyou.dto.admin.AdminDto">
+		select count(*) as paymentCount from payment
+		where payment_date <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and payment_date <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
+	</select>
+	
+	<!-- 이번 달 판매 된 상품 개수 조회 -->
+	<select id="selectPaymentInfoM" resultType="com.guideyou.dto.admin.AdminDto">
+		select count(*) as paymentCount from payment
+		where payment_date <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and payment_date <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 MONTH),'%Y-%m-01 00:00:00')
+	</select>
+	
+	<!-- 올해 판매 된 상품 개수 조회 -->
+	<select id="selectPaymentInfoY" resultType="com.guideyou.dto.admin.AdminDto">
+		select count(*) as paymentCount from payment
+		where payment_date <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and payment_date <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
+	</select>
+	
+	
+	
+	<!-- 총 판매 금액 조회 -->
+	<select id="selectTotalPriceInfo" resultType="com.guideyou.dto.admin.AdminDto">
+		select sum(total_price) as totalPrice from payment
+	</select>
+	
+	<!-- 오늘 총 판매 금액 조회 -->
+	<select id="selectTotalPriceInfoD" resultType="com.guideyou.dto.admin.AdminDto">
+		select sum(total_price) as totalPrice from payment
+		where payment_date <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and payment_date <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
+	</select>
+	
+	<!-- 이번 달 총 판매 금액 조회 -->
+	<select id="selectTotalPriceInfoM" resultType="com.guideyou.dto.admin.AdminDto">
+		select sum(total_price) as totalPrice from payment
+		where payment_date <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and payment_date <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 MONTH),'%Y-%m-01 00:00:00')
+	</select>
+	
+	<!-- 올해 총 판매 금액 조회 -->
+	<select id="selectTotalPriceInfoY" resultType="com.guideyou.dto.admin.AdminDto">
+		select sum(total_price) as totalPrice from payment
+		where payment_date <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and payment_date <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
+	</select>
+	
+	
+	
+	<!-- 가입자 수 조회 -->
+	<select id="selectTotalUserInfo" resultType="com.guideyou.dto.admin.AdminDto">
+		select count(*) as userCount from user
+	</select>
+	
+	<!-- 오늘 가입자 수 조회 -->
+	<select id="selectTotalUserInfoD" resultType="com.guideyou.dto.admin.AdminDto">
+		select count(*) as userCount from user
+		where created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
+	</select>
+	
+	<!-- 이번 달 가입자 수 조회 -->
+	<select id="selectTotalUserInfoM" resultType="com.guideyou.dto.admin.AdminDto">
+		select count(*) as userCount from user
+		where created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 MONTH),'%Y-%m-01 00:00:00')
+	</select>	
+	
+	<!-- 올해 가입자 수 조회 -->
+	<select id="selectTotalUserInfoY" resultType="com.guideyou.dto.admin.AdminDto">
+		select count(*) as userCount from user
+		where created_at <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
+	</select>
+	
+	
+	
+	
+	<!-- 게시글 조회 -->
+	<select id="selectBoardList" resultType="com.guideyou.dto.admin.BoardDto">
+		select id, `type`, title, content from board_contents
+	</select>
+	
+	<!-- 오늘 게시글 조회 -->
+	<select id="selectBoardListD" resultType="com.guideyou.dto.admin.BoardDto">
+		select id, `type`, title, content from board_contents
+		where created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
+	</select>
+	
+	<!-- 이번 달 게시글 조회 -->
+	<select id="selectBoardListM" resultType="com.guideyou.dto.admin.BoardDto">
+		select id, `type`, title, content from board_contents
+		where created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 MONTH),'%Y-%m-01 00:00:00')
+	</select>
+	
+	<!-- 올해 게시글 조회 -->
+	<select id="selectBoardListY" resultType="com.guideyou.dto.admin.BoardDto">
+		select id, `type`, title, content from board_contents
+		where created_at <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
+	</select>
+	
+	
+	
+	
+	
 	
 	<!-- 날짜 필터 -->
 	<select id="selectProductList" resultType="com.guideyou.dto.product.ProductDto">
@@ -48,30 +235,6 @@
 		</if>
 		ORDER BY p.id
 	</select>
-	
-	<!-- 판매 된 상품 개수 조회 -->
-	<select id="selectPaymentInfo" resultType="com.guideyou.dto.admin.AdminDto">
-		select count(*) as paymentCount from payment
-		where created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
-	</select>
-	
-	<!-- 총 판매 금액 조회 -->
-	<select id="selectTotalPriceInfo" resultType="com.guideyou.dto.admin.AdminDto">
-		select sum(total_price) as totalPrice from payment
-		where created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
-	</select>
-	
-	<!-- 가입자 수 조회 -->
-	<select id="selectTotalUserInfo" resultType="com.guideyou.dto.admin.AdminDto">
-		select count(*) as userCount from user
-	</select>
-	
-	<!-- 게시글 조회 -->
-	<select id="selectBoardList" resultType="com.guideyou.dto.admin.BoardDto">
-		select id, `type`, title, content from board_contents
-	</select>
-	
-	
 	
 	
 </mapper>
