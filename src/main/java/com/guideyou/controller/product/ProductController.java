@@ -1,6 +1,8 @@
 package com.guideyou.controller.product;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Product;
 import com.guideyou.repository.entity.User;
 import com.guideyou.repository.entity.wishList.WishList;
+import com.guideyou.service.PaymentService;
 import com.guideyou.service.ProductService;
 import com.guideyou.service.wishListService.WishListService;
 import com.guideyou.utils.Define;
@@ -44,6 +47,8 @@ public class ProductController {
 	private ProductService productService;
 	@Autowired
 	private WishListService wishListService;
+	@Autowired
+	private PaymentService paymentService;
 
 	@Autowired
 	private HttpSession session;
@@ -156,15 +161,25 @@ public class ProductController {
 	    ProductReviewDto productAvg = productService.productAvg(productId);
     	model.addAttribute("productAvg", productAvg);
 			
+    	Boolean paidYn = false;
     	Boolean wishYn = false;
     	User principal = (User) session.getAttribute(Define.PRINCIPAL);
     	if(principal != null) {
-    		WishList result = wishListService.readWishListByUserIdAndProductId(principal.getId(), productId);
-    		if(result != null) {
+    		
+    		int paidProductId = paymentService.getPaidProductIdByUserIdAndProductId(principal.getId(), productId);
+    		if(paidProductId != 0) {
+    			System.out.println("이거 안타?");
+    			paidYn = true;
+    		}
+    		WishList wishResult = wishListService.readWishListByUserIdAndProductId(principal.getId(), productId);
+    		if(wishResult != null) {
     			wishYn = true;
     		}
     	}
+    	
+    	model.addAttribute("paidYn", paidYn);
     	model.addAttribute("wishYn", wishYn);
+    	
 		return "product/productDetail";
 	}
 		

@@ -30,4 +30,5 @@ public interface PaymentRepository {
 	public Payment findByMerchantUidAndUserId(String merchantUid, Integer userId);
 	public int updatePaymentOnRefund(RefundDto refundDto);
 	public PaymentCompleteDto findPaymentAndPaymentDetailMerchantUid(String merchantUid);
+	public int getPaidProductIdByUserIdAndProductId(Map<String, Object> params);
 }

@@ -14,6 +14,7 @@
 
 <!-- Detail Title Start -->
 <!-- Title Image 확인 후 사이즈 변경 필요-->
+<p>${paidYn}</p>
 <div class="container py-5 product--title text-center">
 	<div id="carouselExample" class="carousel slide"
 		data-bs-ride="carousel" data-bs-interval="5000">

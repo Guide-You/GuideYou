@@ -1,107 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guideyou.repository.interfaces.payment.PaymentRepository">
+<mapper
+	namespace="com.guideyou.repository.interfaces.payment.PaymentRepository">
 
 	<insert id="insertPayment">
-		
+
 		INSERT INTO payment(merchant_uid, user_id, total_price, payment_status)
 		VALUES (#{merchantUid}, #{userId}, #{totalPrice}, #{paymentStatus})
-	
+
 	</insert>
-	
-	<select id="findByUserId" resultType="com.guideyou.repository.entity.Payment">
+
+	<select id="findByUserId"
+		resultType="com.guideyou.repository.entity.Payment">
 		SELECT user_id FROM payment WHERE user_id = #{userId}
 	</select>
 
-	<select id="getPurchasedProductInfoList" parameterType="map" resultType="com.guideyou.dto.payment.PurchasedProductInfoDTO">
+	<select id="getPurchasedProductInfoList" parameterType="map"
+		resultType="com.guideyou.dto.payment.PurchasedProductInfoDTO">
 		SELECT
 		b.product_id,
-		d.city_name, 							-- 사용자가 구매한 상품의 지역명
-		c.title AS product_title,				-- 사용자가 구매한 상품의 제목
-		a.payment_date,							-- 사용자가 결제한 날짜
-		e.upload_file_name AS product_image		-- 사용자가 구매한 상품의 썸네일 사진
+		d.city_name, -- 사용자가 구매한 상품의 지역명
+		c.title
+		AS product_title, -- 사용자가 구매한 상품의 제목
+		a.payment_date, -- 사용자가 결제한 날짜
+		e.upload_file_name AS product_image -- 사용자가 구매한 상품의 썸네일 사진
 		FROM
-		payment a
+		payment
+		a
 		JOIN
 		payment_detail b ON a.merchant_uid = b.merchant_uid
 		JOIN
-		product c ON b.product_id = c.id
+		product c
+		ON b.product_id = c.id
 		LEFT JOIN
 		city_code d ON c.city_code_id = d.id
 		LEFT JOIN
-		product_photos e ON c.id = e.product_id AND e.thumbnail IS NOT NULL
+		product_photos e ON c.id = e.product_id AND e.thumbnail IS
+		NOT NULL
 		WHERE
 		a.user_id = #{userId}
 		and a.payment_status = 'paid'
-		order by a.payment_date desc
+		order
+		by a.payment_date desc
 		limit #{size} offset #{offset}
 		;
 	</select>
-	
-	<select id="getPurchasedProductInfoListTotalCount" resultType="long">
+
+	<select id="getPurchasedProductInfoListTotalCount"
+		resultType="long">
 		SELECT
 		count(*)
 		FROM
 		payment a
 		JOIN
-		payment_detail b ON a.merchant_uid = b.merchant_uid
+		payment_detail b ON
+		a.merchant_uid = b.merchant_uid
 		JOIN
 		product c ON b.product_id = c.id
 		LEFT JOIN
 		city_code d ON c.city_code_id = d.id
 		LEFT JOIN
-		product_photos e ON c.id = e.product_id AND e.thumbnail IS NOT NULL
+		product_photos e
+		ON c.id = e.product_id AND e.thumbnail IS NOT NULL
 		WHERE
-		a.user_id = #{userId}
+		a.user_id =
+		#{userId}
 		and a.payment_status = 'paid'
 		;
 	</select>
-	
-	<select id="findByMerchantUid" resultType="com.guideyou.repository.entity.Payment">
-		SELECT user_id FROM payment WHERE merchant_uid = #{merchantUid}
+
+	<select id="findByMerchantUid"
+		resultType="com.guideyou.repository.entity.Payment">
+		SELECT user_id FROM payment WHERE merchant_uid =
+		#{merchantUid}
 	</select>
 
-	<select id="findByMerchantUidAndUserId" resultType="com.guideyou.repository.entity.Payment">
-		SELECT * FROM payment WHERE merchant_uid = #{merchantUid} AND user_id = #{userId}
+	<select id="findByMerchantUidAndUserId"
+		resultType="com.guideyou.repository.entity.Payment">
+		SELECT * FROM payment WHERE merchant_uid = #{merchantUid}
+		AND user_id = #{userId}
 	</select>
-	
+
 	<update id="updatePaymentOnRefund">
 		UPDATE payment AS p
-		LEFT JOIN payment_detail AS pd 
+		LEFT JOIN payment_detail AS pd
 		ON p.merchant_uid = pd.merchant_uid
 		SET
-			p.payment_status = 'refund',
-			p.refund_price = #{refundPrice},
-			p.refund_cause = #{cancelReason},
-			p.refund_date = NOW(),
-			p.refund_yn = 'Y',
-		 	pd.payment_status = 'refund',
-		 	pd.refund_date = NOW(),
-		 	pd.refund_yn = 'Y'
+		p.payment_status = 'refund',
+		p.refund_price = #{refundPrice},
+		p.refund_cause = #{cancelReason},
+		p.refund_date = NOW(),
+		p.refund_yn = 'Y',
+		pd.payment_status = 'refund',
+		pd.refund_date = NOW(),
+		pd.refund_yn = 'Y'
 		WHERE p.merchant_uid = #{merchantUid}
-		AND pd.merchant_uid = #{merchantUid}
+		AND pd.merchant_uid =
+		#{merchantUid}
 	</update>
-	
-	<select id="findPaymentAndPaymentDetailMerchantUid" resultType="com.guideyou.dto.payment.PaymentCompleteDto">
+
+	<select id="findPaymentAndPaymentDetailMerchantUid"
+		resultType="com.guideyou.dto.payment.PaymentCompleteDto">
 		SELECT
-		    b.product_id,
-			a.merchant_uid,
-		    a.payment_date,
-		    b.product_price,
-		    d.upload_file_name AS product_photo,
-		    c.title AS product_title,
-		    a.total_price,
-		    e.nickname AS seller
+		b.product_id,
+		a.merchant_uid,
+		a.payment_date,
+		b.product_price,
+		d.upload_file_name AS product_photo,
+		c.title AS product_title,
+		a.total_price,
+		e.nickname AS seller
 		FROM payment AS a
 		LEFT JOIN payment_detail AS b
-		ON a.merchant_uid = b.merchant_uid
+		ON
+		a.merchant_uid = b.merchant_uid
 		LEFT JOIN product AS c
-		ON b.product_id = c.id
+		ON b.product_id =
+		c.id
 		LEFT JOIN product_photos AS d
 		ON c.id = d.product_id
-		LEFT JOIN user AS e
+		LEFT JOIN user
+		AS e
 		ON c.user_id = e.id
-		WHERE a.merchant_uid = #{merchantUid} AND thumbnail IS NOT NULL
+		WHERE a.merchant_uid = #{merchantUid} AND
+		thumbnail IS NOT NULL
 	</select>
 
+	<select id="getPaidProductIdByUserIdAndProductId" parameterType="map" resultType="Integer">
+		select b.product_id from payment a join
+		payment_detail b on a.merchant_uid = b.merchant_uid where a.user_id =
+		#{userId} and a.payment_status = "paid" and product_id = #{productId};
+	</select>
 </mapper>

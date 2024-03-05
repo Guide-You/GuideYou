@@ -177,5 +177,21 @@ public class PaymentService {
 		return dto;
 		
 	}
+
+
+	/**
+	  * @Method Name : getPaidProductIdByUserIdAndProductId
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 사용자 ID, 상품ID로 paid 상품 번호 찾기
+	  */
+	public int getPaidProductIdByUserIdAndProductId(Integer userId, Integer productId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("productId", productId);
+		map.put("userId", userId);
+		int result = paymentRepository.getPaidProductIdByUserIdAndProductId(map);
+		return result;
+	}
 	
 }
