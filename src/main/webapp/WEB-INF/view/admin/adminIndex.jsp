@@ -418,7 +418,7 @@
 										</c:otherwise>
 									</c:choose>
 									<!-- Line Chart -->
-									<div id="reportsChart"></div>
+									<div id="reportChart"></div>
 
 									<script>
 
