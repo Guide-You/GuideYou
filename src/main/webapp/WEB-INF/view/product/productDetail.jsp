@@ -64,8 +64,8 @@
 	</div>
 
 	<div class="col-lg-12 detail--title--info" style="margin-top: 20px">
-		<span id="title--writer">작성자 : ${product.nickName}</span> <span
-			id="title--siren"><img src="/img/Siren.png" alt="siren" /></span> <span
+		<span id="title--writer">작성자 : ${product.nickName}</span> 
+			<span
 			id="title--like">
 			<img src="${wishYn ? '/img/like.png' : '/img/unlike.png'}" alt="like" />
 			</span>
