@@ -1,25 +1,51 @@
 document.addEventListener('DOMContentLoaded', function() {
 	
+	
+	const saveBtn = document.getElementById('save--button');
+		
+    // productForm을 선택하여 submit
+    const productForm= document.getElementById('productForm')
+	
+	
+    const searchInput = document.getElementById('keyword'); // 검색 입력란
+
 	let productId='' ;
     // 클릭 이벤트 등록
     saveBtn.addEventListener('click', function(event) {
-		
-        // productForm을 선택하여 submit
-        const productForm= document.getElementById('productForm')
-        
+        // 폼의 유효성 검사
+        if (!validateForm()) {
+            event.preventDefault(); // 폼 제출 중지
+            return false;
+        }
         
         productForm.action = '/save';
         productForm.method = 'post';
         
-        productForm.submit();
-        
-        
         // SAVE btn click시 map 정보 insert 함수
-        saveMarkers() 
+        if( saveMarkers(event) == true){
+			
+        productForm.submit();
+			
+		}else {
+			
+			console.log("등록 실패!");
+		} 
         
+        
+    });
+    
+
+    // 검색 입력란에서 Enter 키 입력 이벤트 처리
+    searchInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 기본 동작(새로고침) 방지
+            searchPlaces(); // 검색 기능 호출
+        }
     });
 	
 	
+	
+
     // 사진 선택시 바로 보이게 하는 함수
     document.getElementById('thumbFile').addEventListener('change', function() {
         showImage.call(this, '#thumbImage');
@@ -73,28 +99,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 제품 정보 폼 제출 시 유효성 검사
-    document.getElementById('productForm').addEventListener('submit', function(event) {
+    function validateForm() {
+        var titleInput = document.getElementById('title').value.trim();
+        var introContentInput = document.getElementById('introContent').value.trim();
+        var contentInput = document.getElementById('content').value.trim();
+        var priceInput = document.getElementById('price').value.trim();
+        var thumbFile = document.getElementById('thumbFile').value.trim();
+        var customFile = document.getElementById('detailFile').value.trim();
+
         var errorMessage = ""; // 에러 메시지를 저장할 변수
 
-        var titleInput = document.getElementById('title').value;
-        var introContentInput = document.getElementById('introContent').value;
-        var contentInput = document.getElementById('content').value;
-        var priceInput = document.getElementById('price').value;
-        var thumbFile = document.getElementById('thumbFile').value;
-        var customFile = document.getElementById('detailFile').value;
-
         // 제목이 비어있는 경우 에러 메시지에 추가
-        if (titleInput.trim() === "") {
+        if (titleInput === "") {
             errorMessage += "글 제목을 입력해주세요.\n";
         }
 
         // 소개 내용이 비어있는 경우 에러 메시지에 추가
-        if (introContentInput.trim() === "") {
+        if (introContentInput === "") {
             errorMessage += "소개글 내용을 입력해주세요.\n";
         }
 
         // 내용이 비어있는 경우 에러 메시지에 추가
-        if (contentInput.trim() === "") {
+        if (contentInput === "") {
             errorMessage += "글 내용을 입력해주세요.\n";
         }
 
@@ -112,19 +138,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // 에러 메시지가 비어있지 않은 경우에만 알림 창 표시 및 이벤트 중단
         if (errorMessage !== "") {
             alert(errorMessage); // 에러 메시지 표시
-            document.getElementById('title').focus();
-            document.getElementById('intoContent').focus();
-            document.getElementById('content').focus();
-            document.getElementById('price').focus();
-
-            event.preventDefault(); // 폼 제출 중지
-            return false; // 이벤트 처리 중단
-        } else {
-            // thumbFile의 값을 추가하여 서버로 전송
-            this.innerHTML += '<input type="hidden" name="thumbFile" value="y">';
+            return false; // 폼 제출 중단
         }
-    });
-    
+
+        // 유효성 검사 통과
+        return true;
+    }
+
+	    
     
     
     
@@ -412,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		        // 좌표 값을 반올림하지 않고 정확한 비교
 		        if (isSamePosition(existingPosition, placePosition)) {
-		        	console.log("중복 추가 입니다.");
+		        	alert("중복 추가 입니다.");
 		        	duplicate = true;
 		        }
 		    }
@@ -448,16 +469,25 @@ document.addEventListener('DOMContentLoaded', function() {
 					&& Math.abs(pos1.getLng() - pos2.getLng()) < tolerance;
 		}
 
-		function saveMarkers() { //*************************************** 저장 버튼 클릭시 추가한 마커 배열 가져온다.
-			// checkMarkers 배열의 값들을 콘솔에 출력
-			console.log(checkMarkers);
-			// 여기에 저장 로직 추가 가능
-			if (checkMarkers.length != 0) {
-				saveMarkersToServer(checkMarkers);
-				alert("저장되었습니다");
-			} else {
-				alert("마커를 추가 해주세요");
-			}
+		function saveMarkers(event) { //*************************************** 저장 버튼 클릭시 추가한 마커 배열 가져온다.
+		
+		let flag = false;
+		 event.preventDefault();
+		   // checkMarkers 배열의 값들을 콘솔에 출력
+		    console.log(checkMarkers);
+		    // 여기에 저장 로직 추가 가능
+		    if (checkMarkers.length != 0) {
+		        saveMarkersToServer(checkMarkers);
+		        alert("저장되었습니다");
+		        flag = true;
+		    } else {
+		        alert("마커를 추가 해주세요");
+		        // 폼 제출을 막기 위해 아래 코드 추가
+		       
+		        flag = false;
+		    }
+		    
+		    return flag;
 		}
 
 		// 서버에 데이터를 전송하는 함수
@@ -501,22 +531,26 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 		
 		function setCheckLocationList(places) {
-			var listItem = document.createElement('div');
-			listItem.innerHTML = 
-			'가게명: ' + places.place_name
-			+ "<br>"
-			+ '전화번호: ' +  places.phone
-			+ "<br>"
-			+ '도로명주소: ' +  places.road_address_name
-			+ "<br>"
-			+ '지번주소: ' +  places.address_name
-			+ "<br>"
-			+ 'lat: ' +  + places.y
-			+ "<br>"
-			+ 'lng: ' +  + places.x
-			+ "<button onclick='removeListItem(this.parentNode, "
-		    + JSON.stringify(places) + ")'>삭제</button>"  // places 객체를 문자열로 전달
+		    var listItem = document.createElement('div');
+		
+		    listItem.innerHTML = 
+		    '가게명: ' + places.place_name +
+		    "<br>" +
+		    '전화번호: ' +  places.phone +
+		    "<br>" +
+		    '도로명주소: ' +  places.road_address_name +
+		    "<br>" +
+		    '지번주소: ' +  places.address_name +
+		    "<br>" +
+		    'lat: ' +  + places.y +
+		    "<br>" +
+		    'lng: ' +  + places.x +
+		    "<button class='locationRemoveBtn'>삭제</button>"  // onclick 속성 제거
 		    + "<hr>";
+		
+		    listItem.querySelector('.locationRemoveBtn').addEventListener('click', function() {
+		        removeListItem(listItem, places);
+		    });
 		    
 		    // mouseover 이벤트 추가
 		    listItem.addEventListener('click', function() {
@@ -554,10 +588,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			infowindow.close();
 		} 
     
-    
-    
-    
-    
+
     
     
     
