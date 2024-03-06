@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
@@ -79,7 +80,8 @@ public class ProductController {
 	 * @Method 설명 : 상품 등록 로직
 	 */
 	@PostMapping("/save")
-	public String saveProduct(ProductDto dto, @RequestParam("region") Integer cityCodeId) {
+	@ResponseBody
+	public int saveProduct(ProductDto dto, @RequestParam("region") Integer cityCodeId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		dto.setUserId(principal.getId());		
 		dto.setCityCodeId(cityCodeId);
@@ -91,7 +93,7 @@ public class ProductController {
 			throw new CustomRestfulException(Define.FAIL_TO_CREATE_PRODUCT, HttpStatus.BAD_REQUEST);
 
 		}
-		return "redirect:/detail/" + resultProductId;
+		return resultProductId;
 	}
 
 	

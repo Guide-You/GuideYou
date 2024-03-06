@@ -14,24 +14,36 @@ document.addEventListener('DOMContentLoaded', function() {
     saveBtn.addEventListener('click', function(event) {
         // 폼의 유효성 검사
         if (!validateForm()) {
-            event.preventDefault(); // 폼 제출 중지
-            return false;
+           // event.preventDefault(); // 폼 제출 중지
+            //return false;
         }
-        
-        productForm.action = '/save';
-        productForm.method = 'post';
-        
-        // SAVE btn click시 map 정보 insert 함수
-        if( saveMarkers(event) == true){
+			        // 폼 데이터를 직렬화합니다.
+			        var formData = new FormData(productForm);
 			
-        productForm.submit();
+			        // AJAX 요청을 보냅니다.
+			        $.ajax({
+			            url: '/save', // 서버의 엔드포인트 URL
+			            type: 'POST',
+			            data: formData,
+			            processData: false, // 데이터를 문자열로 변환하지 않습니다.
+			            contentType: false, // 컨텐츠 타입을 설정하지 않습니다.
+			            success: function(response) {
+			                // 서버로부터의 응답을 처리합니다.
+			                console.log(response);
+			                productId = response;
+			                // 성공적으로 처리되었을 때 saveMarkers 함수를 실행합니다.
+								console.log("들어왔나요? 석세스");
+			                    saveMarkers(event, productId);
+			                    window.location.href="/detail/" + productId;
+			            },
+			            error: function(xhr, status, error) {
+			                // 오류가 발생했을 때의 처리를 수행합니다.
+			                console.error('Error:', error);
+			            }
+			        });
 			
-		}else {
-			
-			console.log("등록 실패!");
-		} 
-        
-        
+			        // 폼 제출을 막습니다.
+			        event.preventDefault();
     });
     
 
@@ -469,15 +481,15 @@ document.addEventListener('DOMContentLoaded', function() {
 					&& Math.abs(pos1.getLng() - pos2.getLng()) < tolerance;
 		}
 
-		function saveMarkers(event) { //*************************************** 저장 버튼 클릭시 추가한 마커 배열 가져온다.
-		
+		function saveMarkers(event, productId) { //*************************************** 저장 버튼 클릭시 추가한 마커 배열 가져온다.
+		console.log("세이브 마커스 들어왔나요?" + productId);
 		let flag = false;
 		 event.preventDefault();
 		   // checkMarkers 배열의 값들을 콘솔에 출력
 		    console.log(checkMarkers);
 		    // 여기에 저장 로직 추가 가능
 		    if (checkMarkers.length != 0) {
-		        saveMarkersToServer(checkMarkers);
+		        saveMarkersToServer(checkMarkers, productId);
 		        alert("저장되었습니다");
 		        flag = true;
 		    } else {
@@ -491,7 +503,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 
 		// 서버에 데이터를 전송하는 함수
-		function saveMarkersToServer(markers) {
+		function saveMarkersToServer(markers, getProductId) {
+			console.log("세이브 서버 들어왔나요?" + getProductId);
 			// 마커의 위치 정보만을 추출하여 새로운 배열에 저장합니다
 			var markerPositions = [];
 			for (var i = 0; i < markers.length; i++) {
@@ -513,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			// Ajax 요청
 			$.ajax({
 				type : 'POST',
-				url : '/map/save?productId=' + productId,
+				url : '/map/save?productId=' + getProductId,
 				contentType : 'application/json;charset=UTF-8',
 				data : jsonData,
 				success : function(response) {
