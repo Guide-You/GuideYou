@@ -1,5 +1,7 @@
 package com.guideyou.dto.payment;
 
+import java.text.DecimalFormat;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -23,4 +25,21 @@ public class OrderDto {
 	private Long productPrice;
 	private Integer orderUserId;		// 구매자 ID
 	private String thumbnailFileName;
+	
+	
+	
+	public String formatProductPrice() {
+        if (productPrice != 0L) { // 변경된 타입에 따라 null 대신 0L로 비교
+            DecimalFormat df = new DecimalFormat("#,###");
+            String formaterNumber = df.format(productPrice);
+            return formaterNumber + "원";
+        } else {
+            return ""; // 빈 문자열 반환
+        }
+    }
+	
+	
+	
+	
+	
 }

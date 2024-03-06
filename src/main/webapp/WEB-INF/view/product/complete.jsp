@@ -19,7 +19,7 @@ pageEncoding="UTF-8"%>
                         <h3 class="payment--title">결제 정보</h3>
                         <div class="complete--info"><p><span>상품 번호 : </span>${complete.productId }</p></div>
                         <div class="complete--info"><p><span>결제 번호 : </span>${complete.merchantUid }</p></div>
-                        <div class="complete--info"><p><span>결제 일자 : </span>${complete.paymentDate }</p></div>
+                        <div class="complete--info"><p><span>결제 일자 : </span>${complete.formatPaymentDate() }</p></div>
                       </div>
 
 
@@ -42,14 +42,14 @@ pageEncoding="UTF-8"%>
                               </th>
                               <td class="py-5">${complete.productTitle }</td>
                               <td class="py-5">${complete.seller }</td>
-                              <td class="py-5">${complete.productPrice }</td>
+                              <td class="py-5">${complete.formatProductPrice() }</td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
                       <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4 total--price">Total</h5>
-                        <p class="mb-0 pe-4" id="complete--total--price">${complete.totalPrice }</p>
+                        <p class="mb-0 pe-4" id="complete--total--price">${complete.formatTotalPrice() }</p>
                       </div>
 						
 						<a href="/list">

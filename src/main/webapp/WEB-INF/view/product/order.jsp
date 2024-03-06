@@ -37,7 +37,7 @@ pageEncoding="UTF-8"%>
                       </th>
                       <td class="py-5">${order.productTitle}</td>
                       <td class="py-5">${order.sellerNickname }</td>
-                      <td class="py-5">${order.productPrice }</td>
+                      <td class="py-5">${order.formatProductPrice() }</td>
                     </tr>
                   </tbody>
                 </table>
@@ -45,7 +45,7 @@ pageEncoding="UTF-8"%>
                   class="py-4 mb-4 border-top border-bottom d-flex justify-content-between"
                 >
                   <h5 class="mb-0 ps-4 me-4 total--price">Total</h5>
-                  <p class="mb-0 pe-4">${order.productPrice }</p>
+                  <p class="mb-0 pe-4">${order.formatProductPrice() }</p>
                 </div>
                 <div>
                   <h5 class="payment--title">결제</h5>
@@ -95,7 +95,7 @@ pageEncoding="UTF-8"%>
                     type="hidden"
                     name="orderPrice"
                     id="order--price"
-                    value="${order.productPrice }"
+                    value="${order.formatProductPrice() }"
                   />
                 </form>
 
