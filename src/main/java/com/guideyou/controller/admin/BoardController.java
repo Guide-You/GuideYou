@@ -66,7 +66,7 @@ public class BoardController {
 		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
 		inputData.setWriterId(loginUser.getId());
 		
-		inputData.setType("QnA"); // board는 user만 작성하므로 type은 QnA로 고정
+		inputData.setType(inputData.getType()); // board는 user만 작성하므로 type은 QnA로 고정
 		inputData.getTitle();
 		inputData.getContent();
 
@@ -154,6 +154,7 @@ public class BoardController {
 	public String updateByIdProc(@PathVariable("boardId") Integer boardId, Board board, Model model) {
 		board.setId(boardId);
 		User loginUser	= (User)httpSession.getAttribute(Define.PRINCIPAL);
+		board.setWriterId(loginUser.getId());
 		boardService.updateById(board);
 		return "redirect:/company/boardDetail/" + boardId;
 	}

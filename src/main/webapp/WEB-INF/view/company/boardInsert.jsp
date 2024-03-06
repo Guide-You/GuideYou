@@ -15,7 +15,12 @@
 
                 <div class="col-lg-12">
                     <form action="/company/boardInsert" method="post" id="insert">
-                        <input type="text" name="type" class="w-100 form-control border-0 py-3 mb-4" placeholder="QnA">
+                    <select name="type" class="w-100 form-control border-0 py-3 mb-4">
+							<option value="QnA" ${board.type == 'QnA' ? 'selected' : ''}>QnA</option>
+							<option value="FAQ" ${board.type == 'FAQ' ? 'selected' : ''}>FAQ</option>
+							<option value="Notice"
+								${board.type == 'Notice' ? 'selected' : ''}>Notice</option>
+						</select>
                         <input type="text" name="title" class="w-100 form-control border-0 py-3 mb-4" placeholder="제목을 입력해주세요">
                         <textarea class="w-100 form-control border-0 mb-4" name="content" rows="5" cols="10" placeholder="내용을 입력해주세요"></textarea>
                         <div class="row justify-content-end">
