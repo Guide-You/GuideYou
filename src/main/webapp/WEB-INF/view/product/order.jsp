@@ -48,13 +48,8 @@ pageEncoding="UTF-8"%>
                   <p class="mb-0 pe-4">${order.productPrice }</p>
                 </div>
                 <div>
-                  <h5 class="payment--title">결제 방법</h5>
+                  <h5 class="payment--title">결제</h5>
                   <div class="row payment--button">
-                    <div class="col-md-12 col-lg-4">
-                      <div class="form-item w-100">
-                        <button class="payment--payby">계좌이체</button>
-                      </div>
-                    </div>
                     <div class="col-md-12 col-lg-4">
                       <div class="form-item w-100">
                         <button

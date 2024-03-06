@@ -18,7 +18,6 @@ import lombok.ToString;
   */
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-@ToString
 public class PaymentCompleteDto {
 	private Integer productId;
 	private String merchantUid;

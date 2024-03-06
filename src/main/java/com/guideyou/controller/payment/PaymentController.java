@@ -336,8 +336,6 @@ public class PaymentController {
 		PaymentCompleteDto complete = paymentService.findAllPaymentInfoByMerchantUid(merchantUid);
 		model.addAttribute("complete",complete);
 		
-		log.info(complete.toString());
-		
 		return "product/complete";
 
 	}
