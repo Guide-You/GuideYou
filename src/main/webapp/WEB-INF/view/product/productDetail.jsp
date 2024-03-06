@@ -196,7 +196,7 @@
 								class="rounded-circle shadow-1-strong" width="150" height="150" />
 						</div>
 						<h5 class="mb-3" id="revName">${rev.name}</h5>
-						<h6 class="text-primary mb-3" id="revCreatedAt">${rev.createdAt}</h6>
+						<h6 class="text-primary mb-3" id="revCreatedAt">${rev.formatDateTime()}</h6>
 						<p class="px-xl-3 text-center">
 							<!-- Modified: Center align the content -->
 							<i class="fas fa-quote-left pe-2" id="revContent"></i>${rev.content}

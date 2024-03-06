@@ -1,6 +1,7 @@
 package com.guideyou.dto.product;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -19,4 +20,15 @@ public class ProductReviewDto {
 	private Integer rProductId;
 	private Double avgScore;
 	private Timestamp createdAt;
+	
+	
+	
+	
+	public String formatDateTime() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String fomaterDate = dateFormat.format(createdAt);
+		
+		return fomaterDate;
+	}
+	
 }

@@ -629,7 +629,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             tooltip: {
                 x: {
-                    format: 'dd/MM/yy'
+                    format: 'dd/MM/yy HH'
                 },
             }
         });
