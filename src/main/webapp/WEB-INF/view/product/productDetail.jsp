@@ -192,7 +192,7 @@
 					<div class="col-md-4 mb-4">
 						<div class="d-flex justify-content-center mb-4">
 							<img
-								src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(9).webp"
+								src="/images/upload/${rev.uploadFileName}"
 								class="rounded-circle shadow-1-strong" width="150" height="150" />
 						</div>
 						<h5 class="mb-3" id="revName">${rev.name}</h5>
