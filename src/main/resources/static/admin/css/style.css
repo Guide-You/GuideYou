@@ -957,6 +957,8 @@ h6 {
 .dashboard .top-selling img {
   border-radius: 5px;
   max-width: 60px;
+  max-height: 50px;
+  background-size: cover;
 }
 
 /*--------------------------------------------------------------

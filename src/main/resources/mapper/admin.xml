@@ -213,13 +213,13 @@
 	<!-- 오늘 상품 판매 개수, 수익, 가입자 수 조회 -->
 	<select id="chartInformationListD" resultType="hashmap" parameterType="String">
 		WITH T1 AS (
-		SELECT DATE_FORMAT(payment_date, '%Y-%m-%d %H') as dt1, COUNT(*) AS pay_cnt, SUM(total_price) AS total FROM payment u
+		SELECT DATE_FORMAT(payment_date, '%Y-%m-%d %H:00:00') as dt1, COUNT(*) AS pay_cnt, SUM(total_price) AS total FROM payment u
 		WHERE payment_date <![CDATA[>=]]> DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')
-		GROUP BY DATE_FORMAT(payment_date, '%Y-%m-%d %H')
+		GROUP BY DATE_FORMAT(payment_date, '%Y-%m-%d %H:00:00')
 		), T2 AS (
-		SELECT DATE_FORMAT(created_at, '%Y-%m-%d %H') as dt2, COUNT(*) as user_cnt FROM user u
+		SELECT DATE_FORMAT(created_at, '%Y-%m-%d %H:00:00') as dt2, COUNT(*) as user_cnt FROM user u
 		WHERE created_at <![CDATA[>=]]> DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')
-		GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d %H')
+		GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d %H:00:00')
 		)
 		
 		SELECT if(dt1 IS NULL,dt2,dt1) AS createdAt
