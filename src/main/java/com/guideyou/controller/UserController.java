@@ -1,11 +1,14 @@
 package com.guideyou.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -452,6 +455,18 @@ public class UserController {
 		return result;
 	}
 	
+	@PostMapping("/wishlist/delete/{wishListId}")
+	@ResponseBody
+	public Map<String, Object> deleteWishListItem(@PathVariable("wishListId") Integer wishListId) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	    	wishListService.deleteById(wishListId);
+	    	response.put("success", true);
+	    } catch (Exception e) {
+	        response.put("success", false);
+	    }
+	    return response;
+	}
 
 
 

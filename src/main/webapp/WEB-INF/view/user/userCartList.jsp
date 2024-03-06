@@ -19,7 +19,6 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<form>
 					<table class="table cart--table">
 						<thead>
 							<tr>
@@ -37,8 +36,7 @@
 								<tr>
 									<td scope="row">
 										<div class="d-flex align-items-center mt-2">
-											<img
-												src="/images/upload/${wishListItem.productImage}"
+											<img src="/images/upload/${wishListItem.productImage}"
 												class="img-fluid rounded-circle"
 												style="width: 90px; height: 90px;" alt="">
 										</div>
@@ -48,10 +46,24 @@
 									<td class="py-5" id="productPrice">${wishListItem.formatPrice()}</td>
 									<th scope="row">
 										<div>
-											<button type="button" class="border-secondary rounded-pill text-primary text-uppercase mb-4 ms-4">삭제</button>
+											<button type="button"
+												class="border-secondary rounded-pill text-primary text-uppercase mb-4 ms-4"
+												data-wishlist-id="${wishListItem.wishListId}">삭제
+											</button>
 										</div>
 										<div>
-											<button type="button" class="border-secondary rounded-pill text-primary text-uppercase mb-4 ms-4">구매</button>
+											<form id="send--detail--form">
+											    <input type="hidden" name="productId" id="product--id" value="${wishListItem.productId}"> 
+											    <input type="hidden" name="productTitle" id="product--title" value="${wishListItem.productTitle}"> 
+											    <input type="hidden" name="productSellerId" id="product--seller--id" value="${wishListItem.authorId}">
+											    <input type="hidden" name="sellerNickname" id="seller--nickname" value="${wishListItem.writerNickname}">
+											    <input type="hidden" name="productPrice" id="product--price" value="${wishListItem.productPrice}">
+											    <input type="hidden" name="thumbnailFileName" id="thumbnail--file--name" value="${wishListItem.productImage}">
+											</form>
+											<button type="button"
+													class="border-secondary rounded-pill text-primary text-uppercase mb-4 ms-4"
+													id="cart--purchase--btn">구매
+												</button>
 										</div>
 									</th>
 								</tr>
@@ -59,7 +71,6 @@
 						</tbody>
 
 					</table>
-				</form>
 			</c:otherwise>
 		</c:choose>
 		<!-- 페이징 처리 -->
@@ -93,6 +104,6 @@
 </div>
 <!--  Page End -->
 
-
 <!-- footer -->
+<script src="/js/user/userCartList.js"></script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

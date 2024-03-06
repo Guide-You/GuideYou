@@ -23,9 +23,12 @@ import lombok.Data;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class WishListProductUserDTO {
     private Integer userId;				// 로그인한 사용자 ID
+    private Integer productId;			// 상품 ID
+    private Integer wishListId;				// wishList Id
     private String productTitle;		// 상품 제목
     private Long productPrice;			// 상품 가격
     private String writerNickname;			// 상품 작성자 이름
+    private String authorId;			// 상품 작성자 Id
     private String productImage;		// 상품 이미지
     
 	public String formatPrice() {

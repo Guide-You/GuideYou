@@ -100,11 +100,23 @@ public class WishListService {
 		if(findWish == null) {
 			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		int result = wishListRepository.delete(findWish);
+		int result = wishListRepository.delete(findWish.getId());
 		if(result == 0) {
 			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return result;
+	}
+	
+	/**
+	  * @Method Name : deleteById
+	  * @작성일 : 2024. 3. 6.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : id로 wishList 삭제
+	  */
+	@Transactional
+	public int deleteById(Integer id) {
+		return wishListRepository.delete(id);
 	}
 	
 	/**

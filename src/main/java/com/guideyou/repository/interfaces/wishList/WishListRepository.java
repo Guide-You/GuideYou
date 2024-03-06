@@ -32,6 +32,6 @@ public interface WishListRepository {
 	
 	public int insert(WishList wishList);
 
-	public int delete(WishList wishList);
+	public int delete(Integer id);
 
 }
