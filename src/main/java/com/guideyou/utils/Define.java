@@ -3,6 +3,8 @@ package com.guideyou.utils;
 public class Define {
 	
 
+	public static final String WISHLISTCOUNT = "wishListCount";
+
 	public static final String PRINCIPAL = "principal";
 	public static final String PRINCIPAL_PHOTO = "principalPhoto";
 
@@ -29,10 +31,15 @@ public class Define {
 	public static final String INTERNAL_SERVER_ERROR = "내부 서버 오류가 발생했습니다.";
 
 	public static final String NOT_AN_AUTHENTICATED_USER = "인증된 사용자가 아닙니다.";
+	
+	public static final String WITHDRAWN_USER  = "탈퇴한 사용자입니다.";
 
 	public static final String NOT_FOUNT_PURCHASED_HISTORY = "구매 내역이 없습니다.";
 
 	public static final String D_BALANCE_VALUE = null;
+	
+	public static final String DELETE_N = "N";
+	public static final String DELETE_Y = "Y";
 
 
 	public static final String DEFAULT_NAME = "DEFAULT_NAME";

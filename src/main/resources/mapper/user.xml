@@ -30,7 +30,7 @@
 	<update id="updateById">
 		update user set name = #{name}, nickname =
 		#{nickname}, gender = #{gender}, email = #{email}, phone = #{phone},
-		comment = #{comment}
+		comment = #{comment}, delete_yn = #{deleteYn}, delete_at = #{deleteAt}
 		where id = #{id}
 	</update>
 
