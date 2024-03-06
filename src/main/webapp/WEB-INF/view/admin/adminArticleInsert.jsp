@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 <!--  관리자 Notice,Faq 글 등록 페이지 관리자'만' 등록하므로 작성자칸은 제외-->
-        <!-- Contact Start -->
         <div class="container-fluid contact py-5">
             <div class="container py-5">
                 <div class="p-5 bg-light rounded">
@@ -14,7 +13,7 @@
                         </div>
                        
                         <div class="col-lg-12">
-                            <form action="/company/testInsert" method="post" id="insert">
+                            <form action="/admin/adminArticleInsert" method="post" id="insert">
                                 <input type="text" name="type" class="w-100 form-control border-0 py-3 mb-4" placeholder="Notice/Faq 입력해주세요">
                                 <input type="text" name="title" class="w-100 form-control border-0 py-3 mb-4" placeholder="제목을 입력해주세요">
                                 <textarea class="w-100 form-control border-0 mb-4" name="content" rows="5" cols="10" placeholder="내용을 입력해주세요"></textarea>
@@ -30,9 +29,8 @@
                                 
                                 <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="submit" value="등록">등록하기</button>
                                 
-                                
                                 <div class="col-lg-2 row-sm-1">
-                                <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="button" value="삭제">삭제하기</button>
+                                <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="button" value="삭제">취소하기</button>
                                 </div>  <!-- a tag로 페이지 이동 -->
                         	</div>
                             </div>
