@@ -5,7 +5,7 @@
 	
 	<!-- 최근 생성된 상품 정보 조회 -->
 	<select id="findLatestPosts" resultType="com.guideyou.dto.product.ProductDto">
-		SELECT u.nickname as nickName, p.id, p.user_id as userId, p.title, p.price, p.created_at as createdAt
+		SELECT u.nickname as nickName, p.id as productId, p.user_id as userId, p.title, p.price, p.created_at as createdAt
         FROM product p
         JOIN user u ON p.user_id = u.id
         ORDER BY p.created_at DESC
@@ -13,7 +13,7 @@
 	
 	<!-- 오늘 최근 상품 정보 -->
 	<select id="findLatestPostsD" resultType="com.guideyou.dto.product.ProductDto">
-		SELECT u.nickname as nickName, p.id, p.user_id as userId, p.title, p.price, p.created_at as createdAt
+		SELECT u.nickname as nickName, p.id as productId, p.user_id as userId, p.title, p.price, p.created_at as createdAt
         FROM product p
         JOIN user u ON p.user_id = u.id
         where p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and p.created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
@@ -23,7 +23,7 @@
 	
 	<!-- 이번 달 최근 상품 정보 -->
 	<select id="findLatestPostsM" resultType="com.guideyou.dto.product.ProductDto">
-		SELECT u.nickname as nickName, p.id, p.user_id as userId, p.title, p.price, p.created_at as createdAt
+		SELECT u.nickname as nickName, p.id as productId, p.user_id as userId, p.title, p.price, p.created_at as createdAt
         FROM product p
         JOIN user u ON p.user_id = u.id
         where p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and p.created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 MONTH),'%Y-%m-01 00:00:00')
@@ -33,7 +33,7 @@
 	
 	<!-- 올 해 최근 상품 정보 -->
 	<select id="findLatestPostsY" resultType="com.guideyou.dto.product.ProductDto">
-		SELECT u.nickname as nickName, p.id, p.user_id as userId, p.title, p.price, p.created_at as createdAt
+		SELECT u.nickname as nickName, p.id as productId, p.user_id as userId, p.title, p.price, p.created_at as createdAt
         FROM product p
         JOIN user u ON p.user_id = u.id
         where p.created_at <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and p.created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
@@ -188,24 +188,24 @@
 	
 	<!-- 게시글 조회 -->
 	<select id="selectBoardList" resultType="com.guideyou.dto.admin.BoardDto">
-		select id, `type`, title, content from board_contents
+		select id as boardId, `type`, title, content from board_contents
 	</select>
 	
 	<!-- 오늘 게시글 조회 -->
 	<select id="selectBoardListD" resultType="com.guideyou.dto.admin.BoardDto">
-		select id, `type`, title, content from board_contents
+		select id as boardId, `type`, title, substring(content, 1, 10) as content from board_contents
 		where created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
 	</select>
 	
 	<!-- 이번 달 게시글 조회 -->
 	<select id="selectBoardListM" resultType="com.guideyou.dto.admin.BoardDto">
-		select id, `type`, title, content from board_contents
+		select id as boardId, `type`, title, substring(content, 1, 10) as content from board_contents
 		where created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 MONTH),'%Y-%m-01 00:00:00')
 	</select>
 	
 	<!-- 올해 게시글 조회 -->
 	<select id="selectBoardListY" resultType="com.guideyou.dto.admin.BoardDto">
-		select id, `type`, title, content from board_contents
+		select id as boardId, `type`, title, substring(content, 1, 10) as content from board_contents
 		where created_at <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
 	</select>
 	
@@ -302,8 +302,8 @@
 	</select>
 	
 	<!-- 관리자 페이지 가입 된 회원 정보 조회 -->
-	<select id="selectUserInfoList">
-		select * from payment
+	<select id="selectUserInfoList" resultType="com.guideyou.dto.admin.AdminUserInfoDto">
+		select * from user
 		limit #{limit} offset #{offset}  
 	</select>
 	

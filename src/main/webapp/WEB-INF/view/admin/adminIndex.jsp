@@ -301,7 +301,7 @@
 													<c:forEach items="${productList}" var="post">
 														<tr>
 															<td>${post.nickName}</td>
-															<td><a href="#" class="text-primary">${post.title}</a></td>
+															<td><a href="/detail/${post.productId}" class="text-primary">${post.title}</a></td>
 															<td>${post.price}</td>
 															<td><span class="badge bg-success">${post.createdAt}</span></td>
 														</tr>
@@ -311,7 +311,7 @@
 													<c:forEach items="${productList}" var="post">
 														<tr>
 															<td>${post.nickName}</td>
-															<td><a href="#" class="text-primary">${post.title}</a></td>
+															<td><a href="/detail/${post.productId}" class="text-primary">${post.title}</a></td>
 															<td>${post.price}</td>
 															<td><span class="badge bg-success">${post.createdAt}</span></td>
 														</tr>
@@ -321,7 +321,7 @@
 													<c:forEach items="${productList}" var="info">
 														<tr>
 															<td>${info.nickName}</td>
-															<td><a href="#" class="text-primary">${info.title}</a></td>
+															<td><a href="/detail/${info.productId}" class="text-primary">${info.title}</a></td>
 															<td>${info.price}</td>
 															<td><span class="badge bg-success">${info.createdAt}</span></td>
 														</tr>
@@ -331,7 +331,7 @@
 													<c:forEach items="${productList}" var="info">
 														<tr>
 															<td>${info.nickName}</td>
-															<td><a href="#" class="text-primary">${info.title}</a></td>
+															<td><a href="/detail/${info.productId}" class="text-primary">${info.title}</a></td>
 															<td>${info.price}</td>
 															<td><span class="badge bg-success">${info.createdAt}</span></td>
 														</tr>
@@ -392,7 +392,7 @@
 															<th scope="row"><a href="#"><img
 																	src="/images/upload/${post.uploadFileName}" alt=""></a>
 															</th>
-															<td><a href="#" class="text-primary fw-bold">${post.introContent}</a></td>
+															<td><a href="/detail/${post.productId}" class="text-primary fw-bold">${post.introContent}</a></td>
 															<td>${post.price}원</td>
 															<td class="fw-bold">${post.soldCount}</td>
 															<td>${post.revenue}원</td>
@@ -405,7 +405,7 @@
 															<th scope="row"><a href="#"><img
 																	src="/images/upload/${post.uploadFileName}" alt=""></a>
 															</th>
-															<td><a href="#" class="text-primary fw-bold">${post.introContent}</a></td>
+															<td><a href="/detail/${post.productId}" class="text-primary fw-bold">${post.introContent}</a></td>
 															<td>${post.price}원</td>
 															<td class="fw-bold">${post.soldCount}</td>
 															<td>${post.revenue}원</td>
@@ -418,7 +418,7 @@
 															<th scope="row"><a href="#"><img
 																	src="/images/upload/${info.uploadFileName}" alt=""></a>
 															</th>
-															<td><a href="detail/{productId}" class="text-primary fw-bold">${info.introContent}</a></td>
+															<td><a href="/detail/${info.productId}" class="text-primary fw-bold">${info.introContent}</a></td>
 															<td>${info.price}원</td>
 															<td class="fw-bold">${info.soldCount}</td>
 															<td>${info.revenue}원</td>
@@ -431,7 +431,7 @@
 															<th scope="row"><a href="#"><img
 																	src="/images/upload/${info.uploadFileName}" alt=""></a>
 															</th>
-															<td><a href="#" class="text-primary fw-bold">${info.introContent}</a></td>
+															<td><a href="/detail/${info.productId}" class="text-primary fw-bold">${info.introContent}</a></td>
 															<td>${info.price}원</td>
 															<td class="fw-bold">${info.soldCount}</td>
 															<td>${info.revenue}원</td>
@@ -495,7 +495,7 @@
 												<c:forEach items="${productList6}" var="board">
 													<tr>
 														<td>${board.type}</td>
-														<td>${board.title}</td>
+														<td><a href="/company/boardDetail/${board.boardId}">${board.title}</a></td>
 														<td>${board.content}</td>
 													</tr>
 												</c:forEach>
@@ -504,7 +504,7 @@
 												<c:forEach items="${productList6}" var="board">
 													<tr>
 														<td>${board.type}</td>
-														<td>${board.title}</td>
+														<td><a href="/company/boardDetail/${board.boardId}">${board.title}</a></td>
 														<td>${board.content}</td>
 													</tr>
 												</c:forEach>
@@ -513,7 +513,7 @@
 												<c:forEach items="${productList6}" var="board">
 													<tr>
 														<td>${board.type}</td>
-														<td>${board.title}</td>
+														<td><a href="/company/boardDetail/${board.boardId}">${board.title}</a></td>
 														<td>${board.content}</td>
 													</tr>
 												</c:forEach>
@@ -522,7 +522,7 @@
 												<c:forEach items="${productList6}" var="board">
 													<tr>
 														<td>${board.type}</td>
-														<td>${board.title}</td>
+														<td><a href="/company/boardDetail/${board.boardId}">${board.title}</a></td>
 														<td>${board.content}</td>
 													</tr>
 												</c:forEach>
@@ -580,6 +580,10 @@ document.addEventListener("DOMContentLoaded", () => {
     		
     	});
     	console.log(paymentCount);
+    	console.log(totalPrice);
+    	console.log(userCount);
+    	console.log(createdAt);
+    	
         chart = new ApexCharts(document.querySelector("#reportsChart"), {
             series: [{
                 name: '판매 갯수',
@@ -625,7 +629,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             tooltip: {
                 x: {
-                    format: 'dd/MM/yy'
+                    format: 'dd/MM/yy:HH'
                 },
             }
         });

@@ -42,8 +42,10 @@
 	</select>
 	
 	
-	
-	
+	<!-- 24.03.06 공지사항 조회 -->
+	<select id="selectNoticeBoard" resultType="com.guideyou.dto.admin.BoardDto">
+		select id as boardId, title, type from board_contents where type = 'notice'
+	</select> 
 	
 	
 	

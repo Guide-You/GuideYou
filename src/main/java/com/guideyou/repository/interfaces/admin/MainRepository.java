@@ -4,10 +4,19 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.guideyou.dto.admin.BoardDto;
 import com.guideyou.dto.main.CountDto;
 import com.guideyou.dto.product.ProductDto;
 
-// 24.02.29 mainPage 를 위한 repository
+
+/**
+  * @FileName : MainRepository.java
+  * @Project : GuideYou
+  * @Date : 2024. 2. 29. 
+  * @작성자 : 장명근
+  * @변경이력 :
+  * @프로그램 설명 : mainPage repository
+  */
 @Mapper
 public interface MainRepository {
 	
@@ -19,4 +28,9 @@ public interface MainRepository {
 	
 	// 24.02.29 메인 페이지 실적 조회
 	public CountDto findPerformance();
+	
+	// 24.03.06 공지사항 조회
+	public List<BoardDto> selectNoticeBoard();
+	
+	
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.guideyou.dto.admin.BoardDto;
 import com.guideyou.dto.main.CountDto;
 import com.guideyou.dto.product.ProductDto;
 import com.guideyou.service.MainService;
@@ -42,6 +43,9 @@ public class MainController {
 		// 24.02.29 메인 페이지 실적 조회
 		CountDto count = mainService.findPerformance();
 		model.addAttribute("count", count);
+		
+		List<BoardDto> noticeInfoList = mainService.selectNoticeBoard();
+		model.addAttribute("noticeInfoList", noticeInfoList);
 		
 		return "main";
 	}

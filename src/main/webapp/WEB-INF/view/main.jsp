@@ -28,14 +28,15 @@
 </div>
 <!-- Hero End -->
 <section class="sc-a37b6b4d-0 iVnkhP">
-		<form action="list" id="searchForm">
-			<div class="sc-a37b6b4d-1 bBhtyX">
-				<input id="searchText" maxlength="20" class="sc-a37b6b4d-2 cpWeqo" value="" placeholder="🔍 어느 도시로 떠나시나요?" name="searchText"/>
-					<span class="searchBtn btn" onclick="showCity()">검색</span>
-				<input type="hidden" id="cityCodeId" name="cityCodeId">
-			</div>
-		</form>
-	</section>
+	<form action="list" id="searchForm">
+		<div class="sc-a37b6b4d-1 bBhtyX">
+			<input id="searchText" maxlength="20" class="sc-a37b6b4d-2 cpWeqo"
+				value="" placeholder="🔍 어느 도시로 떠나시나요?" name="searchText" /> <span
+				class="searchBtn btn" onclick="showCity()">검색</span> <input
+				type="hidden" id="cityCodeId" name="cityCodeId">
+		</div>
+	</form>
+</section>
 <!-- Featurs Section Start -->
 <div class="container-fluid featurs py-5">
 	<div class="container py-5">
@@ -138,21 +139,22 @@
 	<div class="container py-5">
 		<h1 class="mb-0">지역 별 인기 여행지</h1>
 		<div class="owl-carousel vegetable-carousel justify-content-center">
-			
-		<c:forEach items="${popluarLocalProduct}" var="local">	
-			<div
-				class="border border-primary rounded position-relative vesitable-item">
-				<div class="vesitable-img">
-					<a href="/detail/${local.id}"><img src="/images/upload/${local.uploadFileName}"
-						class="img-fluid w-100 rounded-top top-city" alt="" /></a>
-				</div>
+
+			<c:forEach items="${popluarLocalProduct}" var="local">
 				<div
-					class="text-white bg-primary px-3 py-1 rounded position-absolute"
-					id="localName">${local.cityName}</div>
-			</div>
-		</c:forEach>	
-			
-			
+					class="border border-primary rounded position-relative vesitable-item">
+					<div class="vesitable-img">
+						<a href="/detail/${local.id}"><img
+							src="/images/upload/${local.uploadFileName}"
+							class="img-fluid w-100 rounded-top top-city" alt="" /></a>
+					</div>
+					<div
+						class="text-white bg-primary px-3 py-1 rounded position-absolute"
+						id="localName">${local.cityName}</div>
+				</div>
+			</c:forEach>
+
+
 		</div>
 	</div>
 </div>
@@ -172,32 +174,32 @@
 						<div class="row g-4">
 							<div class="col-lg-12">
 								<div class="row g-4">
-								
-								<c:forEach items="${popluarProduct}" var="pop">
-									<div class="col-md-6 col-lg-4 col-xl-3">
-										<div class="rounded position-relative fruite-item">
-											<div class="fruite-img">
-												<img src="/images/upload/${pop.uploadFileName}"
-													class="img-fluid w-100 rounded-top" alt="" />
-											</div>
-											<div
-												class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-												 id="popCityName">${pop.cityName}</div>
-											<div
-												class="p-4 border border-secondary border-top-0 rounded-bottom">
-												<a href="/detail/${pop.id}"><h4>${pop.title}</h4></a>
-												<a href="/detail/${pop.id}"><p>${pop.content}</p></a>
-												<div class="d-flex justify-content-between flex-lg-wrap">
-													<p class="text-dark fs-5 fw-bold mb-0">${pop.price}</p>
-													<a href="#"
-														class="btn border border-secondary rounded-pill px-3 text-primary"><i
-														class="fa fa-shopping-bag me-2 text-primary"></i> 구경하기</a>
+
+									<c:forEach items="${popluarProduct}" var="pop">
+										<div class="col-md-6 col-lg-4 col-xl-3">
+											<div class="rounded position-relative fruite-item">
+												<div class="fruite-img">
+													<img src="/images/upload/${pop.uploadFileName}"
+														class="img-fluid w-100 rounded-top" alt="" />
+												</div>
+												<div
+													class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+													id="popCityName">${pop.cityName}</div>
+												<div
+													class="p-4 border border-secondary border-top-0 rounded-bottom">
+													<a href="/detail/${pop.id}"><h4>${pop.title}</h4></a> <a
+														href="/detail/${pop.id}"><p>${pop.content}</p></a>
+													<div class="d-flex justify-content-between flex-lg-wrap">
+														<p class="text-dark fs-5 fw-bold mb-0">${pop.price}</p>
+														<a href="#"
+															class="btn border border-secondary rounded-pill px-3 text-primary"><i
+															class="fa fa-shopping-bag me-2 text-primary"></i> 구경하기</a>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</c:forEach>	
-									
+									</c:forEach>
+
 								</div>
 							</div>
 						</div>
@@ -231,7 +233,7 @@
 										<h4>이용자 수</h4>
 										<h1>${count.userCount}명</h1>
 									</div>
-								</div>							
+								</div>
 								<div class="col-md-6 col-lg-6 col-xl-3">
 									<div class="counter bg-white rounded p-5">
 										<i class="fa fa-users text-secondary"></i>
@@ -252,46 +254,16 @@
 							<h1 class="display-5 mb-5 text-dark">공지사항</h1>
 						</div>
 						<div class="owl-carousel testimonial-carousel">
-							<div
-								class="testimonial-item img-border-radius bg-light rounded p-4">
-								<div class="position-relative">
-									<div class="mb-4 pb-4 border-bottom border-secondary">
-										<p class="mb-0">[이벤트] KTX 서울-부산 반값으로 가자!</p>
+							<c:forEach items="${noticeInfoList}" var="notice">
+								<div
+									class="testimonial-item img-border-radius bg-light rounded p-4">
+									<div class="position-relative">
+										<div class="mb-4 pb-4 border-bottom border-secondary">
+											<a href="/company/boardDetail/${notice.boardId}"><p class="mb-0">${notice.title}</p></a>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div
-								class="testimonial-item img-border-radius bg-light rounded p-4">
-								<div class="position-relative">
-									<div class="mb-4 pb-4 border-bottom border-secondary">
-										<p class="mb-0">[이벤트] KTX 서울-부산 반값으로 가자!</p>
-									</div>
-								</div>
-							</div>
-							<div
-								class="testimonial-item img-border-radius bg-light rounded p-4">
-								<div class="position-relative">
-									<div class="mb-4 pb-4 border-bottom border-secondary">
-										<p class="mb-0">[멤버쉽] 프리미엄 멤버쉽 10% 할인 진행중</p>
-									</div>
-								</div>
-							</div>
-							<div
-								class="testimonial-item img-border-radius bg-light rounded p-4">
-								<div class="position-relative">
-									<div class="mb-4 pb-4 border-bottom border-secondary">
-										<p class="mb-0">[멤버쉽] 프리미엄 멤버쉽 10% 할인 진행중</p>
-									</div>
-								</div>
-							</div>
-							<div
-								class="testimonial-item img-border-radius bg-light rounded p-4">
-								<div class="position-relative">
-									<div class="mb-4 pb-4 border-bottom border-secondary">
-										<p class="mb-0">[멤버쉽] 프리미엄 멤버쉽 10% 할인 진행중</p>
-									</div>
-								</div>
-							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>

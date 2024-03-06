@@ -14,6 +14,7 @@ import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
 import com.guideyou.dto.admin.AdminDto;
 import com.guideyou.dto.admin.AdminPaymentListDto;
+import com.guideyou.dto.admin.AdminUserInfoDto;
 import com.guideyou.dto.admin.BoardDto;
 import com.guideyou.dto.product.ProductDto;
 import com.guideyou.service.AdminService;
@@ -219,6 +220,38 @@ public class AdminController {
 		return "/admin/adminPaymentList";
 	}
 	
+	
+	/**
+	  * @Method Name : userListPasing
+	  * @작성일 : 2024. 3. 6.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 유저 정보 조회
+	  */
+	@GetMapping("/userinfolist")
+	public String userListPasing(PageReq pageReq, Model model) {
+		
+		if (pageReq.getPage() <= 0) {
+			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
+		}
+
+		if (pageReq.getSize() <= 0) {
+			pageReq.setSize(5); // 페이지 당 보여줄 개수
+		}
+		
+		PageRes<AdminUserInfoDto> pageRes = adminService.selectUserInfoList(pageReq);
+		List<AdminUserInfoDto> list = pageRes.getContent();
+		model.addAttribute("adminUserList", list);
+		
+		
+		model.addAttribute("page", pageReq.getPage());
+		model.addAttribute("size", pageRes.getSize());
+		model.addAttribute("totalPages", pageRes.getTotalPages());
+		model.addAttribute("startPage", pageRes.getStartPage());
+		model.addAttribute("endPage", pageRes.getEndPage());
+		
+		return "/admin/adminUserList";
+	}
 	
 	
 	

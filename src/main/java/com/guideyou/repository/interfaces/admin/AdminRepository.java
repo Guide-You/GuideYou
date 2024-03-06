@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.guideyou.dto.admin.AdminDto;
 import com.guideyou.dto.admin.AdminPaymentListDto;
+import com.guideyou.dto.admin.AdminUserInfoDto;
 import com.guideyou.dto.admin.BoardDto;
 import com.guideyou.dto.payment.PaymentDto;
 import com.guideyou.dto.product.ProductDto;
@@ -123,5 +124,13 @@ public interface AdminRepository {
 	
 	// 24.03.06 수익 개수 조회
 	public int getPaymentCount();
+	
+	
+	// 24.03.06 유저 정보 전체 조회
+	public List<AdminUserInfoDto> selectUserInfoList(@Param ("offset") int offset, @Param ("limit") int limit); 
+		
+	// 24.03.06 유저 정보 개수 조회
+	public int getUserCount();
+	
 	
 }
