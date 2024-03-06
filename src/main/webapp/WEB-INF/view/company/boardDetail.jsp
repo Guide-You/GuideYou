@@ -99,7 +99,7 @@
 <div class="text-end">
 	<c:if test="${principal.role eq 'ADMIN' || board.writerId eq writerId}">
 		<button type="button" class="btn btn-outline-info"
-			onclick="location.href='/company/delete/${board.id}'">삭제</button>
+			onclick="location.href='/company/delete/${board.type}/${board.id}'">삭제</button>
 		<button type="button" class="btn btn-outline-info"
 			onclick="location.href='/company/boardModify/${board.id}'">수정</button>
 	</c:if>

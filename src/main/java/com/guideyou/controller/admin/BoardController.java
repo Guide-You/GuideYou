@@ -112,10 +112,10 @@ public class BoardController {
 	 * @프로그램 설명 : 글 detail view 불러오기중입니다.
 	 */
 	// 글 삭제
-	@GetMapping("/delete/{id}")
-	public String deleteById(@PathVariable("id") Integer boardId) {
+	@GetMapping("/delete/{type}/{id}")
+	public String deleteById(@PathVariable("type") String type, @PathVariable("id") Integer boardId) {
 		boardService.deleteById(boardId);
-		return "redirect:/company/boardList";
+		return "redirect:/company/boardList/" + type ;
 	}
 
 	/**
