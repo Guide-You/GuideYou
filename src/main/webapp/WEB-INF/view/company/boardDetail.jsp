@@ -6,7 +6,7 @@
 
 <div class="container">
 	<div class="row g-4">
-		<div class="col-lg-6"></div>
+		<div class="col-lg-6" style="width : 0%;"></div>
 		<div class="col-lg-6">
 			<h4 class="fw-bold mb-3">${board.title}</h4>
 			<p class="mb-3">${board.type}</p>
@@ -110,7 +110,6 @@
 </div>
 </div>
 
-<fmt:formatDate value="${board.createdAt}" pattern="yyyy-MM-dd hh:mm:ss" />
 
 <script>
     function updateComment() {

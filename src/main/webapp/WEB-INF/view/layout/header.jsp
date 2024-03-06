@@ -95,7 +95,7 @@
 							class="text-white mx-2">글쓰기</small>/</a> <a href="/company/policy"
 							class="text-white"><small
 							class="text-white mx-2">약관</small>/</a> <a
-							href="/admin/adminArticleList" class="text-white"><small
+							href="/company/boardList/Notice" class="text-white"><small
 							class="text-white mx-2">고객센터</small>/</a> <a
 							href="/company/boardInsert" class="text-white"><small
 							class="text-white ms-2">문의하기</small></a>
