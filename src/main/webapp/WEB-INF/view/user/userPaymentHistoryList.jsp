@@ -39,7 +39,7 @@
 									<td class="py-5">${history.merchantUid }</td>
 									<td class="py-5">${history.title }</td>
 									<td class="py-5">${history.seller }</td>
-									<td class="py-5">${history.paymentPrice }</td>
+									<td class="py-5">${history.formatPaymentPrice() }</td>
 									<td class="py-5">${history.formatPaymentDate() }</td>
 									<td class="py-5">${history.formatRefundPrice() }</td>
 									<td class="py-5">${history.refundCause }</td>
