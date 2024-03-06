@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-	
+
 	let validBtn = document.getElementById("valid--btn");
 	let userId = document.getElementById("user--id") ? document.getElementById("user--id").value : '0';
 	let signUpBtn = document.getElementById('signUpBtn');
@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	let phoneInput = document.getElementById('phone');
 	let signUpForm = document.forms['signUpForm'];
 	let isNicknameValid = false // 닉네임유효성및중복여부를저장하는변수
-	
-	validBtn.addEventListener('click', function(e){
+
+	validBtn.addEventListener('click', function(e) {
 		e.preventDefault();
-		
+
 		checkNickName();
 	});
 
@@ -75,8 +75,10 @@ document.addEventListener("DOMContentLoaded", function() {
 			$.ajax({
 				type: 'POST',
 				url: "/member/checkNickname",
-				data: { nickname: nickname,
-						userId :  userId},
+				data: {
+					nickname: nickname,
+					userId: userId
+				},
 				error: function(err) {
 					alert("실행중오류가발생하였습니다.");
 				},
@@ -139,6 +141,35 @@ document.addEventListener('DOMContentLoaded', function() {
 	// 총합 변수.
 	var totalPrice = 0;
 
+	let withdrawalBtn = document.getElementById('aside--Withdrawal');
+
+	withdrawalBtn.addEventListener('click', function() {
+		if (confirm('회원 탈퇴 하시겠습니까?')) {
+			fetch('/member/withdrawal', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({}) // 필요에 따라 요청 바디에 데이터를 추가할 수 있습니다.
+			})
+				.then(response => {
+					if (response.ok) {
+						// 서버로부터 응답이 정상적으로 받아졌을 때 수행할 작업
+						alert('회원 탈퇴가 성공적으로 처리되었습니다.');
+						location.href = "/main"; // 리디렉션
+						// 예를 들어, 페이지 새로고침을 수행하거나 다른 작업을 수행할 수 있습니다.
+					} else {
+						// 서버로부터 오류 응답이 받아졌을 때 수행할 작업
+						alert('회원 탈퇴 요청이 실패하였습니다.');
+					}
+				})
+				.catch(error => {
+					// 네트워크 오류 등의 경우 발생할 수 있는 예외 상황에 대한 처리
+					console.error('Error:', error);
+				});
+		}
+	});
+
 	//change 이벤트 (input 상태 변경될때 마다)
 	checkboxes.forEach(function(checkbox) {
 		checkbox.addEventListener('change', function() {
@@ -159,4 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			totalPriceDisplay.textContent = totalPrice.toLocaleString() + "원";
 		});
 	});
+
+
+
 });

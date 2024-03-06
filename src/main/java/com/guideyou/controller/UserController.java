@@ -1,9 +1,11 @@
 package com.guideyou.controller;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,8 @@ import com.guideyou.dto.user.SignUpDTO;
 import com.guideyou.dto.user.UserDTO;
 import com.guideyou.dto.wishList.WishListDTO;
 import com.guideyou.dto.wishList.WishListProductUserDTO;
+import com.guideyou.handler.exception.CustomPageException;
+import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.User;
 import com.guideyou.repository.entity.user.UserPhotos;
 import com.guideyou.service.PaymentService;
@@ -57,41 +61,64 @@ public class UserController {
 	@Autowired
 	private ProductService productService;
 	@Autowired
-	private UserPhotosService userPhotosService; 
-	
+	private UserPhotosService userPhotosService;
 
 	@Autowired
 	private HttpSession httpSession;
-	
-	/* -----------------------------------마이페이지 시작---------------------------------------------*/	
-	
+
+	/*
+	 * -----------------------------------마이페이지
+	 * 시작---------------------------------------------
+	 */
+
 	/**
-	  * @Method Name : logOut
-	  * @작성일 : 2024. 2. 26.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 로그아웃 기능 - 메인화면으로 돌아감
-	  */
+	 * @Method Name : withdrawalUser
+	 * @작성일 : 2024. 3. 6.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 회원 탈퇴 요청 시 수행됨
+	 */
+	@PostMapping("/member/withdrawal")
+	@ResponseBody
+	public String withdrawalUser(HttpServletRequest request, Model model) {
+		User user = (User) httpSession.getAttribute(Define.PRINCIPAL);
+		user.setDeleteYn("Y");
+		user.setDeleteAt(new Timestamp(System.currentTimeMillis()));
+		int result = userService.updateById(user);
+		if (result == 0) {
+			throw new CustomRestfulException(Define.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return logOut(request);
+	}
+
+	/**
+	 * @Method Name : logOut
+	 * @작성일 : 2024. 2. 26.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 로그아웃 기능 - 메인화면으로 돌아감
+	 */
 	@GetMapping("/member/logout")
 	public String logOut(HttpServletRequest request) {
 		httpSession = request.getSession();
 		httpSession.removeAttribute(Define.PRINCIPAL);
 		httpSession.removeAttribute(Define.PRINCIPAL_PHOTO);
+		httpSession.removeAttribute(Define.WISHLISTCOUNT);
 //		httpSession.invalidate();
 		return "redirect:/main";
 	}
-	
+
 	/**
-	  * @Method Name : uploadListPage
-	  * @작성일 : 2024. 2. 24.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 사용자 작성한 상품 목록 페이지
-	  * @return
-	  */
+	 * @Method Name : uploadListPage
+	 * @작성일 : 2024. 2. 24.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 사용자 작성한 상품 목록 페이지
+	 * @return
+	 */
 	@GetMapping("/member/uploadList")
 	public String uploadListPage(PageReq pageReq, Model model) {
-		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
+		User loginUser = (User) httpSession.getAttribute(Define.PRINCIPAL);
 		if (pageReq.getPage() <= 0) {
 			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
 		}
@@ -99,7 +126,8 @@ public class UserController {
 		if (pageReq.getSize() <= 0) {
 			pageReq.setSize(4); // 페이지 당 보여줄 개수
 		}
-		PageRes<UploadProductsInfoDTO> pageRes = productService.getUploadProductsInfoByUserId(pageReq, loginUser.getId());
+		PageRes<UploadProductsInfoDTO> pageRes = productService.getUploadProductsInfoByUserId(pageReq,
+				loginUser.getId());
 
 		model.addAttribute("uploadProductsInfoList", pageRes.getContent());
 		model.addAttribute("page", pageReq.getPage());
@@ -109,19 +137,19 @@ public class UserController {
 		model.addAttribute("endPage", pageRes.getEndPage());
 		return "user/userUploadList";
 	}
-	
+
 	/**
-	  * @Method Name : purchasedListPage
-	  * @작성일 : 2024. 2. 24.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 사용자 구매한 목록 페이지
-	  * @return
-	  */
+	 * @Method Name : purchasedListPage
+	 * @작성일 : 2024. 2. 24.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 사용자 구매한 목록 페이지
+	 * @return
+	 */
 	@GetMapping("/member/purchasedList")
 	public String purchasedListPage(PageReq pageReq, Model model) {
-		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
-		
+		User loginUser = (User) httpSession.getAttribute(Define.PRINCIPAL);
+
 		if (pageReq.getPage() <= 0) {
 			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
 		}
@@ -129,8 +157,9 @@ public class UserController {
 		if (pageReq.getSize() <= 0) {
 			pageReq.setSize(4); // 페이지 당 보여줄 개수
 		}
-		
-		PageRes<PurchasedProductInfoDTO> pageRes = paymentService.getPurchasedProductInfoList(pageReq, loginUser.getId());
+
+		PageRes<PurchasedProductInfoDTO> pageRes = paymentService.getPurchasedProductInfoList(pageReq,
+				loginUser.getId());
 
 		model.addAttribute("purchasedProductInfoList", pageRes.getContent());
 		model.addAttribute("page", pageReq.getPage());
@@ -140,18 +169,18 @@ public class UserController {
 		model.addAttribute("endPage", pageRes.getEndPage());
 		return "user/userPurchasedList";
 	}
-	
+
 	/**
-	  * @Method Name : cartListPage
-	  * @작성일 : 2024. 2. 24.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 사용자 찜 목록 페이지
-	  * @return
-	  */
+	 * @Method Name : cartListPage
+	 * @작성일 : 2024. 2. 24.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 사용자 찜 목록 페이지
+	 * @return
+	 */
 	@GetMapping("/member/cartList")
 	public String cartListPage(PageReq pageReq, Model model) {
-		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
+		User loginUser = (User) httpSession.getAttribute(Define.PRINCIPAL);
 		if (pageReq.getPage() <= 0) {
 			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
 		}
@@ -159,8 +188,9 @@ public class UserController {
 		if (pageReq.getSize() <= 0) {
 			pageReq.setSize(4); // 페이지 당 보여줄 개수
 		}
-		
-		PageRes<WishListProductUserDTO> pageRes = wishListService.findwishListProductUserByUserId(pageReq, loginUser.getId());
+
+		PageRes<WishListProductUserDTO> pageRes = wishListService.findwishListProductUserByUserId(pageReq,
+				loginUser.getId());
 		model.addAttribute("wishListProductUserDTOList", pageRes.getContent());
 		model.addAttribute("page", pageReq.getPage());
 		model.addAttribute("size", pageRes.getSize());
@@ -169,60 +199,59 @@ public class UserController {
 		model.addAttribute("endPage", pageRes.getEndPage());
 		return "user/userCartList";
 	}
-	
+
 	/**
-	  * @Method Name : profilePage
-	  * @작성일 : 2024. 2. 22.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 사용자 프로필 화면 요청
-	  */
+	 * @Method Name : profilePage
+	 * @작성일 : 2024. 2. 22.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 사용자 프로필 화면 요청
+	 */
 	@GetMapping("/member/profile")
 	public String profilePage() {
 		return "user/userProfile";
 	}
 
 	/**
-	  * @Method Name : profileUpdateProc
-	  * @작성일 : 2024. 2. 22.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 사용자 프로필 수정 처리
-	  * @return
-	  */
+	 * @Method Name : profileUpdateProc
+	 * @작성일 : 2024. 2. 22.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 사용자 프로필 수정 처리
+	 * @return
+	 */
 	@PostMapping("/member/profile")
 	public String profileUpdateProc(UserDTO userDTO, MultipartFile file) {
-		User profileUpdateUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
+		User profileUpdateUser = (User) httpSession.getAttribute(Define.PRINCIPAL);
 		profileUpdateUser.setNickname(userDTO.getNickname());
 		profileUpdateUser.setPhone(userDTO.getPhone());
-		
+
 		int photoResult = userPhotosService.saveUserPhotos(profileUpdateUser, file);
 		httpSession.removeAttribute(Define.PRINCIPAL_PHOTO);
 		UserPhotos userPhotos = userPhotosService.readByUserId(profileUpdateUser.getId());
 		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
-		
+
 		// 유저 업데이트 서비스 생성
 		int result = userService.updateUserProfile(profileUpdateUser, userDTO);
 		return "redirect:/member/profile";
 	}
-	
+
 	/**
-	  * @Method Name : checkDuplicateNickname
-	  * @작성일 : 2024. 2. 22.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 사용자 nickname 중복체크
-	  * @param nickname
-	  * @return
-	  */
+	 * @Method Name : checkDuplicateNickname
+	 * @작성일 : 2024. 2. 22.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 사용자 nickname 중복체크
+	 * @param nickname
+	 * @return
+	 */
 	@PostMapping("/member/checkNickname")
 	public @ResponseBody String checkDuplicateNickname(@RequestParam String nickname, @RequestParam Integer userId) {
 		User user = userService.readUserByNickname(nickname);
 		String result;
-		if(user == null) {
+		if (user == null) {
 			result = "Y";
-		}
-		else if(user.getId() == userId) {
+		} else if (user.getId() == userId) {
 			result = "Y";
 		} else {
 			result = "N";
@@ -230,41 +259,43 @@ public class UserController {
 		return result;
 	}
 
-	/* ---------------------------------마이페이지 종료-----------------------------------------------*/	
-	
+	/*
+	 * ---------------------------------마이페이지
+	 * 종료-----------------------------------------------
+	 */
+
 	/**
-	  * @Method Name : signUpProc
-	  * @작성일 : 2024. 2. 21.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 회원가입 처리 메서드입니다.
-	  * @return
-	  */
+	 * @Method Name : signUpProc
+	 * @작성일 : 2024. 2. 21.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 회원가입 처리 메서드입니다.
+	 * @return
+	 */
 	@PostMapping("/member/signUp")
 	public String signUpProc(UserDTO userDTO, MultipartFile file) {
-		User signUpUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
+		User signUpUser = (User) httpSession.getAttribute(Define.PRINCIPAL);
 		// 유저 업데이트 서비스 생성
 		int photoResult = userPhotosService.saveUserPhotos(signUpUser, file);
 		httpSession.removeAttribute(Define.PRINCIPAL_PHOTO);
 		UserPhotos userPhotos = userPhotosService.readByUserId(signUpUser.getId());
 		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
 		int result = userService.updateUserProfile(signUpUser, userDTO);
-		
+
 		return "redirect:/main";
 	}
-	
+
 	/**
 	 * @Method Name : userSignUpPage
 	 * @작성일 : 2024. 2. 21.
 	 * @작성자 : 최장호
-	 * @변경이력 : 
+	 * @변경이력 :
 	 * @Method 설명 : 최초 소셜 로그인한 사용자 회원가입 페이지 요청
 	 */
 	@GetMapping("/member/signUp")
 	public String userSignUpPage() {
 		return "user/userSignUp";
 	}
-		
 
 	/**
 	 * @Method Name : loginPage
@@ -278,7 +309,7 @@ public class UserController {
 	public String loginPage() {
 		return "user/test_signIn";
 	}
-	
+
 	/**
 	 * @Method Name : naverLoginPage
 	 * @작성일 : 2024. 2. 18.
@@ -315,44 +346,50 @@ public class UserController {
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
 			return "redirect:/member/signUp";
 		}
-		
+
+		// 탈퇴 유저 여부
+		if (user.getDeleteYn().equals(Define.DELETE_Y)) {
+			throw new CustomRestfulException(Define.WITHDRAWN_USER , HttpStatus.FORBIDDEN);
+		}
+
 		UserPhotos userPhotos = userPhotosService.readByUserId(user.getId());
-		if(userPhotos == null) {
+		if (userPhotos == null) {
 			userPhotos = new UserPhotos();
 			userPhotos.setProfilePhoto(Define.DEFAULT_PHOTO_PATH);
 			userPhotos.setUploadFileName(Define.DEFAULT_PHOTO);
 		}
+		int wishListCount = wishListService.getWishListTotalCountByUserId(user.getId());
+		httpSession.setAttribute(Define.WISHLISTCOUNT, wishListCount);
 		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
-		System.out.println("최장호 : " +httpSession.getAttribute(Define.PRINCIPAL_PHOTO).toString());
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 
 		return "redirect:/main";
 	}
-	
+
 	/**
-	  * @Method Name : kakaoLoginPage
-	  * @작성일 : 2024. 2. 19.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 카카오 로그인 api 요청
-	  */
+	 * @Method Name : kakaoLoginPage
+	 * @작성일 : 2024. 2. 19.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 카카오 로그인 api 요청
+	 */
 	@GetMapping("/login/kakao")
 	public String kakaoLoginPage() {
 		String kakaoLoginUrl = userService.kakaoLoginUrl();
 		return "redirect:" + kakaoLoginUrl;
 	}
-	
+
 	/**
-	  * @Method Name : signInProcByKakao
-	  * @작성일 : 2024. 2. 19.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 카카오 로그인 처리
-	  */
+	 * @Method Name : signInProcByKakao
+	 * @작성일 : 2024. 2. 19.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 카카오 로그인 처리
+	 */
 	@GetMapping("/login/oauth2/code/kakao")
-	public String signInProcByKakao (@RequestParam String code) {
+	public String signInProcByKakao(@RequestParam String code) {
 		SignUpDTO kakaoUser = userService.signInProcByKakao(code, null);
-		
+
 		User user = userService.readUserByNameAndPhone(kakaoUser.getName(), kakaoUser.getPhone());
 		if (user == null) {
 			// 회원가입
@@ -361,45 +398,50 @@ public class UserController {
 			httpSession.setAttribute(Define.PRINCIPAL, newUser);
 			return "redirect:/member/signUp";
 		}
-		
+		// 탈퇴 유저 여부
+		if (user.getDeleteYn().equals(Define.DELETE_Y)) {
+			throw new CustomRestfulException(Define.WITHDRAWN_USER , HttpStatus.FORBIDDEN);
+		}
+
 		UserPhotos userPhotos = userPhotosService.readByUserId(user.getId());
-		if(userPhotos == null) {
+		if (userPhotos == null) {
 			userPhotos = new UserPhotos();
 			userPhotos.setProfilePhoto(Define.DEFAULT_PHOTO_PATH);
 			userPhotos.setUploadFileName(Define.DEFAULT_PHOTO);
 		}
+		int wishListCount = wishListService.getWishListTotalCountByUserId(user.getId());
+		httpSession.setAttribute(Define.WISHLISTCOUNT, wishListCount);
 		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 		return "redirect:/main";
 	}
-	
-	
+
 	/**
-	  * @Method Name : googleLoginPage
-	  * @작성일 : 2024. 2. 19.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 구글 로그인 api 요청
-	  */
+	 * @Method Name : googleLoginPage
+	 * @작성일 : 2024. 2. 19.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 구글 로그인 api 요청
+	 */
 	@GetMapping("/login/google")
 	public String googleLoginPage() {
 		String googleLoginUrl = userService.googleLoginUrl();
 		return "redirect:" + googleLoginUrl;
 	}
-	
+
 	/**
-	  * @Method Name : signInProcByGoogle
-	  * @작성일 : 2024. 2. 19.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 구글 로그인 처리
-	  */
+	 * @Method Name : signInProcByGoogle
+	 * @작성일 : 2024. 2. 19.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 구글 로그인 처리
+	 */
 	@GetMapping("/login/oauth2/code/google")
 	public String signInProcByGoogle(@RequestParam String code) {
 		SignUpDTO googleUser = userService.signInProcByGoogle(code);
-		
+
 		User user = userService.readUserByNameAndPhone(googleUser.getName(), googleUser.getPhone());
-		if(user == null) {
+		if (user == null) {
 			// 구글은 전화번호가 필수가 아니므로 이메일로 한번 더 확인
 			user = userService.readUserByNameAndEmail(googleUser.getName(), googleUser.getEmail());
 			if (user == null) {
@@ -410,24 +452,32 @@ public class UserController {
 				return "redirect:/member/signUp";
 			}
 		}
+
+		// 탈퇴 유저 여부
+		if (user.getDeleteYn().equals(Define.DELETE_Y)) {
+			throw new CustomRestfulException(Define.WITHDRAWN_USER , HttpStatus.FORBIDDEN);
+		}
+
 		UserPhotos userPhotos = userPhotosService.readByUserId(user.getId());
-		if(userPhotos == null) {
+		if (userPhotos == null) {
 			userPhotos = new UserPhotos();
 			userPhotos.setProfilePhoto(Define.DEFAULT_PHOTO_PATH);
 			userPhotos.setUploadFileName(Define.DEFAULT_PHOTO);
 		}
+		int wishListCount = wishListService.getWishListTotalCountByUserId(user.getId());
+		httpSession.setAttribute(Define.WISHLISTCOUNT, wishListCount);
 		httpSession.setAttribute(Define.PRINCIPAL_PHOTO, userPhotos);
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 		return "redirect:/main";
 	}
-	
+
 	/**
-	  * @Method Name : insertWishList
-	  * @작성일 : 2024. 3. 5.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 상품에서 wishList(하트) 클릭 시 호출 됨
-	  */
+	 * @Method Name : insertWishList
+	 * @작성일 : 2024. 3. 5.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 상품에서 wishList(하트) 클릭 시 호출 됨
+	 */
 	@GetMapping("/saveWishList")
 	@ResponseBody
 	public int insertWishList(@RequestParam Integer userId, @RequestParam Integer productId) {
@@ -437,14 +487,14 @@ public class UserController {
 		int result = wishListService.insert(input);
 		return result;
 	}
-	
+
 	/**
-	  * @Method Name : deleteWishList
-	  * @작성일 : 2024. 3. 5.
-	  * @작성자 : 최장호
-	  * @변경이력 : 
-	  * @Method 설명 : 상품에서 wishList(하트) 클릭 시 호출 됨
-	  */
+	 * @Method Name : deleteWishList
+	 * @작성일 : 2024. 3. 5.
+	 * @작성자 : 최장호
+	 * @변경이력 :
+	 * @Method 설명 : 상품에서 wishList(하트) 클릭 시 호출 됨
+	 */
 	@GetMapping("/deleteWishList")
 	@ResponseBody
 	public int deleteWishList(@RequestParam Integer userId, @RequestParam Integer productId) {
@@ -454,33 +504,31 @@ public class UserController {
 		int result = wishListService.delete(input);
 		return result;
 	}
-	
+
 	@PostMapping("/wishlist/delete/{wishListId}")
 	@ResponseBody
 	public Map<String, Object> deleteWishListItem(@PathVariable("wishListId") Integer wishListId) {
-	    Map<String, Object> response = new HashMap<>();
-	    try {
-	    	wishListService.deleteById(wishListId);
-	    	response.put("success", true);
-	    } catch (Exception e) {
-	        response.put("success", false);
-	    }
-	    return response;
+		Map<String, Object> response = new HashMap<>();
+		try {
+			wishListService.deleteById(wishListId);
+			response.put("success", true);
+		} catch (Exception e) {
+			response.put("success", false);
+		}
+		return response;
 	}
 
-
-
 	/**
-	  * @Method Name : paymentHistoryListPage
-	  * @작성일 : 2024. 3. 3.
-	  * @작성자 : 박경진
-	  * @변경이력 : 
-	  * @Method 설명 : myPage PaymentHistoryListPage 출력
-	  */
+	 * @Method Name : paymentHistoryListPage
+	 * @작성일 : 2024. 3. 3.
+	 * @작성자 : 박경진
+	 * @변경이력 :
+	 * @Method 설명 : myPage PaymentHistoryListPage 출력
+	 */
 	@GetMapping("/member/paymentHistoryList")
 	public String paymentHistoryListPage(PageReq pageReq, Model model) {
-		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
-		log.info(""+loginUser);
+		User loginUser = (User) httpSession.getAttribute(Define.PRINCIPAL);
+		log.info("" + loginUser);
 		if (pageReq.getPage() <= 0) {
 			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
 		}
@@ -490,11 +538,11 @@ public class UserController {
 			pageReq.setSize(4); // 페이지 당 보여줄 개수
 		}
 		log.info("controller if 2");
-		
+
 		PageRes<PaymentHistoryListDto> pageRes = paymentService.getPaymentHistoryList(pageReq, loginUser.getId());
 
 		log.info("controller if pageRes" + pageRes);
-		
+
 		model.addAttribute("PaymentHistoryList", pageRes.getContent());
 		model.addAttribute("page", pageReq.getPage());
 		model.addAttribute("size", pageRes.getSize());
@@ -503,7 +551,5 @@ public class UserController {
 		model.addAttribute("endPage", pageRes.getEndPage());
 		return "user/userPaymentHistoryList";
 	}
-	
-	
-	
+
 }

@@ -47,6 +47,10 @@
 		WHERE
 		a.user_id = #{userId};
 	</select>
+	
+	<select id="getWishListCountByUserId">
+		select count(*) from wish_list where user_id = #{userId};
+	</select>
 
 	<select id="findwishByProductIdAndUserId" resultType="com.guideyou.repository.entity.wishList.WishList">
 		select * from wish_list where user_id = #{userId} and

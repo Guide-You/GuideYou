@@ -133,4 +133,15 @@ public class WishListService {
 		WishList findWish = wishListRepository.findwishByProductIdAndUserId(map);
 		return findWish;
 	}
+	
+	/**
+	  * @Method Name : wishListTotalCountByUserId
+	  * @작성일 : 2024. 3. 6.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : header 장바구니에 넣을 사용자가 찜한 목록 개수
+	  */
+	public int getWishListTotalCountByUserId(Integer userId) {
+		return wishListRepository.getWishListCountByUserId(userId);
+	}
 }

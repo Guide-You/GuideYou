@@ -34,4 +34,6 @@ public interface WishListRepository {
 
 	public int delete(Integer id);
 
+	public int getWishListCountByUserId(Integer userId);
+
 }

@@ -73,7 +73,7 @@
 					</a></li>
 				</ul>
 				<hr>
-				<button class="aside--Withdrawal">회원탈퇴</button>
+				<button class="aside--Withdrawal" id="aside--Withdrawal">회원탈퇴</button>
 			</div>
 		</div>
 		<!-- aside End -->
