@@ -186,7 +186,7 @@
 													class="text-white bg-secondary px-3 py-1 rounded position-absolute"
 													id="popCityName">${pop.cityName}</div>
 												<div
-													class="p-4 border border-secondary border-top-0 rounded-bottom">
+													class="p-4 border border-secondary border-top-0 rounded-bottom" id="main--info">
 													<a href="/detail/${pop.id}"><h4>${pop.title}</h4></a> <a
 														href="/detail/${pop.id}"><p>${pop.content}</p></a>
 													<div class="d-flex justify-content-between flex-lg-wrap">

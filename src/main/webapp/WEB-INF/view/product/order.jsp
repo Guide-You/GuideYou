@@ -61,48 +61,36 @@ pageEncoding="UTF-8"%>
                         </button>
                       </div>
                     </div>
-                    <div class="col-md-12 col-lg-4">
-                      <div class="form-item w-100">
-                        <button class="payment--payby">
-                          <img src="/img/toss-pay.png" alt="" />
-                        </button>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
 
                 <!-- Request Info to paymentAPI -->
                 <form id="send--payment--form">
-                  <p>productId :</p>
                   <input
                     type="hidden"
                     name="orderId"
                     id="order--id"
                     value="${order.productId}"
                   />
-                  <!-- 추후 photo 정보 받아오기 -->
-                  <p>productTitle :</p>
                   <input
                     type="hidden"
                     name="orderTitle"
                     id="order--title"
                     value="${order.productTitle}"
                   />
-                  <P>orderUserId : </P
-                  ><input
+                  <input
                     type="hidden"
                     name="orderUserId"
                     id="order--user--id"
                     value="${order.orderUserId}"
                   />
-                  <p>productSellerId :</p>
                   <input
                     type="hidden"
                     name="orderSeller"
                     id="order--seller--id"
                     value="${order.sellerNickname}"
                   />
-                  <p>productPrice :</p>
                   <input
                     type="hidden"
                     name="orderPrice"
@@ -111,12 +99,7 @@ pageEncoding="UTF-8"%>
                   />
                 </form>
 
-                <button
-                  class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 cart--purchase"
-                  type="button"
-                >
-                  구매하기
-                </button>
+    
               </form>
             </div>
           </div>

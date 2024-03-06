@@ -309,8 +309,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			itemStr += '  <span class="tel">' + places.phone + '</span>'
 					+ '</div>';
 
-			itemStr += '<button class="addMarkerBtn">마커 추가</button>'; // ******************** 추가 버튼
-			itemStr += '<button class="removeMarkerBtn">마커 제거</button>'; // ****************** 제거 버튼
+			itemStr += '<button class="addMarkerBtn custom--button rounded">마커 추가</button>'; // ******************** 추가 버튼
+			itemStr += '<button class="removeMarkerBtn custom--button rounded">마커 제거</button>'; // ****************** 제거 버튼
 
 			el.innerHTML = itemStr;
 			el.className = 'item';
@@ -559,7 +559,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		    'lat: ' +  + places.y +
 		    "<br>" +
 		    'lng: ' +  + places.x +
-		    "<button class='locationRemoveBtn'>삭제</button>"  // onclick 속성 제거
+		    "<button class='locationRemoveBtn custom--button rounded'>삭제</button>"  // onclick 속성 제거
 		    + "<hr>";
 		
 		    listItem.querySelector('.locationRemoveBtn').addEventListener('click', function() {

@@ -16,8 +16,16 @@
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
-<body>
-	<div class="container" style="margin-top: 20%">
+
+
+
+<div class="container-fluid contact">
+    <div class="container">
+        <div class="p-5 bg-light rounded">
+
+
+
+	<div class="container">
 		<form id="productForm" enctype="multipart/form-data">
 
 			<!-- 지역 선택 콤보박스 -->
@@ -56,7 +64,7 @@
 			<label for="thumbFile" style="display: block;">
 				<div class="form-photo">
 					<span class="icon-container"> <img id="thumbImage"
-						src="/img/main-busan.jpg" class="img-fluid w-100 rounded-top" />
+						src="/img/insert_thumb_default_img.png" class="img-fluid  rounded-top insert--image" />
 					</span> <input type="file" id="thumbFile" name="thumbFile"
 						accept="image/*" style="display: none;" />
 				</div>
@@ -65,8 +73,8 @@
 			<label for="detailFile" style="display: block;">
 				<div class="form-photo">
 					<span class="icon-container" id="detailImageContainer"><img
-						id="thumbImage" src="/img/main-busan.jpg"
-						class="img-fluid w-100 rounded-top" /></span> <input type="file"
+						id="thumbImage" src="/img/insert_detail_default_img.png"
+						class="img-fluid rounded-top insert--image" /></span> <input type="file"
 						id="detailFile" name="customFile" multiple style="display: none;" />
 				</div>
 			</label>
@@ -88,7 +96,7 @@
 											키워드 : <input type="text" value="" id="keyword" size="15">
 											
 											<div class="container plan--selling--button">
-												<button type="button" id="keyword--button">검색하기</button>
+												<button type="button" class="custom--button" id="keyword--button">검색하기</button>
 											</div>
 										</form>
 									</div>
@@ -111,9 +119,10 @@
 	</div>
 	
 		<!-- Map Section End -->
+</div>
+</div>
+</div>
 
-</body>
-</html>
 <!-- footer -->
  
 <script type="text/javascript"

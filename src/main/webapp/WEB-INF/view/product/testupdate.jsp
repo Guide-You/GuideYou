@@ -73,8 +73,9 @@
 			<input type="file" id="thumbFile" name="thumbFile" accept="image/*">
 			<div class="imgthumbBox" id="thumbNailBox">
 				<c:if test="${!empty thumb.id}">
-					<p id="imgName_${thumb.id}">${thumb.originFileName}<span
-							onclick="confirmDeleteThumb(${thumb.id})" class="removeImg">X</span>
+				
+					<p id="imgName_${thumb.id}">${thumb.originFileName}
+						<span onclick="confirmDeleteThumb(${thumb.id})" class="removeImg">X</span>
 					</p>
 				</c:if>
 			</div>
