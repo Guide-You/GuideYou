@@ -51,10 +51,12 @@ pageEncoding="UTF-8"%>
                         <h5 class="mb-0 ps-4 me-4 total--price">Total</h5>
                         <p class="mb-0 pe-4" id="complete--total--price">${complete.totalPrice }</p>
                       </div>
-
-                      <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 cart--purchase" type="button">
-                      다른 플랜 구경가기
-                      </button>
+						
+						<a href="/list">
+	                      <button class="btn rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 cart--purchase" type="button">
+	                      다른 플랜 구경가기
+	                      </button>
+                        </a>
                   </div>
                 </div>
             </div>

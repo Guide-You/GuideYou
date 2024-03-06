@@ -14,19 +14,33 @@
 
 <!-- Detail Title Start -->
 <!-- Title Image 확인 후 사이즈 변경 필요-->
-<p>${paidYn} </p>
+<input type="hidden" name="paidYn" id="paidYn" value="${paidYn}"> 
 <div class="container py-5 product--title text-center">
 	<div id="carouselExample" class="carousel slide"
 		data-bs-ride="carousel" data-bs-interval="5000">
 		<div class="carousel-inner">
 			<!-- Iterate over the image list to create carousel slides -->
 			<c:forEach items="${imgList}" var="img" varStatus="loop">
-				<div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
-					<img class="d-block w-100"
-						src="/images/upload/${img.uploadFileName}"
-						alt="Slide ${loop.index + 1}"
-						style="max-height: 400px; max-width: 100%; object-fit: contain;">
-				</div>
+				<c:choose>
+					<c:when test="${paidYn} eq false">
+						<c:if test="${not empty img.thumbnail}">
+							<div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+								<img class="d-block w-100"
+									src="/images/upload/${img.uploadFileName}"
+									alt="Slide ${loop.index + 1}"
+									style="max-height: 400px; max-width: 100%; object-fit: contain;">
+							</div>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+						<div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+							<img class="d-block w-100"
+								src="/images/upload/${img.uploadFileName}"
+								alt="Slide ${loop.index + 1}"
+								style="max-height: 400px; max-width: 100%; object-fit: contain;">
+						</div>
+					</c:otherwise>							
+				</c:choose>
 			</c:forEach>
 		</div>
 		<!-- Add previous and next buttons for carousel navigation -->
@@ -42,7 +56,6 @@
 		</button>
 	</div>
 </div>
-
 <!-- Rest of your code -->
 
 <div class="container title--title">
@@ -51,8 +64,8 @@
 	</div>
 
 	<div class="col-lg-12 detail--title--info" style="margin-top: 20px">
-		<span id="title--writer">작성자 : ${product.nickName}</span> <span
-			id="title--siren"><img src="/img/Siren.png" alt="siren" /></span> <span
+		<span id="title--writer">작성자 : ${product.nickName}</span> 
+			<span
 			id="title--like">
 			<img src="${wishYn ? '/img/like.png' : '/img/unlike.png'}" alt="like" />
 			</span>
@@ -96,7 +109,7 @@
 
 <!-- Detail Content Start -->
 <c:choose>
-	<c:when test="${principal == null}">
+	<c:when test="${principal == null || paidYn eq false}">
 		<div class="container">
 			<div class="card content--card">
 				<div class="card-body">
@@ -148,12 +161,6 @@
 		<div class="col-lg-12">
 			<div class="h-100 rounded">
 				<div id="map" style="width: 100%; height: 350px;"></div>
-				<p>
-					<button onclick="hideMarkers()">마커 감추기</button>
-					<button onclick="showMarkers()">마커 보이기</button>
-				</p>
-				<em>클릭한 위치에 마커가 표시됩니다!</em>
-
 				<div id="locationList"></div>
 			</div>
 		</div>

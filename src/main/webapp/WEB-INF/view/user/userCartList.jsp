@@ -23,11 +23,11 @@
 					<table class="table cart--table">
 						<thead>
 							<tr>
-								<th scope="col"></th>
 								<th scope="col">plan photo</th>
 								<th scope="col">title</th>
 								<th scope="col">seller</th>
 								<th scope="col">price</th>
+								<th scope="col"></th>
 							</tr>
 						</thead>
 
@@ -35,13 +35,6 @@
 							<c:forEach var="wishListItem"
 								items="${wishListProductUserDTOList}">
 								<tr>
-									<th scope="row">
-										<div class="form-check my-3">
-											<input class="form-check-input" type="checkbox"
-												id="cart--checkbox"> <label class="form-check-label"
-												for="cart--checkbox"></label>
-										</div>
-									</th>
 									<td scope="row">
 										<div class="d-flex align-items-center mt-2">
 											<img
@@ -53,20 +46,20 @@
 									<td class="py-5">${wishListItem.productTitle}</td>
 									<td class="py-5">${wishListItem.writerNickname}</td>
 									<td class="py-5" id="productPrice">${wishListItem.formatPrice()}</td>
+									<th scope="row">
+										<div>
+											<button type="button" class="border-secondary rounded-pill text-primary text-uppercase mb-4 ms-4">삭제</button>
+										</div>
+										<div>
+											<button type="button" class="border-secondary rounded-pill text-primary text-uppercase mb-4 ms-4">구매</button>
+										</div>
+									</th>
 								</tr>
 							</c:forEach>
 						</tbody>
 
 					</table>
 				</form>
-				<div
-					class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-					<h5 class="mb-0 ps-4 me-4 total--price">Total</h5>
-					<p id="totalPrice" class="mb-0 pe-4">0원</p>
-				</div>
-				<button
-					class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 cart--purchase"
-					type="button">구매하기</button>
 			</c:otherwise>
 		</c:choose>
 		<!-- 페이징 처리 -->

@@ -48,14 +48,12 @@
 		</div>
 		<!-- End Logo -->
 
-
 		<nav class="header-nav ms-auto">
 			<ul class="d-flex align-items-center">
 				<li class="nav-item dropdown pe-3"><a
 					class="nav-link nav-profile d-flex align-items-center pe-0"
 					href="#" data-bs-toggle="dropdown"> </a> <!-- End Profile Iamge Icon -->
-
-					
+				
 				<!-- End Profile Nav -->
 
 			</ul>
@@ -100,8 +98,8 @@
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="icons-bootstrap.html">
-              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>판매 수익</span>
             </a>
           </li>
           <li>
@@ -118,23 +116,7 @@
       </li>
 
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-layout-text-window-reverse"></i><span>관리자
-						광고관리</span><i class="bi bi-chevron-down ms-auto"></i>
-			</a>
-				<ul id="tables-nav" class="nav-content collapse "
-					data-bs-parent="#sidebar-nav">
-					<li><a href="tables-general.html"> <i class="bi bi-circle"></i><span>광고
-								중인 업체 리스트 페이지</span>
-					</a></li>
-					<li><a href="tables-data.html"> <i class="bi bi-circle"></i><span>광고
-								상세 페이지</span>
-					</a></li>
-					<li><a href="charts-echarts.html"> <i class="bi bi-circle"></i><span>광고
-								등록 수정 삭제 페이지</span>
-					</a></li>
-				</ul></li>
+			
 			<!-- End Tables Nav -->
 
 			<li class="nav-item"><a class="nav-link collapsed"
@@ -154,11 +136,8 @@
 							class="bi bi-circle"></i><span>관리자 권한 Notice 관리</span>
 					</a></li>
 					
-
 				</ul></li>
 			<!-- End Charts Nav -->
-
-
 			
 			<!-- End F.A.Q Page Nav -->
 		</ul>
@@ -169,7 +148,7 @@
 	<main id="main" class="main">
 
 		<!-- hidden_input -->
-		<input type="hidden" id="dateType" name="dateType" value="1">
+<!-- 		<input type="hidden" id="dateType" name="dateType" value=""> -->
 
 		<div class="pagetitle">
 			<h1>가유 관리자 main</h1>
@@ -180,13 +159,15 @@
 				</ol>
 			</nav>
 		</div>
-
+		
 		<div class="filter">
-			<select id="dateTypeSelect" class="form-select">
-				<option value="1">오늘</option>
-				<option value="2">이번 달</option>
-				<option value="3">올해</option>
-			</select>
+			<form action="/admin" method="get" id="searchForm">
+				<select id="dateTypeSelect" name="dateType" class="form-select">
+					<option value="1" <c:if test="${param.dateType == 1}">selected</c:if>>오늘</option>
+					<option value="2" <c:if test="${param.dateType == 2}">selected</c:if>>이번 달</option>
+					<option value="3" <c:if test="${param.dateType == 3}">selected</c:if>>올해</option>
+				</select>
+			</form>	
 		</div>
 		<!-- End Page Title -->
 
@@ -200,29 +181,26 @@
 						<!-- Sales Card -->
 						<div class="col-xxl-4 col-md-6">
 							<div class="card info-card sales-card">
-
-
-
 								<div class="card-body">
 									<c:choose>
 										<c:when test="${param.dateType == 1}">
 											<h5 class="card-title">
-												판매 <span>| 오늘</span>
+												판매 갯수 <span>| 오늘</span>
 											</h5>
 										</c:when>
 										<c:when test="${param.dateType == 2}">
 											<h5 class="card-title">
-												판매 <span>| 이번 달</span>
+												판매 갯수 <span>| 이번 달</span>
 											</h5>
 										</c:when>
 										<c:when test="${param.dateType == 3}">
 											<h5 class="card-title">
-												판매 <span>| 올해</span>
+												판매 갯수 <span>| 올해</span>
 											</h5>
 										</c:when>
 										<c:otherwise>
 											<h5 class="card-title">
-												판매 <span>| 오늘</span>
+												판매 갯수 <span>| 오늘</span>
 											</h5>
 										</c:otherwise>
 									</c:choose>
@@ -263,29 +241,26 @@
 						<!-- Revenue Card -->
 						<div class="col-xxl-4 col-md-6">
 							<div class="card info-card revenue-card">
-
-
-
 								<div class="card-body">
 									<c:choose>
 										<c:when test="${param.dateType == 1}">
 											<h5 class="card-title">
-												수익 <span>| 오늘</span>
+												판매 금액 <span>| 오늘</span>
 											</h5>
 										</c:when>
 										<c:when test="${param.dateType == 2}">
 											<h5 class="card-title">
-												수익 <span>| 이번 달</span>
+												판매 금액 <span>| 이번 달</span>
 											</h5>
 										</c:when>
 										<c:when test="${param.dateType == 3}">
 											<h5 class="card-title">
-												수익 <span>| 올해</span>
+												판매 금액 <span>| 올해</span>
 											</h5>
 										</c:when>
 										<c:otherwise>
 											<h5 class="card-title">
-												수익 <span>| 오늘</span>
+												판매 금액 <span>| 오늘</span>
 											</h5>
 										</c:otherwise>
 									</c:choose>
@@ -325,11 +300,7 @@
 
 						<!-- Customers Card -->
 						<div class="col-xxl-4 col-xl-12">
-
 							<div class="card info-card customers-card">
-
-
-
 								<div class="card-body">
 									<c:choose>
 										<c:when test="${param.dateType == 1}">
@@ -391,9 +362,6 @@
 						<!-- Reports -->
 						<div class="col-12">
 							<div class="card">
-
-
-
 								<div class="card-body">
 									<c:choose>
 										<c:when test="${param.dateType == 1}">
@@ -418,99 +386,7 @@
 										</c:otherwise>
 									</c:choose>
 									<!-- Line Chart -->
-									<div id="reportChart"></div>
-
-									<script>
-
-document.addEventListener("DOMContentLoaded", () => {
-    // 초기 차트 생성
-    let chart = new ApexCharts(document.querySelector("#reportsChart"), {
-      series: [],
-      chart: {
-        height: 350,
-        type: 'area',
-        toolbar: {
-          show: false
-        },
-      },
-      markers: {
-        size: 4
-      },
-      colors: ['#4154f1', '#2eca6a', '#ff771d'],
-      fill: {
-        type: "gradient",
-        gradient: {
-          shadeIntensity: 1,
-          opacityFrom: 0.3,
-          opacityTo: 0.4,
-          stops: [0, 90, 100]
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'smooth',
-        width: 2
-      },
-      xaxis: {
-        type: 'datetime',
-        categories: ["2024-02-13T00:00:00.000Z", "2024-02-21T00:00:00.000Z", "2024-02-21T00:00:00.000Z"]
-      },
-      tooltip: {
-        x: {
-          format: 'dd/MM/yy HH:mm'
-        },
-      }
-    });
-    
-    chart.render();
-    
- 	// 데이터 업데이트 함수
-    function updateChart(paymentCount, totalPrice, userCount) {
-      // 새로운 데이터 생성
-      let newData = [{
-        name: '판매',
-        data: [paymentCount],
-      }, {
-        name: '수익',
-        data: [totalPrice]
-      }, {
-        name: '가입자',
-        data: [userCount]
-      }];
-
-      // 새로운 데이터로 차트 업데이트
-      chart.updateSeries(newData);
-    }
-	
- 	
- 	
- 	// 데이터를 가져와서 차트 업데이트
-    function fetchDataAndRefreshChart() {
-      // AJAX 또는 다른 방법을 사용하여 데이터 가져오기
-      // 예를 들어 jQuery를 사용한다면:
-      // $.get("URL", function(data) {
-      //   updateChart(data.paymentCount, data.totalPrice, data.userCount);
-      // });
-
-      // 여기에 데이터를 가져오고 updateChart 함수를 호출하여 차트 업데이트
-      // 아래는 임시 데이터를 사용하는 예시
-      let paymentCount = 100;
-      let totalPrice = 5000;
-      let userCount = 50;
-
-      // 차트 업데이트
-      updateChart(paymentCount, totalPrice, userCount);
-    }
-
-    // 페이지 로드 시 데이터 가져오기
-    fetchDataAndRefreshChart();
-
-    // 이후 필요한 경우 일정한 간격으로 데이터를 업데이트할 수 있음
-    // setInterval(fetchDataAndRefreshChart, 5000); // 5초마다 업데이트
-  });
-</script>
+									<div id="reportsChart"></div>									
 									<!-- End Line Chart -->
 
 								</div>
@@ -522,28 +398,26 @@ document.addEventListener("DOMContentLoaded", () => {
 						<!-- Recent Sales -->
 						<div class="col-12">
 							<div class="card recent-sales overflow-auto">
-
-
 								<div class="card-body">
 									<c:choose>
 										<c:when test="${param.dateType == 1}">
 											<h5 class="card-title">
-												최근 게시물 <span>| 오늘</span>
+												등록한 게시물 <span>| 오늘</span>
 											</h5>
 										</c:when>
 										<c:when test="${param.dateType == 2}">
 											<h5 class="card-title">
-												최근 게시물 <span>| 이번 달</span>
+												등록한 게시물 <span>| 이번 달</span>
 											</h5>
 										</c:when>
 										<c:when test="${param.dateType == 3}">
 											<h5 class="card-title">
-												최근 게시물 <span>| 올해</span>
+												등록한 게시물 <span>| 올해</span>
 											</h5>
 										</c:when>
 										<c:otherwise>
 											<h5 class="card-title">
-												최근 게시물 <span>| 오늘</span>
+												등록한 게시물 <span>| 오늘</span>
 											</h5>
 										</c:otherwise>
 									</c:choose>
@@ -715,78 +589,6 @@ document.addEventListener("DOMContentLoaded", () => {
 				<!-- Right side columns -->
 				<div class="col-lg-4">
 
-
-
-					<!-- Website Traffic -->
-					<div class="card">
-
-
-						<div class="card-body pb-0">
-							<h5 class="card-title">
-								Website Traffic <span>| 올해</span>
-							</h5>
-
-							<div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-
-							<script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  echarts.init(document.querySelector("#trafficChart")).setOption({
-                    tooltip: {
-                      trigger: 'item'
-                    },
-                    legend: {
-                      top: '5%',
-                      left: 'center'
-                    },
-                    series: [{
-                      name: 'Access From',
-                      type: 'pie',
-                      radius: ['40%', '70%'],
-                      avoidLabelOverlap: false,
-                      label: {
-                        show: false,
-                        position: 'center'
-                      },
-                      emphasis: {
-                        label: {
-                          show: true,
-                          fontSize: '18',
-                          fontWeight: 'bold'
-                        }
-                      },
-                      labelLine: {
-                        show: false
-                      },
-                      data: [{
-                        value: 1048,
-                        name: 'Search Engine'
-                      },
-                      {
-                        value: 735,
-                        name: 'Direct'
-                      },
-                      {
-                        value: 580,
-                        name: 'Email'
-                      },
-                      {
-                        value: 484,
-                        name: 'Union Ads'
-                      },
-                      {
-                        value: 300,
-                        name: 'Video Ads'
-                      }
-                      ]
-                    }]
-                  });
-                });
-              </script>
-
-						</div>
-					</div>
-					<!-- End Website Traffic -->
-
 					<!-- News & Updates Traffic -->
 					<div class="card">
 
@@ -913,27 +715,94 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	<!-- Template Main JS File -->
 	<script src="admin/js/main.js"></script>
-
 <script>
-document.getElementById('dateTypeSelect').addEventListener('change', function() {
-    var selectedDateType = this.value;
-    // URL을 변경하여 페이지를 새로고침
-    window.location.href = "/admin?dateType=" + selectedDateType;
-});
+let data = ${chartInformationList};
+console.log(data);
 
-// 페이지가 로드될 때 옵션을 설정
-document.addEventListener("DOMContentLoaded", function() {
-    var dateTypeInput = document.getElementById('dateType');
-    var selectedDateType = dateTypeInput.value;
-    var dateTypeSelect = document.getElementById('dateTypeSelect');
-    // 선택된 값을 기반으로 select 박스의 옵션을 설정
-    for (var i = 0; i < dateTypeSelect.options.length; i++) {
-        if (dateTypeSelect.options[i].value === selectedDateType) {
-            dateTypeSelect.options[i].selected = true;
-        }
+
+document.addEventListener("DOMContentLoaded", () => {
+	
+	$('#dateTypeSelect').on("change", function(){
+		$("#searchForm").submit();
+	});
+	
+    let chart = null; // 차트 변수 선언
+	    
+
+    // 페이지가 로드될 때 실행
+    createChart(data);
+    
+
+    // 차트 생성 함수
+    function createChart(data) {
+    	let paymentCount = [];
+    	let totalPrice = [];
+    	let userCount = [];
+    	let createdAt = [];
+    	
+    	$.each(data,function(key,val){
+    		paymentCount.push(val.paymentCount);
+    		totalPrice.push(val.totalPrice / 10000);
+    		userCount.push(val.userCount);
+    		createdAt.push(val.createdAt);
+    		
+    	});
+    	console.log(paymentCount);
+        chart = new ApexCharts(document.querySelector("#reportsChart"), {
+            series: [{
+                name: '판매 갯수',
+                data: paymentCount
+              }, {
+                name: '판매 금액(만원)',
+                data: totalPrice
+              }, {
+                name: '가입자',
+                data: userCount
+              }],
+            chart: {
+                height: 350,
+                type: 'bar',
+                stacked: true,
+                toolbar: {
+                    show: false
+                },               
+            },
+            markers: {
+                size: 5
+            },
+            colors: ['#4154f1', '#2eca6a', '#ff771d'],
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.3,
+                    opacityTo: 0.4,
+                    stops: [0, 90, 100]
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2
+            },
+            xaxis: {
+                type: 'datetime',
+                categories: createdAt
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy'
+                },
+            }
+        });
+        
+        chart.render();
     }
-});
-</script>
-</body>
+ });
 
+</script>
+
+</body>
 </html>

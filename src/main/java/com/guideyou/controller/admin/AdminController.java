@@ -1,12 +1,15 @@
 package com.guideyou.controller.admin;
 
 import java.util.List;
+import java.util.Map;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.guideyou.dto.admin.AdminDto;
 import com.guideyou.dto.admin.BoardDto;
@@ -159,11 +162,29 @@ public class AdminController {
 		
 		model.addAttribute("productList6", productList6);
 		
-
-		// 24.03.03 날짜 검색 기능
-				List<ProductDto> selectDateType = adminService.selectProductList();
-				model.addAttribute("selectDateType", selectDateType);
+		
+		// 24.03.05 그래프 정보 조회
+		List<Map<String, Object>> chartInformationList = null;
+		
+		switch (dateType) {
+	        case 1: // 오늘
+	        	chartInformationList = adminService.chartInformationListD();
+	            break;
+	        case 2: // 이번 달
+	        	chartInformationList = adminService.chartInformationListM();
+	            break;
+	        case 3: // 올해
+	        	chartInformationList = adminService.chartInformationListY();
+	            break;
+	        default:
+	        	chartInformationList = adminService.chartInformationListD(); // 기본값은 오늘로 설정
+	            break;
+			}
+			
+		model.addAttribute("chartInformationList", JSONArray.toJSONString(chartInformationList));
+		
 		return "/admin/adminIndex";
 	}
+			
 			
 }

@@ -1,6 +1,7 @@
 package com.guideyou.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -324,23 +325,40 @@ public class AdminService {
 		return adminRepository.selectBoardListY();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
-	  * @Method Name : selectProductList
-	  * @작성일 : 2024. 3. 3.
+	  * @Method Name : chartInformationListD
+	  * @작성일 : 2024. 3. 5.
 	  * @작성자 : 장명근
 	  * @변경이력 : 
-	  * @Method 설명 : 날짜 검색 기능
+	  * @Method 설명 : 오늘 그래프 정보 조회
 	  */
-	public List<ProductDto> selectProductList() {
+	public List<Map<String, Object>> chartInformationListD() {
 		
-		 return adminRepository.selectProductList();
+		return adminRepository.chartInformationListD();
+	}
+	
+	/**
+	  * @Method Name : chartInformationListM
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 이번 달 그래프 정보 조회
+	  */
+	public List<Map<String, Object>> chartInformationListM() {
+		
+		return adminRepository.chartInformationListM();
+	}
+	
+	/**
+	  * @Method Name : chartInformationListY
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 올해 그래프 정보 조회
+	  */
+	public List<Map<String, Object>> chartInformationListY() {
+		
+		return adminRepository.chartInformationListY();
 	}
 }

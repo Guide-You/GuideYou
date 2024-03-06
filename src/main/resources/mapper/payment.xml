@@ -75,9 +75,9 @@
 		#{merchantUid}
 	</select>
 
-	<select id="findByMerchantUidAndUserId"
-		resultType="com.guideyou.repository.entity.Payment">
-		SELECT * FROM payment WHERE merchant_uid = #{merchantUid}
+	<select id="findByMerchantUidAndUserId" parameterType="map" resultType="Integer"> 
+		<!-- resultType="com.guideyou.repository.entity.Payment"> -->
+		SELECT count(*) FROM payment WHERE merchant_uid = #{merchantUid}
 		AND user_id = #{userId}
 	</select>
 
@@ -130,5 +130,37 @@
 		select count(*) from payment a join
 		payment_detail b on a.merchant_uid = b.merchant_uid where a.user_id =
 		#{userId} and a.payment_status = "paid" and product_id = #{productId};
+	</select>
+	
+	<select id="getPaymentHistoryListTotalCount" resultType="long">
+		select 
+		count(*) 
+		from payment a 
+		join payment_detail b 
+		on a.merchant_uid = b.merchant_uid
+		join product d on b.product_id = d.id
+		join user u on d.user_id = u.id
+		where a.user_id = #{userId}
+		and a.payment_status = "paid";
+	</select>
+	
+	<select id="getPaymentHistoryList" parameterType="map" resultType="com.guideyou.dto.payment.PaymentHistoryListDto">
+
+		select 
+			a.user_id, 
+			a.merchant_uid, 
+			d.title, 
+			u.nickname as seller, 
+			a.total_price as payment_price, 
+			a.payment_date  
+		from payment a 
+		join payment_detail b 
+		on a.merchant_uid = b.merchant_uid
+        join product d on b.product_id = d.id
+        join user u on d.user_id = u.id
+        where a.user_id = #{userId}
+		and a.payment_status = "paid"
+		limit #{size} offset #{offset}
+		;
 	</select>
 </mapper>

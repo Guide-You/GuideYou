@@ -48,10 +48,10 @@
 								<use xlink:href="#home"></use></svg><i class="bi bi-person-circle"></i>
 							프로필 수정
 					</a></li>
-					<li><a href="#" class="nav-link link-dark"> <svg
+					<li><a href="/member/paymentHistoryList" class="nav-link link-dark"> <svg
 								class="bi me-2" width="16" height="16">
-								<use xlink:href="#speedometer2"></use></svg><i class="bi bi-bell-fill"></i>
-							알림
+								<use xlink:href="#speedometer2"></use></svg><i class="bi bi-credit-card"></i>
+							결제 내역
 					</a></li>
 				</ul>
 				<ul class="nav nav-pills flex-column mb-auto aside--mypage">

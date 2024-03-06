@@ -210,31 +210,98 @@
 	</select>
 	
 	
-	
-	
-	
-	
-	<!-- 날짜 필터 -->
-	<select id="selectProductList" resultType="com.guideyou.dto.product.ProductDto">
-		SELECT p.id AS productId, p.intro_content AS introContent, p.content, p.price,
-	       p.sold_count, p.created_at,
-	       ph.upload_file_name AS uploadFileName,
-	       (p.price * p.sold_count) AS revenue
-		FROM product p
-		JOIN product_photos ph ON p.id = ph.product_id AND ph.thumbnail IS NOT NULL
-		WHERE 1=1
-		and #{selectedValue} = #{selectedValue}
-		<if test='selectedValue != null and selectedValue.equals("1")'>
-		  and p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-%d 00:00:00') and p.created_at <![CDATA[<=]]> date_format(now(),'%Y-%m-%d 23:59:59')
-		</if>
-		<if test='selectedValue != null and selectedValue.equals("2")'>
-		  and p.created_at <![CDATA[>=]]> date_format(now(),'%Y-%m-01 00:00:00') and p.created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 MONTH),'%Y-%m-01 00:00:00')
-		</if>
-		<if test='selectedValue != null and selectedValue.equals("3")'>
-		  and p.created_at <![CDATA[>=]]> date_format(now(),'%Y-01-01 00:00:00') and p.created_at <![CDATA[<]]> date_format(DATE_ADD(now(),INTERVAL 1 year),'%Y-01-01 00:00:00')
-		</if>
-		ORDER BY p.id
+	<!-- 오늘 상품 판매 개수, 수익, 가입자 수 조회 -->
+	<select id="chartInformationListD" resultType="hashmap" parameterType="String">
+		WITH T1 AS (
+		SELECT DATE_FORMAT(payment_date, '%Y-%m-%d %H') as dt1, COUNT(*) AS pay_cnt, SUM(total_price) AS total FROM payment u
+		WHERE payment_date <![CDATA[>=]]> DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')
+		GROUP BY DATE_FORMAT(payment_date, '%Y-%m-%d %H')
+		), T2 AS (
+		SELECT DATE_FORMAT(created_at, '%Y-%m-%d %H') as dt2, COUNT(*) as user_cnt FROM user u
+		WHERE created_at <![CDATA[>=]]> DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')
+		GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d %H')
+		)
+		
+		SELECT if(dt1 IS NULL,dt2,dt1) AS createdAt
+		, if(pay_cnt IS NULL,0,pay_cnt) AS paymentCount
+		, if(total IS NULL,0,total) AS totalPrice
+		, if(user_cnt IS NULL,0,user_cnt) AS userCount
+		FROM
+		(
+		SELECT * FROM T1
+		LEFT JOIN T2
+		ON T1.dt1 = T2.dt2
+		UNION
+		SELECT * FROM T1
+		RIGHT JOIN T2
+		ON T1.dt1 = T2.dt2
+		) AS test
 	</select>
+	
+	<!-- 이번 달 상품 판매 개수, 수익, 가입자 수 조회 -->
+	<select id="chartInformationListM" resultType="hashmap" parameterType="String">
+		WITH T1 AS (
+		SELECT DATE_FORMAT(payment_date, '%Y-%m-%d') as dt1, COUNT(*) AS pay_cnt, SUM(total_price) AS total FROM payment u
+		WHERE payment_date <![CDATA[>=]]> DATE_FORMAT(NOW(),'%Y-%m-01 00:00:00')
+		GROUP BY DATE_FORMAT(payment_date, '%Y-%m-%d')
+		), T2 AS (
+		SELECT DATE_FORMAT(created_at, '%Y-%m-%d') as dt2, COUNT(*) as user_cnt FROM user u
+		WHERE created_at <![CDATA[>=]]> DATE_FORMAT(NOW(),'%Y-%m-01 00:00:00')
+		GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d')
+		)
+		
+		SELECT if(dt1 IS NULL,dt2,dt1) AS createdAt
+		, if(pay_cnt IS NULL,0,pay_cnt) AS paymentCount
+		, if(total IS NULL,0,total) AS totalPrice
+		, if(user_cnt IS NULL,0,user_cnt) AS userCount
+		FROM
+		(
+		SELECT * FROM T1
+		LEFT JOIN T2
+		ON T1.dt1 = T2.dt2
+		UNION
+		SELECT * FROM T1
+		RIGHT JOIN T2
+		ON T1.dt1 = T2.dt2
+		) AS test
+	</select>
+	
+	<!-- 올해 상품 판매 개수, 수익, 가입자 수 조회 -->
+	<select id="chartInformationListY" resultType="hashmap" parameterType="String">
+		WITH T1 AS (
+		SELECT DATE_FORMAT(payment_date, '%Y-%m') as dt1, COUNT(*) AS pay_cnt, SUM(total_price) AS total FROM payment u
+		WHERE payment_date <![CDATA[>=]]> DATE_FORMAT(NOW(),'%Y-01-01 00:00:00')
+		GROUP BY DATE_FORMAT(payment_date, '%Y-%m')
+		), T2 AS (
+		SELECT DATE_FORMAT(created_at, '%Y-%m') as dt2, COUNT(*) as user_cnt FROM user u
+		WHERE created_at <![CDATA[>=]]> DATE_FORMAT(NOW(),'%Y-01-01 00:00:00')
+		GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+		)
+		
+		SELECT if(dt1 IS NULL,dt2,dt1) AS createdAt
+		, if(pay_cnt IS NULL,0,pay_cnt) AS paymentCount
+		, if(total IS NULL,0,total) AS totalPrice
+		, if(user_cnt IS NULL,0,user_cnt) AS userCount
+		FROM
+		(
+		SELECT * FROM T1
+		LEFT JOIN T2
+		ON T1.dt1 = T2.dt2
+		UNION
+		SELECT * FROM T1
+		RIGHT JOIN T2
+		ON T1.dt1 = T2.dt2
+		) AS test
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 </mapper>

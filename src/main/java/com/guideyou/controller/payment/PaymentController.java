@@ -1,4 +1,4 @@
-package com.guideyou.controller;
+package com.guideyou.controller.payment;
 
 import java.io.Console;
 
@@ -87,7 +87,7 @@ public class PaymentController {
 	  * @Method 설명 : detail 단일 product 정보 paymentPage로 redirect 할 method
 	  */
 	// 
-	@PostMapping("/order")
+	@GetMapping("/order")
 	public String processOrder(Model model, OrderDto orderDto) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
@@ -112,9 +112,7 @@ public class PaymentController {
 	  * @변경이력 : 
 	  * @Method 설명 : 포트원 결제 정보조회 및 토큰 가져오기, db insert
 	  */
-	// TODO: 주석 지우기 및 리턴을 어떻게 할 지 얘기해보기!
 	@PostMapping("/paySuccess") //ResponseEntity<?>  리턴타입 변경
-	//public Payment getData(@RequestBody PaymentDto paymentDto){
 	public ResponseEntity<?> getData(@RequestBody PaymentDto paymentDto){
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
@@ -178,9 +176,7 @@ public class PaymentController {
 			
 			log.info("payment service 성공하고 왔다!");
 			
-			// Payment Entity 값 프론트로 넘겨서 complete창 만들거양!
-			 return ResponseEntity.ok("success"); //HttpMediaTypeNotAcceptableException 때문에 주석처리함
-			//return paymentReturn;
+			 return ResponseEntity.ok("success"); 
 		} else {
 		
 		// 검증이 잘못 됐을시 환불 처리
@@ -207,7 +203,6 @@ public class PaymentController {
 		log.info("refund" ,refund);}
 		
 		return null; 
-		//HttpMediaTypeNotAcceptableException 확인
 	}	
 
 	/**
@@ -230,13 +225,14 @@ public class PaymentController {
 		log.info("refundDto : "+ refundDto);
 		
 		// 세션 로그인 정보와 payment에 등록된 userId가 같아야 로직 시작
-		// Integer userId = principal.getId();
-		Integer userId = 13;
-		log.info(userId+"");
-		//Payment paymentChk = paymentService.findByMerchantUidAndUserId(refundDto.getMerchantUid(), userId);
+		Integer userId = principal.getId();
+		log.info("merchantUid = "+refundDto.getMerchantUid() + "userId = "+userId);
+		int paymentChk = paymentService.findByMerchantUidAndUserId(refundDto.getMerchantUid(), userId);
 		
-		//log.info("paymentChk:" + paymentChk);
-		//if (paymentChk != null) {
+		log.info("paymentChk:" + paymentChk);
+		if (paymentChk != 0) {
+			
+			log.info("paymentChk != null (db에 merchantUid와 userId로 비교해서 값이 있으면) 실행");
 			
 			// 1. 포트원 결제 정보 조회
 			RestTemplate restTemplate = new RestTemplate();
@@ -320,21 +316,7 @@ public class PaymentController {
 			}
 			
 			// TODO : 환불 클라이언트, DB 모두 완료 -> 이후에 어떻게 처리할건지 고민해보기!
-			
-	}
-	
-	/**
-	  * @Method Name : paymentHistoryListPage
-	  * @작성일 : 2024. 3. 3.
-	  * @작성자 : 박경진
-	  * @변경이력 : 
-	  * @Method 설명 : myPage PaymentHistoryListPage 출력
-	  */
-	// TODO : 20240303 USER 컨트롤러로 옮길지 ? 
-	@GetMapping("/paymentHistoryList")
-	public String paymentHistoryListPage(){
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		return "/user/userPaymentHistoryList";
+		}
 	}
 	
 	/**

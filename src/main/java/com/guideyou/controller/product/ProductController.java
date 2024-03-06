@@ -1,8 +1,6 @@
 package com.guideyou.controller.product;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,23 +150,24 @@ public class ProductController {
 	    List<ProductPhotoDto> imgList = productService.findByProductImg(productId);
 	    model.addAttribute("imgList", imgList);	   
 	    
+	    String thumbnailFileName = productService.findThumbnailFileNameByProductId(productId);
+	    model.addAttribute("thumbnailFileName", thumbnailFileName);
+	    
 	    List<ProductReviewDto> reviewList = productService.findReviewByProduct(productId);
 	    model.addAttribute("reviewList", reviewList);
 	   
-	    ProductDetailDto productBtn = productService.findByProductId(productId);
-	    model.addAttribute("productBtn", productBtn);
 	    
 	    ProductReviewDto productAvg = productService.productAvg(productId);
     	model.addAttribute("productAvg", productAvg);
-			
-    	Boolean paidYn = false;
-    	Boolean wishYn = false;
+		
+    	// TODO: line 164, 165 -> Boolean 임포트 안되서 boolean으로 변경 확인 해주세요. 
+    	boolean paidYn = false;
+    	boolean wishYn = false;
     	User principal = (User) session.getAttribute(Define.PRINCIPAL);
     	if(principal != null) {
     		
     		int paidProductId = paymentService.getPaidProductIdByUserIdAndProductId(principal.getId(), productId);
-    		if(paidProductId != 0) {
-    			System.out.println("이거 안타?");
+    		if(paidProductId != 0 || product.getUserId() == principal.getId()) {
     			paidYn = true;
     		}
     		WishList wishResult = wishListService.readWishListByUserIdAndProductId(principal.getId(), productId);

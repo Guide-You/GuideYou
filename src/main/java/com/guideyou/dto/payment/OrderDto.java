@@ -21,4 +21,5 @@ public class OrderDto {
 	private Integer productSellerId;	// 판매자 ID
 	private Long productPrice;
 	private Integer orderUserId;		// 구매자 ID
+	private String thumbnailFileName;
 }

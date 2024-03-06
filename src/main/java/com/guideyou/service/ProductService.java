@@ -561,4 +561,15 @@ public class ProductService {
 		return photosRepository.findOriginNameByThumbnail(productId);
 	}
 
+	/**
+	  * @Method Name : findThumbnailFileNameByProductId
+	  * @작성일 : 2024. 3. 5.
+	  * @작성자 : 박경진
+	  * @변경이력 : 
+	  * @Method 설명 : productId로 thumbnail file name얻어 오기
+	  */
+	public String findThumbnailFileNameByProductId(Integer productId) {
+		return photosRepository.findThumbnailFileNameByProductId(productId);
+	}
+
 }

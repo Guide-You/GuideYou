@@ -5,12 +5,14 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 	orderButton.addEventListener('click', function(e){
 
+		
+
 		e.preventDefault();
 
 		let sendForm = document.getElementById('send--detail--form');
 		
 		sendForm.action = '/order';
-		sendForm.method = 'post';
+		sendForm.method = 'GET';
 		
 		sendForm.submit();
 		

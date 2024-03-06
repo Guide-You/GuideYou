@@ -1,10 +1,18 @@
 document.addEventListener("DOMContentLoaded", function() {
-	var userId = document.getElementById("user--id") ? document.getElementById("user--id").value : '0';
-	var signUpBtn = document.getElementById('signUpBtn');
-	var nicknameInput = document.getElementById('nickname');
-	var phoneInput = document.getElementById('phone');
-	var signUpForm = document.forms['signUpForm'];
-	var isNicknameValid = false // 닉네임유효성및중복여부를저장하는변수
+	
+	let validBtn = document.getElementById("valid--btn");
+	let userId = document.getElementById("user--id") ? document.getElementById("user--id").value : '0';
+	let signUpBtn = document.getElementById('signUpBtn');
+	let nicknameInput = document.getElementById('nickname');
+	let phoneInput = document.getElementById('phone');
+	let signUpForm = document.forms['signUpForm'];
+	let isNicknameValid = false // 닉네임유효성및중복여부를저장하는변수
+	
+	validBtn.addEventListener('click', function(e){
+		e.preventDefault();
+		
+		checkNickName();
+	});
 
 	// 닉네임입력란의blur 이벤트리스너
 	nicknameInput.addEventListener('blur', function(event) {
