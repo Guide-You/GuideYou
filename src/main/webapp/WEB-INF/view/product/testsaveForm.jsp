@@ -9,6 +9,8 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="/css/productcss/saveUpdate.css" rel="stylesheet" />
+<!-- 지도 css -->
+<link href="/css/productcss/map/insertMap.css" rel="stylesheet" />
 </head>
 
 <!-- header -->
@@ -66,20 +68,46 @@
 			<p>디테일사진</p>
 			<label for="detailFile" style="display: block;">
 				<div class="form-photo">
-					<span class="icon-container" id="detailImageContainer"><img id="thumbImage"
-						src="/img/main-busan.jpg" class="img-fluid w-100 rounded-top" /></span> <input
-						type="file" id="detailFile" name="customFile" multiple
-						style="display: none;" />
+					<span class="icon-container" id="detailImageContainer"><img
+						id="thumbImage" src="/img/main-busan.jpg"
+						class="img-fluid w-100 rounded-top" /></span> <input type="file"
+						id="detailFile" name="customFile" multiple style="display: none;" />
 				</div>
 			</label>
+			<div class="map_wrap">
+				<div id="map"
+					style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
 
+				<div id="menu_wrap" class="bg_white">
+					<div class="option">
+						<div>
+							<form onsubmit="searchPlaces(); return false;">
+								키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15">
+								<button type="submit">검색하기</button>
+							</form>
+						</div>
+					</div>
+					<hr>
+					<ul id="placesList"></ul>
+					<div id="pagination"></div>
+				</div>
+			</div>
+			<button id="saveButton" onclick="saveMarkers()">저장</button>
+			<div id="locationList"></div>
 
 			<!-- 등록 버튼 -->
 			<input type="submit" value="등록">
 		</form>
 	</div>
+
+	<!-- 지도 section 시작 -->
+
+	<!-- 지도 section 종료 -->
 </body>
 </html>
 <!-- footer -->
 <script src="/js/product/productSave.js"></script>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ef018e0a6a5030e54ff1e2da58cdceb&libraries=services"></script>
+<script src="/js/product/map/insertMap.js"></script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
