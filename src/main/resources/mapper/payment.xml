@@ -152,7 +152,8 @@
 			d.title, 
 			u.nickname as seller, 
 			a.total_price as payment_price, 
-			a.payment_date  
+			a.payment_date,
+			a.refund_price, a.refund_cause, a.refund_date, a.refund_yn   
 		from payment a 
 		join payment_detail b 
 		on a.merchant_uid = b.merchant_uid
@@ -161,6 +162,6 @@
         where a.user_id = #{userId}
 		and a.payment_status = "paid"
 		limit #{size} offset #{offset}
-		;
+		
 	</select>
 </mapper>
