@@ -36,12 +36,11 @@
                       <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                           <p>${board.content}</p>
                       </div>
-                      
                       <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                           <div class="d-flex">
                               <div class="">
                                <p class="mb-2" style="font-size: 14px;">
-                               <fmt:formatDate value="${board.createdAt}" pattern="yyyy-MM-dd hh:mm:ss"/>
+                               <fmt:formatDate value="${comment.createdAt}" pattern="yyyy-MM-dd hh:mm:ss"/>
                                </p>
                                   <div class="d-flex justify-content-between">
                                       <h5>${comment.writerId}</h5>
@@ -49,7 +48,7 @@
                                   <p>${comment.content}</p>
                               </div>
                           </div>
-                    </div>
+                     </div>
                 </div>
                 <form action="/company/boardDetail" method="post" id="insertComment">
                      <h4 class="mb-5 fw-bold">댓글을 남겨주세요</h4>

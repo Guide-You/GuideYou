@@ -58,10 +58,10 @@ public class AdminTempController {
 		System.out.println("admin 글 등록되었습니다" + articleInsert.toString());
 		
 		boardService.insert(articleInsert);
-		return "redirect:/admin/adminArticleDetail";
+		return "redirect:/admin/adminArticleList";
 	}
 	// pagination and articleList
-	@GetMapping("/adminArticleList")
+	@GetMapping("/admin/adminArticleList")
 	public String articleList(PageReq pageReq, Model model) {
 		// 페이징
 		if (pageReq.getPage() <= 0) {
@@ -86,7 +86,7 @@ public class AdminTempController {
 		model.addAttribute("endPage", pageRes.getEndPage());
 
 		
-		System.out.println("adminArticle" + "위치확인완료");
+		System.out.println("adminArticleList" + "위치확인완료");
 		return "/admin/adminArticleList";
 	}
 	

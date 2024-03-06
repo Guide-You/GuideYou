@@ -70,7 +70,7 @@ public class BoardController {
 		System.out.println("정답입니다!" + inputData.toString());
 		boardService.insert(inputData);
 
-		return "redirect:/company/boardDetail";  // detail로 안가짐 
+		return "redirect:/company/boardList";  // detail로 안가짐 
 	}
 
 	// 글 목록 BoardPageRq | BoardPageS
@@ -112,7 +112,7 @@ public class BoardController {
 	 * @프로그램 설명 : 글 detail view 불러오기중입니다.
 	 */
 	// 글 삭제
-	@PostMapping("/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deleteById(@PathVariable("id") Integer boardId) {
 		boardService.deleteById(boardId);
 		return "redirect:/company/boardList";
@@ -126,7 +126,7 @@ public class BoardController {
 		model.addAttribute("board", board);
 
 		return "company/boardDetail";  
-	};
+	}  // 여기에 ; 왜 있지
 
 	// 글 수정 페이지
 	@GetMapping("/boardModify/{boardId}")
@@ -134,7 +134,7 @@ public class BoardController {
 		Board board = boardService.findById(boardId);
 		model.addAttribute("board", board);
 
-		return "company/testUpdate";
+		return "company/boardModify";
 	}
 
 	// 글 수정 기능
