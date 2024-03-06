@@ -47,6 +47,19 @@ public class BoardController {
 
 	@Autowired
 	private HttpSession httpSession;
+	
+	
+	@GetMapping("/test")
+	public String asd() {
+		return "/admin/adminFaq";
+	}
+	
+	@GetMapping("/test2")
+	public String asd2() {
+		return "/admin/adminNotice";
+	}
+	
+	
 	// 1. 화면 띄우기
 	@GetMapping("/boardInsert")
 	public String boardPage() {

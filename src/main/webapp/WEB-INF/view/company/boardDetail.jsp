@@ -73,6 +73,10 @@
                    </form>
                 </div>
               </div>
+              
+				          <fmt:formatDate value="${board.createdAt}" pattern="yyyy-MM-dd hh:mm:ss"/>
+				        <button type="button" class="btn btn-outline-info" onclick="location.href='/company/delete/${board.id}'">삭제</button>
+				        <button type="button" class="btn btn-primary" onclick="location.href='/company/boardModify/${board.id}'">수정</button>
 <div class="d-flex justify-content-center my-4">
     <a href="/company/boardList" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">게시글 목록</a>
 </div>
