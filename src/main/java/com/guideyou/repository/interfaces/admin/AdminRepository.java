@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.guideyou.dto.admin.AdminDto;
+import com.guideyou.dto.admin.AdminPaymentListDto;
 import com.guideyou.dto.admin.BoardDto;
 import com.guideyou.dto.payment.PaymentDto;
 import com.guideyou.dto.product.ProductDto;
@@ -114,5 +115,13 @@ public interface AdminRepository {
 	
 	// 24.03.05 올해 그래프 정보 조회
 	public List<Map<String, Object>> chartInformationListY();
+	
+	
+	
+	// 24.03.06 수익 전체 조회
+	public List<AdminPaymentListDto> selectPaymentInfoList(@Param ("offset") int offset, @Param ("limit") int limit); 
+	
+	// 24.03.06 수익 개수 조회
+	public int getPaymentCount();
 	
 }

@@ -1,6 +1,7 @@
 package com.guideyou.repository.entity;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,4 +23,20 @@ public class ProductWithPhotos {
 	private Integer wishCount;
 	private Integer viewCount;
 	private Timestamp createdAt;
+	
+	
+	
+	
+	/**
+	  * @Method Name : fomatPrice
+	  * @작성일 : 2024. 3. 6.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : price 포맷
+	  */
+	public String fomatPrice() {
+		DecimalFormat df = new DecimalFormat("#,###");
+		String formaterNumber = df.format(price);
+		return formaterNumber + "원";
+	}
 }

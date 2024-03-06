@@ -115,7 +115,7 @@ public class ProductService {
 				}
 
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				log.info(e.getMessage());
 			}
 		}
 		return true;

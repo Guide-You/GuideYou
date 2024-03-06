@@ -295,12 +295,27 @@
 	</select>
 	
 	
+	<!-- 관리자 페이지 수익 리스트 조회 -->
+	<select id="selectPaymentInfoList" resultType="com.guideyou.dto.admin.AdminPaymentListDto">
+		select * from payment
+		limit #{limit} offset #{offset}  
+	</select>
 	
+	<!-- 관리자 페이지 가입 된 회원 정보 조회 -->
+	<select id="selectUserInfoList">
+		select * from payment
+		limit #{limit} offset #{offset}  
+	</select>
 	
+	<!-- 수익 데이터 개수 조회 -->
+	<select id="getPaymentCount" resultType="int">
+	 	select count(*) from board_contents
+	</select>
 	
-	
-	
-	
+	<!-- 회원 정보 개수 조회 -->
+	<select id="getUserCount" resultType="int">
+	 	select count(*) from user
+	</select>
 	
 	
 	

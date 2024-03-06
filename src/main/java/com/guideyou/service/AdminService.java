@@ -6,9 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.guideyou.dto.PageReq;
+import com.guideyou.dto.PageRes;
 import com.guideyou.dto.admin.AdminDto;
+import com.guideyou.dto.admin.AdminPaymentListDto;
 import com.guideyou.dto.admin.BoardDto;
-import com.guideyou.dto.payment.PaymentDto;
 import com.guideyou.dto.product.ProductDto;
 import com.guideyou.repository.interfaces.admin.AdminRepository;
 
@@ -361,4 +363,46 @@ public class AdminService {
 		
 		return adminRepository.chartInformationListY();
 	}
+	
+	
+	
+	/**
+	  * @Method Name : getPaymentCount
+	  * @작성일 : 2024. 3. 6.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 결제 내역 개수 조회
+	  */
+	public int getPaymentCount() {
+		
+		return adminRepository.getPaymentCount();
+	}
+	
+	
+	/**
+	  * @Method Name : selectPaymentInfoList
+	  * @작성일 : 2024. 3. 6.
+	  * @작성자 : 장명근
+	  * @변경이력 : 
+	  * @Method 설명 : 관리자 수익 페이지 조회
+	  */
+	public PageRes<AdminPaymentListDto> selectPaymentInfoList(PageReq pageReq) {
+		int page = pageReq.getPage();
+		int size = pageReq.getSize();
+		int offset = (page - 1) * size; // 오프셋 계산
+		
+		long totalElements = adminRepository.getPaymentCount();
+		
+		List<AdminPaymentListDto> list = adminRepository.selectPaymentInfoList(offset, size);
+		
+		PageRes<AdminPaymentListDto> pageRes = new PageRes<>(list, page, totalElements, size);
+		
+		return pageRes;
+	}
+	
+	
+	
+	
+	
+	
 }
