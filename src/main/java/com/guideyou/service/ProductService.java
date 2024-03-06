@@ -108,7 +108,7 @@ public class ProductService {
 			}
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			log.info(e.getMessage());
 		}
 
 		// 디테일 파일 저장 로직
@@ -187,7 +187,7 @@ public class ProductService {
 					}
 
 				} catch (Exception e) {
-					System.out.println(e.getMessage());
+					log.info(e.getMessage());
 				}
 			}
 
@@ -239,45 +239,12 @@ public class ProductService {
 				}
 
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				log.info(e.getMessage());
 			}
 		}
 		return true;
 	}
 
-	/**
-	 * @Method Name : readProduct
-	 * @작성일 : 2024. 3. 4.
-	 * @작성자 : 장명근
-	 * @변경이력 :
-	 * @Method 설명 : 상품 정보 조회
-	 */
-	public List<Product> readProduct() {
-		return productRepository.findAll();
-	}
-
-	/**
-	 * @Method Name : readPhoto
-	 * @작성일 : 2024. 3. 4.
-	 * @작성자 : 장명근
-	 * @변경이력 :
-	 * @Method 설명 : 해당 상품 이미지 조회
-	 */
-	public ProductPhotos readPhoto() {
-
-		return photosRepository.findPhoto();
-	}
-
-	/**
-	 * @Method Name : selectPhotoList
-	 * @작성일 : 2024. 3. 4.
-	 * @작성자 : 장명근
-	 * @변경이력 :
-	 * @Method 설명 : 상품에 해당하는 사진 한 장 찾기
-	 */
-	public List<ProductDto> selectPhotoList() {
-		return photosRepository.selectPhoto();
-	}
 
 	/**
 	 * @Method Name : selectProductInf
@@ -290,18 +257,7 @@ public class ProductService {
 
 		return productRepository.selectProductInf(productId);
 	}
-
-	/**
-	 * @Method Name : findByProductId
-	 * @작성일 : 2024. 3. 4.
-	 * @작성자 : 장명근
-	 * @변경이력 :
-	 * @Method 설명 : 해당 상품 id 찾기
-	 */
-	public ProductDetailDto findByProductId(Integer productId) {
-		return productRepository.findByProductId(productId);
-
-	}
+	
 
 	/**
 	 * @Method Name : findAllByProductId
@@ -327,17 +283,6 @@ public class ProductService {
 	}
 
 	/**
-	 * @Method Name : getProductsWithImages
-	 * @작성일 : 2024. 3. 4.
-	 * @작성자 : 장명근
-	 * @변경이력 :
-	 * @Method 설명 : 미리보기 사진 찾기
-	 */
-	public List<Product> getProductsWithImages(int offset, int limit, String searchText) {
-		return productRepository.findProductsWithImages(offset, limit, searchText);
-	}
-
-	/**
 	 * @Method Name : deleteMutiPhoto
 	 * @작성일 : 2024. 3. 4.
 	 * @작성자 : 장명근
@@ -346,8 +291,6 @@ public class ProductService {
 	 */
 	@Transactional
 	public int deleteMutiPhoto(String id) {
-		System.out.println("================================");
-		System.out.println(id);
 		log.info("----------------------");
 		log.info(id);
 
@@ -527,17 +470,6 @@ public class ProductService {
 		PageRes<UploadProductsInfoDTO> pageRes = new PageRes<>(getUploadProductsInfoList, page, totalElements, size);
 
 		return pageRes;
-	}
-
-	/**
-	 * @Method Name : photos
-	 * @작성일 : 2024. 3. 4.
-	 * @작성자 : 장명근
-	 * @변경이력 :
-	 * @Method 설명 : 이미지 업로드 이름 찾기
-	 */
-	public List<ProductPhotoDto> photos(Integer productId) {
-		return productRepository.photos(productId);
 	}
 
 	/**

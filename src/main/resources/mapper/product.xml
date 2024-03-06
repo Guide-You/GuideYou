@@ -38,27 +38,7 @@
 	<select id="findAllByUserId" resultType="com.guideyou.repository.entity.Product">
 		select * from product where user_id = #{userId}
 	</select>
-	
-	<select id="findByProductId" resultType="com.guideyou.dto.product.ProductDetailDto">
-		select * from product where id = #{productId}
-	</select>
-						
-	<select id="findAll" resultType="com.guideyou.repository.entity.Product">
-		select * from product ORDER BY created_at DESC
-	</select>
-	
-	
-	<!-- 검색과 페이징 -->
-	<select id="findProductsWithImages" resultType="com.guideyou.repository.entity.Product">
-		SELECT p.*
-       , (
-          SELECT ph.upload_file_name FROM product_photos ph WHERE product_id = p.id
-          ORDER BY ph.id LIMIT 1
-        ) AS uploadFileName 
-              FROM product p                 
-       ORDER BY p.id DESC
-	</select>
-		
+							
 	
 	<!-- 페이지 처리와 검색 -->
 	<select id="findAllwithPasing" resultType="com.guideyou.dto.product.ProductDto">
@@ -128,23 +108,7 @@
 		from product p 
         left join product_photos ph on p.id = ph.product_id 
 		where product_id = #{productId}	
-	</select>
-	
-	<!-- 상품 리뷰리스트 -->
-<!-- 	<select id="findReviewByProduct" resultType="com.guideyou.dto.ProductDetailDto"> -->
-<!-- 		select p.*, r.* -->
-<!-- 		from product p -->
-<!-- 		left join review r on p.id = r.r_product_id -->
-<!-- 		where p.id = #{productId} -->
-<!-- 	</select> -->
-	
-	
-	<!-- 2024.02.27 -->
-	<select id="photos" resultType="com.guideyou.dto.product.ProductPhotoDto">
-		select b.upload_file_name from product a
-		join product_photos b on a.id = b.product_id
-		where a.id = #{productId}	
-	</select>
+	</select>		
 	
 	<!-- 2024.02.27 리뷰 조회 -->
 	<select id="findReviewByProduct" resultType="com.guideyou.dto.product.ProductReviewDto">

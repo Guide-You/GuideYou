@@ -137,22 +137,22 @@
 										<c:choose>
 											<c:when test="${param.dateType == 1}">
 												<div class="ps-3">
-													<h6>${productList4.totalPrice}원</h6>
+													<h6>${productList4.formatTotalPrice()}</h6>
 												</div>
 											</c:when>
 											<c:when test="${param.dateType == 2}">
 												<div class="ps-3">
-													<h6>${productList4.totalPrice}원</h6>
+													<h6>${productList4.formatTotalPrice()}</h6>
 												</div>
 											</c:when>
 											<c:when test="${param.dateType == 3}">
 												<div class="ps-3">
-													<h6>${productList4.totalPrice}원</h6>
+													<h6>${productList4.formatTotalPrice()}</h6>
 												</div>
 											</c:when>
 											<c:otherwise>
 												<div class="ps-3">
-													<h6>${productList4.totalPrice}원</h6>
+													<h6>${productList4.formatTotalPrice()}</h6>
 												</div>
 											</c:otherwise>
 										</c:choose>
@@ -302,8 +302,8 @@
 														<tr>
 															<td>${post.nickName}</td>
 															<td><a href="/detail/${post.productId}" class="text-primary">${post.title}</a></td>
-															<td>${post.price}</td>
-															<td><span class="badge bg-success">${post.createdAt}</span></td>
+															<td>${post.formatPrice()}</td>
+															<td><span class="badge bg-success">${post.formatDateTime()}</span></td>
 														</tr>
 													</c:forEach>
 												</c:when>
@@ -312,8 +312,8 @@
 														<tr>
 															<td>${post.nickName}</td>
 															<td><a href="/detail/${post.productId}" class="text-primary">${post.title}</a></td>
-															<td>${post.price}</td>
-															<td><span class="badge bg-success">${post.createdAt}</span></td>
+															<td>${post.formatPrice()}</td>
+															<td><span class="badge bg-success">${post.formatDateTime()}</span></td>
 														</tr>
 													</c:forEach>
 												</c:when>
@@ -322,8 +322,8 @@
 														<tr>
 															<td>${info.nickName}</td>
 															<td><a href="/detail/${info.productId}" class="text-primary">${info.title}</a></td>
-															<td>${info.price}</td>
-															<td><span class="badge bg-success">${info.createdAt}</span></td>
+															<td>${info.formatPrice()}</td>
+															<td><span class="badge bg-success">${info.formatDateTime()}</span></td>
 														</tr>
 													</c:forEach>
 												</c:when>
@@ -332,8 +332,8 @@
 														<tr>
 															<td>${info.nickName}</td>
 															<td><a href="/detail/${info.productId}" class="text-primary">${info.title}</a></td>
-															<td>${info.price}</td>
-															<td><span class="badge bg-success">${info.createdAt}</span></td>
+															<td>${info.formatPrice()}</td>
+															<td><span class="badge bg-success">${info.formatDateTime()}</span></td>
 														</tr>
 													</c:forEach>
 												</c:otherwise>
@@ -393,9 +393,9 @@
 																	src="/images/upload/${post.uploadFileName}" alt=""></a>
 															</th>
 															<td><a href="/detail/${post.productId}" class="text-primary fw-bold">${post.introContent}</a></td>
-															<td>${post.price}원</td>
+															<td>${post.formatPrice()}</td>
 															<td class="fw-bold">${post.soldCount}</td>
-															<td>${post.revenue}원</td>
+															<td>${post.formatRevenue()}</td>
 														</tr>
 													</c:forEach>
 												</c:when>
@@ -406,9 +406,9 @@
 																	src="/images/upload/${post.uploadFileName}" alt=""></a>
 															</th>
 															<td><a href="/detail/${post.productId}" class="text-primary fw-bold">${post.introContent}</a></td>
-															<td>${post.price}원</td>
+															<td>${post.formatPrice()}</td>
 															<td class="fw-bold">${post.soldCount}</td>
-															<td>${post.revenue}원</td>
+															<td>${post.formatRevenue()}</td>
 														</tr>
 													</c:forEach>
 												</c:when>
@@ -419,9 +419,9 @@
 																	src="/images/upload/${info.uploadFileName}" alt=""></a>
 															</th>
 															<td><a href="/detail/${info.productId}" class="text-primary fw-bold">${info.introContent}</a></td>
-															<td>${info.price}원</td>
+															<td>${info.formatPrice()}</td>
 															<td class="fw-bold">${info.soldCount}</td>
-															<td>${info.revenue}원</td>
+															<td>${info.formatRevenue()}</td>
 														</tr>
 													</c:forEach>
 												</c:when>
@@ -432,9 +432,9 @@
 																	src="/images/upload/${info.uploadFileName}" alt=""></a>
 															</th>
 															<td><a href="/detail/${info.productId}" class="text-primary fw-bold">${info.introContent}</a></td>
-															<td>${info.price}원</td>
+															<td>${info.formatPrice()}</td>
 															<td class="fw-bold">${info.soldCount}</td>
-															<td>${info.revenue}원</td>
+															<td>${info.formatRevenue()}</td>
 														</tr>
 													</c:forEach>
 												</c:otherwise>
@@ -629,7 +629,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             tooltip: {
                 x: {
-                    format: 'dd/MM/yy:HH'
+                    format: 'dd/MM/yy'
                 },
             }
         });

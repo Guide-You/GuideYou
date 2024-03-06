@@ -36,9 +36,6 @@ public interface ProductRepository {
 	// 상품 정보 삭제
 	public int deletById(Integer id);
 	
-	// 상품 아이디 찾기
-	public List<Product> findByProductId();
-	
 	// 사용자가 작성한 상품 전체 조회
 	public List<Product> findAllByUserId(Integer userId);
 	
@@ -47,15 +44,7 @@ public interface ProductRepository {
 	
 	// 24.02.27 목록에 보여줄 내용들 조회
 	public ProductDetailDto findByProductId(Integer productId);
-	
-	// db에 저장 된 상품 전체 조회
-	public List<Product> findAll();
-	
-	// 상품 대표 이미지 찾기, 페이징 처리
-	public List<Product> findProductsWithImages(@Param ("offset") int offset, @Param ("limit") int limit, 
-			@Param("searchText") String searchText);
-	
-	
+		
 	// 페이징 처리
 	public List<Product> findAllwithPasing(@Param ("offset") int offset, @Param ("limit") int limit,
 											@Param("searchText") String searchText, @Param("cityCodeId") String cityCodeId);
@@ -84,10 +73,7 @@ public interface ProductRepository {
 	
 	// 마이페이지 사용자가 작성한 상품 목록 총 개수 - 최장호 추가 02/26
 	public Long getUploadProductsInfoTotalCount(Integer userId);
-	
-	
-	// 이미지 업로드파일이름 찾기 2024.02.27
-	public List<ProductPhotoDto> photos(Integer productId);
+		
 	
 	// 24.02.28 상품 평점 조회
 	public ProductReviewDto productAvg(Integer productId);

@@ -1,8 +1,5 @@
 package com.guideyou.dto.admin;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 import lombok.Data;
 /**
   * @FileName : BoardDto.java

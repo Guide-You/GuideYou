@@ -1,6 +1,8 @@
 package com.guideyou.dto.product;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +39,26 @@ public class ProductDto {
 	private Double score;
 	private Timestamp createdAt;
 	private String selectedValue;
+	
+	
+	public String formatPrice() {
+		DecimalFormat df = new DecimalFormat("#,###");
+		String formaterNumber = df.format(price);
+		return formaterNumber + "원";
+	}
+	
+	public String formatRevenue() {
+		DecimalFormat df = new DecimalFormat("#,###");
+		String formaterNumber = df.format(revenue);
+		return formaterNumber + "원";
+	}
+	
+	public String formatDateTime() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String fomaterDate = dateFormat.format(createdAt);
+		
+		return fomaterDate;
+	}
 	
 }
 

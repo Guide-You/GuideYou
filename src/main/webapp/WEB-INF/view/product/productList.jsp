@@ -165,7 +165,7 @@
 														<p style="font-size: 14px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
 															${prod.content}</p></a>
 														<div class="d-flex justify-content-between flex-lg-wrap">
-															<p class="text-dark fs-5 fw-bold mb-0">${prod.price}</p>
+															<p class="text-dark fs-5 fw-bold mb-0">${prod.formatPrice()}</p>
 															<a href="#"
 																class="btn border border-secondary rounded-pill px-3 text-primary">
 																<i class="fa fa-shopping-bag me-2 text-primary"></i>구경가기

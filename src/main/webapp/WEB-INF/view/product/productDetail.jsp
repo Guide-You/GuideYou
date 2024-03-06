@@ -72,7 +72,7 @@
 	</div>
 	<div class="title--rate--price">
 		<span class="title--rate">${productAvg.avgScore}</span> <span
-			class="title--price">${product.price}</span>
+			class="title--price">${product.formatPrice()}</span>
 	</div>
 </div>
 <!-- Detail Title End -->

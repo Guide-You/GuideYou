@@ -24,19 +24,7 @@ public interface ProductPhotosRepository {
 	public List<ProductDto> findAllByProductId(Integer productId);
 	
 	// 사용자의 아이디를 찾는다?
-	public ProductPhotos findByProductId(Integer id);
-	
-	// 사진 한 장 찾기 - 생성된 시간 기준
-	public ProductPhotos findPhoto();
-		
-	//
-	List<ProductDto> selectPhotoList();
-	
-	
-	List<ProductPhotos> findRepresentativePhotos();
-	
-	
-	List<ProductDto> selectPhoto();
+	public ProductPhotos findByProductId(Integer id);	
 	
 	// 24.02.28 thumbnail 의 originalName 찾기
 	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId);

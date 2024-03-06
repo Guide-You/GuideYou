@@ -1,6 +1,7 @@
 package com.guideyou.dto.product;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -25,4 +26,12 @@ public class ProductDetailDto {
 	private Double score;
 	private String reviewContent;
 	private Timestamp reviewreatedAt;
+	
+	
+	
+	public String formatPrice() {
+		DecimalFormat df = new DecimalFormat("#,###");
+		String formaterNumber = df.format(price);
+		return formaterNumber + "원";
+	}
 }
