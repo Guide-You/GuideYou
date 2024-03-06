@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     saveBtn.addEventListener('click', function(event) {
         // 폼의 유효성 검사
         if (!validateForm()) {
-           // event.preventDefault(); // 폼 제출 중지
-            //return false;
+            event.preventDefault(); // 폼 제출 중지
+            return false;
         }
 			        // 폼 데이터를 직렬화합니다.
 			        var formData = new FormData(productForm);
@@ -33,8 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
 			                productId = response;
 			                // 성공적으로 처리되었을 때 saveMarkers 함수를 실행합니다.
 								console.log("들어왔나요? 석세스");
-			                    saveMarkers(event, productId);
-			                    window.location.href="/detail/" + productId;
+						        event.preventDefault();
+			                    if(saveMarkers(event, productId) == true) {
+								window.location.href="/detail/" + productId;
+								}
 			            },
 			            error: function(xhr, status, error) {
 			                // 오류가 발생했을 때의 처리를 수행합니다.
@@ -43,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			        });
 			
 			        // 폼 제출을 막습니다.
-			        event.preventDefault();
     });
     
 
