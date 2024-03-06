@@ -57,6 +57,8 @@
 	    try {
 			
 			console.log("try in!");
+			console.log(rsp);
+			console.log(rsp.toString);
 	        // 필요한 데이터 구성
 	        let postData = {
 	            merchantUid: rsp.merchant_uid,
@@ -65,7 +67,7 @@
 	            productTitle: rsp.name,
 	            totalPrice: rsp.paid_amount,
 	            paymentStatus: rsp.status,
-	            orderUserId: orderSellerId
+	            orderUserId: rsp.buyer_name
 	        };
 	
 	
