@@ -29,6 +29,7 @@ public class User {
     private String email;
     private String phone;
     private String comment;
+    private String role;
 
     private Timestamp createdAt;
     private String deleteYn;
