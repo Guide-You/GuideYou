@@ -10,7 +10,7 @@
 
 
 <!-- Upload List Start -->
-<div class="col-md-12 col-lg-6 col-xl-9">
+<div class="col-md-12 col-lg-6 col-xl-9 paging--parent">
 
 	<c:choose>
 		<c:when test="${empty uploadProductsInfoList}">
@@ -55,7 +55,7 @@
 		</c:otherwise>
 	</c:choose>
 	<!-- 페이징 처리 -->
-	<div class="pagination justify-content-center mb-5">
+	<div class="pagination justify-content-center mb-5 paging--num">
 		<c:if test="${page > 1}">
 			<a href="?page=1&size=${size}">&laquo; 첫 페이지</a>
 			<a href="?page=${page - 1}&size=${size}">&laquo; 이전</a>

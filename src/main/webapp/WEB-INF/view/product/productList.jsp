@@ -155,7 +155,7 @@
 														class="title-text bg-secondary px-3 py-1 rounded position-absolute"
 														style="top: 10px; left: 10px;">${prod.cityName}</div>
 													<div
-														class="p-4 border border-secondary border-top-0 rounded-bottom"
+														class="p-4 border border-secondary border-top-0 rounded-bottom list--info"
 														style="max-height: 300px; overflow: hidden;">
 														<!-- Link added to the title -->
 														<a href="/detail/${prod.id}"><h4>${prod.title}</h4></a>

@@ -490,7 +490,12 @@ body {
 
 /*추가 css*/
 /* main */
-#main--info{
+.main--info{
+	margin-top: 3px;
+	height : 215px;
+}
+.list--info{
+	margin-top: 3px;
 	height : 215px;
 }
 
@@ -1108,11 +1113,19 @@ h1 {
 	background-color: #91caff !important;
 	color: white !important;
 	border:0px;
-	margin : 1px;
-	padding: 1px;
+	margin : 1%;
+	padding: 1%;
 }
 
 .custom--button:hover {
 	background-color: #ffc691 !important;
 	color: white !important;
+}
+
+/* paging num button */
+.paging--parent{
+	text-align : center;
+}
+.paging--num{
+	margin-top : 5%;
 }
