@@ -260,7 +260,7 @@ public class ProductController {
 	  * @변경이력 : 
 	  * @Method 설명 : 상품 삭제 로직
 	  */
-	@PostMapping("/delete/{productId}")
+	@GetMapping("/delete/{productId}")
 	public String deleteProduct(@PathVariable("productId") Integer productId) {
 		
 
