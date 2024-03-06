@@ -36,7 +36,7 @@ pageEncoding="UTF-8"%>
                         </div>
                       </th>
                       <td class="py-5">${order.productTitle}</td>
-                      <td class="py-5">${order.productSellerId }</td>
+                      <td class="py-5">${order.sellerNickname }</td>
                       <td class="py-5">${order.productPrice }</td>
                     </tr>
                   </tbody>
@@ -80,7 +80,7 @@ pageEncoding="UTF-8"%>
                 <form id="send--payment--form">
                   <p>productId :</p>
                   <input
-                    type="text"
+                    type="hidden"
                     name="orderId"
                     id="order--id"
                     value="${order.productId}"
@@ -88,28 +88,28 @@ pageEncoding="UTF-8"%>
                   <!-- 추후 photo 정보 받아오기 -->
                   <p>productTitle :</p>
                   <input
-                    type="text"
+                    type="hidden"
                     name="orderTitle"
                     id="order--title"
                     value="${order.productTitle}"
                   />
                   <P>orderUserId : </P
                   ><input
-                    type="text"
+                    type="hidden"
                     name="orderUserId"
                     id="order--user--id"
                     value="${order.orderUserId}"
                   />
                   <p>productSellerId :</p>
                   <input
-                    type="text"
+                    type="hidden"
                     name="orderSeller"
                     id="order--seller--id"
-                    value="${order.productSellerId }"
+                    value="${order.sellerNickname}"
                   />
                   <p>productPrice :</p>
                   <input
-                    type="text"
+                    type="hidden"
                     name="orderPrice"
                     id="order--price"
                     value="${order.productPrice }"

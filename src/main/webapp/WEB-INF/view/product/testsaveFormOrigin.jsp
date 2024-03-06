@@ -18,7 +18,8 @@
 
 <body>
 	<div class="container" style="margin-top: 20%">
-		<form id="productForm" enctype="multipart/form-data">
+		<form id="productForm" action="/save" method="post"
+			enctype="multipart/form-data">
 
 			<!-- 지역 선택 콤보박스 -->
 			<label for="region"></label><br> <select id="region"
@@ -51,6 +52,9 @@
 				style="height: 150px; resize: none;">구매 후 확인하세요</textarea>
 			<br> <br>
 
+
+
+
 			<!-- 파일 선택 input 대신 label을 사용하여 버튼으로 보여줌 -->
 			<p>썸네일</p>
 			<label for="thumbFile" style="display: block;">
@@ -70,48 +74,35 @@
 						id="detailFile" name="customFile" multiple style="display: none;" />
 				</div>
 			</label>
-			</form>
-			
-			
-		<!-- Map Section Start -->
-			<div class="">
-				<div class="container py-5">
-					<div class="col-lg-12">
-						<div class="map_wrap">
-							<div id="map"
-								style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
+			<div class="map_wrap">
+				<div id="map"
+					style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
 
-							<div id="menu_wrap" class="bg_white">
-								<div class="option">
-									<div>
-										<form id="keyword--form">
-											키워드 : <input type="text" value="" id="keyword" size="15">
-											
-											<div class="container plan--selling--button">
-												<button type="button" id="keyword--button">검색하기</button>
-											</div>
-										</form>
-									</div>
-								</div>
-								<hr>
-								<ul id="placesList"></ul>
-								<div id="pagination"></div>
-							</div>
+				<div id="menu_wrap" class="bg_white">
+					<div class="option">
+						<div>
+							<form onsubmit="searchPlaces(); return false;">
+								키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15">
+								<button type="submit">검색하기</button>
+							</form>
 						</div>
-						
-						<div id="locationList"></div>
 					</div>
+					<hr>
+					<ul id="placesList"></ul>
+					<div id="pagination"></div>
 				</div>
 			</div>
-			<!-- Map Section End -->
-			
-			<div class="container plan--selling--button">
-				<button type="button" id="save--button">등록</button>
-			</div>
-	</div>
-	
-		<!-- Map Section End -->
+			<button id="saveButton" onclick="saveMarkers()">저장</button>
+			<div id="locationList"></div>
 
+			<!-- 등록 버튼 -->
+			<input type="submit" value="등록">
+		</form>
+	</div>
+
+	<!-- 지도 section 시작 -->
+
+	<!-- 지도 section 종료 -->
 </body>
 </html>
 <!-- footer -->

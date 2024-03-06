@@ -91,9 +91,8 @@
 <form id="send--detail--form">
 	<input type="hidden" name="productId" id="product--id" value="${product.productId}"> 
 	<input type="hidden" name="productTitle" id="product--title" value="${product.productTitle}"> 
-	<input type="hidden" name="productSellerId" id="product--seller--id" value="${product.userId}">
+	<input type="hidden" name="sellerNickname" id="seller--nickname" value="${product.nickName}">
 	<input type="hidden" name="productPrice" id="product--price" value="${product.price}">
-	<input type="hidden" name="productPhoto" id="product--photo" value=""> <!-- value값 넣어주기 -->
 	<input type="hidden" name="productAvg" id="title--rate" value="${productAvg.avgScore}">
 </form>
 

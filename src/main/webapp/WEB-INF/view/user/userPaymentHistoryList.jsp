@@ -72,18 +72,14 @@
 </div>
 <!-- Cart List End -->
           
-          <!-- 아래 코드는 일단 환불 창 호출 버튼! -->
-          
-
-          
         </div>
       </div>
     </div>
       <!--  Page End -->
       
       <script>
-// 환불 js!
-document.querySelectorAll('.refund-button').forEach(button => {
+	// 환불 js!
+	document.querySelectorAll('.refund-button').forEach(button => {
         button.addEventListener('click', function() {
             const merchantUid = this.getAttribute('data-merchant-uid'); // 버튼에 설정된 데이터 가져오기
             const refundPrice = this.getAttribute('data-refund-price');
@@ -110,28 +106,6 @@ document.querySelectorAll('.refund-button').forEach(button => {
         });
     });
 
-/*
-	"userPaymentHistoryList 실행 시작!"
-
-    const refundButton = document.getElementById("refund--button");
-
-    refundButton.onclick = function cancelPay() {
-	
-		console.log("cancelPay btn click!")
-	
-	    jQuery.ajax({
-	      // 예: http://www.myservice.com/payments/cancel
-	      "url": "/refund", 
-	      "type": "POST",
-	      "contentType": "application/json",
-	      "data": JSON.stringify({
-	        "merchantUid": "kpay_1709427250007", // 이건 구매내역에서 받아 올 예정 현재는 하드코딩!!
-	        "refundPrice": 5000, // 이거도 db에서 받아 올 예정!
-	        "cancelReason": "테스트 결제 환불" // 환불사유-> input테그 value로 받아 오면 될듯 or 드롭다운으로 li태그 주면 될 듯
-	      }),
-	      "dataType": "json"
-	    });
-  	}*/
 </script>
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

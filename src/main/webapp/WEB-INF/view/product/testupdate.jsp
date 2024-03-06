@@ -127,12 +127,6 @@
 							<div id="menu_wrap" class="bg_white">
 								<div class="option">
 									<div>
-									<!-- 
-										<form onsubmit="searchPlaces(); return false;">
-											키워드 : <input type="text" value="" id="keyword" size="15">
-											<button type="submit">검색하기</button>
-										</form>
-										 -->
 										<form id="keyword--form">
 											키워드 : <input type="text" value="" id="keyword" size="15">
 											
@@ -154,7 +148,6 @@
 			</div>
 			<!-- Map Section End -->
 			
-						<!-- 등록 버튼 <input type="submit" id="modify--button" value="수정"> -->
 			<div class="container plan--selling--button">
 				<button type="button" id="modify--button">수정</button>
 			</div>
