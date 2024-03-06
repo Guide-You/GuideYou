@@ -6957,7 +6957,6 @@ fieldset:disabled .btn {
 .rounded-end {
   border-top-right-radius: 10px !important;
   border-bottom-right-radius: 10px !important;
-  height: 220px;
 }
 .rounded-bottom {
   border-bottom-right-radius: 10px !important;
