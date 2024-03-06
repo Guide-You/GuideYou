@@ -82,6 +82,11 @@
 									class="text-white mx-2">로그인</small>/</a>
 							</c:when>
 							<c:otherwise>
+								<c:if test="${principal.role eq 'ADMIN'}">
+									<a href="/admin" class="text-white"><small
+										class="text-white mx-2">관리자 페이지</small>/</a>
+								</c:if>
+
 								<a href="/member/logout" class="text-white"><small
 									class="text-white mx-2">로그아웃</small>/</a>
 							</c:otherwise>
