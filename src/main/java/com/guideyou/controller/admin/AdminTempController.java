@@ -124,4 +124,19 @@ public class AdminTempController {
 		return "redirect:/admin/adminArticleList";
 		
 	}
+	
+	@GetMapping("/admin/notice/{boardId}")
+	public String answerPage() {
+		// user가 Q: 글등록 관리자가 댓글로 Answer
+		// list 에서 qna누르면 해당 글 상세페이지로 
+		return "/company/boardDetail";
+	}
+	
+	public void adminNotice() {
+		// 댓글 없이 관리자가 글등록만 하는 곳 리스트 상세페이지만
+	}
+	
+	public void adminFaq() {
+		// 댓글 없이 관리자가 글등록만 하는 페이지 리스트 상세페이지만 있따
+	}
 }

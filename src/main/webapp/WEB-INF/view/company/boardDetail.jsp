@@ -3,9 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 <!--  글 상세 view -->
-<!-- <div class="container-fluid py-5 mt-5"> -->
-<!--     <div class="container py-5"> -->
-<!--         <div class="row g-4 mb-5"> -->
+
             <div class="col-lg-8 col-xl-9">
                 <div class="row g-4">
                     <div class="col-lg-6">
@@ -68,7 +66,7 @@
                              <div class="d-flex justify-content-between py-3 mb-5">
 
                                  </div>
-                                 <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3" type="submit" value="댓글등록">댓글등록</a>
+                                 <a href="" class="btn border border-secondary text-primary rounded-pill px-4 py-3" type="submit" value="댓글등록">댓글등록</a>
                              </div>
                          </div>
                      </div>

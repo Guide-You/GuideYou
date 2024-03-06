@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
+
         <!-- Contact Start -->
         <div class="container-fluid contact py-5">
             <div class="container py-5">
@@ -29,10 +30,6 @@
                                 
                                 
                                 <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="submit" value="등록">등록하기</button>
-                                
-                                
-                                <div class="col-lg-2 row-sm-1">
-                                <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="button" value="삭제">취소하기</button>
                                 </div>  <!-- a tag로 페이지 이동 -->
                         	</div>
                             </div>

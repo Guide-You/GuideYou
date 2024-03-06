@@ -35,7 +35,8 @@
         </div>
         
         <!-- page group-->
-        <div class="pagination justify-content-center mb-5">
+        
+        <div class="d-flex pagination justify-content-center buttons-group">
 		<c:if test="${page > 1}">
 			<a href="?page=1&size=${size}">&laquo; 첫 페이지</a>
 			<a href="?page=${page - 1}&size=${size}">&laquo; 이전</a>
@@ -56,6 +57,6 @@
 				&raquo;</a>
 		</c:if>
 	</div>
-        <!-- page group-->
+     
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

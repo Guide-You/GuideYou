@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/layout/header.jsp"%>
+<%@ include file="/WEB-INF/view/admin/layout/header.jsp"%>
 <!--  관리자 Notice,Faq 글 등록 페이지 관리자'만' 등록하므로 작성자칸은 제외-->
         <div class="container-fluid contact py-5">
             <div class="container py-5">
@@ -40,5 +40,8 @@
                 </div>
             </div>
         </div>
+        
+        
+        
 
-<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
+<%@ include file="/WEB-INF/view/admin/layout/footer.jsp"%>
