@@ -39,7 +39,7 @@
 								<p>${uploadProductsInfo.shortIntroContent}</p>
 								<div class="d-flex justify-content-between flex-lg-wrap">
 									<p class="text-dark fs-5 fw-bold mb-0">
-										${uploadProductsInfo.productPrice}</p>
+										${uploadProductsInfo.formatPrice()}</p>
 									<a href="/update/${uploadProductsInfo.productId}"
 										class="btn border border-secondary rounded-pill px-3 text-primary">수정하기</a>
 									<a href="/delete/${uploadProductsInfo.productId}"

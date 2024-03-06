@@ -4,6 +4,7 @@
 package com.guideyou.dto.product;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -28,4 +29,11 @@ public class UploadProductsInfoDTO {
 	private String shortIntroContent;
 	private Long productPrice;
 	private Timestamp uploadTime;
+	
+	
+	public String formatPrice() {
+		DecimalFormat df = new DecimalFormat("#,###");
+		String formatNumber = df.format(productPrice);
+		return formatNumber + "원";
+	}
 }
