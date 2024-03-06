@@ -1,5 +1,7 @@
 package com.guideyou.repository.entity;
 
+import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,5 +25,5 @@ public class Comment {
 	private Integer bContentsId;
 	private Integer writerId;
 	private String content;
-	private Integer createdAt;
+	private Timestamp createdAt;
 }

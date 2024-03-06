@@ -26,11 +26,9 @@ public class CommentService {
 	// 댓글 입력
 	public void insertComment(CommentDto commentDto) {
 		Comment comment = new Comment();
-		comment.setId(commentDto.getId());
 		comment.setBContentsId(commentDto.getBContentsId());
 		comment.setWriterId(commentDto.getWriterId());
 		comment.setContent(commentDto.getContent());
-		comment.setCreatedAt(commentDto.getCreatedAt());
 	
 		commentRepository.insertComment(comment);
 	};
@@ -58,7 +56,19 @@ public class CommentService {
 		return comment;
 	}
 
-	
+	/**
+	  * @Method Name : findCommentByBoardId
+	  * @작성일 : 2024. 3. 7.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : boarId로 댓글 조회
+	  * @param boardId
+	  * @return
+	  */
+	public Comment findCommentByBoardId(Integer boardId) {
+		Comment comment = commentRepository.findCommentByBoardId(boardId);
+		return comment;
+	}	
 	
 	
 	

@@ -17,29 +17,30 @@
 				</a>
 
 				<hr>
-				<ul class="nav nav-pills flex-column mb-auto aside--mypage">
+				<ul class="nav nav-pills flex-column mb-auto aside--board">
 					<!-- nav bar 활성화 일때 => class="nav-link active", 비활성화 일떄 => class="nav-link link-dark" -->
 					<li class="nav-item">
-						<a href="/member/profile" class="nav-link link-dark" aria-current="page"> 
+						<a href="/company/boardList/Notice" class="nav-link link-dark" aria-current="page"> 
 						<svg class="bi me-2" width="16" height="16">
 						</svg>
-							notice
+							NOTICE
 						</a>
 					</li>
 					<li>
-						<a href="/member/paymentHistoryList" class="nav-link link-dark"> 
+						<a href="/company/boardList/FAQ" class="nav-link link-dark"> 
 						<svg class="bi me-2" width="16" height="16">
 						</svg>
-							faq
+							FAQ
 						</a>
 					</li>
-					<li><a href="/member/paymentHistoryList" class="nav-link link-dark"> <svg
+					<li><a href="/company/boardList/QnA" class="nav-link link-dark"> <svg
 								class="bi me-2" width="16" height="16">
 								<use xlink:href="#speedometer2"></use></svg>
-							qna
+							QnA
 					</a></li>
 				</ul>
 				<hr>
 			</div>
 		</div>
 		<!-- aside End -->
+<script scr="/js/admin/board/sidebar.js"></script>

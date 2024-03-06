@@ -48,13 +48,13 @@
 			</a>
 				<ul id="charts-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a href="/admin/adminArticleDetail"> <i class="bi bi-circle"></i><span>
+					<li><a href="/company/boardList/QnA"> <i class="bi bi-circle"></i><span>
 								관리자 권한 QnA 관리</span>
 					</a></li>
-					<li><a href="/admin/adminArticleList"> <i
-							class="bi bi-circle"></i><span>관리자 권한 FaQ 관리</span>
+					<li><a href="/company/boardList/FAQ"> <i
+							class="bi bi-circle"></i><span>관리자 권한 FAQ 관리</span>
 					</a></li>
-					<li><a href="/admin/adminModify"> <i
+					<li><a href="/company/boardList/Notice"> <i
 							class="bi bi-circle"></i><span>관리자 권한 Notice 관리</span>
 					</a></li>
 					

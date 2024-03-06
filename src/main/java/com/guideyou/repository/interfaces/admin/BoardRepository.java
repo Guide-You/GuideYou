@@ -38,7 +38,7 @@ public interface BoardRepository {
 	  * @Method 설명 : 페이징처리, 페이지네이션 관련코드입니다
 	  */
 	// 전체 페이지 불러오기
-	public List<Board> findAllwithPasing(@Param ("offset") int offset, @Param ("limit") int limit);
+	public List<Board> findAllwithPasing(@Param ("offset") int offset, @Param ("limit") int limit, @Param("type") String type);
 	// 전체 게시물개수 계산 (product에서 가져옴) 
 	public int getAllPgCount();
 	/**

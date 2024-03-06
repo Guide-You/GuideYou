@@ -4,17 +4,24 @@
 	<!--   댓글 등록  -->
 	<insert id="insertComment"> 
 	INSERT INTO board_comments (b_contents_id, writer_id, content) values 
-	#{bContentsId},#{writerId},#{content} 
+	(#{bContentsId},#{writerId},#{content}) 
 	</insert>
 	
 	<!--  댓글 list출력  -->
 	<select id="printAllcoms"> 
 	select * from board_comments order by id desc 
 	</select>
+	
+	<select id="findCommentByBoardId" resultType="com.guideyou.repository.entity.Comment"> 
+	select * from board_comments where 
+	b_contents_id = #{boardId};
+	</select>
+	
+	
 
 	<!-- 댓글 수정  -->
 	<update id="updateComment"> 
-	update board_comments set content = #{content} where id =#{id} 
+	update board_comments set b_contents_id = #{bContentsId}, writer_id = #{writerId},content = #{content} where id =#{id};  
 	</update>
 	
 	<!-- 댓글 삭제  -->

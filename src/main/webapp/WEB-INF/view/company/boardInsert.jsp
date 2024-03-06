@@ -14,8 +14,7 @@
                 </div>
 
                 <div class="col-lg-12">
-                    <form action="/company/boardDetail/${boardId}" method="post" id="insert">
-                        <input type="text" name="writerId" class="w-100 form-control border-0 py-3 mb-4" placeholder="작성자">
+                    <form action="/company/boardInsert" method="post" id="insert">
                         <input type="text" name="type" class="w-100 form-control border-0 py-3 mb-4" placeholder="QnA">
                         <input type="text" name="title" class="w-100 form-control border-0 py-3 mb-4" placeholder="제목을 입력해주세요">
                         <textarea class="w-100 form-control border-0 mb-4" name="content" rows="5" cols="10" placeholder="내용을 입력해주세요"></textarea>

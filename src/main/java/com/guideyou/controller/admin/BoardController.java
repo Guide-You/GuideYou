@@ -16,8 +16,10 @@ import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
 import com.guideyou.dto.admin.BoardDto;
 import com.guideyou.repository.entity.Board;
+import com.guideyou.repository.entity.Comment;
 import com.guideyou.repository.entity.User;
 import com.guideyou.service.BoardService;
+import com.guideyou.service.CommentService;
 import com.guideyou.utils.Define;
 
 import jakarta.servlet.http.HttpSession;
@@ -44,28 +46,17 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private CommentService commentService;
 
 	@Autowired
 	private HttpSession httpSession;
-	
-	
-	@GetMapping("/test")
-	public String asd() {
-		return "/admin/adminFaq";
-	}
-	
-	@GetMapping("/test2")
-	public String asd2() {
-		return "/admin/adminNotice";
-	}
-	
 	
 	// 1. 화면 띄우기
 	@GetMapping("/boardInsert")
 	public String boardPage() {
 		User principal =  (User)httpSession.getAttribute(Define.PRINCIPAL);
 		
-		System.out.println("이건 get방식의 test가 호출되면 이 글자가 보여요" + principal);
 		return "/company/boardInsert";
 	}
 
@@ -73,22 +64,20 @@ public class BoardController {
 	@PostMapping("/boardInsert")
 	public String inputData(BoardDto inputData) {
 		User loginUser = (User)httpSession.getAttribute(Define.PRINCIPAL);
-		System.out.println("==================================="+loginUser);
 		inputData.setWriterId(loginUser.getId());
 		
 		inputData.setType("QnA"); // board는 user만 작성하므로 type은 QnA로 고정
 		inputData.getTitle();
 		inputData.getContent();
 
-		System.out.println("정답입니다!" + inputData.toString());
-		boardService.insert(inputData);
+		int boardId = boardService.insert(inputData);
 
-		return "redirect:/company/boardList";  // detail로 안가짐 
+		return "redirect:/company/boardDetail/" + boardId;  // detail로 안가짐 
 	}
 
 	// 글 목록 BoardPageRq | BoardPageS
-	@GetMapping("/boardList")
-	public String boardList(PageReq pageReq, Model model) {
+	@GetMapping("/boardList/{type}")
+	public String boardList(PageReq pageReq, Model model, @PathVariable String type) {
 		// 페이징
 		if (pageReq.getPage() <= 0) {
 			pageReq.setPage(1); // 페이지가 0 이하일 경우 첫 페이지로 설정한다
@@ -98,9 +87,8 @@ public class BoardController {
 			pageReq.setSize(10); // 페이지 당 보여줄 개수
 		}
 
-		PageRes<Board> pageRes = boardService.getBoardUsingPage(pageReq); // 페이징 처리함
+		PageRes<Board> pageRes = boardService.getBoardUsingPage(pageReq, type); // 페이징 처리함
 		List<Board> list = pageRes.getContent(); // 내용을 보여줄거다
-		System.out.println("listTest" + list.size());
 
 		// 페이징 정보를 모델에 추가
 		model.addAttribute("boardList", list); // 프로젝트 마다 다른 코드
@@ -111,7 +99,6 @@ public class BoardController {
 		model.addAttribute("startPage", pageRes.getStartPage());
 		model.addAttribute("endPage", pageRes.getEndPage());
 
-		System.out.println("BoardDto" + "여기까지오나");
 		return "/company/boardList";
 	}
 	/**
@@ -131,12 +118,24 @@ public class BoardController {
 		return "redirect:/company/boardList";
 	}
 
+	/**
+	  * @Method Name : selectDeatil
+	  * @작성일 : 2024. 3. 7.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : 글 디테일 화면
+	  * @param boardId
+	  * @param model
+	  * @return
+	  */
 	// 글 디테일 뷰 페이지
 	@GetMapping("/boardDetail/{boardId}")
 	public String selectDeatil(@PathVariable("boardId") Integer boardId, Model model) {
 		System.out.println("boardId= " + boardId);
 		Board board = boardService.findById(boardId);
+		Comment comment = commentService.findCommentByBoardId(boardId);
 		model.addAttribute("board", board);
+		model.addAttribute("comment", comment);
 
 		return "company/boardDetail";  
 	}  // 여기에 ; 왜 있지
@@ -156,7 +155,6 @@ public class BoardController {
 		board.setId(boardId);
 		User loginUser	= (User)httpSession.getAttribute(Define.PRINCIPAL);
 		boardService.updateById(board);
-		System.out.println("여기로 수정되나요" + board.toString()); // 반드시 이해햐기!
 		return "redirect:/company/boardDetail/" + boardId;
 	}
 	

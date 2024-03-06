@@ -31,5 +31,7 @@ public interface CommentRepository {
 	public Comment findComment(Integer comId);
 	// comment 불러오기
 	public List<Comment> printAllcoms();
+	// comment 조회 by boardId
+	public Comment findCommentByBoardId(Integer boardId);
 	
 }

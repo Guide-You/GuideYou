@@ -6,39 +6,39 @@
 <%@ include file="/WEB-INF/view/company/layout/boardAside.jsp"%>
 
 
-                
+
 <!-- Cart List Start -->
 <div class="col-md-12 col-lg-6 col-xl-9">
 	<div class="table-responsive">
-<!-- boardList Start -->
-			<table class="table table-hover">
-			    <thead>
-			      <tr>
-			        <th scope="col">ID</th>
-			        <th scope="col">작성자</th>
-			        <th scope="col">제목</th>
-			        <th scope="col">내용</th>
-			        <th scope="col">조회수</th>
-			      </tr>
-			    </thead>
-			    
-			    <tbody>
-					<c:forEach var="board" items="${boardList}" varStatus="loop">
-				      <tr>
-				        <th class="py-5">${loop.index + 1}</th>
-				        <td class="py-5">${board.writerId}</td>
-				        <td class="py-5"><a href="/company/boardDetail/${board.id}">${board.title}</a></td>
-				        <td class="py-5"><a href="/company/boardDetail/${board.id}">${board.content}</a></td>
-				        <td class="py-5">${board.viewCount}</td>
-				     
-				      </tr>
-					</c:forEach>
-			    </tbody>
-			  </table>
-	
-        <!-- page group-->
-        
-        <div class="d-flex pagination justify-content-center buttons-group">
+		<!-- boardList Start -->
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">작성자</th>
+					<th scope="col">제목</th>
+					<th scope="col">내용</th>
+					<th scope="col">조회수</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<c:forEach var="board" items="${boardList}" varStatus="loop">
+					<tr>
+						<th class="py-5">${loop.index + 1}</th>
+						<td class="py-5">${board.writerId}</td>
+						<td class="py-5"><a href="/company/boardDetail/${board.id}">${board.title}</a></td>
+						<td class="py-5"><a href="/company/boardDetail/${board.id}">${board.content}</a></td>
+						<td class="py-5">${board.viewCount}</td>
+
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+
+		<!-- page group-->
+
+		<div class="d-flex pagination justify-content-center buttons-group">
 			<c:if test="${page > 1}">
 				<a href="?page=1&size=${size}">&laquo; 첫 페이지</a>
 				<a href="?page=${page - 1}&size=${size}">&laquo; 이전</a>
@@ -55,12 +55,18 @@
 			</c:forEach>
 			<c:if test="${page < totalPages}">
 				<a href="?page=${page + 1}&size=${size}">다음 &raquo;</a>
-				<a href="?page=${totalPages}&size=${size}">마지막 페이지
-					&raquo;</a>
+				<a href="?page=${totalPages}&size=${size}">마지막 페이지 &raquo;</a>
 			</c:if>
 		</div>
+			<!-- 글쓰기 버튼 추가 시작 -->
+				<form action="/company/boardDetail" method="post" id="insertComment">
+					<a href="/company/boardInsert"
+						class="btn border border-secondary text-primary rounded-pill px-4 py-3"
+						type="submit" value="글쓰기">글쓰기</a>
+				</form>
+			<!-- 글쓰기 버튼 추가 종료 -->
 	</div>
-  </div>   
-  <!-- Board List End -->
+</div>
+<!-- Board List End -->
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
