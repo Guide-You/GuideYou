@@ -118,8 +118,7 @@
  
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ef018e0a6a5030e54ff1e2da58cdceb&libraries=services"></script>
-<!-- <script src="/js/product/productSave.js"></script>
-<script src="/js/product/map/insertMap.js"></script> -->
+	
+<script src="/js/testSaveProduct.js"></script>
 
-<script src="/js/product/testSaveProduct.js"></script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
