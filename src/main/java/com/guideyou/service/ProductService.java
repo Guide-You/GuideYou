@@ -48,7 +48,7 @@ public class ProductService {
 	 * @Method 설명 : 상품 등록 로직
 	 */
 	@Transactional
-	public boolean createProduct(ProductDto dto) {
+	public int createProduct(ProductDto dto) {
 		// Product 저장
 		Product product = Product.builder().userId(dto.getUserId()).cityCodeId(dto.getCityCodeId())
 				.title(dto.getTitle()).price(dto.getPrice()).introContent(dto.getIntroContent())
@@ -143,7 +143,7 @@ public class ProductService {
 				System.out.println(e.getMessage());
 			}
 		}
-		return true;
+		return productId;
 	}
 
 	/**

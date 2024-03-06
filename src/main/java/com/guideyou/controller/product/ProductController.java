@@ -84,14 +84,14 @@ public class ProductController {
 		dto.setUserId(principal.getId());		
 		dto.setCityCodeId(cityCodeId);
 
-		boolean result = productService.createProduct(dto);
+		int resultProductId = productService.createProduct(dto);
 		
 
-		if (result == false) {
+		if (resultProductId == 0) {
 			throw new CustomRestfulException(Define.FAIL_TO_CREATE_PRODUCT, HttpStatus.BAD_REQUEST);
 
 		}
-		return "redirect:/list";
+		return "redirect:/detail/" + resultProductId;
 	}
 
 	
