@@ -23,7 +23,7 @@
 								<th scope="col">판매자</th>
 								<th scope="col">결제 금액</th>
 								<th scope="col">결제 시각</th>
-								<th scope="col">상태</th>
+								<th scope="col">상태</th>						
 								<th scope="col">환불가격</th>
 								<th scope="col">환불사유</th>
 								<th scope="col">환불일자</th>
@@ -41,10 +41,13 @@
 									<td class="py-5">${history.seller }</td>
 									<td class="py-5">${history.formatPaymentPrice() }</td>
 									<td class="py-5">${history.formatPaymentDate() }</td>
+									<td class="py-5">${history.formatPaymentDate() }</td>
+									<!-- 상태 td 없음 -->
 									<td class="py-5">${history.formatRefundPrice() }</td>
 									<td class="py-5">${history.refundCause }</td>
 									<td class="py-5">${history.formatRefundDate() }</td>
 									<td class="py-5">${history.refundYn }</td>
+									
 									<td class="py-5">
             <!-- 각 버튼에 고유한 ID를 할당하고 onClick 이벤트에 함수를 호출하는 방식으로 변경 -->
             <button type="button" class="refund-button" data-merchant-uid="${history.merchantUid}" data-refund-price="${history.paymentPrice}">환불하기</button>
