@@ -42,6 +42,16 @@ public class PaymentHistoryListDto {
         }
     }
 	
+	public String formatPaymentPrice() {
+		if (paymentPrice != 0L) { // 변경된 타입에 따라 null 대신 0L로 비교
+			DecimalFormat df = new DecimalFormat("#,###");
+			String formaterNumber = df.format(paymentPrice);
+			return formaterNumber + "원";
+		} else {
+			return ""; // 빈 문자열 반환
+		}
+	}
+	
 	public String formatRefundDate() {
 	    if (refundDate != null) {
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
