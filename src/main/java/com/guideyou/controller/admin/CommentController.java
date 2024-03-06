@@ -37,7 +37,7 @@ public class CommentController {
 	private HttpSession httpSession;
 	
 	// 댓글 입력
-	@PostMapping("/boardDetail")
+	@GetMapping("/boardDetail")
 	public String comIn(CommentDto comIn) {
 		User loginUser =  (User)httpSession.getAttribute(Define.PRINCIPAL);
 		comIn.setWriterId(loginUser.getId());

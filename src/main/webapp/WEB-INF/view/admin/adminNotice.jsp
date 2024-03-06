@@ -3,7 +3,6 @@
 <%@ include file="/WEB-INF/view/admin/layout/header.jsp"%>
 <%@ include file="/WEB-INF/view/admin/layout/sidebar.jsp"%>
 
-
 <main id="main" class="main">
 
         <div class="table container-fluid contact py-5">
@@ -22,7 +21,7 @@
 				 <c:forEach var="board" items="${boardList}">
                   <tr>
                     <th>${board.id}</th>
-                    <td>${board.type}</td>  <!--관리자니까 board.writerId로 가야하나  -->
+                    <td>${board.type}</td> 
                     <td><a href="/admin/adminArticleDetail/${board.id}">${board.title}</a></td>
                     <td><a href="/admin/adminArticleDetail/${board.id}">${board.content}</a></td>
                     <td>${board.viewCount}</td>

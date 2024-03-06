@@ -1,35 +1,42 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/admin/layout/header.jsp"%>
 <!--  관리자 Notice,Faq 글 등록 페이지 관리자'만' 등록하므로 작성자칸은 제외-->
-        <div class="col-xl-6">
-          <div class="card p-4">
-            <form action="forms/contact.php" method="post" class="php-email-form">
-              <div class="row gy-4">
+        <!-- Contact Start -->
+        <div class="container-fluid contact py-5">
+            <div class="container py-5">
+                <div class="p-5 bg-light rounded">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="text-center mx-auto" style="max-width: 700px;">
+                                <h1 class="text-primary">글쓰기</h1>
+                                <p class="mb-4"></a></p>
+                            </div>
+                        </div>
+                       
+                        <div class="col-lg-12">
+                            <form action="/company/boardInsert" method="post" id="insert">
+                                <input type="text" name="writerId" class="w-100 form-control border-0 py-3 mb-4" placeholder="작성자">
+                                <input type="text" name="type" class="w-100 form-control border-0 py-3 mb-4" placeholder="QnA">
+                                <input type="text" name="title" class="w-100 form-control border-0 py-3 mb-4" placeholder="제목을 입력해주세요">
+                                <textarea class="w-100 form-control border-0 mb-4" name="content" rows="5" cols="10" placeholder="내용을 입력해주세요"></textarea>
 
-                <div class="col-md-6">
-                  <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                                <div class="col-lg-2 row-sm-1">
+                                <div>
+                                <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="submit">  취소</button>
+                               
+                                </div>    
+                                  
+                                <div class="col-lg-2 row-sm-1">
+                                
+                                
+                                <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="submit" value="등록">등록하기</button>
+                                </div>  <!-- a tag로 페이지 이동 -->
+                        	</div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="col-md-6 ">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email" required>
-                </div>
-
-                <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required>
-                </div>
-
-                <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
-                </div>
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-                  <button type="submit">Send Message</button>
-                </div>
-              </div>
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
 <%@ include file="/WEB-INF/view/admin/layout/footer.jsp"%>

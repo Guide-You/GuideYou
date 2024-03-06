@@ -3,7 +3,6 @@
 <%@ include file="/WEB-INF/view/admin/layout/header.jsp"%>
 <%@ include file="/WEB-INF/view/admin/layout/sidebar.jsp"%>
 <!-- 자주 묻는 질문 -->
-
 <main id="main" class="main">
 
         <div class="table container-fluid contact py-5">
