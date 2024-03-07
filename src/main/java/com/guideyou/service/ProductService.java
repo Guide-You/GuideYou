@@ -161,7 +161,6 @@ public class ProductService {
 			String path = Define.UPLOAD_FILE_DERECTORY;
 			String ext = StringUtils.getFilenameExtension(filename);
 			long filesize = thumb.getSize();
-			System.out.println("파일 사이즈 : " + filesize);
 			if (filesize > 0) {
 				LocalDateTime now = LocalDateTime.now();
 				String uploadFileName = "P" + now.getYear() + now.getMonthValue() + now.getDayOfMonth() + now.getHour()
@@ -194,13 +193,12 @@ public class ProductService {
 		}
 
 		MultipartFile[] files = dto.getCustomFile();
-		System.out.println("파일 크기 : " + files.length);
 		for (int i = 0; i < files.length; i++) {
 			String filename = files[i].getOriginalFilename();
 			String path = Define.UPLOAD_FILE_DERECTORY;
 			String ext = StringUtils.getFilenameExtension(filename);
 			long filesize = files[i].getSize();
-			System.out.println("파일 사이즈 : " + filesize);
+
 			if (filesize <= 0) {
 				continue;
 			}

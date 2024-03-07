@@ -193,7 +193,7 @@
 														href="/detail/${pop.id}"><p>${pop.content}</p></a>
 													<div class="d-flex justify-content-between flex-lg-wrap">
 														<p class="text-dark fs-5 fw-bold mb-0">${pop.formatPrice()}</p>
-														<a href="#"
+														<a href="/detail/${pop.id}"
 															class="btn border border-secondary rounded-pill px-3 text-primary"><i
 															class="fa fa-shopping-bag me-2 text-primary"></i> 구경하기</a>
 													</div>
