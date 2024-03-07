@@ -834,8 +834,12 @@ h1 {
 	color: white;
 }
 
-.cart--table {
-	
+.cart--table > thead > tr > th {
+	font-size: 10px !important;
+}
+
+.cart--table > thead > tr > td {
+	font-size: 10px !important;
 }
 
 .cart--table .form-check {
@@ -1109,17 +1113,24 @@ h1 {
 	font-weight: bold;
 }
 
+/* button */
 .custom--button {
 	background-color: #91caff !important;
 	color: white !important;
 	border:0px;
-	margin : 1%;
+	margin : 1% !important;
 	padding: 1%;
 }
+
 
 .custom--button:hover {
 	background-color: #ffc691 !important;
 	color: white !important;
+}
+
+.cart--button{
+	margin: 12px !important;	
+	padding: 6px !important;
 }
 
 /* paging num button */
@@ -1129,3 +1140,4 @@ h1 {
 .paging--num{
 	margin-top : 5%;
 }
+

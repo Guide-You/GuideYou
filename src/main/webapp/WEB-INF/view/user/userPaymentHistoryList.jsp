@@ -49,7 +49,7 @@
 									
 									<td class="py-5">
 							            <!-- 각 버튼에 고유한 ID를 할당하고 onClick 이벤트에 함수를 호출하는 방식으로 변경 -->
-							            <button type="button" class="refund-button custom--button rounded" data-merchant-uid="${history.merchantUid}" data-refund-price="${history.paymentPrice}">환불하기</button>
+							            <button type="button" class="refund-button custom--button rounded" data-merchant-uid="${history.merchantUid}" data-refund-price="${history.paymentPrice}" style="font-size: 12px;">환불하기</button>
         
 									</td>
 								</tr>
@@ -101,19 +101,27 @@
 
 			confirm("정말로 환불 하시겠습니까?");
             
-    	    $.ajax({
-    	      // 예: http://www.myservice.com/payments/cancel
-    	      "url": "/refund", 
-    	      "type": "POST",
-    	      "contentType": "application/json",
-    	      "data": JSON.stringify({
-    	        "merchantUid": merchantUid, // 이건 구매내역에서 받아 올 예정 현재는 하드코딩!!
-    	        "refundPrice": refundPrice, // 이거도 db에서 받아 올 예정!
-    	        "cancelReason": "테스트 결제 환불" // 환불사유-> input테그 value로 받아 오면 될듯 or 드롭다운으로 li태그 주면 될 듯
-    	      }),
-    	      "dataType": "json"
-    	    });
-            // 여기에 AJAX 요청 등을 추가하여 서버에 환불을 요청하는 코드 작성
+			$.ajax({
+			    // 예: http://www.myservice.com/payments/cancel
+			    "url": "/refund", 
+			    "type": "POST",
+			    "contentType": "application/json",
+			    "data": JSON.stringify({
+			        "merchantUid": merchantUid, // 이건 구매내역에서 받아 올 예정 현재는 하드코딩!!
+			        "refundPrice": refundPrice, // 이거도 db에서 받아 올 예정!
+			        "cancelReason": "테스트 결제 환불" // 환불사유-> input테그 value로 받아 오면 될듯 or 드롭다운으로 li태그 주면 될 듯
+			    }),
+			    "dataType": "json",
+			    "success": function(response) {
+			        console.log("환불 성공:", response);
+			        alert("환불이 성공적으로 처리되었습니다.");
+			        location.reload(); // 화면 새로고침
+			    },
+			    "error": function(error) {
+			        console.error("환불 실패:", error);
+			        alert("환불 처리 중 오류가 발생했습니다.");
+			    }
+			});
         });
     });
 

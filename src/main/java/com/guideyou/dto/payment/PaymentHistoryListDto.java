@@ -62,7 +62,7 @@ public class PaymentHistoryListDto {
 	}
 	
 	public String formatPaymentDate() {
-	    if (refundDate != null) {
+	    if (paymentDate != null) {
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	        return dateFormat.format(paymentDate);
 	    } else {
