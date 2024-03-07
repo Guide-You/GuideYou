@@ -549,7 +549,6 @@
 	
 <script>
 let data = ${chartInformationList};
-console.log(data);
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -579,10 +578,6 @@ document.addEventListener("DOMContentLoaded", () => {
     		createdAt.push(val.createdAt);
     		
     	});
-    	console.log(paymentCount);
-    	console.log(totalPrice);
-    	console.log(userCount);
-    	console.log(createdAt);
     	
         chart = new ApexCharts(document.querySelector("#reportsChart"), {
             series: [{
