@@ -67,7 +67,7 @@
 									<c:when test="${empty comment}">
 										<textarea name="content" id="content" class="form-control border-0"
 											cols="30" rows="8" placeholder="질문에 답글을 작성해주세요 *"
-											spellcheck="false"></textarea>
+											spellcheck="false" style="resize:none;"></textarea>
 									</c:when>
 									<c:otherwise>
 										<input type="hidden" id="commentId" name="commentId"
@@ -78,7 +78,7 @@
 											onclick="location.href='/company/deleteComment/${comment.id}/${board.id}'">삭제</button>
 										<button type="button" class="btn btn-outline-info" id="commentUpdateBtn" onclick="updateComment()">수정</button>
 										<textarea name="content" id="content" class="form-control border-0"
-											cols="30" rows="8" spellcheck="false" disabled>${comment.content} </textarea>
+											cols="30" rows="8" spellcheck="false" disabled style="resize:none;">${comment.content} </textarea>
 									</c:otherwise>
 								</c:choose>
 							</div>

@@ -36,96 +36,100 @@
 	</div>
 	<!-- City Photo End -->
 
-	<!-- Featurs Section Start -->
-	<div class="">
-		<div class="container py-5">
-			<div class="col-lg-4 text-start">
-				<h1>어디가유?</h1>
-			</div>
-			<div>
-				<button class="city-button" onclick="showCity('1')">
-					<img src="/img/main-seoul.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">서울</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('2')">
-					<img src="/img/main-busan.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">부산</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('3')">
-					<img src="/img/main-incheon.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">인천</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('4')">
-					<img src="/img/main-daegu.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">대구</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('5')">
-					<img src="/img/main-daejeon.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">대전</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('6')">
-					<img src="/img/main-gwangju.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">광주</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('7')">
-					<img src="/img/main-gyeonggi-do.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">경기도</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('8')">
-					<img src="/img/main-chungcheong-do.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">충청도</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('9')">
-					<img src="/img/main-jeolla-do.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">전라도</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('1')">
-					<img src="/img/main-gyeongsang-do.jpeg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">경상도</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('11')">
-					<img src="/img/main-gangwon-do.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">강원도</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('12')">
-					<img src="/img/main-jeju.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">제주도</p>
-					</div>
-				</button>
-				<button class="city-button" onclick="showCity('13')">
-					<img src="/img/main-jeju.jpg" class="city-image" />
-					<div class="city-info">
-						<p class="city-name">기타</p>
-					</div>
-				</button>
-			</div>
+<!-- Featurs Section Start -->
+<div class="container-fluid vesitable py-5">
+	<div class="container py-5">
+		<h1 class="mb-0">어디가유?</h1>
+		<div class="owl-carousel vegetable-carousel justify-content-center">
+
+			<button class="city-button">
+				<img src="/img/main-seoul.jpg" class="city-image" />
+				<div class="city-info">
+					<a href="/list"><p class="city-name">전체</p></a>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('1')">
+				<img src="/img/main-seoul.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">서울</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('2')">
+				<img src="/img/main-busan.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">부산</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('3')">
+				<img src="/img/main-incheon.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">인천</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('4')">
+				<img src="/img/main-daegu.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">대구</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('5')">
+				<img src="/img/main-daejeon.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">대전</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('6')">
+				<img src="/img/main-gwangju.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">광주</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('7')">
+				<img src="/img/main-gyeonggi-do.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">경기도</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('8')">
+				<img src="/img/main-chungcheong-do.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">충청도</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('9')">
+				<img src="/img/main-jeolla-do.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">전라도</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('1')">
+				<img src="/img/main-gyeongsang-do.jpeg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">경상도</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('11')">
+				<img src="/img/main-gangwon-do.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">강원도</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('12')">
+				<img src="/img/main-jeju.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">제주도</p>
+				</div>
+			</button>
+			<button class="city-button" onclick="showCity('13')">
+				<img src="/img/main-jeju.jpg" class="city-image" />
+				<div class="city-info">
+					<p class="city-name">기타</p>
+				</div>
+			</button>
 		</div>
 	</div>
+</div>
 
-	<!-- Featurs Section End -->
 
 	<!-- Fruits Shop Start-->
 	<div class="container-fluid fruite">

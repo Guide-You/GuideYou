@@ -13,7 +13,7 @@
                 
 <!-- Cart List Start -->
 <div class="col-md-12 col-lg-6 col-xl-9">
-	<div class="table-responsive paging--parent" >
+	<div class="table-responsive paging--parent--history" >
 					<table class="table cart--table">
 						<thead>
 							<tr>
@@ -23,18 +23,18 @@
 								<th scope="col">판매자</th>
 								<th scope="col">결제 금액</th>
 								<th scope="col">결제 시각</th>
-								<th scope="col">상태</th>						
 								<th scope="col">환불가격</th>
 								<th scope="col">환불사유</th>
 								<th scope="col">환불일자</th>
 								<th scope="col">환불여부</th>
+								<th scope="col">환불</th>
 							</tr>
 						</thead>
 
 						<tbody>
 							<c:forEach var="history"
 								items="${PaymentHistoryList}" varStatus="loop">
-								<tr>
+								<tr class="text--size--small">
 									<td class="py-5">${loop.index + 1}</td>
 									<td class="py-5">${history.merchantUid }</td>
 									<td class="py-5">${history.title }</td>

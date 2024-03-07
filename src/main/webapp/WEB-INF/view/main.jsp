@@ -37,13 +37,15 @@
 		</div>
 	</form>
 </section>
+
+
+
 <!-- Featurs Section Start -->
-<div class="container-fluid featurs py-5">
+<div class="container-fluid vesitable py-5">
 	<div class="container py-5">
-		<div class="col-lg-4 text-start">
-			<h1>어디가유?</h1>
-		</div>
-		<div>
+		<h1 class="mb-0">어디가유?</h1>
+		<div class="owl-carousel vegetable-carousel justify-content-center">
+
 			<button class="city-button">
 				<img src="/img/main-seoul.jpg" class="city-image" />
 				<div class="city-info">

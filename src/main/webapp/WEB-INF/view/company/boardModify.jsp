@@ -3,15 +3,14 @@
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 <!-- Contact Start -->
 <div class="container-fluid contact py-5">
-	<div class="container py-5">
-		<div class="p-5 bg-light rounded">
-			<div class="row g-4">
-				<div class="col-12">
-					<div class="text-center mx-auto" style="max-width: 700px;">
-						<h1 class="text-primary">글 수정하기</h1>
-						<p class="mb-4">
-							</a>
-						</p>
+    <div class="container py-5">
+        <div class="p-5 bg-light rounded">
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="text-center mx-auto" style="max-width: 700px;">
+                        <h1 class="text-primary">글쓰기</h1>
+                        <p class="mb-4"></a></p>
+                        
 					</div>
 				</div>
 
