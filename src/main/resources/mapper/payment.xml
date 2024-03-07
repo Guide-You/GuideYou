@@ -160,8 +160,10 @@
         join product d on b.product_id = d.id
         join user u on d.user_id = u.id
         where a.user_id = #{userId}
-		and a.payment_status in ("paid", "refund")
+		and a.payment_status in ("paid", "refund")order
+		by a.payment_date desc
 		limit #{size} offset #{offset}
+		;
 		
 	</select>
 </mapper>

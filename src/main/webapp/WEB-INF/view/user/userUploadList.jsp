@@ -41,9 +41,9 @@
 									<p class="text-dark fs-5 fw-bold mb-0">
 										${uploadProductsInfo.formatPrice()}</p>
 									<a href="/update/${uploadProductsInfo.productId}"
-										class="btn border border-secondary rounded-pill px-3 text-primary">수정하기</a>
+										class="btn border border-secondary rounded-pill px-3 text-primary custom--button">수정하기</a>
 									<a href="/delete/${uploadProductsInfo.productId}"
-										class="btn border border-secondary rounded-pill px-3 text-primary">삭제하기</a>
+										class="btn border border-secondary rounded-pill px-3 text-primary custom--button">삭제하기</a>
 								</div>
 							</div>
 						</div>

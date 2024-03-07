@@ -9,6 +9,12 @@
 
 <!-- aside -->
 <%@ include file="/WEB-INF/view/layout/userAside.jsp"%>
+
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
 <!-- Purchased List Start -->
 <div class="col-md-12 col-lg-6 col-xl-9">
     <div class="container">
@@ -63,7 +69,7 @@
                                                     <div class="d-flex main-content">
                                                         <div class="content-text p-4">
                                                             <form action="#" id="send--review--form">
-                                                                <input type="text" id="review--product--id"
+                                                                <input type="hidden" id="review--product--id"
                                                                     name="reviewProductId"
                                                                     value="${purchaseProductInfo.productId }" /> <span>구매
                                                                     플랜 :
@@ -87,14 +93,22 @@
                                                                         placeholder="Enter content" name="reviewContent"
                                                                         id="review--content" value="review content" />
                                                                 </div>
-                                                                <div class="form-group review--group">
-                                                                    <lable for="review--score">별점</lable>
-                                                                    <input type="text"
-                                                                        class="form-control review--score--input"
-                                                                        placeholder="Enter Score" name="reviewScore"
-                                                                        id="review--score" value="5" />
-                                                                </div>
-
+                                                                
+                                              
+<!-- Review modal -->
+<div class="form-group review--group">
+    <label for="review--score">별점</label>
+    <div id="review--stars">
+        <span class="star" data-rating="1"><i class="fas fa-star"></i></span>
+        <span class="star" data-rating="2"><i class="fas fa-star"></i></span>
+        <span class="star" data-rating="3"><i class="fas fa-star"></i></span>
+        <span class="star" data-rating="4"><i class="fas fa-star"></i></span>
+        <span class="star" data-rating="5"><i class="fas fa-star"></i></span>
+    </div>
+    <input type="hidden" name="reviewScore" id="review--score" value="5">
+</div>
+																	
+																		
                                                                 <div class="form-group">
                                                                     <input type="submit" value="리뷰 등록"
                                                                         class="btn btn-primary btn-block review--btn"
@@ -145,6 +159,31 @@
 </div>
 </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const stars = document.querySelectorAll('.star');
+
+    stars.forEach(function (star) {
+        star.addEventListener('click', function () {
+            const rating = this.getAttribute('data-rating');
+            document.getElementById('review--score').value = rating;
+            highlightStars(rating);
+        });
+    });
+
+    function highlightStars(rating) {
+        stars.forEach(function (star) {
+            if (star.getAttribute('data-rating') <= rating) {
+                star.classList.add('checked');
+            } else {
+                star.classList.remove('checked');
+            }
+        });
+    }
+});
+
+</script>
 <!--  Page End -->
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

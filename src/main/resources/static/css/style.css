@@ -679,6 +679,13 @@ h1 {
 	width: 400px;
 }
 
+
+
+
+
+
+
+
 /* Product Detail*/
 /* detail - title */
 .title--title {
@@ -1135,9 +1142,40 @@ h1 {
 
 /* paging num button */
 .paging--parent{
+	width: 800px;
 	text-align : center;
 }
 .paging--num{
 	margin-top : 5%;
 }
 
+.purchased--img{
+	height: 200px !important;
+}
+
+/* 별점 */
+.star {
+    cursor: pointer;
+}
+
+.checked {
+    color: orange;
+}
+
+.main--info {
+    display: flex;
+    flex-direction: column;
+    position: relative; /* 부모 요소 position 설정 */
+}
+
+.text-dark.fs-5.fw-bold.mb-0 {
+    flex: 1; /* 금액이 버튼보다 더 많은 공간을 차지하도록 함 */
+    overflow: hidden; /* 금액이 버튼보다 길어지면 숨김 처리 */
+    white-space: nowrap; /* 금액이 너무 길어지면 줄바꿈 방지 */
+    text-overflow: ellipsis; /* 금액이 너무 길어지면 생략 (...) 처리 */
+}
+
+.btn {
+    flex-shrink: 0; /* 버튼이 컨테이너 크기에 맞게 자동으로 크기를 조정하지 않도록 함 */
+    margin-top: auto; /* 버튼을 항상 아래에 위치하도록 함 */
+}
