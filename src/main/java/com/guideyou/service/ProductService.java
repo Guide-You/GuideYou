@@ -49,13 +49,19 @@ public class ProductService {
 	 */
 	@Transactional
 	public int createProduct(ProductDto dto) {
+		int productId = 0;
+		if(dto.getProductId() == null) {
+			
 		// Product 저장
 		Product product = Product.builder().userId(dto.getUserId()).cityCodeId(dto.getCityCodeId())
 				.title(dto.getTitle()).price(dto.getPrice()).introContent(dto.getIntroContent())
 				.content(dto.getContent()).build();
 
 		productRepository.insert(product);
-		int productId = product.getId();
+		productId = product.getId();
+		} else {
+			productId = dto.getProductId();
+		}
 
 		String saveDirectory = Define.UPLOAD_FILE_DERECTORY;
 		// 폴더가 없다면 오류 발생(파일 생성시)
@@ -193,12 +199,12 @@ public class ProductService {
 		}
 
 		MultipartFile[] files = dto.getCustomFile();
+		System.out.println("파일 크기 : " + files.length);
 		for (int i = 0; i < files.length; i++) {
 			String filename = files[i].getOriginalFilename();
 			String path = Define.UPLOAD_FILE_DERECTORY;
 			String ext = StringUtils.getFilenameExtension(filename);
 			long filesize = files[i].getSize();
-
 			if (filesize <= 0) {
 				continue;
 			}
@@ -516,4 +522,15 @@ public class ProductService {
 		return photosRepository.findThumbnailFileNameByProductId(productId);
 	}
 
+	/**
+	  * @Method Name : deletePhotosByIdList
+	  * @작성일 : 2024. 3. 7.
+	  * @작성자 : 최장호
+	  * @변경이력 : 
+	  * @Method 설명 : idList로 삭제
+	  */
+	@Transactional
+	public int deletePhotosByIdList(List<Integer> photoIdList) {
+		return photosRepository.deletePhotosByIdList(photoIdList);
+	}
 }

@@ -6,7 +6,27 @@
 <head>
 <meta charset="UTF-8">
 <title>상품 수정 페이지</title>
-
+<style>
+			.imgthumbBox {
+				background-color: #ccc;
+				width: 100%;
+				height: 50px;
+				margin-top: 10px;
+			}
+			
+			.imgNameBox {
+				background-color: #ccc;
+				width: 100%;
+				height: 300px;
+				overflow: scroll;
+				margin-top: 10px;
+			}
+			
+			.removeImg {
+				color: red;
+				margin-left: 20px;
+			}
+			</style>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="/css/productcss/saveUpdate.css" rel="stylesheet" />
 <link href="/css/productcss/map/updateMap.css" rel="stylesheet" />
@@ -70,52 +90,25 @@
 
 			<!-- 파일 선택 input 대신 label을 사용하여 버튼으로 보여줌 -->
 			<p>썸네일</p>
-			<input type="file" id="thumbFile" name="thumbFile" accept="image/*">
-			<div class="imgthumbBox" id="thumbNailBox">
-				<c:if test="${!empty thumb.id}">
-				
-					<p id="imgName_${thumb.id}">${thumb.originFileName}
-						<span onclick="confirmDeleteThumb(${thumb.id})" class="removeImg">X</span>
-					</p>
-				</c:if>
-			</div>
+			<label for="thumbFile" style="display: block;">
+				<div class="form-photo">
+					<span class="icon-container"> <img id="thumbImage"
+						src="/images/upload/${thumbnail.uploadFileName}" class="img-fluid  rounded-top insert--image" />
+					</span> <input type="file" id="thumbFile" name="thumbFile"
+						accept="image/*" style="display: none;" />
+				</div>
+			</label>
 			<p>디테일사진</p>
-			<input type="file" id="fileInput" name="customFile" multiple>
-
-			<input type="hidden" value="" id="removeImgs" name="removeImgs">
-
-
-			<style>
-			.imgthumbBox {
-				background-color: #ccc;
-				width: 100%;
-				height: 50px;
-				margin-top: 10px;
-			}
-			
-			.imgNameBox {
-				background-color: #ccc;
-				width: 100%;
-				height: 300px;
-				overflow: scroll;
-				margin-top: 10px;
-			}
-			
-			.removeImg {
-				color: red;
-				margin-left: 20px;
-			}
-			</style>
-			
-			<div class="imgNameBox">
-				<c:forEach items="${photoResult}" var="pho">
-					<p id="imgName_${pho.id}">${pho.originFileName}<span
-							onclick="confirmDelete(${pho.id})" class="removeImg">X</span>
-					</p>
-				</c:forEach>
-			</div>
-
-
+			<c:forEach items="${details}" var="detail">
+				<label for="detailFile" style="display: block;">
+					<div class="form-photo">
+						<span class="icon-container" id="detailImageContainer"><img
+							id="thumbImage" src="/images/upload/${detail.uploadFileName}"
+							class="img-fluid rounded-top insert--image" /></span> <input type="file"
+							id="detailFile" name="customFile" multiple style="display: none;" />
+					</div>
+				</label>
+			</c:forEach>	
 		</form>
 		<!-- Map Section Start -->
 			<div class="">

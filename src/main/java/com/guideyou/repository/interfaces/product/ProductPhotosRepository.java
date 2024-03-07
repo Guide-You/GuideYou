@@ -30,4 +30,6 @@ public interface ProductPhotosRepository {
 	public ProductThumbnailDto findOriginNameByThumbnail(Integer productId);
 	
 	public String findThumbnailFileNameByProductId(Integer productId);
+	
+	public int deletePhotosByIdList(List<Integer> photoIdList);
 }

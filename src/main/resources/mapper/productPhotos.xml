@@ -22,7 +22,7 @@
 	<select id="findAllByProductId"
 		resultType="com.guideyou.dto.product.ProductDto">
 		select * from product_photos where product_id =
-		#{productId} and thumbnail is null
+		#{productId}
 	</select>
 
 	<select id="findByProductId"
@@ -51,4 +51,11 @@
 		product_photos b on a.id = b.product_id where a.id = #{productId} and
 		b.thumbnail is not null
 	</select>
+	
+	<delete id="deletePhotosByIdList" parameterType="List">
+        DELETE FROM product_photos WHERE id IN
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

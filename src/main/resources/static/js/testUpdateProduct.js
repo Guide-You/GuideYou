@@ -103,6 +103,60 @@ document.addEventListener('DOMContentLoaded', function() {
     	productForm.submit();
     }); //  $('#productForm').submit(function(event) end
     
+    //-----------이미지-------------//
+    // 사진 선택시 바로 보이게 하는 함수
+    document.getElementById('thumbFile').addEventListener('change', function() {
+        showImage.call(this, '#thumbImage');
+    });
+
+    document.getElementById('detailFile').addEventListener('change', function() {
+        showMultipleImages.call(this, '#detailImageContainer');
+    });
+
+    function showImage(selector) {
+        // 파일이 선택되었는지 확인
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // 선택된 파일의 URL을 이미지 태그의 src 속성에 설정
+                var imageElement = document.querySelector(selector);
+                imageElement.src = e.target.result;
+            };
+
+            // 파일을 읽어서 DataURL로 변환
+            reader.readAsDataURL(this.files[0]);
+        }
+    }
+
+    function showMultipleImages(selector) {
+        // 파일이 선택되었는지 확인
+        if (this.files && this.files.length > 0) {
+            var container = document.querySelector(selector);
+            container.innerHTML = ''; // Clear previous images
+
+            for (var i = 0; i < this.files.length; i++) {
+                var reader = new FileReader();
+
+                reader.onload = (function(index) {
+                    return function(e) {
+                        // 선택된 파일의 URL을 이미지 태그의 src 속성에 설정
+                        var imageElement = document.createElement('img');
+                        imageElement.src = e.target.result;
+                        imageElement.className = 'img-fluid w-100 rounded-top';
+
+                        // Append image to the container
+                        container.appendChild(imageElement);
+                    };
+                })(i);
+
+                // 파일을 읽어서 DataURL로 변환
+                reader.readAsDataURL(this.files[i]);
+            }
+        }
+    }
+    
+    //-----------이미지-------------//
     	////////////////////Map
         // 마커를 담을 배열입니다
 		var markers = [];
@@ -328,11 +382,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 
 		function addCheckMarker(position, idx, placeInfo) { //***************************************************** 버튼 클릭시 추가 되는 마커 함수
-			var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markers_sprites.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-			imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
+			var imageSrc = 'https://ifh.cc/g/27PVFv.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+			imageSize = new kakao.maps.Size(27, 33), // 마커 이미지의 크기
 			imgOptions = {
-				spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-				spriteOrigin : new kakao.maps.Point(0, (idx * 46) + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+//				spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+//				spriteOrigin : new kakao.maps.Point(0, (idx * 46) + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
 				offset : new kakao.maps.Point(13, 37)
 			// 마커 좌표에 일치시킬 이미지 내에서의 좌표
 			}, markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize,
