@@ -192,9 +192,18 @@
 					</c:if>
 					<div class="col-md-4 mb-4">
 						<div class="d-flex justify-content-center mb-4">
+						<c:choose>
+						<c:when test="${not empty rev.uploadFileName}">
 							<img
 								src="/images/upload/${rev.uploadFileName}"
 								class="rounded-circle shadow-1-strong" width="150" height="150" />
+						</c:when>
+						<c:otherwise>
+							<img
+								src="https://ifh.cc/g/p0ghTp.png"
+								class="rounded-circle shadow-1-strong" width="150" height="150" />
+						</c:otherwise>
+						</c:choose>
 						</div>
 						<h5 class="mb-3" id="revName">${rev.name}</h5>
 						<h6 class="text-primary mb-3" id="revCreatedAt">${rev.formatDateTime()}</h6>
