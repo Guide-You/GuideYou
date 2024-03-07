@@ -22,7 +22,7 @@
 			<!-- Iterate over the image list to create carousel slides -->
 			<c:forEach items="${imgList}" var="img" varStatus="loop">
 				<c:choose>
-					<c:when test="${paidYn} eq false">
+					<c:when test="${paidYn eq false}">
 						<c:if test="${not empty img.thumbnail}">
 							<div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
 								<img class="d-block w-100"
