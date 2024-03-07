@@ -166,6 +166,11 @@ public class ProductController {
 			if (paidProductId != 0 || product.getUserId() == principal.getId()) {
 				paidYn = true;
 			}
+			if(principal.getRole() != null) {
+				if(principal.getRole().equals(Define.ROLE_ADMIN)) {
+					paidYn = true;
+				}
+			}
 			WishList wishResult = wishListService.readWishListByUserIdAndProductId(principal.getId(), productId);
 			if (wishResult != null) {
 				wishYn = true;
