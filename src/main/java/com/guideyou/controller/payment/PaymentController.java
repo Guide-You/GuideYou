@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -213,7 +214,8 @@ public class PaymentController {
 	  * @Method 설명 : 환불
 	  */
 	@PostMapping("/refund")
-	public void refund(@RequestBody RefundDto refundDto) {
+	@ResponseBody
+	public String refund(@RequestBody RefundDto refundDto) {
 		
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
@@ -313,10 +315,13 @@ public class PaymentController {
 				// 3. db에 환불 결과 저장
 				paymentService.updatePaymentOnRefund(refundDto);
 				
+				log.info("환불 sold -1");
 			}
-			
-			// TODO : 환불 클라이언트, DB 모두 완료 -> 이후에 어떻게 처리할건지 고민해보기!
+			log.info("환불 마지막 ㅠ");
+
 		}
+		return "success";
+		
 	}
 	
 	/**

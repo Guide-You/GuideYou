@@ -21,18 +21,33 @@
 		<div class="col-lg-12">
 			<nav>
 				<div class="nav nav-tabs mb-3">
-					<button class="nav-link active border-white border-bottom-0"
+					<p class="nav-link active border-white border-bottom-0"
 						type="button" role="tab" id="nav-about-tab" data-bs-toggle="tab"
 						data-bs-target="#nav-about" aria-controls="nav-about"
-						aria-selected="true">상세내용</button>
-					<c:if test="${board.type eq 'QnA'}">
-						<button class="nav-link border-white border-bottom-0"
-							type="button" role="tab" id="nav-mission-tab"
-							data-bs-toggle="tab" data-bs-target="#nav-mission"
-							aria-controls="nav-mission" aria-selected="false">댓글 리스트</button>
-					</c:if>
+						aria-selected="true">상세내용</p>
 				</div>
 			</nav>
+			
+			
+<div class="text-end">
+
+	<c:if test="${principal.role eq 'ADMIN' || board.writerId eq writerId}">
+		<button type="button" class="btn btn-outline-info"
+			onclick="location.href='/company/delete/${board.type}/${board.id}'">삭제</button>
+		<button type="button" class="btn btn-outline-info"
+			onclick="location.href='/company/boardModify/${board.id}'">수정</button>
+	</c:if>
+
+	<a href="/company/boardList/${board.type}">
+		<button type="button" class="btn btn-outline-info">게시글 목록</button>
+	</a>
+</div>
+		
+		<p>${board.writerId }</p>
+			
+			
+			
+			
 			<div class="tab-content mb-5">
 				<div class="tab-pane active" id="nav-about" role="tabpanel"
 					aria-labelledby="nav-about-tab">
@@ -43,7 +58,7 @@
 					<div class="d-flex">
 						<div class="">
 							<p class="mb-2" style="font-size: 14px;">
-								<fmt:formatDate value="${comment.createdAt}"
+								<fmt:formatDate value="${board.createdAt}"
 									pattern="yyyy-MM-dd hh:mm:ss" />
 							</p>
 							<div class="d-flex justify-content-between">
@@ -54,9 +69,8 @@
 					</div>
 				</div>
 			</div>
-
 			<c:if test="${board.type eq 'QnA'}">
-				<h4 class="mb-5 fw-bold">관리자님의 답글</h4>
+				<h4 class=" fw-bold">관리자님의 답글</h4>
 				<form action="/company/saveComment" method="post" id="insertComment">
 					<input type="hidden" id="bContentsId" name="bContentsId"
 						value="${board.id}">
@@ -67,20 +81,26 @@
 									<c:when test="${empty comment}">
 										<textarea name="content" id="content" class="form-control border-0"
 											cols="30" rows="8" placeholder="질문에 답글을 작성해주세요 *"
-											spellcheck="false" style="resize:none;"></textarea>
+											spellcheck="false" style="resize:none; height: 130px; border: 1px solid #ffc691 !important;"></textarea>
 									</c:when>
 									<c:otherwise>
+									
 										<input type="hidden" id="commentId" name="commentId"
 											value="${comment.id}">
 										<input type="hidden" id="writerId" name="writerId"
 											value="${principal.id}">
-										<button type="button" class="btn btn-outline-info"
-											onclick="location.href='/company/deleteComment/${comment.id}/${board.id}'">삭제</button>
-										<button type="button" class="btn btn-outline-info" id="commentUpdateBtn" onclick="updateComment()">수정</button>
+
 										<textarea name="content" id="content" class="form-control border-0"
-											cols="30" rows="8" spellcheck="false" disabled style="resize:none;">${comment.content} </textarea>
+											cols="30" rows="8" spellcheck="false" disabled style="resize:none; height: 130px; margin-top:10px; background-color:white; border: 1px solid #91caff !important;">${comment.content} </textarea>
 									</c:otherwise>
 								</c:choose>
+								
+														
+	<c:if test="${principal.role eq 'ADMIN' || board.writerId eq writerId}">					
+								<button type="button" class="btn btn-outline-info"
+									onclick="location.href='/company/deleteComment/${comment.id}/${board.id}'">삭제</button>
+								<button type="button" class="btn btn-outline-info" id="commentUpdateBtn" onclick="updateComment()">수정</button>
+	</c:if>
 							</div>
 						</div>
 				</form>
@@ -95,18 +115,6 @@
 		</div>
 		</c:if>
 	</div>
-</div>
-<div class="text-end">
-	<c:if test="${principal.role eq 'ADMIN' || board.writerId eq writerId}">
-		<button type="button" class="btn btn-outline-info"
-			onclick="location.href='/company/delete/${board.type}/${board.id}'">삭제</button>
-		<button type="button" class="btn btn-outline-info"
-			onclick="location.href='/company/boardModify/${board.id}'">수정</button>
-	</c:if>
-
-	<a href="/company/boardList/${board.type}">
-		<button type="button" class="btn btn-outline-info">게시글 목록</button>
-	</a>
 </div>
 </div>
 
