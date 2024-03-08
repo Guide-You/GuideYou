@@ -1,4 +1,3 @@
-[guideYou_readMe_code]
 <div align=center>
 
   ![가유 로고](로고 자리)
