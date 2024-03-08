@@ -14,11 +14,12 @@
 	</select>
 	<!-- 페이징 처리 쿼리 -->
 	<select id="findAllwithPasing"
-		resultType="com.guideyou.repository.entity.Board">
-		select id, type , writer_id, title, substring(content, 1,
-		10) as content, view_count from board_contents
+		resultType="com.guideyou.dto.admin.BoardDto">
+		select u.nickname, b.id as boardId, b.type, b.title, substring(b.content, 1, 10) as content, b.view_count
+		from user u
+		join board_contents b on u.id = b.writer_id
 		<if test='type != null'>
-			where type = #{type}
+			where b.type = #{type}
 		</if>
 		limit #{limit} offset #{offset}
 	</select>

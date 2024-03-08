@@ -84,7 +84,7 @@ public class BoardService {
 		return boardRepository.getAllPgCount();
 	}
 	// 페이징 된 글 목록 조회
-	public PageRes<Board> getBoardUsingPage(PageReq pageReq, String type) {
+	public PageRes<BoardDto> getBoardUsingPage(PageReq pageReq, String type) {
 		int page = pageReq.getPage();
 		int size = pageReq.getSize();
 		int offset = (page - 1) * size; // 오프셋 계산
@@ -93,10 +93,10 @@ public class BoardService {
 		long totalElements = boardRepository.getAllPgCount();
 
 		// 페이징 처리된 목록 조회
-		List<Board> boardList = boardRepository.findAllwithPasing(offset, size, type);
+		List<BoardDto> boardList = boardRepository.findAllwithPasing(offset, size, type);
 
 		// 페이징 결과 객체 생성
-		PageRes<Board> pageRes = new PageRes<>(boardList ,page, totalElements, size);
+		PageRes<BoardDto> pageRes = new PageRes<>(boardList ,page, totalElements, size);
 
 		return pageRes;
 	}
