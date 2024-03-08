@@ -3,6 +3,7 @@ package com.guideyou.controller.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.guideyou.dto.PageReq;
 import com.guideyou.dto.PageRes;
 import com.guideyou.dto.admin.BoardDto;
+import com.guideyou.handler.exception.CustomRestfulException;
 import com.guideyou.repository.entity.Board;
 import com.guideyou.repository.entity.Comment;
 import com.guideyou.repository.entity.User;
@@ -55,7 +57,11 @@ public class BoardController {
 	// 1. 화면 띄우기
 	@GetMapping("/boardInsert")
 	public String boardPage() {
-		User principal =  (User)httpSession.getAttribute(Define.PRINCIPAL);
+		User principal =  (User)httpSession.getAttribute(Define.PRINCIPAL);	
+		
+		if (principal == null) {
+			throw new CustomRestfulException(Define.ENTER_YOUR_LOGIN, HttpStatus.BAD_REQUEST);
+		}
 		
 		return "/company/boardInsert";
 	}
@@ -87,8 +93,8 @@ public class BoardController {
 			pageReq.setSize(10); // 페이지 당 보여줄 개수
 		}
 
-		PageRes<Board> pageRes = boardService.getBoardUsingPage(pageReq, type); // 페이징 처리함
-		List<Board> list = pageRes.getContent(); // 내용을 보여줄거다
+		PageRes<BoardDto> pageRes = boardService.getBoardUsingPage(pageReq, type); // 페이징 처리함
+		List<BoardDto> list = pageRes.getContent(); // 내용을 보여줄거다
 
 		// 페이징 정보를 모델에 추가
 		model.addAttribute("boardList", list); // 프로젝트 마다 다른 코드

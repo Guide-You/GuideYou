@@ -14,10 +14,9 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th scope="col">ID</th>
+					<th scope="col">번호</th>
 					<th scope="col">작성자</th>
 					<th scope="col">제목</th>
-					<th scope="col">내용</th>
 					<th scope="col">조회수</th>
 				</tr>
 			</thead>
@@ -26,9 +25,8 @@
 				<c:forEach var="board" items="${boardList}" varStatus="loop">
 					<tr>
 						<th class="py-5">${loop.index + 1}</th>
-						<td class="py-5">${board.writerId}</td>
-						<td class="py-5"><a href="/company/boardDetail/${board.id}">${board.title}</a></td>
-						<td class="py-5"><a href="/company/boardDetail/${board.id}">${board.content}</a></td>
+						<td class="py-5">${board.nickname}</td>
+						<td class="py-5"><a href="/company/boardDetail/${board.boardId}">${board.title}</a></td>
 						<td class="py-5">${board.viewCount}</td>
 
 					</tr>
