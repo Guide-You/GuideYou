@@ -101,7 +101,7 @@
 |Framewoke|Spring Boot 4|
 |Language|Java17 Javascript jsp|
 |Tool|Spring tool Suite<br> Git<br> GitHub<br> Figma<br> Bootstrap4|
-|Library|Gson 2.8.6<br> json-simple 1.1.1 <br> jkarta.servlet.jsp.jstl 2.0.0<br> spring-security-crypto<br> spring-boot-starter-data-jdbc <br>spring-boot-starter-web <br> mybatis-spring-boot-starter 3.0.3<br> lombok<br> mysql-connector-java|
+|Library|Gson 2.8.6<br> json-simple 1.1.1 <br> jkarta.servlet.jsp.jstl 2.0.0<br> spring-boot-starter-data-jdbc <br>spring-boot-starter-web <br> mybatis-spring-boot-starter 3.0.3<br> lombok<br> mysql-connector-java|
 |DBMS|MySQL 8.0.26<br> MyBatis 3.0.3|
 |Communication|Slack|
 <br>
