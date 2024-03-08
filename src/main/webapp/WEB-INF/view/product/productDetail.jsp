@@ -2,6 +2,73 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<style>
+.markerbg {
+    float: left;
+    position: relative;
+    width: 36px;
+    height: 37px;
+    margin: 0 0 -5 0;
+    background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
+}
+
+.marker_1 { background-position: 0 -10px; }
+.marker_2 { background-position: 0 -56px; }
+.marker_3 { background-position: 0 -102px; }
+.marker_4 {background-position: 0 -148px;}
+.marker_5 {background-position: 0 -194px;}
+.marker_6 {background-position: 0 -240px;}
+.marker_7 {background-position: 0 -286px;}
+.marker_8 {background-position: 0 -332px;}
+.marker_9 {background-position: 0 -378px;}
+.marker_11 {background-position: 0 -470px;}
+.marker_12 {background-position: 0 -516px;}
+.marker_13 {background-position: 0 -562px;}
+.marker_14 {background-position: 0 -608px;}
+.marker_15 {background-position: 0 -654px;}
+#mapWrapper {
+	position: relative; /* 이 부분을 추가 */
+}
+
+#locationList {
+	top: 0px; /* 상단에서 얼마나 떨어질지 설정 */
+	right: 0px; /* 우측에서 얼마나 떨어질지 설정, 필요에 따라 조절 */
+	position: absolute; /* 절대 위치 설정 */
+	background-color: rgba(255, 255, 255, 0.8); /* 반투명 흰색 배경 */
+	padding: 10px;
+	border-radius: 8px;
+	z-index: 1; /* 지도 위에 표시 */
+	display: block; /* 목록 표시 */
+	width: 30%; /* 너비 설정 */
+	max-height: 90%; /* 최대 높이 설정 */
+	overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
+}
+
+.list-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.item-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.item-phone, .item-roadAddress, .item-addressName {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 2px;
+}
+
+.item-divider {
+    margin-top: 10px;
+}
+</style>
 <!-- header -->
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -14,7 +81,7 @@
 
 <!-- Detail Title Start -->
 <!-- Title Image 확인 후 사이즈 변경 필요-->
-<input type="hidden" name="paidYn" id="paidYn" value="${paidYn}"> 
+<input type="hidden" name="paidYn" id="paidYn" value="${paidYn}">
 <div class="container py-5 product--title text-center">
 	<div id="carouselExample" class="carousel slide"
 		data-bs-ride="carousel" data-bs-interval="5000">
@@ -39,7 +106,7 @@
 								alt="Slide ${loop.index + 1}"
 								style="max-height: 400px; max-width: 100%; object-fit: contain;">
 						</div>
-					</c:otherwise>							
+					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 		</div>
@@ -64,11 +131,10 @@
 	</div>
 
 	<div class="col-lg-12 detail--title--info" style="margin-top: 20px">
-		<span id="title--writer">작성자 : ${product.nickName}</span> 
-			<span
-			id="title--like">
-			<img src="${wishYn ? '/img/like.png' : '/img/unlike.png'}" alt="like" />
-			</span>
+		<span id="title--writer">작성자 : ${product.nickName}</span> <span
+			id="title--like"> <img
+			src="${wishYn ? '/img/like.png' : '/img/unlike.png'}" alt="like" />
+		</span>
 	</div>
 	<div class="title--rate--price">
 		<span class="title--rate">${productAvg.avgScore}</span> <span
@@ -85,16 +151,21 @@
 	</h6>
 </div>
 <!-- Purchase detail End -->
-<input type="hidden" name="loginId" id="login--id" value="${principal.id}">
+<input type="hidden" name="loginId" id="login--id"
+	value="${principal.id}">
 
 <!-- Request Info to Server -->
 <form id="send--detail--form">
-	<input type="hidden" name="productId" id="product--id" value="${product.productId}"> 
-	<input type="hidden" name="productTitle" id="product--title" value="${product.productTitle}"> 
-	<input type="hidden" name="sellerNickname" id="seller--nickname" value="${product.nickName}">
-	<input type="hidden" name="productPrice" id="product--price" value="${product.price}">
-	<input type="hidden" name="thumbnailFileName" id="product--thumbnail" value="${thumbnailFileName}">
-	<input type="hidden" name="productAvg" id="title--rate" value="${productAvg.avgScore}">
+	<input type="hidden" name="productId" id="product--id"
+		value="${product.productId}"> <input type="hidden"
+		name="productTitle" id="product--title"
+		value="${product.productTitle}"> <input type="hidden"
+		name="sellerNickname" id="seller--nickname"
+		value="${product.nickName}"> <input type="hidden"
+		name="productPrice" id="product--price" value="${product.price}">
+	<input type="hidden" name="thumbnailFileName" id="product--thumbnail"
+		value="${thumbnailFileName}"> <input type="hidden"
+		name="productAvg" id="title--rate" value="${productAvg.avgScore}">
 </form>
 
 <!-- Plan Selling Button Start -->
@@ -159,9 +230,12 @@
 <div class="">
 	<div class="container py-5">
 		<div class="col-lg-12">
-			<div class="h-100 rounded">
-				<div id="map" style="width: 100%; height: 350px;"></div>
-				<div id="locationList"></div>
+			<div class="h-100 rounded" id="mapWrapper">
+				<div id="map" style="width: 100%; height: 500px;"></div>
+				<c:if test="${paidYn eq true}">
+				<div id="locationList"
+					style="width: 30%; overflow-y: auto; height: 500px;"></div>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -192,18 +266,18 @@
 					</c:if>
 					<div class="col-md-4 mb-4">
 						<div class="d-flex justify-content-center mb-4">
-						<c:choose>
-						<c:when test="${not empty rev.uploadFileName}">
-							<img
-								src="/images/upload/${rev.uploadFileName}"
-								class="rounded-circle shadow-1-strong" width="150" height="150" />
-						</c:when>
-						<c:otherwise>
-							<img
-								src="https://ifh.cc/g/p0ghTp.png"
-								class="rounded-circle shadow-1-strong" width="150" height="150" />
-						</c:otherwise>
-						</c:choose>
+							<c:choose>
+								<c:when test="${not empty rev.uploadFileName}">
+									<img src="/images/upload/${rev.uploadFileName}"
+										class="rounded-circle shadow-1-strong" width="150"
+										height="150" />
+								</c:when>
+								<c:otherwise>
+									<img src="https://ifh.cc/g/p0ghTp.png"
+										class="rounded-circle shadow-1-strong" width="150"
+										height="150" />
+								</c:otherwise>
+							</c:choose>
 						</div>
 						<h5 class="mb-3" id="revName">${rev.name}</h5>
 						<h6 class="text-primary mb-3" id="revCreatedAt">${rev.formatDateTime()}</h6>
@@ -232,9 +306,9 @@
 							</c:forEach>
 						</ul>
 					</div>
-					
+
 					<input type="hidden" value="${rev.score }" id="review--score">
-					
+
 					<c:if test="${loop.index % 3 == 2 or loop.last}">
 			</div>
 			<!-- Close the row -->

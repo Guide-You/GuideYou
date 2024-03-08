@@ -100,18 +100,14 @@ var infowindow = new kakao.maps.InfoWindow({
 function setCheckLocationList(data, index) {
 	var listItem = document.createElement('div');
 	listItem.innerHTML =
-		'가게명: ' + data[index].placeName
-		+ "<br>"
-		+ '전화번호: ' + data[index].phone
-		+ "<br>"
-		+ '도로명주소: ' + data[index].roadAddressName
-		+ "<br>"
-		+ '지번주소: ' + data[index].addressName
-		+ "<br>"
-		+ 'lat: ' + + data[index].lat
-		+ "<br>"
-		+ 'lng: ' + + data[index].lng
-		+ "<hr>";
+        '<div class="item-content">' + // 내용을 감싸는 div 추가
+		'<div class="markerbg marker_' + (index + 1) + '"></div>' + 
+        '<div class="item-title">' + data[index].placeName + '</div>' +
+        '<div class="item-phone">전화번호: ' + data[index].phone + '</div>' +
+        '<div class="item-roadAddress">도로명주소: ' + data[index].roadAddressName + '</div>' +
+        '<div class="item-addressName">지번주소: ' + data[index].addressName + '</div>' +
+        '</div>' + 
+        '<hr class="item-divider">';
 
 	// mouseover 이벤트 추가
 	listItem.addEventListener('click', function(event) {
