@@ -38,12 +38,14 @@
 								<h4>${uploadProductsInfo.title}</h4>
 								<p>${uploadProductsInfo.shortIntroContent}</p>
 								<div class="d-flex justify-content-between flex-lg-wrap">
-									<p class="text-dark fs-5 fw-bold mb-0">
+									<p class="text-dark fs-5 fw-bold mb-0" style="margin-top:-10px">
 										${uploadProductsInfo.formatPrice()}</p>
+										</div>
+									<div style="text-align: right; margin-top: 10px;" >
 									<a href="/update/${uploadProductsInfo.productId}"
-										class="btn border border-secondary rounded-pill px-3 text-primary custom--button">수정하기</a>
+										class="btn btn-primary border px-3 " style="color:white;">수정하기</a>
 									<a href="/delete/${uploadProductsInfo.productId}"
-										class="btn border border-secondary rounded-pill px-3 text-primary custom--button">삭제하기</a>
+										class="btn btn-primary border px-3 " style="color:white;">삭제하기</a>
 								</div>
 							</div>
 						</div>

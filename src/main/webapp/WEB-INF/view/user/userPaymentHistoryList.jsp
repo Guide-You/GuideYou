@@ -66,7 +66,7 @@
 								<td class="py-5">
 									<!-- 각 버튼에 고유한 ID를 할당하고 onClick 이벤트에 함수를 호출하는 방식으로 변경 -->
 									<button type="button"
-										class="refund-button custom--button rounded"
+										class="btn btn-primary refund-button  rounded"
 										data-merchant-uid="${history.merchantUid}"
 										data-refund-price="${history.paymentPrice}"
 										style="font-size: 12px;">환불하기</button>
