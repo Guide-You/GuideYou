@@ -43,8 +43,8 @@
 <!-- Featurs Section Start -->
 <div class="container-fluid vesitable py-5">
 	<div class="container py-5">
-		<h1 class="mb-0">어디가유?</h1>
-		<div class="owl-carousel vegetable-carousel justify-content-center">
+		<h1 class="mb-0" >어디가유?</h1>
+		<div class="owl-carousel vegetable-carousel justify-content-center" style="margin-bottom:-80px">
 
 			<button class="city-button">
 				<img src="/img/main-seoul.jpg" class="city-image" />
