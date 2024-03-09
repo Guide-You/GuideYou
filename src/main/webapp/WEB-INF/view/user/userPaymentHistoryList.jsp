@@ -69,7 +69,7 @@
 										class="btn btn-primary refund-button  rounded"
 										data-merchant-uid="${history.merchantUid}"
 										data-refund-price="${history.paymentPrice}"
-										style="font-size: 12px;">환불하기</button>
+										style="font-size: 12px; color:white;">환불하기</button>
 								</td>
 							</c:otherwise>
 						</c:choose>

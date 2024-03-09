@@ -47,8 +47,8 @@
 									<th scope="row">
 										<div>
 											<button type="button"
-												class="border-secondary rounded-pill text-primary text-uppercase mb-4 ms-4 custom--button cart--button"
-												data-wishlist-id="${wishListItem.wishListId}">삭제
+												class="btn btn-primary cart--button"
+												data-wishlist-id="${wishListItem.wishListId}" style="color: white;">삭제
 											</button>
 										</div>
 										<div>
@@ -61,8 +61,8 @@
 											    <input type="hidden" name="thumbnailFileName" id="thumbnail--file--name" value="${wishListItem.productImage}">
 											</form>
 											<button type="button"
-													class="border-secondary rounded-pill text-primary text-uppercase mb-4 ms-4 custom--button cart--button"
-													id="cart--purchase--btn">구매
+													class="btn btn-primary cart--button"
+													id="cart--purchase--btn" style="color: white;">구매
 												</button>
 										</div>
 									</th>
