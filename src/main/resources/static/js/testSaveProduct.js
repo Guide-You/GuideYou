@@ -549,19 +549,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		    var listItem = document.createElement('div');
 		
 		    listItem.innerHTML = 
-		    '가게명: ' + places.place_name +
-		    "<br>" +
-		    '전화번호: ' +  places.phone +
-		    "<br>" +
-		    '도로명주소: ' +  places.road_address_name +
-		    "<br>" +
-		    '지번주소: ' +  places.address_name +
-		    "<br>" +
-		    'lat: ' +  + places.y +
-		    "<br>" +
-		    'lng: ' +  + places.x +
-		    "<button class='locationRemoveBtn custom--button rounded'>삭제</button>"  // onclick 속성 제거
-		    + "<hr>";
+		    '<div class="item-title">' + places.place_name + '</div>' +
+		    '<div class="item-phone">전화번호: ' +  places.phone + '</div>' +
+		    '<div class="item-roadAddress">도로명주소: ' +  places.road_address_name + '</div>' +
+		    '<div class="item-addressName">지번주소: ' +  places.address_name + '</div>' +
+		    "<button class='locationRemoveBtn custom--button rounded'>삭제</button>" + // onclick 속성 제거
+		    '<hr class="item-divider">';
+       
 		
 		    listItem.querySelector('.locationRemoveBtn').addEventListener('click', function() {
 		        removeListItem(listItem, places);

@@ -6,7 +6,48 @@
 <head>
 <meta charset="UTF-8">
 <title>상품 등록 페이지</title>
+<style>
+#mapWrapper {
+	position: relative; /* 이 부분을 추가 */
+}
+#locationList {
+	top: 0px; /* 상단에서 얼마나 떨어질지 설정 */
+	right: 0px; /* 우측에서 얼마나 떨어질지 설정, 필요에 따라 조절 */
+	position: absolute; /* 절대 위치 설정 */
+	background-color: rgba(255, 255, 255, 0.8); /* 반투명 흰색 배경 */
+	padding: 10px;
+	border-radius: 8px;
+	z-index: 1; /* 지도 위에 표시 */
+	display: block; /* 목록 표시 */
+	width: 30%; /* 너비 설정 */
+	max-height: 90%; /* 최대 높이 설정 */
+	overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
+}
+.list-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
+.item-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.item-phone, .item-roadAddress, .item-addressName {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 2px;
+}
+
+.item-divider {
+    margin-top: 10px;
+}
+</style>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="/css/productcss/saveUpdate.css" rel="stylesheet" />
 <!-- 지도 css -->
@@ -27,7 +68,6 @@
 
 	<div class="container">
 		<form id="productForm" enctype="multipart/form-data">
-
 			<!-- 지역 선택 콤보박스 -->
 			<label for="region"></label><br> <select id="region"
 				name="region" onchange="displaySelectedRegion()">
@@ -105,9 +145,8 @@
 								<ul id="placesList"></ul>
 								<div id="pagination"></div>
 							</div>
+								<div id="locationList"></div>
 						</div>
-						
-						<div id="locationList"></div>
 					</div>
 				</div>
 			</div>

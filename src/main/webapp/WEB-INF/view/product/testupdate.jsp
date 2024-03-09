@@ -7,26 +7,70 @@
 <meta charset="UTF-8">
 <title>상품 수정 페이지</title>
 <style>
-			.imgthumbBox {
-				background-color: #ccc;
-				width: 100%;
-				height: 50px;
-				margin-top: 10px;
-			}
-			
-			.imgNameBox {
-				background-color: #ccc;
-				width: 100%;
-				height: 300px;
-				overflow: scroll;
-				margin-top: 10px;
-			}
-			
-			.removeImg {
-				color: red;
-				margin-left: 20px;
-			}
-			</style>
+.imgthumbBox {
+	background-color: #ccc;
+	width: 100%;
+	height: 50px;
+	margin-top: 10px;
+}
+
+.imgNameBox {
+	background-color: #ccc;
+	width: 100%;
+	height: 300px;
+	overflow: scroll;
+	margin-top: 10px;
+}
+
+.removeImg {
+	color: red;
+	margin-left: 20px;
+}
+
+/* 지도 */
+#mapWrapper {
+	position: relative; /* 이 부분을 추가 */
+}
+
+#locationList {
+	top: 0px; /* 상단에서 얼마나 떨어질지 설정 */
+	right: 0px; /* 우측에서 얼마나 떨어질지 설정, 필요에 따라 조절 */
+	position: absolute; /* 절대 위치 설정 */
+	background-color: rgba(255, 255, 255, 0.8); /* 반투명 흰색 배경 */
+	padding: 10px;
+	border-radius: 8px;
+	z-index: 1; /* 지도 위에 표시 */
+	display: block; /* 목록 표시 */
+	width: 30%; /* 너비 설정 */
+	max-height: 90%; /* 최대 높이 설정 */
+	overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
+}
+
+.list-item {
+	padding: 10px;
+	margin-bottom: 10px;
+	background-color: #f9f9f9;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.item-title {
+	font-size: 18px;
+	color: #333;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.item-phone, .item-roadAddress, .item-addressName {
+	font-size: 14px;
+	color: #666;
+	margin-bottom: 2px;
+}
+
+.item-divider {
+	margin-top: 10px;
+}
+</style>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="/css/productcss/saveUpdate.css" rel="stylesheet" />
 <link href="/css/productcss/map/updateMap.css" rel="stylesheet" />
@@ -93,7 +137,8 @@
 			<label for="thumbFile" style="display: block;">
 				<div class="form-photo">
 					<span class="icon-container"> <img id="thumbImage"
-						src="/images/upload/${thumbnail.uploadFileName}" class="img-fluid  rounded-top insert--image" />
+						src="/images/upload/${thumbnail.uploadFileName}"
+						class="img-fluid  rounded-top insert--image" />
 					</span> <input type="file" id="thumbFile" name="thumbFile"
 						accept="image/*" style="display: none;" />
 				</div>
@@ -104,51 +149,51 @@
 					<div class="form-photo">
 						<span class="icon-container" id="detailImageContainer"><img
 							id="thumbImage" src="/images/upload/${detail.uploadFileName}"
-							class="img-fluid rounded-top insert--image" /></span> <input type="file"
-							id="detailFile" name="customFile" multiple style="display: none;" />
+							class="img-fluid rounded-top insert--image" /></span> <input
+							type="file" id="detailFile" name="customFile" multiple
+							style="display: none;" />
 					</div>
 				</label>
-			</c:forEach>	
+			</c:forEach>
 		</form>
 		<!-- Map Section Start -->
-			<div class="">
-				<div class="container py-5">
-					<div class="col-lg-12">
-						<div class="map_wrap">
-							<div id="map"
-								style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
+		<div class="">
+			<div class="container py-5">
+				<div class="col-lg-12">
+					<div class="map_wrap">
+						<div id="map"
+							style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
 
-							<div id="menu_wrap" class="bg_white">
-								<div class="option">
-									<div>
-										<form id="keyword--form">
-											키워드 : <input type="text" value="" id="keyword" size="15">
-											
-											<div class="container plan--selling--button">
-												<button type="button" id="keyword--button">검색하기</button>
-											</div>
-										</form>
-									</div>
+						<div id="menu_wrap" class="bg_white">
+							<div class="option">
+								<div>
+									<form id="keyword--form">
+										키워드 : <input type="text" value="" id="keyword" size="15">
+
+										<div class="container plan--selling--button">
+											<button type="button" class="custom--button" id="keyword--button">검색하기</button>
+										</div>
+									</form>
 								</div>
-								<hr>
-								<ul id="placesList"></ul>
-								<div id="pagination"></div>
 							</div>
+							<hr>
+							<ul id="placesList"></ul>
+							<div id="pagination"></div>
 						</div>
-						
 						<div id="locationList"></div>
 					</div>
 				</div>
 			</div>
-			<!-- Map Section End -->
-			
-			<div class="container plan--selling--button">
-				<button type="button" id="modify--button">수정</button>
-			</div>
+		</div>
+		<!-- Map Section End -->
+
+		<div class="container plan--selling--button">
+			<button type="button" id="modify--button">수정</button>
+		</div>
 	</div>
 	<script>
-
-</script>
+		
+	</script>
 </body>
 </html>
 <!-- footer -->
