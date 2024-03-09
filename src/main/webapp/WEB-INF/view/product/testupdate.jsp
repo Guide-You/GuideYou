@@ -7,6 +7,25 @@
 <meta charset="UTF-8">
 <title>상품 수정 페이지</title>
 <style>
+#detailImageContainer {
+	display: flex;
+	flex-wrap: wrap; /* 이미지들이 여러 줄에 걸쳐 표시되도록 설정 */
+	gap: 10px; /* 이미지 간의 간격 설정 (원하는 크기로 조절) */
+}
+
+/* 각 이미지에 대한 스타일 */
+#detailImageContainer img {
+	width: 100px; /* 이미지의 가로 크기를 원하는 크기로 조절 */
+	height: 100px; /* 이미지의 세로 크기를 원하는 크기로 조절 */
+	object-fit: cover; /* 이미지가 컨테이너에 맞게 잘리지 않도록 설정 */
+	border-radius: 5px; /* 이미지에 둥근 테두리 설정 */
+	margin-right: 5px; /* 이미지 간의 우측 마진 설정 (원하는 크기로 조절) */
+	margin-bottom: 5px; /* 이미지 간의 하단 마진 설정 (원하는 크기로 조절) */
+}
+.form-photo {
+    margin-right: 100px; /* 이미지 사이의 우측 마진을 설정 (원하는 크기로 조절) */
+}
+
 .imgthumbBox {
 	background-color: #ccc;
 	width: 100%;
@@ -84,7 +103,36 @@
 		<input type="hidden" name="productId" id="product--id"
 			value="${ProductInfo.id}">
 		<form id="productForm" enctype="multipart/form-data">
+			<div style="display: flex;">
+				<!-- 파일 선택 input 대신 label을 사용하여 버튼으로 보여줌 -->
+				<div>
+					<p>썸네일</p>
+					<label for="thumbFile" style="display: block;">
+						<div class="form-photo">
+							<span class="icon-container"> <img id="thumbImage"
+								src="/images/upload/${thumbnail.uploadFileName}"
+								class="img-fluid  rounded-top insert--image" />
+							</span> <input type="file" id="thumbFile" name="thumbFile"
+								accept="image/*" style="display: none;" />
+						</div>
+					</label>
+				</div>
 
+				<div>
+					<p>디테일사진</p>
+					<c:forEach items="${details}" var="detail">
+						<label for="detailFile" style="display: block;">
+							<div class="form-photo">
+								<span class="icon-container" id="detailImageContainer"><img
+									id="thumbImage" src="/images/upload/${detail.uploadFileName}"
+									class="img-fluid rounded-top insert--image" /></span> <input
+									type="file" id="detailFile" name="customFile" multiple
+									style="display: none;" />
+							</div>
+						</label>
+					</c:forEach>
+				</div>
+			</div>
 
 			<!-- 지역 선택 콤보박스 -->
 			<label for="region"></label><br> <select id="region"
@@ -132,29 +180,6 @@
 
 
 
-			<!-- 파일 선택 input 대신 label을 사용하여 버튼으로 보여줌 -->
-			<p>썸네일</p>
-			<label for="thumbFile" style="display: block;">
-				<div class="form-photo">
-					<span class="icon-container"> <img id="thumbImage"
-						src="/images/upload/${thumbnail.uploadFileName}"
-						class="img-fluid  rounded-top insert--image" />
-					</span> <input type="file" id="thumbFile" name="thumbFile"
-						accept="image/*" style="display: none;" />
-				</div>
-			</label>
-			<p>디테일사진</p>
-			<c:forEach items="${details}" var="detail">
-				<label for="detailFile" style="display: block;">
-					<div class="form-photo">
-						<span class="icon-container" id="detailImageContainer"><img
-							id="thumbImage" src="/images/upload/${detail.uploadFileName}"
-							class="img-fluid rounded-top insert--image" /></span> <input
-							type="file" id="detailFile" name="customFile" multiple
-							style="display: none;" />
-					</div>
-				</label>
-			</c:forEach>
 		</form>
 		<!-- Map Section Start -->
 		<div class="">
@@ -171,7 +196,8 @@
 										키워드 : <input type="text" value="" id="keyword" size="15">
 
 										<div class="container plan--selling--button">
-											<button type="button" class="custom--button" id="keyword--button">검색하기</button>
+											<button type="button" class="custom--button"
+												id="keyword--button">검색하기</button>
 										</div>
 									</form>
 								</div>
