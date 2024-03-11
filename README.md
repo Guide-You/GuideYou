@@ -36,8 +36,8 @@
 <br>
 <h1> 🎱프로젝트 결과</h1><br>
 
--[GUIDE_YOU_결과보고서][Guide You 스토리보드 (1).pdf](https://github.com/Guide-You/GuideYou/files/14553211/Guide.You.1.pdf): 개발한 서비스의 결과 보고서 입니다.<br>
--[GUIDE_YOU_발표PPT][Guide You의 발표 ppt.pdf](https://github.com/Guide-You/GuideYou/files/14553213/Guide.You.ppt.pdf): 개발한 서비스의 발표 PPT 입니다.
+-[Guide You 스토리보드.pdf](https://github.com/Guide-You/GuideYou/files/14553211/Guide.You.1.pdf): 개발한 서비스의 스토리보드 입니다.<br>
+-[Guide You 발표 PPT.pdf](https://github.com/Guide-You/GuideYou/files/14553213/Guide.You.ppt.pdf): 개발한 서비스의 발표 PPT 입니다.
 
 <br>
 
