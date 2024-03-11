@@ -1,6 +1,6 @@
 <div align=center>
 
-  ![가유 로고](로고 자리)
+![guideyou_logo_hover](https://github.com/Guide-You/GuideYou/assets/134483532/89df4067-193b-47e5-85a7-ef81f5a80afd)
 
 </div>
 
@@ -37,8 +37,8 @@
 <h1> 🎱프로젝트 결과</h1><br>
 
 -[Guide You 스토리보드.pdf](https://github.com/Guide-You/GuideYou/files/14553211/Guide.You.1.pdf): 개발한 서비스의 스토리보드 입니다.<br>
--[Guide You 발표 PPT.pdf](https://github.com/Guide-You/GuideYou/files/14553213/Guide.You.ppt.pdf): 개발한 서비스의 발표 PPT 입니다.
-
+-[Guide You 발표 PPT.pdf](https://github.com/Guide-You/GuideYou/files/14553213/Guide.You.ppt.pdf): 개발한 서비스의 발표 PPT 입니다.<br>
+-[GuideYou_개발보고서.pdf](https://github.com/Guide-You/GuideYou/files/14553823/GuideYou_.pdf): 개발보고서 입니다.
 <br>
 
 
@@ -181,6 +181,6 @@
 
 ------
 
-🏗정보구조(IA : Information Architecture)<br>
-![image](IA 정보구조 경로)
+🏗사이트맵<br>
+![Printing Service Site Map (1)](https://github.com/Guide-You/GuideYou/assets/134483532/26450ac9-65df-41ce-a736-c9f5af38aa59)
 ----
